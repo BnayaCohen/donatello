@@ -3,10 +3,10 @@
   @return ($remSize) * 1rem;
 }
 
-@function em($pixels, $context: 16px) {
+@function em($pixels, $context: 14px) {
   @return ($pixels/$context) * 1em;
 }
 
-@function lh($pixels, $context: 16px) {
+@function lh($pixels, $context: 14px) {
   @return ($pixels/$context);
 }
