@@ -2,7 +2,7 @@ import { httpService } from './http-service'
 import { storageService } from './async-storage'
 import { userService } from './user-service'
 import { utilService } from './util-service'
-httpService.defaults.withCredentials = true
+// httpService.defaults.withCredentials = true
 const STORAGE_KEY = 'boardDB'
 const BASE_URL =
   process.env.NODE_ENV === 'production'
