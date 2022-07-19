@@ -168,7 +168,7 @@ async function query(filterBy = null) {
 async function getById(boardId) {
   try {
     return gBoard
-    // const res = await storageService.getById(STORAGE_KEY + boardId) // return gBoard
+    // const res = await storageService.getById(STORAGE_KEY + boardId)
     // const res = await httpService.get(BASE_URL + boardId)
     // return res.data
   } catch (err) {
@@ -213,7 +213,8 @@ function getEmptyBoard() {
 
 function saveTask(boardId, groupId, task, activity) {
   const board = getById(boardId)
-
+  board.groups.find((group) => group.id === groupId)
+  board.groups.push(task)
   board.activities.unshift(activity)
   saveBoard(board)
 }
