@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <section class="home-page">
     <div class="hero">
       <h1>Donatello helps teams move work forward.</h1>
       <p>
@@ -7,9 +7,9 @@
         rises to the home office,the way your team works is unique —accomplish
         it all with Donatello.
       </p>
-      <router-link></router-link>
+      <router-link to="/board">Get Started!</router-link>
     </div>
-  </main>
+  </section>
 </template>
 
 <script></script>
