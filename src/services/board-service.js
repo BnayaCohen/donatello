@@ -2,16 +2,16 @@
 // axios.defaults.withCredentials= true
 
 // const TOY_URL = (process.env.NODE_ENV !== 'development')
-//   ? '/api/toy/'
-//   : '//localhost:3030/api/toy/'
+//   ? '/api/board/'
+//   : '//localhost:3030/api/board/'
 
-// export const toyService = {
+// export const boardService = {
 //   getLabels,
 //   query,
 //   getById,
 //   remove,
 //   save,
-//   getEmptyToy,
+//   getEmptyBoard,
 // }
 
 // function getLabels() {
@@ -23,35 +23,35 @@
 //     const res = await axios.get(TOY_URL, { params: filterBy })
 //     return res.data
 //   } catch (err) {
-//     console.log('Cannot get toys', err)
+//     console.log('Cannot get boards', err)
 //   }
 // }
 
-// async function getById(toyId) {
+// async function getById(boardId) {
 //   try {
-//     const res = await axios.get(TOY_URL + toyId)
+//     const res = await axios.get(TOY_URL + boardId)
 //     return res.data
 //   } catch (err) {
-//     console.log('Cannot get the toy', err)
+//     console.log('Cannot get the board', err)
 //   }
 // }
 
-// async function remove(toyId) {
-//   await axios.delete(TOY_URL + toyId)
+// async function remove(boardId) {
+//   await axios.delete(TOY_URL + boardId)
 // }
 
-// async function save(toy) {
+// async function save(board) {
 //   try {
-//     const savedToy = toy._id
-//       ? await axios.put(TOY_URL, toy)
-//       : await axios.post(TOY_URL, toy)
-//     return savedToy.data
+//     const savedBoard = board._id
+//       ? await axios.put(TOY_URL, board)
+//       : await axios.post(TOY_URL, board)
+//     return savedBoard.data
 //   } catch {
-//     console.log('cannot save toy')
+//     console.log('cannot save board')
 //   }
 // }
 
-// function getEmptyToy() {
+// function getEmptyBoard() {
 //   return {
 //     _id: '',
 //     name: '',
