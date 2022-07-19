@@ -1,6 +1,6 @@
 <template>
     <main class="board-container">
-        <groupList v-if="board" :groups="groups" />
+        <group-list v-if="board" :groups="groups" />
     </main>
 </template>
 
@@ -16,7 +16,6 @@ export default {
     async created() {
         const { boardId } = this.$route.params
         this.board = await this.$store.dispatch({ type: 'loadBoard', boardId })
-        console.log(this.board);
     },
     computed: {
         groups() {
