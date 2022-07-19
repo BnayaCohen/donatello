@@ -1,24 +1,47 @@
 <template>
-    <main class="boards-container">
-        <h1>BOARDS!</h1>
-    </main>
+  <main class="boards-page">
+    <section v-if="starredBoards" class="boards-container">
+      <div class="boards-title flex">
+        <div class="board-title-icon"><!--img --></div>
+        <h3>Starred boards</h3>
+      </div>
+    </section>
+    <section class="boards-container">
+      <div class="boards-title flex">
+        <div class="board-title-icon"><!--img --></div>
+        <h3>Board templates</h3>
+      </div>
+      <ul class="board-list clean-list">
+        <router-link
+          v-for="board in boards"
+          :key="board._id"
+          :to="'/board/' + board._id"
+        >
+          <li style="background-color: #ac874qad">{{ board._id }}</li>
+          <!--:style="board.style"-->
+        </router-link>
+      </ul>
+    </section>
+  </main>
 </template>
 
 <script>
 export default {
-    name: 'boards-container',
-    data() {
-        return {
-            boards: null,
-        }
-    },
-    // async created() {
-    //     this.boards = await this.$store.dispatch('loadBoards')
-    // },
-    methods: {
+  name: 'boards-container',
+  data() {
+    return {}
+  },
 
+  methods: {},
+  computed: {
+    starredBoards() {
+      //   this.$store.getters.starredBoards
+      return false
     },
-    components: {
-    }
+    boards() {
+      return this.$store.getters.boardsForDisplay
+    },
+  },
+  components: {},
 }
 </script>
