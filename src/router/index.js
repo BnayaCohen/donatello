@@ -16,11 +16,11 @@ const router = createRouter({
       name: 'boardsPage',
       component: boardsPage
     },
-    // {
-    //   path: '/board/:boardId',
-    //   name: 'boardDetails',
-    //   component: boardDetails
-    // },
+    {
+      path: '/board/:boardId',
+      name: 'boardDetails',
+      component: boardDetails
+    },
   ]
 })
 
