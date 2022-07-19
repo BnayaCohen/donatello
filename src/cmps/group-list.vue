@@ -1,6 +1,9 @@
 <template>
     <section class="group-list-container">
         <group-preview v-for="(group, i) in groups" :group="group" :key="i"/>
+        <article class="new-group">
+            <group-preview :group="{}"/>
+        </article>
     </section>
 </template>
 
