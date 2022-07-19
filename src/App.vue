@@ -1,6 +1,6 @@
 <template>
-  <appHeader />
-  <RouterView />
+  <app-header />
+  <router-link />
 </template>
 
 <script >
