@@ -1,6 +1,6 @@
 <template>
   <app-header />
-  <router-link />
+  <router-view />
 </template>
 
 <script >
@@ -13,7 +13,7 @@ export default {
     // this.$store.dispatch('load')
   },
   components: {
-    appHeader
+    appHeader,
   }
 }
 </script>
