@@ -168,7 +168,7 @@ async function query(filterBy = null) {
 
 async function getById(boardId) {
   try {
-    const res = await storageService.getById(STORAGE_KEY + boardId)
+    const res = await storageService.get(STORAGE_KEY + boardId)
     // const res = await httpService.get(BASE_URL + boardId)
     return res.data
   } catch (err) {
@@ -230,7 +230,7 @@ function saveTask(boardId, groupId, task, activity) {
 
 function _createBoard(title) {
   const board = getEmptyBoard(title)
-  utilService.saveToStorage(board)
+  utilService.saveToStorage(STORAGE_KEY, board)
   return board
 }
 function _createBoards() {
