@@ -1,5 +1,6 @@
 import { httpService } from './http-service'
 import { storageService } from './async-storage'
+import { userService } from './user-service'
 httpService.defaults.withCredentials = true
 const STORAGE_KEY = 'boardDB'
 const TOY_URL =
@@ -62,11 +63,15 @@ async function save(board) {
 function getEmptyBoard() {
   return {
     _id: '',
-    name: '',
-    price: 0,
+    title: '',
+    createdAt: Date.now(),
     labels: [],
     reviewes: [],
-    createdAt: 0,
-    inStock: true,
+    createdBy: userService.getLoggedInUser(),
+    style: {},
+    labels: [],
+    members: [],
+    groups: [],
+    activities: [],
   }
 }
