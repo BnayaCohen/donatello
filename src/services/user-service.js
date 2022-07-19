@@ -1,64 +1,84 @@
-import axios from 'axios'
-axios.defaults.withCredentials= true
+import { httpService } from './http-service.js';
 
-const USER_URL = (process.env.NODE_ENV !== 'development')
+const USER_URL =
+  process.env.NODE_ENV === 'production'
     ? '/api/user/'
-    : '//localhost:3030/api/user/'
-const AUTH_URL = (process.env.NODE_ENV !== 'development')
+    : '//localhost:3030/api/user/';
+const AUTH_URL =
+  process.env.NODE_ENV === 'production'
     ? '/api/auth/'
-    : '//localhost:3030/api/auth/'
+    : '//localhost:3030/api/auth/';
 
 export const userService = {
-    query,
-    remove,
-    getById,
-    signup,
-    login,
-    logout,
-    getLoggedInUser,
+  query,
+  remove,
+  getById,
+  signup,
+  login,
+  logout,
+  getLoggedInUser,
+};
+
+const STORAGE_KEY = 'loggedinUser';
+
+async function query(filterBy = null) {
+  try {
+    const res = await httpService.get(API, { params: filterBy });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    console.error('Something went wrong try again later');
+  }
 }
 
-const STORAGE_KEY = "loggedinUser";
-
-function query() {
-    return axios.get(USER_URL).then((res) => res.data)
+async function getById(userId) {
+  try {
+    const res = await httpService.get(USER_URL + userId);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    console.error('Something went wrong try again later');
+  }
 }
 
-function remove(userId) {
-    return axios.delete(USER_URL + userId).then((res) => res.data)
+async function remove(userId) {
+  try {
+    await httpService.delete(USER_URL + userId);
+  } catch (err) {
+    console.log(err);
+    console.error('Something went wrong try again later');
+  }
 }
 
-function getById(userId) {
-    return axios.get(USER_URL + userId).then(res => res.data)
+async function login(credentials) {
+  try {
+    const res = await httpService.post(API + 'login', credentials);
+    return _saveToSession(res.data);
+  } catch (err) {
+    console.log(err);
+    throw new Error('Failed to login try again later');
+  }
 }
 
-function signup(signupInfo) {
-    return axios.post(AUTH_URL + 'signup', signupInfo)
-        .then(res => res.data)
-        .then(user => {
-            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user))
-            return user
-        })
-}
-
-function login(credentials) {
-    return axios.post(AUTH_URL + 'login', credentials)
-        .then(res => res.data)
-        .then(user => {
-            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user))
-            return user
-        })
+async function signup(signUpInfo) {
+  try {
+    const res = await httpService.post(API + 'signup', signUpInfo);
+    return _saveToSession(res.data);
+  } catch (err) {
+    console.log(err);
+    throw new Error('Failed to signup try again later');
+  }
 }
 
 async function logout() {
-    try {
-        await axios.post(AUTH_URL + 'logout')
-        sessionStorage.removeItem(STORAGE_KEY)
-    } catch {
-        console.log('cannot logout')
-    }
+  try {
+    await httpService.post(AUTH_URL + 'logout');
+    sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    throw new Error('Failed to logout try again later');
+  }
 }
 
 function getLoggedInUser() {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY))
+  return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
 }
