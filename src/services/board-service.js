@@ -158,9 +158,9 @@ function getLabels() {
 
 async function query(filterBy = null) {
   try {
-    const res = await storageService.query(STORAGE_KEY)
+    return await storageService.query(STORAGE_KEY)
     // const res = await httpService.get(STORAGE_KEY, { params: filterBy })
-    return res.data
+    // return res.data
   } catch (err) {
     console.log('Cannot get boards', err)
   }
@@ -168,28 +168,28 @@ async function query(filterBy = null) {
 
 async function getById(boardId) {
   try {
-    const res = await storageService.get(STORAGE_KEY + boardId)
+    return await storageService.get(STORAGE_KEY, boardId)
     // const res = await httpService.get(BASE_URL + boardId)
-    return res.data
+    // return res.data
   } catch (err) {
     console.log('Cannot get the board', err)
   }
 }
 
 async function remove(boardId) {
-  await storageService.remove(STORAGE_KEY + boardId)
+  await storageService.remove(STORAGE_KEY, boardId)
   //   await httpService.delete(BASE_URL + boardId)
 }
 
 async function saveBoard(board) {
   try {
-    const savedBoard = board._id
+    return board._id
       ? await storageService.put(STORAGE_KEY, board)
       : await storageService.post(STORAGE_KEY, board)
     // const savedBoard = board._id
     //   ? await httpService.put(BASE_URL, board)
     //   : await httpService.post(BASE_URL, board)
-    return savedBoard.data
+    // return savedBoard.data
   } catch {
     console.log('cannot save board')
   }
@@ -234,9 +234,12 @@ function _createBoard(title) {
   return board
 }
 function _createBoards() {
-  const boards = []
-  boards.push(gBoard)
-  boards.push(_createBoard('Work'))
-  boards.push(_createBoard('Study'))
-  boards.push(_createBoard('Vacation'))
+  let boards = utilService.loadFromStorage(STORAGE_KEY) || []
+  if (!boards || !board.length) {
+    boards.push(gBoard)
+    boards.push(_createBoard('Work'))
+    boards.push(_createBoard('Study'))
+    boards.push(_createBoard('Vacation'))
+  }
+  return boards
 }
