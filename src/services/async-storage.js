@@ -17,7 +17,7 @@ async function query(entityType) {
 async function get(entityType, entityId) {
   try {
     const entities = await query(entityType);
-    entities.find(entity => entity._id === entityId);
+   return entities.find(entity => entity._id === entityId);
   } catch (err) {
     throw new Error('Cannot get entity');
   }
