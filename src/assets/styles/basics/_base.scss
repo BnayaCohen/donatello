@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 // ::selection {
@@ -7,16 +7,15 @@
 //     color: $clr3;
 // }
 
-
 html {
-    font-family: Bahnschrift, sans-serif;
-    // line-height: 1.8;
-    //    line-height: lh(26px);
+  font-family: Bahnschrift, sans-serif;
+  // line-height: 1.8;
+  //    line-height: lh(26px);
 }
 
 body {
-    margin: 0;
-    // background-color: $clr2;
+  margin: 0;
+  // background-color: $clr2;
 }
 
 // h1,
@@ -44,37 +43,36 @@ body {
 // }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 p {
-    margin: 0 0 0.5em;
+  margin: 0 0 0.5em;
 }
 
 .btn {
-    @include btn;
+  @include btn;
 
-    &-dark {
-        @include btn($type: dark);
-    }
+  &-dark {
+    @include btn($type: dark);
+  }
 
-    &-light {
-        @include btn($type: light);
-    }
+  &-light {
+    @include btn($type: light);
+  }
 }
-
 
 // links
 a {
-    color: $clr3;
-    border-radius: 5px;
+  color: rgba($color: #2251d0, $alpha: 0.7);
+  border-radius: 5px;
 
-    &:hover {
-        background-color: $clr4;
-    }
+  &:hover {
+    background-color: $clr4;
+  }
 
-    &.active {
-        background-color: $clr4;
-        color: $clr2;
-    }
+  &.active {
+    background-color: $clr4;
+    color: $clr2;
+  }
 }

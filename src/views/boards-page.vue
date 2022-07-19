@@ -17,7 +17,8 @@
           :key="board._id"
           :to="'/board/' + board._id"
         >
-          <li :style="board.style"></li>
+          <li style="background-color: #ac874qad">{{ board._id }}</li>
+          <!--:style="board.style"-->
         </router-link>
       </ul>
     </section>
@@ -28,13 +29,9 @@
 export default {
   name: 'boards-container',
   data() {
-    return {
-      boards: null,
-    }
+    return {}
   },
-  created() {
-    this.$store.dispatch('loadBoards')
-  },
+
   methods: {},
   computed: {
     starredBoards() {
@@ -42,7 +39,7 @@ export default {
       return false
     },
     boards() {
-      this.$store.getters.boardsForDisplay
+      return this.$store.getters.boardsForDisplay
     },
   },
   components: {},

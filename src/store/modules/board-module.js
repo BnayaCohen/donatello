@@ -18,8 +18,8 @@ export default {
     setBoards(state, { boards }) {
       state.boards = boards
     },
-    setBoard(state, {board}) {
-        state.currBoard = board
+    setBoard(state, { board }) {
+      state.currBoard = board
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -45,14 +45,14 @@ export default {
         console.log('couldnt get boards for display', err)
       }
     },
-    async loadBoard({ commit }, {boardId}) {
-        try {
-            var board = await boardService.getById(boardId)
-            commit({type: 'setBoard', board})
-            return board
-        } catch(err) {
-            console.log('cannot get board', err)
-        }
+    async loadBoard({ commit }, { boardId }) {
+      try {
+        var board = await boardService.getById(boardId)
+        commit({ type: 'setBoard', board })
+        return board
+      } catch (err) {
+        console.log('cannot get board', err)
+      }
     },
     async saveBoard({ commit }, { board }) {
       const actionType = board._id ? 'updateBoard' : 'addBoard'
