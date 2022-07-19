@@ -1,8 +1,7 @@
-import { httpService } from './http-service'
+// import { httpService } from './http-service'
 import { storageService } from './async-storage'
 import { userService } from './user-service'
 import { utilService } from './util-service'
-httpService.defaults.withCredentials = true
 const STORAGE_KEY = 'boardDB'
 const BASE_URL =
   process.env.NODE_ENV === 'production'
@@ -141,6 +140,7 @@ export const boardService = {
   saveBoard,
   getEmptyBoard,
   saveTask,
+  getEmptyGroup,
 }
 
 function getLabels() {
@@ -195,10 +195,10 @@ async function saveBoard(board) {
   }
 }
 
-function getEmptyBoard() {
+function getEmptyBoard(title) {
   return {
     _id: utilService.makeId(),
-    title: '',
+    title,
     createdAt: Date.now(),
     labels: [],
     reviewes: [],
@@ -211,10 +211,28 @@ function getEmptyBoard() {
   }
 }
 
+function getEmptyGroup() {
+  return {
+    id: utilService.makeId(),
+    title: '',
+    tasks: [],
+    style: {},
+  }
+}
+
 function saveTask(boardId, groupId, task, activity) {
   const board = getById(boardId)
   board.groups.find((group) => group.id === groupId)
   board.groups.push(task)
   board.activities.unshift(activity)
   saveBoard(board)
+}
+
+function _createBoard(title) {
+  getEmptyBoard(title)
+}
+function _createBoards() {
+  const boards = []
+  _createBoard('Work')
+  _createBoard('Work')
 }
