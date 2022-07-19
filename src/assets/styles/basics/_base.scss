@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+}
+
+// ::selection {
+//     background-color: $clr1;
+//     color: $clr3;
+// }
+
+
+html {
+    font-family: Bahnschrift, sans-serif;
+    // line-height: 1.8;
+    //    line-height: lh(26px);
+}
+
+body {
+    margin: 0;
+    // background-color: $clr2;
+}
+
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     font-weight: 500;
+//     margin: 0 0 1rem;
+//     // line-height: lh(40px, 29px);
+// }
+
+// h2 {
+//     font-size: em(16px);
+//     // margin: em(63px) 0;
+//     grid-area: title;
+//     color: $clr1;
+//     text-transform: uppercase;
+//     @include type(boldCondensed);
+// }
+
+// h3 {
+//     font-size: em(29px);
+// }
+
+img {
+    width: 100%;
+}
+
+p {
+    margin: 0 0 0.5em;
+}
+
+.btn {
+    @include btn;
+
+    &-dark {
+        @include btn($type: dark);
+    }
+
+    &-light {
+        @include btn($type: light);
+    }
+}
+
+
+// links
+a {
+    color: $clr3;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: $clr4;
+    }
+
+    &.active {
+        background-color: $clr4;
+        color: $clr2;
+    }
+}
