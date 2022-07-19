@@ -1,13 +1,63 @@
 .group-list-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill,272px);
+    grid-template-columns: repeat(auto-fill, 272px);
     grid-auto-flow: column;
-
     // grid-row: 1;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    // padding-left: 16px;
 }
-
 
 .group-container {
     background-color: #ebecf0;
-    margin: 0 4px 0 12px;
+    margin: 0 4px;
+    border-radius: 3px;
+
+    .group-header {
+        white-space: normal;
+        padding: 10px 8px;
+
+        input{
+            height: 28px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .group-options-btn{
+            border: none;
+            border-radius: 3px;
+            background-color: inherit;
+            color: #5e6c84;
+            font-size: rem(18px);
+            display: flex;
+            justify-self: center;
+            padding: 6px;
+        }
+        .group-options-btn:hover{
+            background-color: #091e4214;
+        }
+    }
+
+    .add-card-btn {
+        margin: 2px 8px 8px;
+        padding: 4px 8px;
+        border-radius: 3px;
+        border: none;
+        background-color: inherit;
+        text-align: left;
+        color: #5e6c84;
+        cursor: pointer;
+        gap: 2px;
+    }
+
+    .plus-sign{
+        font-size: rem(20px);
+    }
+
+    .add-card-btn:hover {
+        background-color: #091e4214;
+    }
 }
