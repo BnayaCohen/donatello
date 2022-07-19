@@ -1,5 +1,5 @@
 <template>
-  <section class="home-page">
+  <section class="home-page main-layout">
     <div class="hero">
       <h1>Donatello helps teams move work forward.</h1>
       <p>
