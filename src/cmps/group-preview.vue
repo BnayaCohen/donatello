@@ -1,5 +1,5 @@
 <template>
-    <article class="group-preview">
+    <article class="group-container">
         
     </article>
 </template>

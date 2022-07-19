@@ -1,16 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import homePage from '../views/home-page.vue'
-import boardPage from '../views/board-page.vue'
+import boardsPage from '../views/boards-page.vue'
 import boardDetails from '../views/board-details.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/board',
-    //   name: 'board-details',
-    //   component: homePage
-    // },
     {
       path: '/',
       name: 'home',
@@ -18,8 +13,8 @@ const router = createRouter({
     },
     {
       path: '/board',
-      name: 'boardPage',
-      component: boardPage
+      name: 'boardsPage',
+      component: boardsPage
     },
     {
       path: '/board/:boardId',
