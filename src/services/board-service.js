@@ -230,16 +230,16 @@ function saveTask(boardId, groupId, task, activity) {
 
 function _createBoard(title) {
   const board = getEmptyBoard(title)
-  utilService.saveToStorage(STORAGE_KEY, board)
   return board
 }
 function _createBoards() {
   let boards = utilService.loadFromStorage(STORAGE_KEY) || []
-  if (!boards || !board.length) {
+  if (!boards || !boards.length) {
     boards.push(gBoard)
     boards.push(_createBoard('Work'))
     boards.push(_createBoard('Study'))
     boards.push(_createBoard('Vacation'))
+    utilService.saveToStorage(STORAGE_KEY, boards)
   }
   return boards
 }
