@@ -1,12 +1,20 @@
 <template>
     <section class="group-list">
-        
-
+        <group-preview v-for="(group, i) in groups" :group="group" :key="i"/>
     </section>
 </template>
 
 <script>
-    export default {
-        
-    }
+import groupPreview from './group-preview.vue'
+
+export default {
+    props: {
+        groups: Array,
+    },
+    methods: {
+    },
+    components: {
+        groupPreview,
+    },
+}
 </script>
