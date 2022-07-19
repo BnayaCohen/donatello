@@ -16,7 +16,7 @@ export default {
     },
     async created() {
         const { boardId } = this.$route.params
-        this.board = await this.$store.dispatch({ type: 'getBoardById', boardId })
+        this.board = await this.$store.dispatch({ type: 'loadBoard', boardId })
     },
     methods: {
 

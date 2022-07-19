@@ -1,10 +1,9 @@
 <template>
   <app-header />
-  <RouterView />
+  <router-view />
 </template>
 
 <script >
-import { RouterLink, RouterView } from 'vue-router'
 import appHeader from '@/cmps/app-header.vue'
 
 export default {
@@ -13,7 +12,7 @@ export default {
     // this.$store.dispatch('load')
   },
   components: {
-    appHeader
+    appHeader,
   }
 }
 </script>

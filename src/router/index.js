@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import homePage from '../views/home-page.vue'
 import boardsPage from '../views/boards-page.vue'
 import boardDetails from '../views/board-details.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
@@ -16,11 +16,11 @@ const router = createRouter({
       name: 'boardsPage',
       component: boardsPage
     },
-    {
-      path: '/board/:boardId',
-      name: 'boardDetails',
-      component: boardDetails
-    },
+    // {
+    //   path: '/board/:boardId',
+    //   name: 'boardDetails',
+    //   component: boardDetails
+    // },
   ]
 })
 
