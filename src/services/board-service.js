@@ -1,8 +1,7 @@
-import { httpService } from './http-service'
+// import { httpService } from './http-service'
 import { storageService } from './async-storage'
 import { userService } from './user-service'
 import { utilService } from './util-service'
-// httpService.defaults.withCredentials = true
 const STORAGE_KEY = 'boardDB'
 const BASE_URL =
   process.env.NODE_ENV === 'production'
@@ -132,6 +131,7 @@ const gBoard = {
     },
   ],
 }
+_createBoards()
 
 export const boardService = {
   getLabels,
@@ -141,6 +141,7 @@ export const boardService = {
   saveBoard,
   getEmptyBoard,
   saveTask,
+  getEmptyGroup,
 }
 
 function getLabels() {
@@ -167,10 +168,9 @@ async function query(filterBy = null) {
 
 async function getById(boardId) {
   try {
-    return gBoard
-    // const res = await storageService.getById(STORAGE_KEY + boardId)
+    const res = await storageService.getById(STORAGE_KEY + boardId)
     // const res = await httpService.get(BASE_URL + boardId)
-    // return res.data
+    return res.data
   } catch (err) {
     console.log('Cannot get the board', err)
   }
@@ -195,10 +195,10 @@ async function saveBoard(board) {
   }
 }
 
-function getEmptyBoard() {
+function getEmptyBoard(title) {
   return {
     _id: utilService.makeId(),
-    title: '',
+    title,
     createdAt: Date.now(),
     labels: [],
     reviewes: [],
@@ -211,10 +211,32 @@ function getEmptyBoard() {
   }
 }
 
+function getEmptyGroup() {
+  return {
+    id: utilService.makeId(),
+    title: '',
+    tasks: [],
+    style: {},
+  }
+}
+
 function saveTask(boardId, groupId, task, activity) {
   const board = getById(boardId)
   board.groups.find((group) => group.id === groupId)
   board.groups.push(task)
   board.activities.unshift(activity)
   saveBoard(board)
+}
+
+function _createBoard(title) {
+  const board = getEmptyBoard(title)
+  utilService.saveToStorage(board)
+  return board
+}
+function _createBoards() {
+  const boards = []
+  boards.push(gBoard)
+  boards.push(_createBoard('Work'))
+  boards.push(_createBoard('Study'))
+  boards.push(_createBoard('Vacation'))
 }
