@@ -131,6 +131,7 @@ const gBoard = {
     },
   ],
 }
+_createBoards()
 
 export const boardService = {
   getLabels,
@@ -167,10 +168,9 @@ async function query(filterBy = null) {
 
 async function getById(boardId) {
   try {
-    return gBoard
-    // const res = await storageService.getById(STORAGE_KEY + boardId)
+    const res = await storageService.getById(STORAGE_KEY + boardId)
     // const res = await httpService.get(BASE_URL + boardId)
-    // return res.data
+    return res.data
   } catch (err) {
     console.log('Cannot get the board', err)
   }
@@ -229,10 +229,14 @@ function saveTask(boardId, groupId, task, activity) {
 }
 
 function _createBoard(title) {
-  getEmptyBoard(title)
+  const board = getEmptyBoard(title)
+  utilService.saveToStorage(board)
+  return board
 }
 function _createBoards() {
   const boards = []
-  _createBoard('Work')
-  _createBoard('Work')
+  boards.push(gBoard)
+  boards.push(_createBoard('Work'))
+  boards.push(_createBoard('Study'))
+  boards.push(_createBoard('Vacation'))
 }
