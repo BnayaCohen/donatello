@@ -1,6 +1,6 @@
 <template>
     <article class="group-container">
-        
+        <h1>group</h1>
     </article>
 </template>
 
