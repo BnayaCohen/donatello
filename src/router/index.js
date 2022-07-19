@@ -6,6 +6,11 @@ import boardDetails from '../views/board-details.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // {
+    //   path: '/board',
+    //   name: 'board-details',
+    //   component: homePage
+    // },
     {
       path: '/',
       name: 'home',

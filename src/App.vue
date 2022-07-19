@@ -1,15 +1,19 @@
-
 <template>
-  <!-- <header>
-  
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    </nav>
-</header> -->
-
-  <!-- <RouterView /> -->
+  <appHeader />
+  <RouterView />
 </template>
 
 <script >
 import { RouterLink, RouterView } from 'vue-router'
+import appHeader from '@/cmps/app-header.vue'
+
+export default {
+  name: 'app',
+  created() {
+    // this.$store.dispatch('load')
+  },
+  components: {
+    appHeader
+  }
+}
 </script>
