@@ -1,20 +1,22 @@
 <template>
-  <header class="app-header flex justify-between">
-    <section class="nav-container">
-      <nav class="main-nav flex">
-        <router-link to="/">Home</router-link>
-        <router-link to="/board">Boards</router-link>
-      </nav>
-    </section>
-    <section class="logo flex">
-      <h1>Donatello</h1>
-    </section>
-    <section class="user-actions">
+  <header class="main-layout app-header">
+    <div class="flex justify-between align-center">
+      <section class="nav-container">
+        <nav class="main-nav flex">
+          <router-link to="/">Home</router-link>
+          <router-link to="/board">Boards</router-link>
+        </nav>
+      </section>
+      <section class="logo flex">
+        <h1>Donatello</h1>
+      </section>
+      <section class="user-actions">
         <button>+</button>
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
-        <button>Noti</button> 
+        <button>Noti</button>
         <button>User</button>
-    </section>
+      </section>
+    </div>
   </header>
 </template>
 
@@ -39,7 +41,7 @@ export default {
   computed: {
     isAdmin() {
       return this.$store.getters.isAdmin
-    }
+    },
   },
   components: {
     // loginLogout,

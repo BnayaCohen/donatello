@@ -1,7 +1,7 @@
 <template>
-    <section class="container task-list">
+    <ul class="container clean-list task-list">
         <task-preview v-for="task in tasks" :key = task.id :task="task" />
-    </section>
+    </ul>
 </template>
 <script>
 import taskPreview from './task-preview.vue'

@@ -1,7 +1,7 @@
 <template>
     <article class="group-container">
         <div class="flex justify-between">
-        <input type="text" v-model="groupTitle" placeholder="Enter group title...">
+        <input class="group-title-input" type="text" v-model="groupTitle" placeholder="Enter group title...">
         <button class="group-options">...</button>
         </div>
         <task-list :tasks="group.tasks" />

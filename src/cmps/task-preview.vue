@@ -1,6 +1,11 @@
 <template>
-    <div class="container task-preview">
-        <h3>{{task.title}}</h3>
+    <div class="task-wrapper">
+        <li class="task-li">
+            <div class="task-preview">
+                <p>{{task.title}}</p>
+            </div>
+        </li>
+
     </div>
 </template>
 <script>
