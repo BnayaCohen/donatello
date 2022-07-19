@@ -1,0 +1,16 @@
+.task-li {
+    margin-block-end: 0.5rem;
+    .task-preview {
+        cursor: pointer;
+        word-wrap: break-word;
+        max-width: 300px;
+        min-height: 20px;
+        position: relative;
+        flex-direction: column;
+        background-color: #fff;
+        box-shadow: 0 1px 0 rgb(22 24 27 / 25%);
+        border-radius: 3px;
+        padding: 1px 8px;
+    }
+}
+
