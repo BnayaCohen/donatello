@@ -1,10 +1,11 @@
 <template>
     <article class="group-container">
-        <h1>group</h1>
+<task-list :tasks="group.tasks" />
     </article>
 </template>
 
 <script>
+import taskList from '../cmps/task-list.vue'
 export default {
     name: 'group-preview',
     props: {
@@ -13,6 +14,9 @@ export default {
         },
     },
     methods: {
+    },
+     components: {
+        taskList,
     }
 }
 </script>
