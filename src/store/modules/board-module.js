@@ -47,7 +47,7 @@ export default {
     },
     async loadBoard({ commit }, {boardId}) {
         try {
-            var board = await boardService.getBoardById(boardId)
+            var board = await boardService.getById(boardId)
             commit({type: 'setBoard', board})
             return board
         } catch(err) {
