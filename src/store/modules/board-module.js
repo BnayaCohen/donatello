@@ -4,14 +4,18 @@ export default {
   state: {
     boards: [],
     currBoard: null,
-    labels: boardService.getLabels,
   },
   getters: {
     boardsForDisplay({ boards }) {
       return JSON.parse(JSON.stringify(boards))
     },
-    getLabels({ labels }) {
-      return JSON.parse(JSON.stringify(labels))
+    starredBoards({ boards }) {
+      return JSON.parse(
+        JSON.stringify(boards.filter((board) => board.isStarred))
+      )
+    },
+    getLabels({ currBoard }) {
+      return JSON.parse(JSON.stringify(currBoard.labels))
     },
   },
   mutations: {
@@ -57,8 +61,8 @@ export default {
     async saveBoard({ commit }, { board }) {
       const actionType = board._id ? 'updateBoard' : 'addBoard'
       try {
-        var savedBoardId = await boardService.save(board)
-        var savedBoard = await boardService.getById(savedBoardId)
+        const savedBoardId = await boardService.save(board)
+        const savedBoard = await boardService.getById(savedBoardId)
         commit({ type: actionType, board: savedBoard })
         return savedBoard
       } catch (err) {
@@ -71,6 +75,19 @@ export default {
         commit({ type: 'removeBoard', boardId })
       } catch (err) {
         console.log('couldnt remove board', err)
+      }
+    },
+    async storeSaveTask({ commit, state }, { groupId, task, activity }) {
+      try {
+        const board = await boardService.saveTask(
+          state.currBoard._id,
+          groupId,
+          task,
+          activity
+        )
+        commit('setBoard', board)
+      } catch (err) {
+        console.log("Couldn't save task", err)
       }
     },
   },
