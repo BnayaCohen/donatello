@@ -230,7 +230,7 @@ function saveTask(boardId, groupId, task, activity) {
 
 function _createBoard(title) {
   const board = getEmptyBoard(title)
-  utilService.saveToStorage(board)
+  utilService.saveToStorage(STORAGE_KEY, board)
   return board
 }
 function _createBoards() {
