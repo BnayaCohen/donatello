@@ -1,5 +1,5 @@
 <template>
-  <header class="app-header flex space-between">
+  <header class="app-header flex justify-between">
     <section class="nav-container">
       <nav class="main-nav flex">
         <router-link to="/">Home</router-link>
