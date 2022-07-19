@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <header class="app-header flex space-between">
+=======
+  <header class="app-header flex">
+>>>>>>> e86bd9cdd024dea6cba1d2629d2742f7b789f07e
     <section class="nav-container">
       <nav class="main-nav flex">
         <router-link to="/">Home</router-link>

@@ -1,5 +1,5 @@
 <template>
-    <section class="group-list">
+    <section class="group-list-container">
         <group-preview v-for="(group, i) in groups" :group="group" :key="i"/>
     </section>
 </template>
