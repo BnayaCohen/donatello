@@ -225,7 +225,7 @@ function saveTask(boardId, groupId, task, activity) {
   board.groups.find((group) => group.id === groupId)
   board.groups.push(task)
   board.activities.unshift(activity)
-  saveBoard(board)
+  return saveBoard(board)
 }
 
 function _createBoard(title) {
@@ -242,4 +242,14 @@ function _createBoards() {
     utilService.saveToStorage(STORAGE_KEY, boards)
   }
   return boards
+}
+
+function createActicity(txt, task) {
+  return (activity = {
+    id: utilService.makeId(),
+    txt,
+    createdAt: Date.now(),
+    byMember: userService.getLoggedInUser(),
+    task,
+  })
 }
