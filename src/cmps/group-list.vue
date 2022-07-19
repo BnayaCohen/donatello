@@ -12,7 +12,7 @@ export default {
         groups: Array,
     },
     created() {
-        console.log(groups);
+        console.log(this.groups);
     },
     components: {
         groupPreview,

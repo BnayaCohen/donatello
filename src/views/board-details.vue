@@ -16,6 +16,7 @@ export default {
     async created() {
         const { boardId } = this.$route.params
         this.board = await this.$store.dispatch({ type: 'loadBoard', boardId })
+        console.log(this.board);
     },
     computed: {
         groups() {
