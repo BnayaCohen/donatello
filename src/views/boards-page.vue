@@ -1,5 +1,5 @@
 <template>
-  <main class="boards-page">
+  <main class="boards-page main-layout">
     <section v-if="starredBoards" class="boards-container">
       <div class="boards-title flex">
         <div class="board-title-icon"><!--img --></div>
