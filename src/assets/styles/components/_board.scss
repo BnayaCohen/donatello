@@ -1,0 +1,13 @@
+.group-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,272px);
+    grid-auto-flow: column;
+
+    // grid-row: 1;
+}
+
+
+.group-container {
+    background-color: #ebecf0;
+    margin: 0 4px 0 12px;
+}
