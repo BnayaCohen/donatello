@@ -168,9 +168,9 @@ async function query(filterBy = null) {
 
 async function getById(boardId) {
   try {
-    const res = await storageService.get(STORAGE_KEY + boardId)
+    const res = await storageService.get(STORAGE_KEY , boardId)
     // const res = await httpService.get(BASE_URL + boardId)
-    return res.data
+    return res//.data
   } catch (err) {
     console.log('Cannot get the board', err)
   }
