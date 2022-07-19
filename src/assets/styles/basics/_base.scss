@@ -66,6 +66,7 @@ p {
 a {
   color: rgba($color: #2251d0, $alpha: 0.7);
   border-radius: 5px;
+  text-decoration: none;
 
   &:hover {
     background-color: $clr4;
