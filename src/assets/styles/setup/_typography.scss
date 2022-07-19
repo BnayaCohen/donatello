@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Bahnschrift';
+  src: local('Bahnschrift'), url(~@/fonts/Bahnschrift/bahnschrift.ttf);
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  src: local('Lato-Regular'), url(~@/fonts/Lato/Lato-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('../fonts/lato/Lato-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: local('Roboto-Regular'), url('../fonts/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Bold';
+  src: url('../fonts/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url('../fonts/Roboto/Roboto-Medium.ttf');
+}
