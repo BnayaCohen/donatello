@@ -11,7 +11,8 @@ export default {
     props: {
         groups: Array,
     },
-    methods: {
+    created() {
+        console.log(groups);
     },
     components: {
         groupPreview,
