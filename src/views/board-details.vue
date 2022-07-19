@@ -1,10 +1,7 @@
 <template>
-<<<<<<< HEAD
-=======
     <main class="board-container">
         <groupList :groups="groups" />
     </main>
->>>>>>> e86bd9cdd024dea6cba1d2629d2742f7b789f07e
 </template>
 
 <script>
