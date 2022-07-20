@@ -85,8 +85,32 @@
 }
 
 .popup {
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+  width: 300px;
+  min-width: max-content;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.48);
+  background-color: #fff;
   z-index: 20;
-  color: #fff;
+  color: set-text-color(#fff);
+  .close-popup-btn {
+    z-index: 25;
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    top: 11px;
+    right: 8px;
+  }
+  h4 {
+    margin: 0.8rem;
+  }
+  ul {
+    text-align: left;
+
+    li {
+      margin-bottom: 0.8rem;
+      margin-inline-start: 1rem;
+    }
+  }
 }
