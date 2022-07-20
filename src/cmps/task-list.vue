@@ -7,7 +7,6 @@
       @click.stop="openTask(task.groupId, task.id)"
     />
   </ul>
-  <task-details v-if="isTaskDetail"/>
 </template>
 <script>
 import taskPreview from './task-preview.vue'

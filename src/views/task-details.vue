@@ -1,8 +1,12 @@
 <template>
   <section class="container task-detail">
     <div class="detail-modal-container">
-      <div class="task-detail-bg"></div>
-      <div class="btn-wrapper">
+      <div
+        v-if="task.style?.bgColor"
+        class="task-detail-bg"
+        :style="taskBgColor"
+      ></div>
+      <div v-if="task.style?.bgColor" class="btn-wrapper">
         <button class="cover-btn">
           <span class="cover-icon">
             <svg
@@ -22,16 +26,15 @@
                 ></path>
               </g>
             </svg>
+            Cover
           </span>
-          Cover
         </button>
       </div>
       <router-link :to="'/board/' + this.$route.params.boardId"
         ><button class="btn close-modal-btn">X</button></router-link
       >
       <div class="task-detail-header">
-        <span
-          ><svg
+        <svg
             stroke="currentColor"
             fill="none"
             stroke-width="0"
@@ -51,12 +54,17 @@
               fill="currentColor"
             ></path>
           </svg>
-        </span>
-        <input class="title-input" type="text" />
+        <input
+          class="title-input"
+          type="text"
+          ref="taskTitle"
+          v-model="task.title"
+          placeholder="Enter title here..."
+        />
       </div>
       <div class="task-detail-container flex">
         <div class="task-detail-main">
-          <div class="label-date-container flex">
+          <div class="members-labels-container flex">
             <div class="labels-container">
               <span>Labels</span>
               <div class="labels"></div>
@@ -65,12 +73,11 @@
               <span>Due Date</span>
               <input type="checkbox" class="date-checkbox" />
               <div class="task-detail-btn">
-                <span>...</span>
+                <span>{{ dueDateFixed }}</span>
               </div>
             </div>
           </div>
           <div class="description-container flex">
-            <span>
               <svg
                 stroke="currentColor"
                 fill="currentColor"
@@ -85,44 +92,41 @@
                 ></path>
                 <g><path d="M80 376h288v48H80z"></path></g>
               </svg>
-              <h3>Description</h3>
-            </span>
+            <h3>Description</h3>
           </div>
           <div class="task-description-txt">
             <textarea
               rows="3"
               placeholder="Add detailed description..."
-              ref="taskTitle"
-              v-model="task.title"
-              @click="isEditTitle = !isEditTitle"
+              ref="taskDescription"
+              v-model="task.description"
+              @click="isEditDescription = !isEditDescription"
             ></textarea>
-            <div v-if="isEditTitle" class="description-btns flex align-center">
-              <el-button @click="updateTitle">Save</el-button>
-              <el-button @click="isEditTitle = false">X</el-button>
+            <div
+              v-if="isEditDescription"
+              class="description-btns flex align-center"
+            >
+              <el-button @click="updateDescription">Save</el-button>
+              <el-button @click="isEditDescription = false">X</el-button>
             </div>
           </div>
-          <div class="comment-container">
-            <section class="flex justify-between">
-              <div class="task-detail-title">
-                <span>
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M80 280h256v48H80zM80 184h320v48H80zM80 88h352v48H80z"
-                    ></path>
-                    <g><path d="M80 376h288v48H80z"></path></g>
-                  </svg>
-                  <h3>Comments</h3>
-                </span>
-              </div>
-            </section>
+          <div class="comment-container flex justify-between align-center">
+            <div class="task-detail-title">
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"
+                  ></path>
+                </svg>
+              <h3>Comments</h3>
+            </div>
           </div>
         </div>
       </div>
@@ -139,18 +143,37 @@ export default {
   data() {
     return {
       task: boardService.getEmptyTask(),
-      isEditTitle: false,
+      isEditDescription: false,
     }
   },
   async created() {
     const { boardId, taskId, groupId } = this.$route.params
+    if (!this.$store.getters.board)
+      await this.$store.dispatch({ type: 'loadBoard', boardId })
     this.task = await boardService.getTaskById(boardId, groupId, taskId)
     this.$refs.taskTitle.value = this.task.title
+    this.$refs.taskDescription.value = this.task.description
   },
   methods: {
-    updateTitle() {
+    updateDescription() {
       const { groupId } = this.$route.params
-      this.$store.dispatch({type: 'saveTask', task: this.task, groupId})
+      this.$store.dispatch({ type: 'saveTask', task: this.task, groupId })
+      this.isEditDescription = false
+    },
+  },
+  computed: {
+    dueDateFixed() {
+      if (this.task?.dueDate) {
+        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
+        console.log(fixedDate)
+        fixedDate += ' at 12:00 AM'
+        return fixedDate
+      }
+    },
+    taskBgColor() {
+      if (this.task.style.bgColor) {
+        return { backgroundColor: this.task.style.bgColor }
+      } else return ''
     },
   },
 }
