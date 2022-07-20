@@ -1,4 +1,5 @@
 .task-detail {
+  line-height: rem(20px);
   h3 {
     display: inline-block;
   }
@@ -96,8 +97,8 @@
       }
     }
     .task-detail-main {
-      flex: 2 1;
       padding: 0 8px 8px 16px;
+      flex-basis: 75%;
       .task-description-txt {
         textarea {
           width: 100%;
@@ -135,6 +136,38 @@
             border-radius: 5px;
             margin-inline-start: 0.5rem;
           }
+        }
+      }
+    }
+    .detail-sidebar {
+      padding: 0 16px 8px 8px;
+      display: flex;
+      flex-basis: 25%;
+      flex-direction: column;
+      gap: 8px;
+      .sidebar-btn {
+        display: flex;
+        align-items: center;
+        border: none;
+        border-radius: 3px;
+        color: #172b4d;
+        font-family: inherit;
+        gap: rem(6px);
+        font-size: 1rem;
+        line-height: rem(20px);
+        padding: rem(8px) rem(12px);
+        transition: all 85ms ease;
+        background-color: rgba(9, 30, 66, 0.0392156862745098);
+        width: 100%;
+        margin-block-start: rem(8px);
+        cursor: pointer;
+        svg {
+          height: 14px;
+          width: 14px;
+        }
+        &:hover {
+          transition: all 85ms ease-in-out;
+          background-color: rgba(9, 30, 66, 0.152156862745098);
         }
       }
     }

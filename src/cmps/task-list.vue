@@ -1,14 +1,14 @@
 <template>
   <ul class="container clean-list task-list">
-    <task-preview
-      v-for="task in tasks"
-      :key="task.id"
-      :task="task"
-      @click.stop="openTask(task.groupId, task.id)"
-    />
+    <Container>
+      <Draggable v-for="task in tasks" :key="task.id">
+        <task-preview :task="task" />
+      </Draggable>
+    </Container>
   </ul>
 </template>
 <script>
+import { Container, Draggable } from 'vue3-smooth-dnd'
 import taskPreview from './task-preview.vue'
 import taskDetails from '../views/task-details.vue'
 export default {
@@ -21,17 +21,17 @@ export default {
   data() {
     return {
       isTaskDetail: false,
+      items: [],
     }
   },
-  methods: {
-    openTask(groupId, taskId) {
-      this.$router.push(
-        this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
-      )
-    },
-  },
-  created() {},
-  components: { taskPreview, taskDetails },
+  methods: {},
+  //   getChildPayload (index) {
+  //     console.log(index)
+  //   return {
+
+  //   }
+  // },
+  components: { taskPreview, taskDetails, Container, Draggable },
 }
 </script>
 <style>
