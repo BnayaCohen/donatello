@@ -248,7 +248,9 @@ function getEmptyTask() {
     style: {},
   }
 }
-async function saveGroup(board, group) {
+async function saveGroup(boardId, group) {
+  const board = await getById(boardId) 
+  console.log(board);
   if (!group.id) {
     group.id = utilService.makeId()
     board.push(group)
