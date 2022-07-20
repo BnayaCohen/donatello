@@ -15,7 +15,11 @@
     </div>
   </li>
   <div v-show="isOpen" class="quick-card-editor">
-    <span class="icon-lg icon-close quick-card-editor-close-icon">X</span>
+    <span
+      @click="closeSideBar"
+      class="icon-lg icon-close quick-card-editor-close-icon"
+      >X</span
+    >
     <div class="quick-card-editor-card">
       <div
         :style="task.styles"
