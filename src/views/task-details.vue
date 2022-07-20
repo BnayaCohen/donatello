@@ -149,6 +149,63 @@
         <div class="detail-sidebar">
           <div class="pos-relative">
             <h3 class="small-title">Add to card</h3>
+            <div class="sidebar-btns flex flex-column">
+              <div class="sidebar-btn-container">
+                <button class="sidebar-btn flex align-center">
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle fill="none" cx="12" cy="7" r="3"></circle>
+                    <path
+                      d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5S14.757 2 12 2zM12 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3S13.654 10 12 10zM21 21v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h2v-1c0-2.757 2.243-5 5-5h4c2.757 0 5 2.243 5 5v1H21z"
+                    ></path>
+                  </svg>
+                  <span>Members</span>
+                </button>
+              </div>
+              <div class="sidebar-btn-container">
+                <button class="sidebar-btn flex align-center">
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16zM16 17H5V7h11l3.55 5L16 17z"
+                    ></path>
+                  </svg>
+                  <span>Labels</span>
+                </button>
+              </div>
+                            <div class="sidebar-btn-container">
+                <button class="sidebar-btn flex align-center">
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16zM16 17H5V7h11l3.55 5L16 17z"
+                    ></path>
+                  </svg>
+                  <span>Labels</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

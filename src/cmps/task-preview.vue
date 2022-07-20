@@ -3,6 +3,7 @@
     @mouseenter="toggleOnHover"
     @mouseleave="toggleOnHover"
     class="task-preview"
+    @click="openTask(task.groupId, task.id)"
   >
     <div class="flex flex-column">
       <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
@@ -73,9 +74,8 @@
               </div>
             </span>
           </div>
-          <div class="list-card-members">
+          <div v-if="task.members?.length" class="list-card-members">
             <div
-              v-if="task.members?.length"
               v-for="member in task.members"
               :key="member._id"
               class="member"
@@ -174,6 +174,11 @@ export default {
     },
     closeSideBar() {
       this.isOpen = false
+    },
+    openTask(groupId, taskId) {
+      this.$router.push(
+        this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
+      )
     },
   },
   computed: {
