@@ -1,7 +1,7 @@
 <template>
     <main class="main-layout board-container">
         <board-header />
-        <group-list v-if="board" :groups="groups" />
+        <group-list v-if="board" :groups="groups" @add-task="addTask"/>
     </main>
 </template>
 
@@ -22,6 +22,11 @@ export default {
     computed: {
         groups() {
             return this.board.groups
+        }
+    },
+    methods: {
+        addTask(groupId) {
+            console.log(groupId)
         }
     },
     components: {

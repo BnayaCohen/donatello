@@ -7,7 +7,7 @@
 
         <task-list :tasks="group.tasks" />
 
-        <button class="add-card-btn flex align-center">
+        <button @click="addTask" class="add-card-btn flex align-center">
             <i class="plus-sign"><svg stroke="currentColor" fill="currentColor" stroke-width="0" t="1551322312294"
                     viewBox="0 0 1024 1024" version="1.1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                     <defs></defs>
@@ -33,6 +33,9 @@ export default {
         }
     },
     methods: {
+        addTask() {
+            this.$emit('add-task', this.group.id)
+        }
     },
     components: {
         taskList,
