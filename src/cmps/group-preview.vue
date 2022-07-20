@@ -37,15 +37,11 @@ export default {
     },
     methods: {
         updateTitle() {
-            // const currGroup = JSON.parse(JSON.stringify(this.group))
-
-            // currGroup.title = this.groupTitle
             this.$store.dispatch({ type: 'saveGroup', group: this.group })
         },
-        addTask() {
-            // const task = boardService.getEmptyTask()
-            // task.groupId = group.id
-        },
+        addTask(groupId) {
+            this.$emit('add-task', groupId)
+        }
     },
     components: {
         taskList,
