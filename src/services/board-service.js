@@ -248,7 +248,9 @@ function getEmptyTask() {
     style: {},
   }
 }
-async function saveGroup(board, group) {
+async function saveGroup(boardId, group) {
+  const board = await getById(boardId)
+
   if (!group.id) {
     group.id = utilService.makeId()
     board.push(group)
@@ -260,8 +262,9 @@ async function saveGroup(board, group) {
   return await saveBoard(board)
 }
 
-async function saveTask(board, groupId, task, activity = 'Activity!') {
-  console.log(board)
+async function saveTask(boardId, groupId, task, activity) {
+  const board = await getById(boardId)
+
   const group = board.groups.find((group) => group.id === groupId)
 
   if (!task.id) {
@@ -302,13 +305,17 @@ function createActivity(txt = '', task) {
   })
 }
 
-async function removeGroup(board, groupId) {
+async function removeGroup(boardId, groupId) {
+  const board = await getById(boardId)
+
   const idx = board.groups.findIndex((group) => group.id === groupId)
   if (idx !== -1) board.groups.splice(idx, 1)
   return await saveBoard(board)
 }
 
-async function removeTask(board, groupId, taskId) {
+async function removeTask(boardId, groupId, taskId) {
+  const board = await getById(boardId)
+
   const group = board.groups.find((group) => group.id === groupId)
   const idx = group.tasks.findIndex((task) => task.id === taskId)
   if (idx !== -1) group.splice(idx, 1)
@@ -316,8 +323,8 @@ async function removeTask(board, groupId, taskId) {
 }
 
 async function getTaskById(boardId, groupId, taskId) {
-  console.log(boardId, groupId, taskId)
   const board = await getById(boardId)
+
   const group = board.groups.find((group) => group.id === groupId)
   return group.tasks.find((task) => task.id === taskId)
 }
