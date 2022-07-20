@@ -11,6 +11,7 @@ const BASE_URL =
 const gBoard = {
   _id: 'b101',
   title: 'Robot dev proj',
+  isStarred: false,
   archivedAt: 1589983468418,
   createdAt: 1589983468418,
   createdBy: {
@@ -213,6 +214,7 @@ function getEmptyBoard(title) {
   return {
     _id: utilService.makeId(),
     title,
+    isStarred: false,
     createdAt: Date.now(),
     labels: [],
     reviewes: [],

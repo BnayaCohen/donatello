@@ -6,28 +6,39 @@
         background-color: #00000014;
         border: none;
         border-radius: 3px;
-        color: #172b4d;
+        color: inherit;
         box-shadow: none;
         cursor: pointer;
         line-height: em(24px);
         margin: 0 4px 4px 0;
-        padding: 6px 8px;
+        padding: 6px 9px;
         font-family: inherit;
-        font-size: rem(16px);
+        font-size: em(16px);
         transition-property: background-color, border-color, box-shadow;
         transition-duration: 85ms;
         transition-timing-function: ease;
 
-        &:hover:not(input) {
+        &:hover {
             background-color: rgba(0, 0, 0, 0.2);
-            color: #172b4d;
         }
     }
 
-    .starred-btn{
-       
-        &.starred{
+    .board-name-input {
+        font-weight: 700;
+    }
+
+    .starred-btn {
+        &.starred {
             color: yellow;
+        }
+
+        &:hover {
+            background-color: rgba(110, 110, 48, 0.3) !important;
+
+            &>i {
+                transition: .1s;
+                transform: scale(1.15);
+            }
         }
     }
 }
