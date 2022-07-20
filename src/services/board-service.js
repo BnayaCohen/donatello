@@ -310,7 +310,8 @@ async function removeTask(board, groupId, taskId) {
   return await saveBoard(board)
 }
 
-async function getTaskById(board, groupId, taskId) {
+async function getTaskById(boardId, groupId, taskId) {
+  const board = await getById(boardId)
   const group = board.groups.find((group) => group.id === groupId)
   return group.tasks.find((task) => task.id === taskId)
 }
