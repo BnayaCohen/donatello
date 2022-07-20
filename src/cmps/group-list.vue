@@ -1,21 +1,24 @@
 <template>
     <section class="group-list-container">
-        <group-preview v-for="(group, i) in groups" :group="group" :key="i"/>
+        <group-preview v-for="group in groups" :group="group" :key="group.id" />
         <article class="new-group">
-            <group-preview :group="{}"/>
+            <group-preview :group="newGroup" />
         </article>
     </section>
 </template>
 
 <script>
 import groupPreview from './group-preview.vue'
+import { boardService } from '../services/board-service.js'
 
 export default {
     props: {
         groups: Array,
     },
-    created() {
-        
+    computed: {
+        newGroup() {
+            return boardService.getEmptyGroup()
+        }
     },
     components: {
         groupPreview,
