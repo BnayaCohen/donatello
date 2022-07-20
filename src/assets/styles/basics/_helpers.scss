@@ -29,6 +29,14 @@
     margin: 0;
 }
 
+// Input
+.clean-input {
+    border: none;
+    outline: none;
+    background-color: inherit;
+    transition: border .1s;
+}
+
 // Text 
 .vertical-text {
     writing-mode: tb-rl;

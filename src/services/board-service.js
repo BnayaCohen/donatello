@@ -18,7 +18,10 @@ const gBoard = {
     fullname: 'Abi Abambi',
     imgUrl: 'http://some-img',
   },
-  style: {},
+  style: {
+    backgroundImage: `https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`,
+    // 'background-repeat': `no-repeat`,
+  },
   labels: [
     {
       id: 'l101',
@@ -146,6 +149,11 @@ export const boardService = {
   getEmptyBoard,
   saveTask,
   getEmptyGroup,
+  getEmptyTask,
+  createActivity,
+  removeGroup,
+  removeTask,
+  saveGroup,
 }
 
 function getLabels() {
@@ -207,7 +215,9 @@ function getEmptyBoard(title) {
     labels: [],
     reviewes: [],
     createdBy: userService.getLoggedInUser(),
-    style: {},
+    style: {
+      'background-image': `https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`,
+    },
     labels: [],
     members: [],
     groups: [],
@@ -217,19 +227,51 @@ function getEmptyBoard(title) {
 
 function getEmptyGroup() {
   return {
-    id: utilService.makeId(),
     title: '',
     tasks: [],
     style: {},
   }
 }
 
-function saveTask(boardId, groupId, task, activity) {
-  const board = getById(boardId)
-  board.groups.find((group) => group.id === groupId)
-  board.groups.push(task)
+function getEmptyTask() {
+  return {
+    title: '',
+    status: '',
+    description: '',
+    comments: [],
+    memberIds: [],
+    labelIds: [],
+    createdAt: Date.now(),
+    dueDate: null,
+    byMember: userService.getLoggedInUser(),
+    style: {},
+  }
+}
+async function saveGroup(board, group) {
+  if (!group.id) {
+    group.id = utilService.makeId()
+    board.push(group)
+  } else {
+    const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
+    if (idx !== -1) board.splice(idx, 1, group)
+  }
+
+  return await saveBoard(board)
+}
+
+async function saveTask(board, groupId, task, activity) {
+  const group = board.groups.find((group) => group.id === groupId)
+
+  if (!task.id) {
+    task.id = utilService.makeId()
+    group.tasks.push(task)
+  } else {
+    const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
+    if (idx !== -1) group.tasks.splice(idx, 1, task)
+  }
+
   board.activities.unshift(activity)
-  return saveBoard(board)
+  return await saveBoard(board)
 }
 
 function _createBoard(title) {
@@ -248,7 +290,7 @@ function _createBoards() {
   return boards
 }
 
-function createActicity(txt, task) {
+function createActivity(txt = '', task) {
   return (activity = {
     id: utilService.makeId(),
     txt,
@@ -257,3 +299,38 @@ function createActicity(txt, task) {
     task,
   })
 }
+
+async function removeGroup(board, groupId) {
+  const idx = board.groups.findIndex((group) => group.id === groupId)
+  if (idx !== -1) board.groups.splice(idx, 1)
+  return await saveBoard(board)
+}
+
+async function removeTask(board, groupId, taskId) {
+  const group = board.groups.find((group) => group.id === groupId)
+  const idx = group.tasks.findIndex((task) => task.id === taskId)
+  if (idx !== -1) group.splice(idx, 1)
+  return await saveBoard(board)
+}
+
+// function updateTask(cmpType, data) {
+//   switch (cmpType) {
+//     case 'status-picker':
+//       task.status = data
+//       break
+//     case 'member-picker':
+//       task.members = task.members ? [...task.members, data] : [data]
+//       break
+//     case 'date-picker':
+//       task.date = data
+//       break
+//     case 'label-picker':
+//       task.labels = task.labels ? [...task.labels, data] : [data]
+//       break
+//     case 'attachment-picker':
+//       task.attachment = data
+//       break
+//   }
+
+//   // dispatch to store
+// }
