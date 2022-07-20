@@ -1,7 +1,7 @@
 <template>
     <article v-if="group.title" class="group-container flex flex-column">
         <div class="group-header flex justify-between align-center">
-            <input class="group-title clean-input" type="text" v-model="currGroup.title"
+            <input class="group-title clean-input" type="text" v-model="group.title"
                 placeholder="Enter group title..." @keyup.enter="updateTitle">
             <button class="group-options-btn"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
                     viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -33,8 +33,6 @@ export default {
     },
     data() {
         return {
-            currGroup: JSON.parse(JSON.stringify(this.group))
-            // groupTitle: this.group.title
         }
     },
     methods: {
@@ -42,7 +40,7 @@ export default {
             // const currGroup = JSON.parse(JSON.stringify(this.group))
 
             // currGroup.title = this.groupTitle
-            this.$store.dispatch({ type: 'saveGroup', group: this.currGroup })
+            this.$store.dispatch({ type: 'saveGroup', group: this.group })
         },
         addTask() {
             // const task = boardService.getEmptyTask()
