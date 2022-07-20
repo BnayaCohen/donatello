@@ -71,7 +71,7 @@ export default {
     },
     async saveGroup({ commit, state }, { group }) {
       try {
-        const board = await boardService.saveGroup(state.currBoard)
+        const board = await boardService.saveGroup(state.currBoard, group)
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("Couln't remove group", err)
