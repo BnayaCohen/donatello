@@ -18,7 +18,7 @@ export default {
       return JSON.parse(JSON.stringify(currBoard.labels))
     },
     board({ currBoard }) {
-      return currBoard
+      return JSON.parse(JSON.stringify(currBoard))
     },
   },
   mutations: {
@@ -74,7 +74,7 @@ export default {
     },
     async saveGroup({ commit, state }, { group }) {
       try {
-        const board = await boardService.saveGroup(state.currBoard, group)
+        const board = await boardService.saveGroup(state.currBoard._id, group)
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("Couldn't save group", err)
