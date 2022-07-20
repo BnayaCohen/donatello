@@ -2,16 +2,11 @@
   <header class="main-layout app-header">
     <div class="flex justify-between align-center">
       <section class="nav-container">
-        <nav class="main-nav flex">
-          <router-link to="/">Home</router-link>
-          <router-link to="/board">Boards</router-link>
-        </nav>
-      </section>
-      <section class="logo flex">
-        <h1>Donatello</h1>
+        <div class="logo flex">
+          <router-link to="/">Donatello</router-link>
+        </div>
       </section>
       <section class="user-actions">
-        <button>+</button>
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
         <button>Noti</button>
         <button>User</button>

@@ -5,6 +5,7 @@
   </section>
 </template>
 <script>
+import {boardService} from '../services/board-service.js'
 export default {
   name: 'taskDetails',
   props: {
@@ -15,10 +16,10 @@ export default {
       task: null,
     }
   },
-  created() {
-    const { taskId, groupId } = this.$route.params
-    const ids = {taskId, groupId}
-    // this.task = this.$store.dispatch({type: 'getTask', ids})
+  async created() {
+    const {boardId, taskId, groupId } = this.$route.params
+    this.task = await boardService.getTaskById(boardId, groupId, taskId)
+    console.log(this.task);
   },
 }
 </script>

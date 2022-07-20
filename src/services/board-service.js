@@ -50,12 +50,12 @@ const gBoard = {
         {
           id: 'c101',
           title: 'Replace logo',
-          groupId: 'g101'
+          groupId: 'g101',
         },
         {
           id: 'c102',
           title: 'Add Samples',
-          groupId: 'g101'
+          groupId: 'g101',
         },
       ],
       style: {},
@@ -68,7 +68,7 @@ const gBoard = {
           id: 'c103',
           title: 'Do that',
           archivedAt: 1589983468418,
-          groupId: 'g102'
+          groupId: 'g102',
         },
         {
           id: 'c104',
@@ -154,6 +154,7 @@ export const boardService = {
   removeGroup,
   removeTask,
   saveGroup,
+  getTaskById,
 }
 
 function getLabels() {
@@ -311,6 +312,13 @@ async function removeTask(board, groupId, taskId) {
   const idx = group.tasks.findIndex((task) => task.id === taskId)
   if (idx !== -1) group.splice(idx, 1)
   return await saveBoard(board)
+}
+
+async function getTaskById(boardId, groupId, taskId) {
+  console.log(boardId, groupId, taskId)
+  const board = await getById(boardId)
+  const group = board.groups.find((group) => group.id === groupId)
+  return group.tasks.find((task) => task.id === taskId)
 }
 
 // function updateTask(cmpType, data) {
