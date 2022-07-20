@@ -51,6 +51,19 @@ export default {
     },
     components: {
         taskList,
-    }
+    },
+  methods: {
+    updateTitle() {
+      // if(this.group.id===ev.target.id)
+      console.log(this.groupTitle)
+    },
+    addTask() {
+      const task = boardService.getEmptyTask()
+      task.groupId = group.id
+    },
+  },
+  components: {
+    taskList,
+  }
 }
 </script>

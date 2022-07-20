@@ -26,7 +26,7 @@ export default {
       state.boards = boards
     },
     setBoard(state, { board }) {
-      state.currBoard = JSON.parse(JSON.stringify(board))
+      state.currBoard = board
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -119,6 +119,19 @@ export default {
         commit({ type: 'removeBoard', boardId })
       } catch (err) {
         console.log('couldnt remove board', err)
+      }
+    },
+    async storeSaveTask({ commit, state }, { groupId, task, activity }) {
+      try {
+        const board = await boardService.saveTask(
+          state.currBoard._id,
+          groupId,
+          task,
+          activity
+        )
+        commit('setBoard', board)
+      } catch (err) {
+        console.log("Couldn't save task", err)
       }
     },
   },

@@ -17,5 +17,4 @@ app.directive('click-outside', clickOutsideDirective)
 app.use(router)
 app.use(store)
 app.use(ElementPlus)
-
 app.mount('#app')
