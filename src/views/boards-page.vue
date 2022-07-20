@@ -17,8 +17,7 @@
           :key="board._id"
           :to="'/board/' + board._id"
         >
-          <li style="background-color: #ac874qad">{{ board._id }}</li>
-          <!--:style="board.style"-->
+          <li :style="board.style">{{ board._id }}</li>
         </router-link>
       </ul>
     </section>
