@@ -19,8 +19,9 @@ const gBoard = {
     imgUrl: 'http://some-img',
   },
   style: {
-    backgroundImage: `https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`,
-    // 'background-repeat': `no-repeat`,
+    background: `url('https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80') no-repeat 0 30%/cover`,
+    height: '150px',
+    width: '150px',
   },
   labels: [
     {
@@ -217,15 +218,16 @@ function getEmptyBoard(title) {
     reviewes: [],
     createdBy: userService.getLoggedInUser(),
     style: {
-      'background-image': `https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`,
+      background: `url('https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80') no-repeat 0 30%/cover`,
+      height: '150px',
+      width: '150px',
+      labels: [],
+      members: [],
+      groups: [],
+      activities: [],
     },
-    labels: [],
-    members: [],
-    groups: [],
-    activities: [],
   }
 }
-
 function getEmptyGroup() {
   return {
     title: '',

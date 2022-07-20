@@ -7,7 +7,6 @@
       @click.stop="openTask(task.groupId, task.id)"
     />
   </ul>
-  <task-details v-if="isTaskDetail"/>
 </template>
 <script>
 import taskPreview from './task-preview.vue'
@@ -26,7 +25,9 @@ export default {
   },
   methods: {
     openTask(groupId, taskId) {
-        this.$router.push(this.$router.currentRoute._value.path + `/${groupId}/${taskId}`)
+      this.$router.push(
+        this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
+      )
     },
   },
   created() {},
