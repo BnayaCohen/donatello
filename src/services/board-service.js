@@ -271,6 +271,7 @@ async function saveTask(boardId, groupId, task, activity) {
 
   if (!task.id) {
     task.id = utilService.makeId()
+    task.groupId = groupId
     group.tasks.push(task)
   } else {
     const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
