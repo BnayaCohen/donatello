@@ -1,13 +1,17 @@
 <template>
     <main class="main-layout board-container">
-        <board-header />
-        <group-list v-if="board" :groups="groups" @add-task="addTask"/>
+        <board-header v-if="board" :board="board" />
+        <board-side-bar v-if="board" :activities="activities" />
+        <group-list v-if="board" :groups="groups" @add-task="addTask" />
     </main>
 </template>
 
 <script>
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
+import boardSideBar from '../cmps/board-side-bar.vue'
+import BoardSideBar from '../cmps/board-side-bar.vue'
+
 export default {
     name: 'board-details',
     data() {
@@ -22,7 +26,10 @@ export default {
         groups() {
             return this.board.groups
         },
-        board(){
+        activities() {
+            return this.board.activities
+        },
+        board() {
             return this.$store.getters.board
         }
     },
@@ -33,7 +40,8 @@ export default {
     },
     components: {
         groupList,
-        boardHeader
+        boardHeader,
+        boardSideBar,
     }
 }
 </script>
