@@ -253,7 +253,7 @@ async function saveGroup(board, group) {
     board.push(group)
   } else {
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
-    if (idx !== -1) board.splice(idx, 1, group)
+    if (idx !== -1) board.groups.splice(idx, 1, group)
   }
 
   return await saveBoard(board)
