@@ -12,16 +12,18 @@ export default {
     name: 'board-details',
     data() {
         return {
-            board: null,
         }
     },
     async created() {
         const { boardId } = this.$route.params
-        this.board = await this.$store.dispatch({ type: 'loadBoard', boardId })
+        await this.$store.dispatch({ type: 'loadBoard', boardId })
     },
     computed: {
         groups() {
             return this.board.groups
+        },
+        board(){
+            return this.$store.getters.board
         }
     },
     methods: {
