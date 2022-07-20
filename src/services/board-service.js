@@ -50,10 +50,12 @@ const gBoard = {
         {
           id: 'c101',
           title: 'Replace logo',
+          groupId: 'g101',
         },
         {
           id: 'c102',
           title: 'Add Samples',
+          groupId: 'g101',
         },
       ],
       style: {},
@@ -66,12 +68,14 @@ const gBoard = {
           id: 'c103',
           title: 'Do that',
           archivedAt: 1589983468418,
+          groupId: 'g102',
         },
         {
           id: 'c104',
           title: 'Help me',
           status: 'in-progress',
           description: 'description',
+          groupId: 'g102',
           comments: [
             {
               id: 'ZdPnm',

@@ -1,7 +1,7 @@
 <template>
     <main class="main-layout board-container">
         <board-header />
-        <group-list v-if="board" :groups="groups" />
+        <group-list v-if="board" :groups="groups" @add-task="addTask"/>
     </main>
 </template>
 
@@ -24,6 +24,11 @@ export default {
         },
         board(){
             return this.$store.getters.board
+        }
+    },
+    methods: {
+        addTask(groupId) {
+            console.log(groupId)
         }
     },
     components: {
