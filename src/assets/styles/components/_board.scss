@@ -83,3 +83,10 @@
 .plus-sign {
   font-size: rem(18px);
 }
+
+.popup {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.48);
+  z-index: 20;
+  color: #fff;
+}
