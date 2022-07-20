@@ -14,10 +14,26 @@
       <ul class="board-list clean-list">
         <router-link
           v-for="board in boards"
+          class="board-page-display"
           :key="board._id"
           :to="'/board/' + board._id"
         >
-          <li :style="board.style" @click="setBoard(board._id)">{{ board._id }}</li>
+          <li
+            :style="board.style"
+            @mouseenter="showRemoveBtn(board._id)"
+            @mouseleave="hideRemoveBtn"
+            @click="setBoard(board._id)"
+          >
+            {{ board._id }}
+            <span
+              v-show="board._id === removeBtn"
+              class="remove-board-btn"
+              href="#"
+              @click.stop="removeBoard(board._id)"
+            >
+              <i class="fa-regular fa-trash-can"></i
+            ></span>
+          </li>
         </router-link>
       </ul>
     </section>
@@ -28,13 +44,24 @@
 export default {
   name: 'boards-container',
   data() {
-    return {}
+    return {
+      removeBtn: null,
+    }
   },
 
   methods: {
     setBoard(boardId) {
-      this.$store.dispatch({type: 'loadBoard', boardId})
-    }
+      this.$store.dispatch({ type: 'loadBoard', boardId })
+    },
+    showRemoveBtn(boardId) {
+      this.removeBtn = boardId
+    },
+    hideRemoveBtn() {
+      this.removeBtn = null
+    },
+    removeBoard(boardId) {
+      this.$store.dispatch({ type: 'removeBoard', boardId })
+    },
   },
   computed: {
     starredBoards() {

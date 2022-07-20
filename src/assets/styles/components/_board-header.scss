@@ -1,8 +1,33 @@
 .board-header {
     padding-block: 5px;
-    .board-options {
-        max-height: 30px;
-        .members-container {
+    flex-wrap: wrap;
+
+    .btn-background {
+        background-color: #00000014;
+        border: none;
+        border-radius: 3px;
+        color: #172b4d;
+        box-shadow: none;
+        cursor: pointer;
+        line-height: em(24px);
+        margin: 0 4px 4px 0;
+        padding: 6px 8px;
+        font-family: inherit;
+        font-size: rem(16px);
+        transition-property: background-color, border-color, box-shadow;
+        transition-duration: 85ms;
+        transition-timing-function: ease;
+
+        &:hover:not(input) {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #172b4d;
+        }
+    }
+
+    .starred-btn{
+       
+        &.starred{
+            color: yellow;
         }
     }
 }
