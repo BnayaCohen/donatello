@@ -255,7 +255,7 @@ async function saveGroup(boardId, group) {
 
   if (!group.id) {
     group.id = utilService.makeId()
-    board.push(group)
+    board.groups.push(group)
   } else {
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
     if (idx !== -1) board.groups.splice(idx, 1, group)
