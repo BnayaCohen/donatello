@@ -58,3 +58,20 @@
 .ratio-card { @include aspect-ratio(100, 80); }
 
 .ratio-poster { @include aspect-ratio(100, 150); }
+
+// Pop over
+
+.dynamic-popover {
+    width: 304px;
+    border-radius: 3px;
+    box-shadow: 2 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
+    background-color: #fff;
+    z-index: 10;
+    bottom: 0;
+}
+
+// Position
+
+.pos-absolute {
+    position: absolute;
+}

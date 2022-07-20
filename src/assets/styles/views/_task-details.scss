@@ -2,6 +2,27 @@
   h3 {
     display: inline-block;
   }
+  .small-title {
+    color: #5e6c84;
+    font-size: 0.8571428571rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+    line-height: 20px;
+    text-transform: uppercase;
+  }
+
+  svg {
+    width: 24px;
+    height: 18px;
+  }
+  .description-container,
+  .task-detail-title {
+    display: flex;
+    grid-gap: 8px;
+    gap: 8px;
+    align-items: center;
+  }
   .detail-modal-container {
     position: absolute;
     top: 46px;
@@ -39,7 +60,6 @@
     }
     .task-detail-bg {
       min-height: 116px;
-      background-color: rgb(9, 80, 110);
     }
     .cover-btn {
       position: relative;
@@ -49,7 +69,7 @@
     }
     .task-detail-header {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       padding: 20px 8px 0 16px;
       span {
         margin-block-end: 0.3rem;
@@ -70,6 +90,10 @@
         margin-right: 50px;
         background-color: transparent;
       }
+      .title-input:focus {
+        background-color: $clr3;
+        border: 2px solid rgb(17, 53, 114);
+      }
     }
     .task-detail-main {
       flex: 2 1;
@@ -87,6 +111,30 @@
           color: #172b4d;
           font-family: inherit;
           font-size: 1rem;
+        }
+      }
+      .members-labels-container {
+        display: flex;
+        grid-gap: 16px;
+        gap: 16px;
+        margin: 24px 0 24px 26px;
+        position: relative;
+        flex-wrap: wrap;
+        .due-date-container {
+          flex-direction: column;
+          align-items: flex-start;
+          .due-date-picker {
+            position: absolute;
+            background-color: transparent;
+            border: none;
+          }
+
+          .due-date-txt {
+            background-color: darken($clr3, 10%);
+            padding: 0.2rem;
+            border-radius: 5px;
+            margin-inline-start: 0.5rem;
+          }
         }
       }
     }
