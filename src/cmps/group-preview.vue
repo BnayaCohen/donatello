@@ -1,7 +1,8 @@
 <template>
     <article class="group-container flex flex-column">
-        <div class="group-header flex justify-between">
-            <input class="clean-input" type="text" v-model="groupTitle" placeholder="Enter group title...">
+        <div class="group-header flex justify-between align-center">
+            <input class="group-title clean-input" type="text" v-model="groupTitle" placeholder="Enter group title..."
+            v-click-outside="updateTitle">
             <button class="group-options-btn"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" clip-rule="evenodd"></path></svg></button>
         </div>
 
@@ -33,6 +34,10 @@ export default {
         }
     },
     methods: {
+        updateTitle(){
+            // if(this.group.id===ev.target.id)
+            console.log(this.groupTitle);
+        }
     },
     components: {
         taskList,
