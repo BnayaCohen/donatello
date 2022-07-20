@@ -260,7 +260,8 @@ async function saveGroup(board, group) {
   return await saveBoard(board)
 }
 
-async function saveTask(board, groupId, task, activity) {
+async function saveTask(board, groupId, task, activity = 'Activity!') {
+  console.log(board)
   const group = board.groups.find((group) => group.id === groupId)
 
   if (!task.id) {

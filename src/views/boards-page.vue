@@ -17,7 +17,7 @@
           :key="board._id"
           :to="'/board/' + board._id"
         >
-          <li :style="board.style">{{ board._id }}</li>
+          <li :style="board.style" @click="setBoard(board._id)">{{ board._id }}</li>
         </router-link>
       </ul>
     </section>
@@ -31,7 +31,11 @@ export default {
     return {}
   },
 
-  methods: {},
+  methods: {
+    setBoard(boardId) {
+      this.$store.dispatch({type: 'loadBoard', boardId})
+    }
+  },
   computed: {
     starredBoards() {
       //   this.$store.getters.starredBoards
