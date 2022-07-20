@@ -25,7 +25,9 @@ export default {
   },
   methods: {
     openTask(groupId, taskId) {
-        this.$router.push(this.$router.currentRoute._value.path + `/${groupId}/${taskId}`)
+      this.$router.push(
+        this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
+      )
     },
   },
   created() {},
