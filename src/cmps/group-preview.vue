@@ -1,8 +1,8 @@
 <template>
-    <article class="group-container flex flex-column">
+    <article v-if="group.title" class="group-container flex flex-column">
         <div class="group-header flex justify-between align-center">
-            <input class="group-title clean-input" type="text" v-model="groupTitle" placeholder="Enter group title..."
-                v-click-outside="updateTitle">
+            <input class="group-title clean-input" type="text" v-model="currGroup.title"
+                placeholder="Enter group title..." @keyup.enter="updateTitle">
             <button class="group-options-btn"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
                     viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -10,9 +10,7 @@
                         clip-rule="evenodd"></path>
                 </svg></button>
         </div>
-
         <task-list :tasks="group.tasks" />
-
         <button @click="addTask" class="add-card-btn flex align-center">
             <i class="plus-sign"><svg stroke="currentColor" fill="currentColor" stroke-width="0" t="1551322312294"
                     viewBox="0 0 1024 1024" version="1.1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -35,17 +33,20 @@ export default {
     },
     data() {
         return {
-            groupTitle: this.group.title
+            currGroup: JSON.parse(JSON.stringify(this.group))
+            // groupTitle: this.group.title
         }
     },
     methods: {
         updateTitle() {
-            // if(this.group.id===ev.target.id)
-            console.log(this.groupTitle);
+            // const currGroup = JSON.parse(JSON.stringify(this.group))
+
+            // currGroup.title = this.groupTitle
+            this.$store.dispatch({ type: 'saveGroup', group: this.currGroup })
         },
         addTask() {
-            const task = boardService.getEmptyTask()
-            task.groupId = group.id
+            // const task = boardService.getEmptyTask()
+            // task.groupId = group.id
         },
     },
     components: {
