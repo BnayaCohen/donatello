@@ -249,7 +249,7 @@ async function saveGroup(board, group) {
     board.push(group)
   } else {
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
-    if (idx !== -1) board.splice(idx, 1, group)
+    if (idx !== -1) board.groups.splice(idx, 1, group)
   }
 
   return await saveBoard(board)
@@ -307,6 +307,11 @@ async function removeTask(board, groupId, taskId) {
   const idx = group.tasks.findIndex((task) => task.id === taskId)
   if (idx !== -1) group.splice(idx, 1)
   return await saveBoard(board)
+}
+
+async function getTaskById(board, groupId, taskId) {
+  const group = board.groups.find((group) => group.id === groupId)
+  return group.tasks.find((task) => task.id === taskId)
 }
 
 // function updateTask(cmpType, data) {
