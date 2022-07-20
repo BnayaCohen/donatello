@@ -149,6 +149,7 @@ export const boardService = {
   createActivity,
   removeGroup,
   removeTask,
+  saveGroup,
 }
 
 function getLabels() {
@@ -222,7 +223,6 @@ function getEmptyBoard(title) {
 
 function getEmptyGroup() {
   return {
-    id: utilService.makeId(),
     title: '',
     tasks: [],
     style: {},
@@ -231,7 +231,6 @@ function getEmptyGroup() {
 
 function getEmptyTask() {
   return {
-    id: utilService.makeId(),
     title: '',
     status: '',
     description: '',
@@ -244,13 +243,28 @@ function getEmptyTask() {
     style: {},
   }
 }
+async function saveGroup(board, group) {
+  if (!group.id) {
+    group.id = utilService.makeId()
+    board.push(group)
+  } else {
+    const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
+    if (idx !== -1) board.splice(idx, 1, group)
+  }
+
+  return await saveBoard(board)
+}
 
 async function saveTask(board, groupId, task, activity) {
   const group = board.groups.find((group) => group.id === groupId)
-  const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
 
-  if (idx !== -1) group.tasks.splice(idx, 1, task)
-  else group.tasks.push(task)
+  if (!task.id) {
+    task.id = utilService.makeId()
+    group.tasks.push(task)
+  } else {
+    const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
+    if (idx !== -1) group.tasks.splice(idx, 1, task)
+  }
 
   board.activities.unshift(activity)
   return await saveBoard(board)
@@ -282,16 +296,17 @@ function createActivity(txt = '', task) {
   })
 }
 
-function removeGroup(board, groupId) {
+async function removeGroup(board, groupId) {
   const idx = board.groups.findIndex((group) => group.id === groupId)
   if (idx !== -1) board.groups.splice(idx, 1)
-  return saveBoard(board)
+  return await saveBoard(board)
 }
-function removeTask(board, groupId, taskId) {
+
+async function removeTask(board, groupId, taskId) {
   const group = board.groups.find((group) => group.id === groupId)
   const idx = group.tasks.findIndex((task) => task.id === taskId)
   if (idx !== -1) group.splice(idx, 1)
-  return saveBoard(board)
+  return await saveBoard(board)
 }
 
 // function updateTask(cmpType, data) {

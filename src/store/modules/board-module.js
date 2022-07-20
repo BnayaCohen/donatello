@@ -69,12 +69,12 @@ export default {
         console.log('couldnt save/update board', err)
       }
     },
-    async removeBoard({ commit }, { boardId }) {
+    async saveGroup({ commit, state }, { group }) {
       try {
-        await boardService.remove(boardId)
-        commit({ type: 'removeBoard', boardId })
+        const board = await boardService.saveGroup(state.currBoard)
+        commit({ type: 'setBoard', board })
       } catch (err) {
-        console.log('couldnt remove board', err)
+        console.log("Couln't remove group", err)
       }
     },
     async saveTask({ commit, state }, { groupId, task, activity }) {
@@ -90,9 +90,13 @@ export default {
         console.log("Couldn't save task", err)
       }
     },
-    async removeTask({ commit }, { groupId, taskId }) {
+    async removeTask({ commit, state }, { groupId, taskId }) {
       try {
-        const board = await boardService.removeTask(board, groupId, taskId)
+        const board = await boardService.removeTask(
+          state.currBoard,
+          groupId,
+          taskId
+        )
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove task", err)
@@ -104,6 +108,14 @@ export default {
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove group", err)
+      }
+    },
+    async removeBoard({ commit }, { boardId }) {
+      try {
+        await boardService.remove(boardId)
+        commit({ type: 'removeBoard', boardId })
+      } catch (err) {
+        console.log('couldnt remove board', err)
       }
     },
   },
