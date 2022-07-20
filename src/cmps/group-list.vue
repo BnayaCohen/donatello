@@ -1,6 +1,6 @@
 <template>
     <section class="group-list-container">
-        <group-preview v-for="(group, i) in groups" :group="group" :key="i"/>
+        <group-preview v-for="(group, i) in groups" :group="group" :key="i" @add-task="addTask"/>
     </section>
 </template>
 
@@ -13,6 +13,11 @@ export default {
     },
     created() {
         
+    },
+    methods: {
+        addTask(groupId) {
+            this.$emit('add-task', groupId)
+        }
     },
     components: {
         groupPreview,
