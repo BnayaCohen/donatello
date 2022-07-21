@@ -347,6 +347,7 @@ async function getTaskById(boardId, groupId, taskId) {
 }
 
 async function changeGroupPos(boardId, dropResult) {
+  // TODO: fix bug
   const { removedIndex, addedIndex } = dropResult
   const board = await getById(boardId)
   const group = board.groups.splice(removedIndex, 1)[0]
@@ -354,10 +355,9 @@ async function changeGroupPos(boardId, dropResult) {
   return await saveBoard(board)
 }
 
-async function updateGroups(boardId, itemIndex, newColumn) {
-  const board = await getById(boardId)
-  board.groups.splice(itemIndex, 1, newColumn)
-  return await saveBoard(board)
+async function updateGroups(board) {
+  const newBoard = JSON.parse(JSON.stringify(board))
+  return await saveBoard(newBoard)
 }
 
 // function updateTask(cmpType, data) {

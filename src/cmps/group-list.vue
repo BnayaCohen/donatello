@@ -3,6 +3,9 @@
     <Container
       class="h-full flex overflow-x-auto gap-8 p-8"
       group-name="cols"
+      drag-class="card-ghost"
+      drop-class="card-ghost-drop"
+      :drop-placeholder="dropPlaceHolderOptions"
       tag="div"
       orientation="horizontal"
       @drop="onGroupDrop($event)"
@@ -37,6 +40,13 @@ export default {
     scene() {
       return this.$store.getters.scene
     },
+    dropPlaceHolderOptions() {
+      return {
+        className: 'drop-preview',
+        animationDuration: '150',
+        showOnTop: false,
+      }
+    },
   },
   methods: {
     onGroupDrop(dropResult) {
@@ -55,3 +65,17 @@ export default {
   },
 }
 </script>
+<style>
+.card-ghost {
+  transition: transform 0.18s ease;
+  transform: rotateZ(5deg);
+}
+.card-ghost-drop {
+  transition: transform 0.18s ease-in-out;
+  transform: rotateZ(0deg);
+}
+.drop-preview {
+  background-color: rgba(150, 150, 200, 0.1);
+  margin: 1rem 2rem 1rem 0.3rem;
+}
+</style>
