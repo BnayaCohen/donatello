@@ -10,7 +10,7 @@ const store = createStore({
   actions: {},
   modules: {
     userStore,
-    boardStore
+    boardStore,
   },
 })
 

@@ -4,6 +4,11 @@ export default {
   state: {
     boards: [],
     currBoard: null,
+    scene: {
+      type: 'container',
+      props: { orientation: 'horizontal' },
+      children: null,
+    },
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -20,6 +25,9 @@ export default {
     board({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard))
     },
+    scene({ scene }) {
+      return JSON.parse(JSON.stringify(scene))
+    },
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -27,6 +35,7 @@ export default {
     },
     setBoard(state, { board }) {
       state.currBoard = board
+      state.scene.children = board.groups
     },
     addBoard(state, { board }) {
       state.boards.push(board)
