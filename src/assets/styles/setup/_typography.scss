@@ -3,10 +3,7 @@
   src: local('Bahnschrift'), url(~@/fonts/Bahnschrift/bahnschrift.ttf);
 }
 
-@font-face {
-  font-family: 'Trellicons';
-  src: local('Trellicons'), url(~@/fonts/Trellicons/trellicons.ttf);
-}
+
 
 @font-face {
   font-family: 'Lato-Regular';
@@ -31,4 +28,9 @@
 @font-face {
   font-family: 'Roboto-Medium';
   src: url('../fonts/Roboto/Roboto-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'trellicons';
+  src: url('../fonts/Trellicons/trellicons.ttf');
 }
