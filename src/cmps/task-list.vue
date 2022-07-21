@@ -1,6 +1,7 @@
 <template>
   <ul class="container clean-list task-list">
     <Container
+      v-if="tasks.length"
       class="flex-grow overflow-y-auto overflow-x-hidden"
       orientation="vertical"
       group-name="col-items"
