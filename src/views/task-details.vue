@@ -1,5 +1,11 @@
 <template>
-  <section class="container task-detail">
+  <section
+    class="container task-detail"
+    @click="
+      isDate = false;
+      isDateSide = false
+    "
+  >
     <div class="detail-modal-container">
       <div
         v-if="task.style?.bgColor"
@@ -31,10 +37,19 @@
         </button>
       </div>
       <router-link :to="'/board/' + this.$route.params.boardId"
-        ><button class="btn close-modal-btn" @click="updateTask">
-          X
-        </button></router-link
-      >
+        ><button class="close-modal-btn" @click="updateTask">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="256px"
+            height="256px"
+            viewBox="0 0 256 256"
+            id="Flat"
+          >
+            <path
+              d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z"
+            />
+          </svg></button
+      ></router-link>
       <div class="task-detail-header">
         <svg
           stroke="currentColor"
@@ -62,6 +77,10 @@
           ref="taskTitle"
           v-model="task.title"
           placeholder="Enter title here..."
+          @keydown.enter="
+            saveTask;
+            $refs.taskTitle.blur()
+          "
         />
       </div>
       <div class="task-detail-container flex">
@@ -69,18 +88,34 @@
           <div class="members-labels-container flex align-center">
             <div class="labels-container">
               <h3 class="small-title">Labels</h3>
-              <div class="labels"></div>
             </div>
             <div
               v-if="task?.dueDate"
               class="due-date-container flex align-center"
             >
               <h3 class="small-title">Due Date</h3>
-              <label for="due-date-picker" @click="isDate = !isDate">
-                <div class="task-detail-btn">
-                  <el-checkbox type="checkbox" class="date-checkbox" />
+              <label
+                class="flex"
+                for="due-date-picker"
+                @click.stop="isDate = !isDate"
+              >
+                <el-checkbox type="checkbox" class="date-checkbox" />
+                <button class="due-date-btn">
                   <span class="due-date-txt">{{ dueDateFixed }}</span>
-                </div>
+                  <svg
+                    width="24"
+                    height="24"
+                    role="presentation"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.2929 16.7071L4.22185 9.63606C3.83132 9.24554 3.83132 8.61237 4.22185 8.22185C4.61237 7.83133 5.24554 7.83133 5.63606 8.22185L12 14.5858L18.364 8.22185C18.7545 7.83132 19.3877 7.83132 19.7782 8.22185C20.1687 8.61237 20.1687 9.24554 19.7782 9.63606L12.7071 16.7071C12.3166 17.0977 11.6834 17.0977 11.2929 16.7071Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
               </label>
               <div class="dynamic-popover pos-absolute">
                 <datepicker
@@ -186,12 +221,112 @@
                   </svg>
                   <span>Labels</span>
                 </button>
+                <div v-if="false" class="dynamic-popover pos-absolute">
+                  <div class="popover-header">
+                    <h4>Labels</h4>
+                    <button class="pop-close-btn">x</button>
+                  </div>
+                  <div class="label-list-container">
+                    <ul>
+                      <li
+                        v-for="label in labels"
+                        :key="label.id"
+                        @click="addLabel"
+                      >
+                        <span>{{ label.title }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-                            <div class="sidebar-btn-container">
+              <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 16 16"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M14.5 3h-13a.5.5 0 00-.5.5v9a.5.5 0 00.5.5h13a.5.5 0 00.5-.5v-9a.5.5 0 00-.5-.5zm-13-1A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h13a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0014.5 2h-13z"
+                      clip-rule="evenodd"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      d="M7 5.5a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm-1.496-.854a.5.5 0 010 .708l-1.5 1.5a.5.5 0 01-.708 0l-.5-.5a.5.5 0 11.708-.708l.146.147 1.146-1.147a.5.5 0 01.708 0zM7 9.5a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm-1.496-.854a.5.5 0 010 .708l-1.5 1.5a.5.5 0 01-.708 0l-.5-.5a.5.5 0 01.708-.708l.146.147 1.146-1.147a.5.5 0 01.708 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span>Checklist</span>
+                </button>
+              </div>
+              <div class="sidebar-btn-container">
+                <label
+                  for="date-picker-side"
+                  @click.stop="isDateSide = !isDateSide"
+                >
+                  <button class="sidebar-btn flex align-center">
+                    <svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 16 16"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 15A7 7 0 108 1a7 7 0 000 14zm8-7A8 8 0 110 8a8 8 0 0116 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                      <path
+                        fill-rule="evenodd"
+                        d="M7.5 3a.5.5 0 01.5.5v5.21l3.248 1.856a.5.5 0 01-.496.868l-3.5-2A.5.5 0 017 9V3.5a.5.5 0 01.5-.5z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>Dates</span>
+                  </button>
+                </label>
+                <datepicker
+                  v-if="isDateSide"
+                  :inline="true"
+                  class="datepicker-side"
+                  id="date-picker-side"
+                  v-model="dueDate"
+                  @update:modelValue="updateDueDate"
+                ></datepicker>
+              </div>
+              <div class="sidebar-btn-container">
+                <button class="sidebar-btn flex align-center">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
+                    ></path>
+                  </svg>
+                  <span>Attachment</span>
+                </button>
+              </div>
+              <div class="sidebar-btn-container">
+                <button class="sidebar-btn flex align-center">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
                     stroke-width="0"
                     viewBox="0 0 24 24"
                     height="1em"
@@ -199,10 +334,17 @@
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16zM16 17H5V7h11l3.55 5L16 17z"
+                      d="M4 9C4 8.44772 4.44772 8 5 8H9C9.55228 8 10 8.44772 10 9C10 9.55228 9.55228 10 9 10H5C4.44772 10 4 9.55228 4 9Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M4 3C1.79086 3 0 4.79086 0 7V17C0 19.2091 1.79086 21 4 21H20C22.2091 21 24 19.2091 24 17V7C24 4.79086 22.2091 3 20 3H4ZM20 5H4C2.89543 5 2 5.89543 2 7V14H22V7C22 5.89543 21.1046 5 20 5ZM22 16H2V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V16Z"
+                      fill="currentColor"
                     ></path>
                   </svg>
-                  <span>Labels</span>
+                  <span>Cover</span>
                 </button>
               </div>
             </div>
@@ -228,6 +370,8 @@ export default {
       isEditDescription: false,
       dueDate: ref(new Date()),
       isDate: false,
+      isDateSide: false,
+      labels: this.$store.getters.getLabels
     }
   },
   async created() {

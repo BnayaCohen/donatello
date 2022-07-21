@@ -1,77 +1,100 @@
-// Flex 
+// Flex
 .flex {
-    display: flex;
+  display: flex;
 }
 .flex.inline-flex {
-    display: inline-flex;
+  display: inline-flex;
 }
 .flex.flex-column {
-    flex-direction: column;
+  flex-direction: column;
 }
 .align-self-center {
-    align-self: center;
+  align-self: center;
 }
-.justify-center{
-    justify-content: center;
+.justify-center {
+  justify-content: center;
 }
-.justify-between{
-    justify-content: space-between;
+.justify-between {
+  justify-content: space-between;
 }
-.align-center{
-    align-items: center;
+.align-center {
+  align-items: center;
 }
 
-
-// List 
+// List
 .clean-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 // Input
 .clean-input {
-    border: none;
-    outline: none;
-    background-color: inherit;
-    transition: border .1s;
+  border: none;
+  outline: none;
+  background-color: inherit;
+  transition: border 0.1s;
 }
 
-// Text 
+// Text
 .vertical-text {
-    writing-mode: tb-rl;
-    transform: rotate(-180deg);  
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
 }
 
 .tag-text {
-    color: $clr1;
-    text-transform: uppercase;
-    @include type(boldCondensed);
+  color: $clr1;
+  text-transform: uppercase;
+  @include type(boldCondensed);
 }
 
 // Aspect ratios
 
-.ratio-16-9 { @include aspect-ratio(100, 56); }
+.ratio-16-9 {
+  @include aspect-ratio(100, 56);
+}
 
-.ratio-square { @include aspect-ratio(100, 100); }
+.ratio-square {
+  @include aspect-ratio(100, 100);
+}
 
-.ratio-card { @include aspect-ratio(100, 80); }
+.ratio-card {
+  @include aspect-ratio(100, 80);
+}
 
-.ratio-poster { @include aspect-ratio(100, 150); }
+.ratio-poster {
+  @include aspect-ratio(100, 150);
+}
 
 // Pop over
 
 .dynamic-popover {
-    width: 304px;
-    border-radius: 3px;
-    box-shadow: 2 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
-    background-color: #fff;
-    z-index: 10;
-    bottom: 0;
+  width: 304px;
+  border-radius: 3px;
+  box-shadow: 2 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
+  background-color: #fff;
+  z-index: 10;
+//   bottom: 0;
+  .popover-header {
+    margin-bottom: 8px;
+    height: 40px;
+    border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
+    position: relative;
+    color: #5e6c84;
+    padding: 0 12px 12px;
+  }
+  .popover-content {
+    overflow-y: auto;
+    padding: 0 12px 12px;
+}
 }
 
 // Position
 
 .pos-absolute {
-    position: absolute;
+  position: absolute;
+}
+
+.pos-relative {
+    position: relative;
 }
