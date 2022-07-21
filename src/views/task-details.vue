@@ -34,6 +34,7 @@
       <div class="task-detail-header">
         <span class="trellicons trellicons-details"></span>
         <textarea
+          rows="1"
           class="title-input"
           type="text"
           ref="taskTitle"
@@ -119,14 +120,15 @@
               </div>
             </div>
           </div>
-          <div class="description-container flex">
-            <span class="trellicons trellicons-description"></span>
-            <h3>Description</h3>
-          </div>
+          <div class="description-container flex flex-column">
+            <div class="description-header flex align-center">
+              <span class="trellicons trellicons-description"></span>
+              <h3>Description</h3>
+            </div>
           <div class="task-description-txt">
             <textarea
               rows="3"
-              placeholder="Add detailed description..."
+              placeholder="Add a more detailed description..."
               ref="taskDescription"
               v-model="task.description"
               @click="isEditDescription = !isEditDescription"
@@ -138,6 +140,7 @@
               <el-button @click="updateTask">Save</el-button>
               <el-button @click="isEditDescription = false">X</el-button>
             </div>
+          </div>
           </div>
           <div class="comment-container flex justify-between align-center">
             <div class="task-detail-title">
@@ -156,7 +159,9 @@
               </button>
             </div>
 
-            <h3 class="small-title">Add to card</h3>
+            <h3 class="small-title" :style="{ marginTop: '15.5px' }">
+              Add to card
+            </h3>
             <div class="sidebar-btns flex flex-column">
               <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
@@ -176,7 +181,7 @@
                   <div class="popover-header flex justify-center align-center">
                     <h4>Labels</h4>
                     <button class="pop-close-btn" @click="toggleLabels">
-                      <span class="trellicons trellicons-close"></span>
+                      <span class="trellicons trellicons-close-btn"></span>
                     </button>
                   </div>
                   <div class="popover-content label-list-container">
@@ -384,15 +389,18 @@ export default {
       }
     },
     taskBgColor() {
-      if (this.task.style.bgColor) {
+      if (this.task?.style.bgColor) {
         return { backgroundColor: this.task.style.bgColor };
       } else return '';
     },
     groupTitle() {
       const { groupId } = this.$route.params;
-      const groups = this.$store.getters.board.groups;
-      const group = groups.find((group) => group.id === groupId);
-      return group.title;
+      const board = this.$store.getters.board;
+      if (board?._id) {
+        const groups = board.groups;
+        const group = groups.find((group) => group.id === groupId);
+        return group.title;
+      }
     },
   },
   components: { Datepicker },
