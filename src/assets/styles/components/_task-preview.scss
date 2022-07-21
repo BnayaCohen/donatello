@@ -16,11 +16,14 @@
 
   .hover-edit-btn {
     z-index: 5;
-    font-size: 0.6rem;
+    font-size: rem(17px);
+    font-weight: 500;
     position: absolute;
-    right: 3px;
-    top: 3px;
-    padding: 0px 5px;
+    right: 2px;
+    top: 2px;
+    padding: 4px ;
+    width: 26px;
+    height: 28px;
 
     &:hover {
       background-color: #cccccdcd;
