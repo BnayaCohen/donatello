@@ -84,7 +84,7 @@
         />
       </div>
       <div class="task-detail-container flex">
-        <div class="task-detail-main">
+        <div class="task-detail-main flex flex-column">
           <div class="members-labels-container flex align-center">
             <div class="labels-container">
               <h3 class="small-title">Labels</h3>
@@ -244,9 +244,8 @@
                         v-for="label in labels"
                         :key="label.id"
                         @click.stop="addLabel(label.id)"
-                        class="label flex align-center"
-                        :style="{ backgroundColor: label.color }"
-                      >
+                        class="label flex align-center">
+                        <div :style="{width: '100%', height:'32px', backgroundColor: label.color}"></div>
                         <span>{{ label.title }}</span>
                       </li>
                     </ul>
@@ -384,7 +383,7 @@
                         d="M13 2H1v2h12V2zM0 4a1 1 0 0 0 1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v2zm2 1h10v9H2V5zm2 3h6V7H4v1z"
                       ></path>
                     </svg>
-                    <span>Delete</span>
+                    <span>Archive</span>
                   </button>
                 </div>
               </div>
@@ -423,11 +422,13 @@ export default {
     }
     this.labels = this.$store.getters.getLabels;
     this.task = await boardService.getTaskById(boardId, groupId, taskId);
-    this.task.labelIds.map((labelId) => {
-      this.labels.forEach((label) => {
-        if (label.id === labelId) this.taskLabels.push(label);
+    if (this.task.labelIds) {
+      this.task.labelIds.map((labelId) => {
+        this.labels.forEach((label) => {
+          if (label.id === labelId) this.taskLabels.push(label);
+        });
       });
-    });
+    }
     this.$refs.taskTitle.value = this.task.title;
     this.$refs.taskDescription.value = this.task.description;
   },
@@ -465,13 +466,17 @@ export default {
         if (this.task.labelIds[i] === labelId) {
           this.task.labelIds.splice(i, 1);
           this.updateTask();
-          // this.updateTaskLabels();
+          const idx = this.taskLabels.findIndex(
+            (taskLabel) => taskLabel.id === labelId
+          );
+          this.taskLabels.splice(idx, 1);
           return;
         }
       }
       this.task.labelIds.push(labelId);
       this.updateTask();
-      // this.updateTaskLabels();
+      const label = this.labels.find((taskLabel) => taskLabel.id === labelId);
+      this.taskLabels.push(label);
     },
     async removeTask() {
       const { boardId, taskId, groupId } = this.$route.params;

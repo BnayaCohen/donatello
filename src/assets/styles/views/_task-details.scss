@@ -123,6 +123,7 @@
       padding: 0 8px 8px 16px;
       flex-basis: 75%;
       .task-description-txt {
+        margin-inline-start: rem(40px);
         textarea {
           width: 100%;
           border: none;
@@ -242,12 +243,15 @@
 
         .label {
           min-height: 32px;
-          margin: 0 0 4px;
-          border-radius: 2px;
-          font-size: 0.9rem;
-          color:#172b4dd2;
-          font-weight: 600;
+          font-size: rem(14px);
+          color:#fffffff3;
+          border-radius: 3px;
           cursor: pointer;
+          font-weight: 700;
+          margin: 0 0 4px;
+          padding: 6px 12px;
+          position: relative;
+          transition: padding 85ms,margin 85ms,box-shadow 85ms;
           span {
             margin-left: rem(5px);
           }
@@ -255,7 +259,7 @@
         &:hover {
           padding-inline-start: 0.5rem;
         }
-        }
+      }
 
       }
     }
