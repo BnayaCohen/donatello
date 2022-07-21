@@ -170,6 +170,8 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
+  changeGroupPos,
+  updateGroups,
 }
 
 function getLabels() {
@@ -342,6 +344,20 @@ async function getTaskById(boardId, groupId, taskId) {
 
   const group = board.groups.find((group) => group.id === groupId)
   return group.tasks.find((task) => task.id === taskId)
+}
+
+async function changeGroupPos(boardId, dropResult) {
+  const { removedIndex, addedIndex } = dropResult
+  const board = await getById(boardId)
+  const group = board.groups.splice(removedIndex, 1)[0]
+  board.groups.splice(addedIndex, 0, group)
+  return await saveBoard(board)
+}
+
+async function updateGroups(boardId, itemIndex, newColumn) {
+  const board = await getById(boardId)
+  board.groups.splice(itemIndex, 1, newColumn)
+  return await saveBoard(board)
 }
 
 // function updateTask(cmpType, data) {
