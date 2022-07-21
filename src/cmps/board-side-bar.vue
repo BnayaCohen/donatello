@@ -6,7 +6,7 @@
                 @click="$emit('sideBarClosed')"></button>
         </header>
         <hr class="side-header-hr">
-        <section  class="side-bar-options">
+        <section class="side-bar-options">
             <section class="background-change-select flex">
                 <div>
                     <img src="src/assets/img/background-photos-sidebar.jpg" alt="Photos">
@@ -18,20 +18,21 @@
                 </div>
             </section>
         </section>
-            <hr class="side-header-hr">
+        <hr class="side-header-hr">
         <section class="side-bar-options">
             <ul class="clean-list">
                 <li>
-                    <i class="fa-solid fa-box-archive"></i>
+                    <span class="trellicons trellicons-archive"></span>
                     Archive
                 </li>
-                <li>
+                <!-- <li>
                     <i class="fa-regular fa-trash-can"></i>
                     Delete board
-                </li>
+                </li> -->
             </ul>
         </section>
         <hr class="side-header-hr">
+
         <section class="side-bar-activities">
             <div class="activities-title flex">
                 <span class="trellicons trellicons-activities"></span>
