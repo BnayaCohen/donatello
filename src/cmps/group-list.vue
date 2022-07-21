@@ -40,11 +40,12 @@ export default {
   },
   methods: {
     onGroupDrop(dropResult) {
+      if (dropResult.removedIndex === dropResult.addedIndex) return
       const scene = Object.assign({}, this.scene)
       scene.children = applyDrag(scene.children, dropResult)
       this.scene = scene
-      console.log('dropResult:', dropResult)
-      console.log('scene:', scene)
+      console.log(dropResult)
+      this.$store.dispatch({ type: 'swap', dropResult })
     },
   },
   components: {

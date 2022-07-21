@@ -62,17 +62,22 @@ export default {
       this.scene = scene
     },
     onCardDrop(groupId, dropResult) {
+      const { removedIndex, addedIndex } = dropResult
       // check if element where ADDED or REMOVED in current collumn
-      console.log(groupId, dropResult)
-      if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+      if (
+        (removedIndex !== null && removedIndex !== addedIndex) ||
+        (addedIndex !== null && removedIndex !== addedIndex)
+      ) {
         const scene = Object.assign({}, this.scene)
         const group = scene.children.find((p) => p.id === groupId)
         const itemIndex = scene.children.indexOf(group)
         const newColumn = Object.assign({}, group)
-
+        console.log(newColumn)
         // check if element was ADDED in current group
         if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
           // your action / api call
+          console.log(newColumn)
+          console.log('elements changed between columns')
           dropResult.payload.loading = true
           // simulate api call
           setTimeout(function () {
@@ -81,8 +86,10 @@ export default {
         }
 
         newColumn.tasks = applyDrag(newColumn.tasks, dropResult)
-        scene.children.splice(itemIndex, 1, newColumn)
-        this.scene = scene
+        // TODO:store call
+        this.$store.dispatch({ type: 'updateGroups', itemIndex, newColumn })
+        // scene.children.splice(itemIndex, 1, newColumn)
+        // this.scene = scene
       }
     },
     getCardPayload(groupId) {
@@ -90,9 +97,6 @@ export default {
         return this.scene.children.find((p) => p.id === groupId).tasks[index]
       }
     },
-  },
-  computed: {
-    getScene() {},
   },
   components: { taskPreview, taskDetails, Container, Draggable },
 }
