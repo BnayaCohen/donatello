@@ -3,7 +3,7 @@
     class="container task-detail"
     @click="
       isDate = false;
-      isDateSide = false
+      isDateSide = false;
     "
   >
     <div class="detail-modal-container">
@@ -79,7 +79,7 @@
           placeholder="Enter title here..."
           @keydown.enter="
             saveTask;
-            $refs.taskTitle.blur()
+            $refs.taskTitle.blur();
           "
         />
       </div>
@@ -117,7 +117,7 @@
                   </svg>
                 </button>
               </label>
-              <div class="dynamic-popover pos-absolute">
+              <div class="pos-absolute">
                 <datepicker
                   v-if="isDate"
                   :inline="true"
@@ -205,7 +205,10 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <button class="sidebar-btn flex align-center">
+                <button
+                  class="sidebar-btn flex align-center"
+                  @click="toggleLabels"
+                >
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
@@ -221,17 +224,19 @@
                   </svg>
                   <span>Labels</span>
                 </button>
-                <div v-if="false" class="dynamic-popover pos-absolute">
+                <div ref="labelOpts" class="dynamic-popover pos-absolute">
                   <div class="popover-header">
                     <h4>Labels</h4>
-                    <button class="pop-close-btn">x</button>
+                    <button class="pop-close-btn pos-absolute">x</button>
                   </div>
                   <div class="label-list-container">
-                    <ul>
+                    <ul class="clean-list">
                       <li
                         v-for="label in labels"
                         :key="label.id"
-                        @click="addLabel"
+                        @click.stop="addLabel"
+                        class="label"
+                        :style="{ backgroundColor: label.color }"
                       >
                         <span>{{ label.title }}</span>
                       </li>
@@ -355,9 +360,9 @@
   </section>
 </template>
 <script>
-import { boardService } from '../services/board-service.js'
-import Datepicker from 'vuejs3-datepicker'
-import { ref } from 'vue'
+import { boardService } from '../services/board-service.js';
+import Datepicker from 'vuejs3-datepicker';
+import { ref } from 'vue';
 
 export default {
   name: 'taskDetails',
@@ -371,45 +376,51 @@ export default {
       dueDate: ref(new Date()),
       isDate: false,
       isDateSide: false,
-      labels: this.$store.getters.getLabels
-    }
+      labels: null,
+    };
   },
   async created() {
-    const { boardId, taskId, groupId } = this.$route.params
-    if (!this.$store.getters.board)
-      await this.$store.dispatch({ type: 'loadBoard', boardId })
-    this.task = await boardService.getTaskById(boardId, groupId, taskId)
-    this.$refs.taskTitle.value = this.task.title
-    this.$refs.taskDescription.value = this.task.description
+    const { boardId, taskId, groupId } = this.$route.params;
+    if (!this.$store.getters.board || !this.$store.getters.getLabels) {
+      await this.$store.dispatch({ type: 'loadBoard', boardId });
+    }
+    this.labels = this.$store.getters.getLabels;
+    this.task = await boardService.getTaskById(boardId, groupId, taskId);
+    this.$refs.taskTitle.value = this.task.title;
+    this.$refs.taskDescription.value = this.task.description;
   },
   methods: {
     updateTask() {
-      const { groupId } = this.$route.params
-      this.$store.dispatch({ type: 'saveTask', task: this.task, groupId })
-      this.isEditDescription = false
+      const { groupId } = this.$route.params;
+      this.$store.dispatch({ type: 'saveTask', task: this.task, groupId });
+      this.isEditDescription = false;
     },
     updateDueDate() {
-      const chosenDate = new Date(this.dueDate)
-      const timestamp = chosenDate.getTime()
-      this.task.dueDate = timestamp
+      const chosenDate = new Date(this.dueDate);
+      const timestamp = chosenDate.getTime();
+      this.task.dueDate = timestamp;
+    },
+    toggleLabels() {
+      const elLabels = this.$refs.labelOpts;
+      elLabels.classList.toggle('show');
     },
   },
   computed: {
     dueDateFixed() {
       if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
-        console.log(fixedDate)
-        fixedDate += ' at 12:00 AM'
-        return fixedDate
+        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10);
+        console.log(fixedDate);
+        fixedDate += ' at 12:00 AM';
+        return fixedDate;
       }
     },
     taskBgColor() {
       if (this.task.style.bgColor) {
-        return { backgroundColor: this.task.style.bgColor }
-      } else return ''
+        return { backgroundColor: this.task.style.bgColor };
+      } else return '';
     },
   },
   components: { Datepicker },
-}
+};
 </script>
 <style></style>
