@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import headerHomePage from '../cmps/header-page.vue';
+import headerHomePage from '../cmps/header-page.vue'
 export default {
   components: { headerHomePage },
-};
+}
 </script>
 
 <style>
