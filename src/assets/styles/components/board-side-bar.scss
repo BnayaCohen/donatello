@@ -1,9 +1,32 @@
-.board-side-bar{
+.board-side-bar {
+    background-color: #f4f5f7;
     position: absolute;
-    height: 100%;
-    // width: 100px;
-    background-color: aqua;
-    top: 20px;
+    z-index: 10;
+    top: rem(50px);
     right: 0;
+    bottom: 0;
+    transform: translateX(em(305px));
+    width: em(305px);
+    transition-duration: .1s;
+    transition-property: transform, width;
+    transition-timing-function: ease-in;
 
+    &.opened {
+        box-shadow: 0 12px 24px -6px #091e4240, 0 0 0 1px #091e4214;
+        transform: translateX(0);
+    }
+
+    .side-bar-title{
+        line-height: rem(20px);
+        margin: 14px 32px;
+        overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    transition: margin .12s ease-in;
+    }
+    .close-side-bar{
+        position: absolute;
+        right:0;
+        font-stretch:expanded;
+    }
 }
