@@ -70,6 +70,7 @@
   margin-top: 4px;
   background-color: transparent;
   color: #979ca3;
+  font-size: em(24px);
 
   &:hover {
     color: #172b4d;
@@ -116,9 +117,11 @@
   background-color: #fff;
   z-index: 10;
   padding: 0 12px 12px;
+
   &.show {
     display: block;
   }
+
   //   bottom: 0;
   .popover-header {
     margin-bottom: 8px;
@@ -126,6 +129,7 @@
     border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
     position: relative;
     color: #5e6c84;
+
     .pop-close-btn {
       right: 0;
       top: 0;
@@ -134,9 +138,23 @@
       cursor: pointer;
     }
   }
+
   .popover-content {
     overflow-y: auto;
   }
+}
+
+// Member avatar
+.member-avatar-big {
+  width: em(32px);
+  height: em(32px);
+  border-radius: 50%;
+}
+
+.member-avatar-small {
+  width: em(28px);
+  height: em(28px);
+  border-radius: 50%;
 }
 
 // Position
@@ -158,6 +176,10 @@
   content: '\e946';
 }
 
-.trellicons-activities::before{
+.trellicons-activities::before {
   content: '\e900';
+}
+
+.trellicons-close-btn::before {
+  content: "\e91c";
 }
