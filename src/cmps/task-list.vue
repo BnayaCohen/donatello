@@ -31,10 +31,10 @@
   </ul>
 </template>
 <script>
-import { Container, Draggable } from 'vue3-smooth-dnd';
-import { applyDrag } from '../services/util-service';
-import taskPreview from './task-preview.vue';
-import taskDetails from '../views/task-details.vue';
+import { Container, Draggable } from 'vue3-smooth-dnd'
+import { applyDrag } from '../services/util-service'
+import taskPreview from './task-preview.vue'
+import taskDetails from '../views/task-details.vue'
 export default {
   name: 'taskList',
   props: {
@@ -48,53 +48,53 @@ export default {
       isTaskDetail: false,
       items: [],
       scene: this.$store.getters.scene,
-    };
+    }
   },
   methods: {
     getColumnHeightPx() {
-      let kanban = document.getElementById('kanbanContainer');
-      return kanban ? kanban.offsetHeight - 122 : 0;
+      let kanban = document.getElementById('kanbanContainer')
+      return kanban ? kanban.offsetHeight - 122 : 0
     },
     onColumnDrop(dropResult) {
-      const scene = Object.assign({}, this.scene);
-      scene.children = applyDrag(scene.children, dropResult);
-      this.scene = scene;
+      const scene = Object.assign({}, this.scene)
+      scene.children = applyDrag(scene.children, dropResult)
+      this.scene = scene
     },
     onCardDrop(groupId, dropResult) {
       // check if element where ADDED or REMOVED in current collumn
+      console.log(groupId, dropResult)
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        const scene = Object.assign({}, this.scene);
-        const group = scene.children.find((p) => p.id === groupId);
-        const itemIndex = scene.children.indexOf(group);
-        const newColumn = Object.assign({}, group);
+        const scene = Object.assign({}, this.scene)
+        const group = scene.children.find((p) => p.id === groupId)
+        const itemIndex = scene.children.indexOf(group)
+        const newColumn = Object.assign({}, group)
 
         // check if element was ADDED in current group
         if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
           // your action / api call
-          dropResult.payload.loading = true;
+          dropResult.payload.loading = true
           // simulate api call
           setTimeout(function () {
-            dropResult.payload.loading = false;
-          }, Math.random() * 5000 + 1000);
+            dropResult.payload.loading = false
+          }, Math.random() * 5000 + 1000)
         }
 
-        newColumn.tasks = applyDrag(newColumn.tasks, dropResult);
-        scene.children.splice(itemIndex, 1, newColumn);
-        this.scene = scene;
+        newColumn.tasks = applyDrag(newColumn.tasks, dropResult)
+        scene.children.splice(itemIndex, 1, newColumn)
+        this.scene = scene
       }
     },
     getCardPayload(groupId) {
       return (index) => {
-        console.log(index, this.scene.children);
-        return this.scene.children.find((p) => p.id === groupId).tasks[index];
-      };
+        return this.scene.children.find((p) => p.id === groupId).tasks[index]
+      }
     },
   },
   computed: {
     getScene() {},
   },
   components: { taskPreview, taskDetails, Container, Draggable },
-};
+}
 </script>
 <style>
 .modal {
