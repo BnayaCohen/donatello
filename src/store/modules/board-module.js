@@ -61,9 +61,9 @@ export default {
       }
     },
     updateGroups(state, { newColumn, itemIndex }) {
-      console.log(state.currBoard)
       state.currBoard.groups.splice(itemIndex, 1, newColumn)
     },
+    undoChanges(state, { newColumn, itemIndex }) {},
   },
   actions: {
     async loadBoards({ commit }) {
@@ -173,11 +173,7 @@ export default {
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
       commit({ type: 'updateGroups', itemIndex, newColumn })
       try {
-        const board = await boardService.updateGroups(
-          state.currBoard._id,
-          itemIndex,
-          newColumn
-        )
+        const board = await boardService.updateGroups(state.currBoard)
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log(err)
