@@ -1,4 +1,18 @@
 <template>
+  <div
+    class="back-screen"
+    :style="{
+      backgroundColor: '#000000a3',
+      width: screenWidth,
+      height: screenHeight,
+      position: 'absolute',
+      top: 0,
+      zIndex: 2,
+      cursor: 'pointer'
+    }"
+    @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
+  ></div>
+
   <section
     class="container task-detail"
     @click="
@@ -8,11 +22,11 @@
   >
     <div class="detail-modal-container">
       <div
-        v-if="task.style?.bgColor"
+        v-if="task?.style?.bgColor"
         class="task-detail-bg"
         :style="taskBgColor"
       ></div>
-      <div v-if="task.style?.bgColor" class="btn-wrapper">
+      <div v-if="task?.style?.bgColor" class="btn-wrapper">
         <button class="cover-btn">
           <span class="cover-icon"> Cover </span>
         </button>
@@ -125,22 +139,22 @@
               <span class="trellicons trellicons-description"></span>
               <h3>Description</h3>
             </div>
-          <div class="task-description-txt">
-            <textarea
-              rows="3"
-              placeholder="Add a more detailed description..."
-              ref="taskDescription"
-              v-model="task.description"
-              @click="isEditDescription = !isEditDescription"
-            ></textarea>
-            <div
-              v-if="isEditDescription"
-              class="description-btns flex align-center"
-            >
-              <el-button @click="updateTask">Save</el-button>
-              <el-button @click="isEditDescription = false">X</el-button>
+            <div class="task-description-txt">
+              <textarea
+                rows="3"
+                placeholder="Add a more detailed description..."
+                ref="taskDescription"
+                v-model="task.description"
+                @click="isEditDescription = !isEditDescription"
+              ></textarea>
+              <div
+                v-if="isEditDescription"
+                class="description-btns flex align-center"
+              >
+                <el-button @click="updateTask">Save</el-button>
+                <el-button @click="isEditDescription = false">X</el-button>
+              </div>
             </div>
-          </div>
           </div>
           <div class="comment-container flex justify-between align-center">
             <div class="task-detail-title">
@@ -327,6 +341,30 @@ export default {
     this.$refs.taskTitle.value = this.task.title;
     this.$refs.taskDescription.value = this.task.description;
   },
+  computed: {
+    dueDateFixed() {
+      if (this.task?.dueDate) {
+        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10);
+        console.log(fixedDate);
+        fixedDate += ' at 12:00 AM';
+        return fixedDate;
+      }
+    },
+    taskBgColor() {
+      if (this.task?.style.bgColor) {
+        return { backgroundColor: this.task.style.bgColor };
+      } else return '';
+    },
+    groupTitle() {
+      const { groupId } = this.$route.params;
+      const board = this.$store.getters.board;
+      if (board?._id) {
+        const groups = board.groups;
+        const group = groups.find((group) => group.id === groupId);
+        return group.title;
+      }
+    },
+  },
   methods: {
     updateTask() {
       const { groupId } = this.$route.params;
@@ -377,30 +415,6 @@ export default {
       const { boardId, taskId, groupId } = this.$route.params;
       await this.$store.dispatch({ type: 'removeTask', taskId, groupId });
       this.$router.push('/board/' + boardId);
-    },
-  },
-  computed: {
-    dueDateFixed() {
-      if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10);
-        console.log(fixedDate);
-        fixedDate += ' at 12:00 AM';
-        return fixedDate;
-      }
-    },
-    taskBgColor() {
-      if (this.task?.style.bgColor) {
-        return { backgroundColor: this.task.style.bgColor };
-      } else return '';
-    },
-    groupTitle() {
-      const { groupId } = this.$route.params;
-      const board = this.$store.getters.board;
-      if (board?._id) {
-        const groups = board.groups;
-        const group = groups.find((group) => group.id === groupId);
-        return group.title;
-      }
     },
   },
   components: { Datepicker },
