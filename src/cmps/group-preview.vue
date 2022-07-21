@@ -31,7 +31,7 @@
               <span>Move list...</span>
             </li>
             <li>
-              <span @click="">Archive list...</span>
+              <span >Archive list...</span>
             </li>
             <li>
               <span>Watch</span>
@@ -41,7 +41,7 @@
       </button>
     </div>
 
-    <task-list :tasks="group.tasks" />
+    <task-list :tasks="group.tasks"/>
     <section class="add-task-container">
       <add-group-or-task @closeAddEntity="setAddTaskFalse" :edit="addTask" :groupOrTask="status || 'task'"
         :groupId="group.id" />
