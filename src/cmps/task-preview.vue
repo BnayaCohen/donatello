@@ -1,22 +1,20 @@
 <template>
-  <Draggable>
-    <li
-      @mouseenter="toggleOnHover"
-      @mouseleave="toggleOnHover"
-      class="task-preview"
-      @click="openTask(task.groupId, task.id)"
-    >
-      <div class="flex flex-column">
-        <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
-          ><i class="fa-solid fa-pencil"></i
-        ></span>
-        <div class="task-preview-header">
-          <div v-if="task?.styles" class="image-wrapper"></div>
-        </div>
-        <p>{{ task?.title }}</p>
+  <div
+    class="task-preview"
+    @mouseenter="toggleOnHover"
+    @mouseleave="toggleOnHover"
+    @click.stop="openTask(task.groupId, task.id)"
+  >
+    <div class="flex flex-column">
+      <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
+        ><i class="fa-solid fa-pencil"></i
+      ></span>
+      <div class="task-preview-header">
+        <div v-if="task?.styles" class="image-wrapper"></div>
       </div>
-    </li>
-  </Draggable>
+      <p>{{ task?.title }}</p>
+    </div>
+  </div>
   <div v-show="isOpen" class="quick-card-editor">
     <span
       @click="closeSideBar"
@@ -150,7 +148,6 @@
   </div>
 </template>
 <script>
-import { Draggable } from 'vue3-smooth-dnd'
 export default {
   name: 'taskPreview',
   props: {
@@ -164,33 +161,32 @@ export default {
       isOpen: false,
       x: 0,
       y: 0,
-    }
+    };
   },
   methods: {
     toggleOnHover() {
-      this.onHover = !this.onHover
+      this.onHover = !this.onHover;
     },
     openSideBar(ev) {
-      this.x = ev.clientX
-      this.y = ev.clientY
-      this.isOpen = true
+      this.x = ev.clientX;
+      this.y = ev.clientY;
+      this.isOpen = true;
     },
     closeSideBar() {
-      this.isOpen = false
+      this.isOpen = false;
     },
     openTask(groupId, taskId) {
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
-      )
+      );
     },
   },
   computed: {
     getCords() {
-      return { top: this.y + 'px', left: this.x - 228 + 'px' }
+      return { top: this.y + 'px', left: this.x - 228 + 'px' };
     },
   },
   emits: ['click'],
-  components: { Draggable },
-}
+};
 </script>
 <style></style>
