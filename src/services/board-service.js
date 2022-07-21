@@ -170,12 +170,9 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
-<<<<<<< HEAD
-  getGroupById
-=======
+  getGroupById,
   changeGroupPos,
   updateGroups,
->>>>>>> 733e93049ea811c2f516479835029951d89666e1
 }
 
 function getLabels() {
