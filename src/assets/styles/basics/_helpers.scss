@@ -144,6 +144,15 @@
   }
 }
 
+// Screen 
+
+.back-screen {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+}
+
+
 // Member avatar
 .member-avatar-big {
   width: em(32px);
@@ -222,4 +231,8 @@
 
 .trellicons-plus-sign::before {
   content: "\e901";
+}
+
+.trellicons-edit::before {
+  content: "\e928";
 }

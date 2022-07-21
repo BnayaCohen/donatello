@@ -7,7 +7,7 @@
   >
     <div class="flex flex-column">
       <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
-        ><i class="fa-solid fa-pencil"></i
+        ><i class="trellicons trellicons-edit"></i
       ></span>
       <div class="task-preview-header">
         <div v-if="task?.styles" class="image-wrapper"></div>
