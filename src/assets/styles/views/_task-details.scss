@@ -4,6 +4,22 @@
     display: inline-block;
     font-weight: 500;
   }
+  input {
+    -webkit-appearance: none;
+    background-color: #fafbfc;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 2px #dfe1e6;
+    box-sizing: border-box;
+    display: block;
+    line-height: rem(20px);
+    outline: none;
+    padding: rem(8px) rem(12px);
+    width: 100%;
+    transition-duration: 85ms;
+    transition-property: background-color,border-color,box-shadow;
+    transition-timing-function: ease;
+  }
   .small-title {
     color: #5e6c84;
     font-size: 0.8571428571rem;
@@ -128,18 +144,37 @@
         margin: 24px 0 24px 26px;
         position: relative;
         flex-wrap: wrap;
+        .task-labels {
+          display: flex;
+          padding: 0.5rem;
+          .label-prev {
+            min-width: 40px;
+            min-height: 32px;
+            margin: 0 rem(4px) rem(4px) 0;
+            font-size: 0.9rem;
+            color: #f4f5f7;
+            font-weight: 600;
+            .label-bg {
+              height: 100%;
+              width: 100%;
+              border-radius: 3px;
+              padding: 0 rem(12px);
+            }
+          }
+        }
         .due-date-container {
           flex-direction: column;
           align-items: flex-start;
           label {
-            padding-inline: 0.3rem;
+            padding-inline-end: 0.3rem;
           }
           .due-date-picker {
             position: absolute;
             background-color: transparent;
             border: none;
+            top: 4rem;
           }
-          
+
           .due-date-txt {
             border-radius: 5px;
             margin-inline-start: 0.5rem;
@@ -197,13 +232,31 @@
       .datepicker-side {
         position: absolute;
       }
-
+      input {
+        margin-bottom: rem(12px);
+      }
+      h4 {
+        font-weight: 400;
+      }
       .label-list-container {
+
         .label {
-          padding: 0.6rem 0.8rem;
+          min-height: 32px;
           margin: 0 0 4px;
           border-radius: 2px;
+          font-size: 0.9rem;
+          color:#172b4dd2;
+          font-weight: 600;
+          cursor: pointer;
+          span {
+            margin-left: rem(5px);
+          }
+        transition: 100ms padding ease-in-out;
+        &:hover {
+          padding-inline-start: 0.5rem;
         }
+        }
+
       }
     }
   }

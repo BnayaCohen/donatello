@@ -1,20 +1,39 @@
 <template>
   <ul class="container clean-list task-list">
     <Container
+      v-if="tasks.length"
       class="flex-grow overflow-y-auto overflow-x-hidden"
       orientation="vertical"
+      group-name="col-items"
       :shouldAcceptDrop="
         (e, payload) => e.groupName === 'col-items' && !payload.loading
       "
       :get-child-payload="getCardPayload(groupId)"
+      :drop-placeholder="{
+        className: `bg-primary bg-opacity-20  
+            border-dotted border-2 
+            border-primary rounded-lg mx-4 my-2`,
+        animationDuration: '200',
+        showOnTop: true,
+      }"
+      drag-class="bg-primary dark:bg-primary 
+            border-2 border-primary-hover text-white 
+            transition duration-100 ease-in z-50
+            transform rotate-6 scale-110"
+      drop-class="transition duration-100 
+            ease-in z-50 transform 
+            -rotate-2 scale-90"
       @drop="(e) => onCardDrop(groupId, e)"
     >
-      <task-preview v-for="task in tasks" :key="task.id" :task="task" />
+      <Draggable v-for="task in tasks" :key="task.id">
+        <task-preview :task="task" />
+      </Draggable>
     </Container>
   </ul>
 </template>
 <script>
 import { Container, Draggable } from 'vue3-smooth-dnd'
+import { applyDrag } from '../services/util-service'
 import taskPreview from './task-preview.vue'
 import taskDetails from '../views/task-details.vue'
 export default {
@@ -29,18 +48,27 @@ export default {
     return {
       isTaskDetail: false,
       items: [],
+      scene: this.$store.getters.scene,
     }
   },
   methods: {
+    getColumnHeightPx() {
+      let kanban = document.getElementById('kanbanContainer')
+      return kanban ? kanban.offsetHeight - 122 : 0
+    },
+    onColumnDrop(dropResult) {
+      const scene = Object.assign({}, this.scene)
+      scene.children = applyDrag(scene.children, dropResult)
+      this.scene = scene
+    },
     onCardDrop(groupId, dropResult) {
       // check if element where ADDED or REMOVED in current collumn
+      console.log(groupId, dropResult)
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        const scene = Object.assign({}, this.$store.getters.scene)
-        const group = scene.children.filter((p) => p.id === groupId)[0]
+        const scene = Object.assign({}, this.scene)
+        const group = scene.children.find((p) => p.id === groupId)
         const itemIndex = scene.children.indexOf(group)
-        console.log(itemIndex)
-        const newGroup = Object.assign({}, group)
-        console.log(newGroup, dropResult)
+        const newColumn = Object.assign({}, group)
 
         // check if element was ADDED in current group
         if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
@@ -51,25 +79,21 @@ export default {
             dropResult.payload.loading = false
           }, Math.random() * 5000 + 1000)
         }
-        console.log(newGroup, scene)
-        newGroup.children = applyDrag(newGroup.children, dropResult)
-        scene.children.splice(itemIndex, 1, newGroup)
+
+        newColumn.tasks = applyDrag(newColumn.tasks, dropResult)
+        scene.children.splice(itemIndex, 1, newColumn)
         this.scene = scene
       }
     },
     getCardPayload(groupId) {
       return (index) => {
-        console.log(
-          groupId,
-          this.$store.getters.scene.children.filter((p) => p.id === groupId)
-        )
-        return this.$store.getters.scene.children.filter(
-          (p) => p.id === groupId
-        )[0].tasks[index]
+        return this.scene.children.find((p) => p.id === groupId).tasks[index]
       }
     },
   },
-
+  computed: {
+    getScene() {},
+  },
   components: { taskPreview, taskDetails, Container, Draggable },
 }
 </script>

@@ -7,7 +7,10 @@ export const utilService = {
   timeAgo,
   makeRandNum,
   getRandomColor,
+<<<<<<< HEAD
   // applyDrag,
+=======
+>>>>>>> bb57f55860a9bb31163b6f3d865b78884e24d905
 };
 
 function makeRandNum() {
