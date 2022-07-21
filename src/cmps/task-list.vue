@@ -1,6 +1,29 @@
 <template>
   <ul class="container clean-list task-list">
-    <Container>
+    <Container
+      class="flex-grow overflow-y-auto overflow-x-hidden"
+      orientation="vertical"
+      group-name="col-items"
+      :shouldAcceptDrop="
+        (e, payload) => e.groupName === 'col-items' && !payload.loading
+      "
+      :get-child-payload="getCardPayload(groupId)"
+      :drop-placeholder="{
+        className: `bg-primary bg-opacity-20  
+            border-dotted border-2 
+            border-primary rounded-lg mx-4 my-2`,
+        animationDuration: '200',
+        showOnTop: true,
+      }"
+      drag-class="bg-primary dark:bg-primary 
+            border-2 border-primary-hover text-white 
+            transition duration-100 ease-in z-50
+            transform rotate-6 scale-110"
+      drop-class="transition duration-100 
+            ease-in z-50 transform 
+            -rotate-2 scale-90"
+      @drop="(e) => onCardDrop(groupId, e)"
+    >
       <Draggable v-for="task in tasks" :key="task.id">
         <task-preview :task="task" />
       </Draggable>
@@ -8,31 +31,70 @@
   </ul>
 </template>
 <script>
-import { Container, Draggable } from 'vue3-smooth-dnd'
-import taskPreview from './task-preview.vue'
-import taskDetails from '../views/task-details.vue'
+import { Container, Draggable } from 'vue3-smooth-dnd';
+import { applyDrag } from '../services/util-service';
+import taskPreview from './task-preview.vue';
+import taskDetails from '../views/task-details.vue';
 export default {
   name: 'taskList',
   props: {
     tasks: {
       type: Array,
     },
+    groupId: String,
   },
   data() {
     return {
       isTaskDetail: false,
       items: [],
-    }
+      scene: this.$store.getters.scene,
+    };
   },
-  methods: {},
-  //   getChildPayload (index) {
-  //     console.log(index)
-  //   return {
+  methods: {
+    getColumnHeightPx() {
+      let kanban = document.getElementById('kanbanContainer');
+      return kanban ? kanban.offsetHeight - 122 : 0;
+    },
+    onColumnDrop(dropResult) {
+      const scene = Object.assign({}, this.scene);
+      scene.children = applyDrag(scene.children, dropResult);
+      this.scene = scene;
+    },
+    onCardDrop(groupId, dropResult) {
+      // check if element where ADDED or REMOVED in current collumn
+      if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+        const scene = Object.assign({}, this.scene);
+        const group = scene.children.find((p) => p.id === groupId);
+        const itemIndex = scene.children.indexOf(group);
+        const newColumn = Object.assign({}, group);
 
-  //   }
-  // },
+        // check if element was ADDED in current group
+        if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
+          // your action / api call
+          dropResult.payload.loading = true;
+          // simulate api call
+          setTimeout(function () {
+            dropResult.payload.loading = false;
+          }, Math.random() * 5000 + 1000);
+        }
+
+        newColumn.tasks = applyDrag(newColumn.tasks, dropResult);
+        scene.children.splice(itemIndex, 1, newColumn);
+        this.scene = scene;
+      }
+    },
+    getCardPayload(groupId) {
+      return (index) => {
+        console.log(index, this.scene.children);
+        return this.scene.children.find((p) => p.id === groupId).tasks[index];
+      };
+    },
+  },
+  computed: {
+    getScene() {},
+  },
   components: { taskPreview, taskDetails, Container, Draggable },
-}
+};
 </script>
 <style>
 .modal {

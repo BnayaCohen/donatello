@@ -64,6 +64,18 @@
     }
 }
 
+.close-btn {
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+  background-color: transparent;
+  color: #42526e;
+
+  &:hover{
+    color: #172b4d;
+  }
+}
+
 // Text 
 .vertical-text {
     writing-mode: tb-rl;
