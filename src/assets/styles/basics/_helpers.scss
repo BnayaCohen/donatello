@@ -2,23 +2,29 @@
 .flex {
   display: flex;
 }
+
 .flex.inline-flex {
   display: inline-flex;
 }
+
 .flex.flex-column {
   flex-direction: column;
 }
+
 .align-self-center {
   align-self: center;
 }
+
 .justify-center {
-  justify-content: center;
+    justify-content: center;
 }
+
 .justify-between {
-  justify-content: space-between;
+    justify-content: space-between;
 }
+
 .align-center {
-  align-items: center;
+    align-items: center;
 }
 
 // List
@@ -36,10 +42,32 @@
   transition: border 0.1s;
 }
 
-// Text
+// Buttons
+.btn-background {
+    background-color: #00000014;
+    border: none;
+    border-radius: 3px;
+    color: inherit;
+    box-shadow: none;
+    cursor: pointer;
+    height: em(30px);
+    margin: 0 4px 4px 0;
+    padding: 0 9px;
+    font-family: inherit;
+    font-size: em(15px);
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+}
+
+// Text 
 .vertical-text {
-  writing-mode: tb-rl;
-  transform: rotate(-180deg);
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
 }
 
 .tag-text {
@@ -51,29 +79,33 @@
 // Aspect ratios
 
 .ratio-16-9 {
-  @include aspect-ratio(100, 56);
+    @include aspect-ratio(100, 56);
 }
 
 .ratio-square {
-  @include aspect-ratio(100, 100);
+    @include aspect-ratio(100, 100);
 }
 
 .ratio-card {
-  @include aspect-ratio(100, 80);
+    @include aspect-ratio(100, 80);
 }
 
 .ratio-poster {
-  @include aspect-ratio(100, 150);
+    @include aspect-ratio(100, 150);
 }
 
 // Pop over
 
 .dynamic-popover {
+    display: none;
   width: 304px;
   border-radius: 3px;
   box-shadow: 2 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
   background-color: #fff;
   z-index: 10;
+  &.show {
+    display: block;
+  }
 //   bottom: 0;
   .popover-header {
     margin-bottom: 8px;
@@ -82,6 +114,13 @@
     position: relative;
     color: #5e6c84;
     padding: 0 12px 12px;
+    .pop-close-btn {
+        right: 6px;
+        top: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
   }
   .popover-content {
     overflow-y: auto;

@@ -197,6 +197,14 @@
       .datepicker-side {
         position: absolute;
       }
+
+      .label-list-container {
+        .label {
+          padding: 0.6rem 0.8rem;
+          margin: 0 0 4px;
+          border-radius: 2px;
+        }
+      }
     }
   }
 }
