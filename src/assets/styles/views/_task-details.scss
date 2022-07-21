@@ -3,6 +3,12 @@
   h3 {
     display: inline-block;
     font-weight: 500;
+    margin: 0;
+    padding: 0;
+  }
+  h4 {
+    margin: 0;
+    padding: 0;
   }
   textarea,
   input {
@@ -10,7 +16,6 @@
     background-color: #fafbfc;
     border: none;
     border-radius: 3px;
-    box-shadow: inset 0 0 0 2px #dfe1e6;
     box-sizing: border-box;
     display: block;
     line-height: rem(20px);
@@ -29,7 +34,7 @@
     font-weight: 600;
     // letter-spacing: 0.04em;
     font-size: 12px;
-    line-height: 20px;
+    margin-top: 5px;
     // text-transform: uppercase;
   }
 
@@ -37,7 +42,6 @@
     width: 24px;
     height: 18px;
   }
-  .description-container,
   .task-detail-title {
     display: flex;
     grid-gap: 8px;
@@ -106,15 +110,12 @@
       padding: 20px 8px 0 16px;
       gap: 8px;
 
-      span {
-        margin-block-end: 0.3rem;
-      }
       .title-input {
         border: none;
         outline: none;
-        min-height: 24px;
+        // min-height: 24px;
         padding: 4px 8px;
-        height: 33.333px;
+        min-height: 33.333px;
         border-radius: 3px;
         font-size: 1.25rem;
         font-weight: 600;
@@ -124,22 +125,31 @@
         width: 100%;
         margin-right: 50px;
         background-color: transparent;
+        overflow-y: hidden;
+        overflow-wrap: break-word;
+        color: #172b4d;
       }
-      .title-input:focus {
+      .title-input:focus-within {
         background-color: $clr3;
-        border: 2px solid rgb(17, 53, 114);
+        box-shadow: inset 0 0 0 2px #0079bf;
       }
     }
     .subtitle-header {
       opacity: 0.8;
-      margin: 8px 58px;
+      margin: 0 58px;
       p {
         margin: 0 0 8px;
       }
     }
     .task-detail-main {
-      padding: 0 8px 8px 16px;
+      padding: 0 8px 8px 29px;
       flex-basis: 75%;
+      .description-container {
+        margin-bottom: 24px;
+        .description-header {
+          padding: 8px 0;
+        }
+      }
       .task-description-txt {
         margin-inline-start: rem(40px);
         textarea {
@@ -154,18 +164,18 @@
           color: #172b4d;
           font-family: inherit;
           font-size: 1rem;
+          overflow-wrap: break-word;
         }
       }
       .members-labels-container {
         display: flex;
-        grid-gap: 16px;
-        gap: 16px;
-        margin: 24px 0 24px 26px;
+        margin: 9px 0 24px 26px;
+        gap: rem(8px);
         position: relative;
         flex-wrap: wrap;
         .task-labels {
           display: flex;
-          padding: 0.5rem;
+          padding: 0.5rem 0;
           .label-prev {
             min-width: 40px;
             min-height: 32px;
@@ -185,6 +195,7 @@
           flex-direction: column;
           align-items: flex-start;
           label {
+            padding: 0.55rem 0;
             padding-inline-end: 0.3rem;
           }
           .due-date-picker {
@@ -193,6 +204,7 @@
             border: none;
             top: 4rem;
             z-index: 10;
+            padding: 0.6rem 0;
           }
 
           .due-date-txt {
@@ -223,6 +235,7 @@
       flex-basis: 25%;
       flex-direction: column;
       gap: 8px;
+      width: calc(100% - 600px);
       .trellicons {
         font-size: 1.15rem;
         height: 16px;
@@ -238,14 +251,14 @@
         border-radius: 3px;
         color: #172b4d;
         font-family: inherit;
-        gap: rem(6px);
+        gap: rem(9px);
         font-size: 1rem;
         line-height: rem(20px);
-        padding: rem(8px) rem(12px);
+        padding: rem(8px) rem(7.7px);
         transition: all 85ms ease;
         background-color: rgba(9, 30, 66, 0.0392156862745098);
         width: 100%;
-        margin-block-start: 8px;
+        margin-top: rem(8.9px);
         cursor: pointer;
         svg {
           height: 13px;
