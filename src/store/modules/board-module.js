@@ -64,8 +64,8 @@ export default {
     async saveBoard({ commit }, { board }) {
       const actionType = board._id ? 'updateBoard' : 'addBoard'
       try {
-        const savedBoardId = await boardService.save(board)
-        const savedBoard = await boardService.getById(savedBoardId)
+        const savedBoard = await boardService.saveBoard(board)
+        // const savedBoard = await boardService.getById(savedBoard._id)
         commit({ type: actionType, board: savedBoard })
         return savedBoard
       } catch (err) {
