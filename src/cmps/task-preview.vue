@@ -161,32 +161,32 @@ export default {
       isOpen: false,
       x: 0,
       y: 0,
-    };
+    }
   },
   methods: {
     toggleOnHover() {
-      this.onHover = !this.onHover;
+      this.onHover = !this.onHover
     },
     openSideBar(ev) {
-      this.x = ev.clientX;
-      this.y = ev.clientY;
-      this.isOpen = true;
+      this.x = ev.clientX
+      this.y = ev.clientY
+      this.isOpen = true
     },
     closeSideBar() {
-      this.isOpen = false;
+      this.isOpen = false
     },
     openTask(groupId, taskId) {
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
-      );
+      )
     },
   },
   computed: {
     getCords() {
-      return { top: this.y + 'px', left: this.x - 228 + 'px' };
+      return { top: this.y + 'px', left: this.x - 228 + 'px' }
     },
   },
   emits: ['click'],
-};
+}
 </script>
 <style></style>

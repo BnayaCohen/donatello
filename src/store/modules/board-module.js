@@ -144,19 +144,7 @@ export default {
         console.log('couldnt remove board', err)
       }
     },
-    async storeSaveTask({ commit, state }, { groupId, task, activity }) {
-      try {
-        const board = await boardService.saveTask(
-          state.currBoard._id,
-          groupId,
-          task,
-          activity
-        )
-        commit('setBoard', board)
-      } catch (err) {
-        console.log("Couldn't save task", err)
-      }
-    },
+
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
       try {
