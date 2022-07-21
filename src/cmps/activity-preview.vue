@@ -1,8 +1,8 @@
 <template>
-    <!-- <li class="activity-preview">
-        <img :src="activity.byMember.imgUrl" :alt="activity.byMember.fullname">
+    <li class="activity-preview" v-if="activity">
+        <!-- <img :src="activity.byMember?.imgUrl" :alt="activity.byMember?.fullname"> -->
         <h3 class="member-fullname">{{}}</h3>
-    </li> -->
+    </li>
 </template>
 <script>
 export default {
