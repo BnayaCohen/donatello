@@ -442,7 +442,6 @@ export default {
         if (label.id === labelId) this.taskLabels.push(label);
       });
     });
-    console.log(this.taskLabels);
     this.$refs.taskTitle.value = this.task.title;
     this.$refs.taskDescription.value = this.task.description;
   },
@@ -461,6 +460,13 @@ export default {
       const timestamp = chosenDate.getTime();
       this.task.dueDate = timestamp;
     },
+    // updateTaskLabels() {
+    //   this.task.labelIds.map((labelId) => {
+    //     this.labels.forEach((label) => {
+    //       if (label.id === labelId && !this.taskLabels.includes(labelId)) this.taskLabels.push(label);
+    //     });
+    //   });
+    // },
     toggleLabels() {
       const elLabels = this.$refs.labelOpts;
       elLabels.classList.toggle('show');
@@ -473,11 +479,13 @@ export default {
         if (this.task.labelIds[i] === labelId) {
           this.task.labelIds.splice(i, 1);
           this.updateTask();
+          // this.updateTaskLabels();
           return;
         }
       }
       this.task.labelIds.push(labelId);
       this.updateTask();
+      // this.updateTaskLabels();
     },
     async removeTask() {
       const { boardId, taskId, groupId } = this.$route.params;
