@@ -3,6 +3,7 @@
         <board-header v-if="board" :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar" />
         <board-side-bar v-if="board" :activities="activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar"/>
         <group-list v-if="board" :groups="groups" @add-task="addTask" />
+        <router-view></router-view>
     </main>
 </template>
 
@@ -32,7 +33,7 @@ export default {
         },
         board() {
             return this.$store.getters.board
-        }
+        },
     },
     methods: {
         addTask(groupId) {
