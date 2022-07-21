@@ -76,13 +76,6 @@
   }
 }
 
-.trellicon {
-  font-family: 'trellicons';
-}
-
-.trellicon-member::before {
-  content: '\e946';
-}
 // Text
 .vertical-text {
   writing-mode: tb-rl;
@@ -154,4 +147,17 @@
 
 .pos-relative {
   position: relative;
+}
+
+// Icons
+.trellicons {
+  font-family: 'trellicons';
+}
+
+.trellicons-member::before {
+  content: '\e946';
+}
+
+.trellicons-activities::before{
+  content: '\e900';
 }
