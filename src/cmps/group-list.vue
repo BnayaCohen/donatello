@@ -18,17 +18,10 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import { Container, Draggable } from 'vue3-smooth-dnd'
-// import { applyDrag } from '../services/util-service'
-import groupPreview from './group-preview.vue'
-import { boardService } from '../services/board-service.js'
-=======
 import { Container, Draggable } from 'vue3-smooth-dnd';
 import { applyDrag } from '../services/util-service';
 import groupPreview from './group-preview.vue';
 import { boardService } from '../services/board-service.js';
->>>>>>> bb57f55860a9bb31163b6f3d865b78884e24d905
 
 export default {
   props: {
