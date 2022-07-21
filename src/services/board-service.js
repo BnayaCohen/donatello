@@ -333,7 +333,7 @@ async function removeTask(boardId, groupId, taskId) {
 
   const group = board.groups.find((group) => group.id === groupId)
   const idx = group.tasks.findIndex((task) => task.id === taskId)
-  if (idx !== -1) group.splice(idx, 1)
+  if (idx !== -1) group.tasks.splice(idx, 1)
   return await saveBoard(board)
 }
 
