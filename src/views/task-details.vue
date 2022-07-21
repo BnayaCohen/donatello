@@ -88,6 +88,20 @@
           <div class="members-labels-container flex align-center">
             <div class="labels-container">
               <h3 class="small-title">Labels</h3>
+              <div class="task-labels">
+                <div
+                  class="label-prev"
+                  v-for="label in taskLabels"
+                  :key="label.id"
+                >
+                  <div
+                    class="label-bg flex align-center justify-center"
+                    :style="{ backgroundColor: label.color }"
+                  >
+                    <span>{{ label.title }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div
               v-if="task?.dueDate"
@@ -225,17 +239,26 @@
                   <span>Labels</span>
                 </button>
                 <div ref="labelOpts" class="dynamic-popover pos-absolute">
-                  <div class="popover-header">
+                  <div class="popover-header flex justify-center align-center">
                     <h4>Labels</h4>
-                    <button class="pop-close-btn pos-absolute">x</button>
+                    <button
+                      class="pop-close-btn pos-absolute"
+                      @click="toggleLabels"
+                    >
+                      x
+                    </button>
                   </div>
-                  <div class="label-list-container">
+                  <div class="popover-content label-list-container">
+                    <div class="search-labels">
+                      <input type="text" placeholder="Search labels..." />
+                    </div>
+                    <h3 class="small-title">Labels</h3>
                     <ul class="clean-list">
                       <li
                         v-for="label in labels"
                         :key="label.id"
-                        @click.stop="addLabel"
-                        class="label"
+                        @click.stop="addLabel(label.id)"
+                        class="label flex align-center"
                         :style="{ backgroundColor: label.color }"
                       >
                         <span>{{ label.title }}</span>
@@ -353,6 +376,33 @@
                 </button>
               </div>
             </div>
+            <div class="actions pos-relative">
+              <h3 class="small-title">Actions</h3>
+              <div class="sidebar-btns flex flex-column">
+                <div class="sidebar-btn-container">
+                  <button
+                    class="sidebar-btn flex align-center"
+                    @click="removeTask"
+                  >
+                    <svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M13 2H1v2h12V2zM0 4a1 1 0 0 0 1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v2zm2 1h10v9H2V5zm2 3h6V7H4v1z"
+                      ></path>
+                    </svg>
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -377,6 +427,7 @@ export default {
       isDate: false,
       isDateSide: false,
       labels: null,
+      taskLabels: [],
     };
   },
   async created() {
@@ -386,13 +437,23 @@ export default {
     }
     this.labels = this.$store.getters.getLabels;
     this.task = await boardService.getTaskById(boardId, groupId, taskId);
+    this.task.labelIds.map((labelId) => {
+      this.labels.forEach((label) => {
+        if (label.id === labelId) this.taskLabels.push(label);
+      });
+    });
+    console.log(this.taskLabels);
     this.$refs.taskTitle.value = this.task.title;
     this.$refs.taskDescription.value = this.task.description;
   },
   methods: {
     updateTask() {
       const { groupId } = this.$route.params;
-      this.$store.dispatch({ type: 'saveTask', task: this.task, groupId });
+      this.$store.dispatch({
+        type: 'saveTask',
+        task: JSON.parse(JSON.stringify(this.task)),
+        groupId,
+      });
       this.isEditDescription = false;
     },
     updateDueDate() {
@@ -403,6 +464,25 @@ export default {
     toggleLabels() {
       const elLabels = this.$refs.labelOpts;
       elLabels.classList.toggle('show');
+    },
+    addLabel(labelId) {
+      if (!this.task.labelIds || !this.task.labelIds.length) {
+        this.task.labelIds = [];
+      }
+      for (var i = 0; i < this.task.labelIds.length; i++) {
+        if (this.task.labelIds[i] === labelId) {
+          this.task.labelIds.splice(i, 1);
+          this.updateTask();
+          return;
+        }
+      }
+      this.task.labelIds.push(labelId);
+      this.updateTask();
+    },
+    async removeTask() {
+      const { boardId, taskId, groupId } = this.$route.params;
+      await this.$store.dispatch({ type: 'removeTask', taskId, groupId });
+      this.$router.push('/board/' + boardId);
     },
   },
   computed: {
