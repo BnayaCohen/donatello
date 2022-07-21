@@ -2,22 +2,28 @@
 .flex {
     display: flex;
 }
+
 .flex.inline-flex {
     display: inline-flex;
 }
+
 .flex.flex-column {
     flex-direction: column;
 }
+
 .align-self-center {
     align-self: center;
 }
-.justify-center{
+
+.justify-center {
     justify-content: center;
 }
-.justify-between{
+
+.justify-between {
     justify-content: space-between;
 }
-.align-center{
+
+.align-center {
     align-items: center;
 }
 
@@ -37,10 +43,32 @@
     transition: border .1s;
 }
 
+// Buttons
+.btn-background {
+    background-color: #00000014;
+    border: none;
+    border-radius: 3px;
+    color: inherit;
+    box-shadow: none;
+    cursor: pointer;
+    height: em(30px);
+    margin: 0 4px 4px 0;
+    padding: 0 9px;
+    font-family: inherit;
+    font-size: em(15px);
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+}
+
 // Text 
 .vertical-text {
     writing-mode: tb-rl;
-    transform: rotate(-180deg);  
+    transform: rotate(-180deg);
 }
 
 .tag-text {
@@ -51,13 +79,21 @@
 
 // Aspect ratios
 
-.ratio-16-9 { @include aspect-ratio(100, 56); }
+.ratio-16-9 {
+    @include aspect-ratio(100, 56);
+}
 
-.ratio-square { @include aspect-ratio(100, 100); }
+.ratio-square {
+    @include aspect-ratio(100, 100);
+}
 
-.ratio-card { @include aspect-ratio(100, 80); }
+.ratio-card {
+    @include aspect-ratio(100, 80);
+}
 
-.ratio-poster { @include aspect-ratio(100, 150); }
+.ratio-poster {
+    @include aspect-ratio(100, 150);
+}
 
 // Pop over
 
