@@ -1,8 +1,8 @@
 <template>
-    <li class="cativity-preview">
+    <!-- <li class="activity-preview">
         <img :src="activity.byMember.imgUrl" :alt="activity.byMember.fullname">
         <h3 class="member-fullname">{{}}</h3>
-    </li>
+    </li> -->
 </template>
 <script>
 export default {
@@ -20,7 +20,6 @@ export default {
 
     },
     components: {
-        activityPreview
     }
 }
 </script>
