@@ -171,7 +171,9 @@ export const boardService = {
   getTaskById,
   changeGroupPos,
   updateGroups,
-};
+  changeGroupPos,
+  updateGroups,
+}
 
 function getLabels() {
   return [

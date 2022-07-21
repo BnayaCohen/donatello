@@ -2,28 +2,49 @@
   margin-bottom: 8px;
   margin-left: 2px;
   overflow-x: auto;
-  overflow-y: hidden;
+  // overflow-y: hidden;
   padding-bottom: 8px;
-  scroll-snap-type: x mandatory;
+  // scroll-snap-type: x mandatory;
+  height: calc(100vh - 104px);
+
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  // background
+  &::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 4px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #091e4254;
+    border-radius: 4px;
+  }
 }
 
 .group-container {
   background-color: #ebecf0;
   margin: 0 4px;
-  padding: 6px 4px;
-  height: fit-content;
+  padding:6px 8px 7px 8px;
   border-radius: 3px;
+  height: fit-content;
+  width:em(272px);
 
   .group-header {
     .group-title {
-      line-height: em(20px);
+      height: em(30px);
+      width: 100%;
       font-weight: 600;
       box-shadow: none;
       color: #172b4d;
+      font-family: inherit;
+      font-size: em(14px);
       cursor: pointer;
       border-radius: 3px;
-      margin: 0 4px 6px 0;
-      padding: 8px 10px;
+      margin-bottom:4px;
+      padding: 0 10px;
       transition-property: background-color, border-color, box-shadow;
       transition-timing-function: ease;
 
@@ -39,10 +60,11 @@
       border-radius: 3px;
       background-color: inherit;
       color: #5e6c84;
-      font-size: rem(20px);
+      font-size: rem(18px);
       height: em(23px);
-      margin-top: 2px;
-      padding: 5px;
+      margin: 1px  0 ;
+      margin-left: 3px;
+      padding: 4px;
       cursor: pointer;
 
       &:hover {
@@ -95,6 +117,7 @@
   background-color: #fff;
   z-index: 20;
   color: set-text-color(#fff);
+
   .close-popup-btn {
     z-index: 25;
     position: absolute;
@@ -103,9 +126,11 @@
     top: 11px;
     right: 8px;
   }
+
   h4 {
     margin: 0.8rem;
   }
+
   ul {
     text-align: left;
 
