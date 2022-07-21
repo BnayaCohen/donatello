@@ -39,28 +39,8 @@
         <button @click="addEntity" class="add-entity-btn">
           {{ btnPlaceholder }}
         </button>
-        <button @click="closeAddEntity" class="close-btn">
-          <svg
-            stroke="currentColor"
-            fill="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            class="icon"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            style="
-              color: rgb(66, 82, 110);
-              font-size: 24px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-          >
-            <path
-              d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"
-            ></path>
-          </svg>
+        <button @click="closeAddEntity" class="close-btn trellicons trellicons-close-btn">
+          
         </button>
       </div>
     </div>
@@ -109,7 +89,20 @@ export default {
         type: 'saveTask',
         groupId: this.groupId,
         task: newTask,
-        activity: {},
+        activity: {
+          id: 'a101',
+      txt: 'Changed Color',
+      createdAt: Date.now(),
+      byMember: {
+        _id: 'u101',
+        fullname: 'Abi Abambi',
+        imgUrl: 'http://some-img',
+      },
+      task: {
+        id: 'c101',
+        title: 'Replace Logo',
+      },
+        },
       })
       this.titleInput = ''
     },

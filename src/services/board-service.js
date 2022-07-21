@@ -170,7 +170,12 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
+<<<<<<< HEAD
   getGroupById
+=======
+  changeGroupPos,
+  updateGroups,
+>>>>>>> 733e93049ea811c2f516479835029951d89666e1
 }
 
 function getLabels() {
@@ -350,6 +355,20 @@ async function getGroupById(boardId, groupId) {
 
   return  board.groups.find((group) => group.id === groupId)
 }
+async function changeGroupPos(boardId, dropResult) {
+  const { removedIndex, addedIndex } = dropResult
+  const board = await getById(boardId)
+  const group = board.groups.splice(removedIndex, 1)[0]
+  board.groups.splice(addedIndex, 0, group)
+  return await saveBoard(board)
+}
+
+async function updateGroups(boardId, itemIndex, newColumn) {
+  const board = await getById(boardId)
+  board.groups.splice(itemIndex, 1, newColumn)
+  return await saveBoard(board)
+}
+
 // function updateTask(cmpType, data) {
 //   switch (cmpType) {
 //     case 'status-picker':
