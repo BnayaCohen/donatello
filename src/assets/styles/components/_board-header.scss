@@ -1,27 +1,6 @@
 .board-header {
-    padding-block: 5px;
+    padding: 2px 0 2px;
     flex-wrap: wrap;
-
-    .btn-background {
-        background-color: #00000014;
-        border: none;
-        border-radius: 3px;
-        color: inherit;
-        box-shadow: none;
-        cursor: pointer;
-        line-height: em(24px);
-        margin: 0 4px 4px 0;
-        padding: 6px 9px;
-        font-family: inherit;
-        font-size: em(16px);
-        transition-property: background-color, border-color, box-shadow;
-        transition-duration: 85ms;
-        transition-timing-function: ease;
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-    }
 
     .board-name-input {
         font-weight: 700;

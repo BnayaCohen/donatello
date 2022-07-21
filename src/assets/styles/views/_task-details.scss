@@ -2,15 +2,17 @@
   line-height: rem(20px);
   h3 {
     display: inline-block;
+    font-weight: 500;
   }
   .small-title {
     color: #5e6c84;
     font-size: 0.8571428571rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 4px;
-    letter-spacing: 0.04em;
-    line-height: 20px;
-    text-transform: uppercase;
+    // letter-spacing: 0.04em;
+    font-size: 12px;
+    // line-height: 20px;
+    // text-transform: uppercase;
   }
 
   svg {
@@ -26,7 +28,7 @@
   }
   .detail-modal-container {
     position: absolute;
-    top: 46px;
+    top: 58px;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -51,13 +53,18 @@
       top: 8px;
       right: 8px;
       color: #42526e;
-      background-color: rgba(0, 0, 0, 0.0784313725490196);
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      transition: background-color 85ms, color 85ms;
-      font-size: 2.2857142857rem;
-      padding: 10px;
+      height: 35px;
+      width: 35px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+      &:hover {
+        transition: all 250ms;
+        border-radius: 50%;
+        // padding: 10px;
+        background-color: rgba(0, 0, 0, 0.0784313725490196);
+      }
     }
     .task-detail-bg {
       min-height: 116px;
@@ -124,17 +131,33 @@
         .due-date-container {
           flex-direction: column;
           align-items: flex-start;
+          label {
+            padding-inline: 0.3rem;
+          }
           .due-date-picker {
             position: absolute;
             background-color: transparent;
             border: none;
           }
-
+          
           .due-date-txt {
-            background-color: darken($clr3, 10%);
-            padding: 0.2rem;
             border-radius: 5px;
             margin-inline-start: 0.5rem;
+            color: #172b4ddd;
+          }
+          .due-date-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background-color: rgba(9, 30, 66, 0.0392156862745098);
+            padding: 0.2rem;
+            border-radius: 3px;
+            &:hover {
+              transition: all 85ms ease-in-out;
+              background-color: rgba(9, 30, 66, 0.082156862745098);
+            }
           }
         }
       }
@@ -146,6 +169,7 @@
       flex-direction: column;
       gap: 8px;
       .sidebar-btn {
+        position: relative;
         display: flex;
         align-items: center;
         border: none;
@@ -167,7 +191,18 @@
         }
         &:hover {
           transition: all 85ms ease-in-out;
-          background-color: rgba(9, 30, 66, 0.152156862745098);
+          background-color: rgba(9, 30, 66, 0.082156862745098);
+        }
+      }
+      .datepicker-side {
+        position: absolute;
+      }
+
+      .label-list-container {
+        .label {
+          padding: 0.6rem 0.8rem;
+          margin: 0 0 4px;
+          border-radius: 2px;
         }
       }
     }
