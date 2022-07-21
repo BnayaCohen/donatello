@@ -39,17 +39,14 @@
                 </svg>
                 <p>Activities</p>
             </div>
-            <!-- <ul class="activities-list">
-                <li v-for="activity in activities" :key="activity.id">
-                    <img :src="activity.byMember.imgUrl" :alt="activity.byMember.fullname">
-                    <h3 class="member-fullname">{{}}</h3>
-                </li>
-            </ul> -->
+            <ul class="clean-list">
+                <activity-preview v-for="activity in activities" :key="activity.id" :activity="activity" />
+            </ul>
         </section>
     </section>
 </template>
 <script>
-// import activityPreview from '../cmps/activity-preview.vue'
+import activityPreview from '../cmps/activity-preview.vue'
 
 export default {
     name: 'board-side-bar',
@@ -71,8 +68,8 @@ export default {
     created() {
         console.log(this.activities);
     },
-    components:{
-
+    components: {
+        activityPreview
     }
 }
 </script>
