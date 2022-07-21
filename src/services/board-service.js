@@ -1,12 +1,12 @@
 // import { httpService }git from './http-service'
-import { storageService } from './async-storage'
-import { userService } from './user-service'
-import { utilService } from './util-service'
-const STORAGE_KEY = 'boardDB'
+import { storageService } from './async-storage';
+import { userService } from './user-service';
+import { utilService } from './util-service';
+const STORAGE_KEY = 'boardDB';
 const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? '/api/board/'
-    : '//localhost:3030/api/board/'
+    : '//localhost:3030/api/board/';
 
 const gBoard = {
   _id: 'b101',
@@ -152,8 +152,8 @@ const gBoard = {
       },
     },
   ],
-}
-_createBoards()
+};
+_createBoards();
 
 export const boardService = {
   getLabels,
@@ -170,13 +170,10 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
-<<<<<<< HEAD
-  getGroupById
-=======
+  getGroupById,
   changeGroupPos,
   updateGroups,
->>>>>>> 733e93049ea811c2f516479835029951d89666e1
-}
+};
 
 function getLabels() {
   return [
@@ -187,31 +184,31 @@ function getLabels() {
     { id: 'l104', title: 'Product Marketing', color: '#0079bf' },
     { id: 'l105', title: 'Trello Tip', color: '#00c2e0' },
     { id: 'l106', title: 'Help', color: '#51e898' },
-  ]
+  ];
 }
 
 async function query(filterBy = null) {
   try {
-    return await storageService.query(STORAGE_KEY)
+    return await storageService.query(STORAGE_KEY);
     // const res = await httpService.get(STORAGE_KEY, { params: filterBy })
     // return res.data
   } catch (err) {
-    console.log('Cannot get boards', err)
+    console.log('Cannot get boards', err);
   }
 }
 
 async function getById(boardId) {
   try {
-    return await storageService.get(STORAGE_KEY, boardId)
+    return await storageService.get(STORAGE_KEY, boardId);
     // const res = await httpService.get(BASE_URL + boardId)
     // return res.data
   } catch (err) {
-    console.log('Cannot get the board', err)
+    console.log('Cannot get the board', err);
   }
 }
 
 async function remove(boardId) {
-  await storageService.remove(STORAGE_KEY, boardId)
+  await storageService.remove(STORAGE_KEY, boardId);
   //   await httpService.delete(BASE_URL + boardId)
 }
 
@@ -219,13 +216,13 @@ async function saveBoard(board) {
   try {
     return board._id
       ? await storageService.put(STORAGE_KEY, board)
-      : await storageService.post(STORAGE_KEY, board)
+      : await storageService.post(STORAGE_KEY, board);
     // const savedBoard = board._id
     //   ? await httpService.put(BASE_URL, board)
     //   : await httpService.post(BASE_URL, board)
     // return savedBoard.data
   } catch {
-    console.log('cannot save board')
+    console.log('cannot save board');
   }
 }
 
@@ -244,7 +241,7 @@ function getEmptyBoard(title) {
     members: [],
     groups: [],
     activities: [],
-  }
+  };
 }
 
 function getEmptyGroup() {
@@ -252,7 +249,7 @@ function getEmptyGroup() {
     title: '',
     tasks: [],
     style: {},
-  }
+  };
 }
 
 function getEmptyTask() {
@@ -267,53 +264,53 @@ function getEmptyTask() {
     dueDate: null,
     byMember: userService.getLoggedInUser(),
     style: {},
-  }
+  };
 }
 async function saveGroup(boardId, group) {
-  const board = await getById(boardId)
+  const board = await getById(boardId);
 
   if (!group.id) {
-    group.id = utilService.makeId()
-    board.groups.push(group)
+    group.id = utilService.makeId();
+    board.groups.push(group);
   } else {
-    const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
-    if (idx !== -1) board.groups.splice(idx, 1, group)
+    const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id);
+    if (idx !== -1) board.groups.splice(idx, 1, group);
   }
 
-  return await saveBoard(board)
+  return await saveBoard(board);
 }
 
 async function saveTask(boardId, groupId, task, activity) {
-  const board = await getById(boardId)
+  const board = await getById(boardId);
 
-  const group = board.groups.find((group) => group.id === groupId)
+  const group = board.groups.find((group) => group.id === groupId);
 
   if (!task.id) {
-    task.id = utilService.makeId()
-    group.tasks.push(task)
+    task.id = utilService.makeId();
+    group.tasks.push(task);
   } else {
-    const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
-    if (idx !== -1) group.tasks.splice(idx, 1, task)
+    const idx = group.tasks.findIndex((curTask) => task.id === curTask.id);
+    if (idx !== -1) group.tasks.splice(idx, 1, task);
   }
 
-  board.activities.unshift(activity)
-  return await saveBoard(board)
+  board.activities.unshift(activity);
+  return await saveBoard(board);
 }
 
 function _createBoard(title) {
-  const board = getEmptyBoard(title)
-  return board
+  const board = getEmptyBoard(title);
+  return board;
 }
 function _createBoards() {
-  let boards = utilService.loadFromStorage(STORAGE_KEY) || []
+  let boards = utilService.loadFromStorage(STORAGE_KEY) || [];
   if (!boards || !boards.length) {
-    boards.push(gBoard)
-    boards.push(_createBoard('Work'))
-    boards.push(_createBoard('Study'))
-    boards.push(_createBoard('Vacation'))
-    utilService.saveToStorage(STORAGE_KEY, boards)
+    boards.push(gBoard);
+    boards.push(_createBoard('Work'));
+    boards.push(_createBoard('Study'));
+    boards.push(_createBoard('Vacation'));
+    utilService.saveToStorage(STORAGE_KEY, boards);
   }
-  return boards
+  return boards;
 }
 
 function createActivity(txt = '', task) {
@@ -323,50 +320,50 @@ function createActivity(txt = '', task) {
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
     task,
-  })
+  });
 }
 
 async function removeGroup(boardId, groupId) {
-  const board = await getById(boardId)
+  const board = await getById(boardId);
 
-  const idx = board.groups.findIndex((group) => group.id === groupId)
-  if (idx !== -1) board.groups.splice(idx, 1)
-  return await saveBoard(board)
+  const idx = board.groups.findIndex((group) => group.id === groupId);
+  if (idx !== -1) board.groups.splice(idx, 1);
+  return await saveBoard(board);
 }
 
 async function removeTask(boardId, groupId, taskId) {
-  const board = await getById(boardId)
+  const board = await getById(boardId);
 
-  const group = board.groups.find((group) => group.id === groupId)
-  const idx = group.tasks.findIndex((task) => task.id === taskId)
-  if (idx !== -1) group.tasks.splice(idx, 1)
-  return await saveBoard(board)
+  const group = board.groups.find((group) => group.id === groupId);
+  const idx = group.tasks.findIndex((task) => task.id === taskId);
+  if (idx !== -1) group.tasks.splice(idx, 1);
+  return await saveBoard(board);
 }
 
 async function getTaskById(boardId, groupId, taskId) {
-  const board = await getById(boardId)
+  const board = await getById(boardId);
 
-  const group = board.groups.find((group) => group.id === groupId)
-  return group.tasks.find((task) => task.id === taskId)
+  const group = board.groups.find((group) => group.id === groupId);
+  return group.tasks.find((task) => task.id === taskId);
 }
 
 async function getGroupById(boardId, groupId) {
-  const board = await getById(boardId)
+  const board = await getById(boardId);
 
-  return  board.groups.find((group) => group.id === groupId)
+  return board.groups.find((group) => group.id === groupId);
 }
 async function changeGroupPos(boardId, dropResult) {
   // TODO: fix bug
-  const { removedIndex, addedIndex } = dropResult
-  const board = await getById(boardId)
-  const group = board.groups.splice(removedIndex, 1)[0]
-  board.groups.splice(addedIndex, 0, group)
-  return await saveBoard(board)
+  const { removedIndex, addedIndex } = dropResult;
+  const board = await getById(boardId);
+  const group = board.groups.splice(removedIndex, 1)[0];
+  board.groups.splice(addedIndex, 0, group);
+  return await saveBoard(board);
 }
 
 async function updateGroups(board) {
-  const newBoard = JSON.parse(JSON.stringify(board))
-  return await saveBoard(newBoard)
+  const newBoard = JSON.parse(JSON.stringify(board));
+  return await saveBoard(newBoard);
 }
 
 // function updateTask(cmpType, data) {
