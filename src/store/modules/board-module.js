@@ -50,6 +50,20 @@ export default {
       const idx = state.boards.findIndex((board) => board._id === boardId)
       state.boards.splice(idx, 1)
     },
+    changeGroupPos(state, { dropResult, reverse }) {
+      const { addedIndex, removedIndex } = dropResult
+      if (!reverse) {
+        const group = state.currBoard.groups.splice(removedIndex, 1)[0]
+        state.currBoard.groups.splice(addedIndex, 0, group)
+      } else {
+        const group = state.currBoard.groups.splice(addedIndex, 1)[0]
+        state.currBoard.groups.splice(removedIndex, 0, group)
+      }
+    },
+    updateGroups(state, { newColumn, itemIndex }) {
+      console.log(state.currBoard)
+      state.currBoard.groups.splice(itemIndex, 1, newColumn)
+    },
   },
   actions: {
     async loadBoards({ commit }) {
@@ -141,6 +155,33 @@ export default {
         commit('setBoard', board)
       } catch (err) {
         console.log("Couldn't save task", err)
+      }
+    },
+    async swap({ commit, state }, { dropResult }) {
+      commit({ type: 'changeGroupPos', dropResult })
+      try {
+        const board = await boardService.changeGroupPos(
+          state.currBoard._id,
+          dropResult
+        )
+        commit({ type: 'setBoard', board })
+      } catch (err) {
+        console.log(err)
+        commit({ type: 'changeGroupPos', dropResult, reverse: true })
+      }
+    },
+    async updateGroups({ commit, state }, { itemIndex, newColumn }) {
+      commit({ type: 'updateGroups', itemIndex, newColumn })
+      try {
+        const board = await boardService.updateGroups(
+          state.currBoard._id,
+          itemIndex,
+          newColumn
+        )
+        commit({ type: 'setBoard', board })
+      } catch (err) {
+        console.log(err)
+        commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
   },
