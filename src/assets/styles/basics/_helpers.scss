@@ -116,6 +116,7 @@
   background-color: #fff;
   z-index: 10;
   padding: 0 12px 12px;
+
   &.show {
     display: block;
   }
@@ -127,8 +128,8 @@
     position: relative;
     color: #5e6c84;
     .pop-close-btn {
+      position: absolute;
       right: 0;
-      top: 0;
       background-color: transparent;
       border: none;
       cursor: pointer;
@@ -158,6 +159,42 @@
   content: '\e946';
 }
 
-.trellicons-activities::before{
+.trellicons-activities::before {
   content: '\e900';
+}
+
+.trellicons-labels::before {
+  content: '\e93f';
+}
+
+.trellicons-checklist::before {
+  content: '\e91a';
+}
+
+.trellicons-attachment::before {
+  content: '\e908';
+}
+
+.trellicons-cover::before {
+  content: '\e914';
+}
+
+.trellicons-archive::before {
+  content: '\e907';
+}
+
+.trellicons-details::before {
+  content: '\e912';
+}
+
+.trellicons-description::before {
+  content: '\e922';
+}
+
+.trellicons-comments::before {
+  content: '\e900';
+}
+
+.trellicons-close::before {
+  content: '\e91c';
 }
