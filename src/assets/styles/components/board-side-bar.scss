@@ -84,10 +84,16 @@
             padding-left: 12px;
             font-weight: 600;
             line-height: 20px;
-
+            width: 30px;
+            
             i {
                 font-size: rem(20px);
                 margin-right: 8px;
+            }
+            
+            &::before {
+                font-family: trellicons;
+                content: "\e900";
             }
         }
     }
