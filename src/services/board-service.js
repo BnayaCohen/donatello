@@ -31,22 +31,22 @@ const gBoard = {
     {
       id: 'l102',
       title: 'Progress',
-      color: '#6495ED',
+      color: '#008080',
     },
     {
       id: 'l103',
       title: 'Important',
-      color: '#61bd33',
+      color: '#FFC300',
     },
     {
       id: 'l104',
       title: 'Urgent',
-      color: '#FFC300',
+      color: '#FF5733',
     },
     {
       id: 'l105',
       title: 'Low Priority',
-      color: '#DAF7A6',
+      color: '#1434A4',
     },
   ],
   members: [
@@ -170,8 +170,12 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
+<<<<<<< HEAD
+  getGroupById
+=======
   changeGroupPos,
   updateGroups,
+>>>>>>> 733e93049ea811c2f516479835029951d89666e1
 }
 
 function getLabels() {
@@ -346,6 +350,11 @@ async function getTaskById(boardId, groupId, taskId) {
   return group.tasks.find((task) => task.id === taskId)
 }
 
+async function getGroupById(boardId, groupId) {
+  const board = await getById(boardId)
+
+  return  board.groups.find((group) => group.id === groupId)
+}
 async function changeGroupPos(boardId, dropResult) {
   // TODO: fix bug
   const { removedIndex, addedIndex } = dropResult

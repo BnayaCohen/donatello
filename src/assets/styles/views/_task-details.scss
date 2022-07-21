@@ -4,6 +4,7 @@
     display: inline-block;
     font-weight: 500;
   }
+  textarea,
   input {
     -webkit-appearance: none;
     background-color: #fafbfc;
@@ -17,17 +18,18 @@
     padding: rem(8px) rem(12px);
     width: 100%;
     transition-duration: 85ms;
-    transition-property: background-color,border-color,box-shadow;
+    transition-property: background-color, border-color, box-shadow;
     transition-timing-function: ease;
+    resize: none;
   }
+
   .small-title {
     color: #5e6c84;
     font-size: 0.8571428571rem;
     font-weight: 600;
-    margin-bottom: 4px;
     // letter-spacing: 0.04em;
     font-size: 12px;
-    // line-height: 20px;
+    line-height: 20px;
     // text-transform: uppercase;
   }
 
@@ -43,6 +45,14 @@
     align-items: center;
   }
   .detail-modal-container {
+    .trellicons {
+      width: 32px;
+      height: 32px;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      color: #42526e;
+    }
     position: absolute;
     top: 58px;
     left: 50%;
@@ -93,8 +103,9 @@
     }
     .task-detail-header {
       display: flex;
-      align-items: center;
       padding: 20px 8px 0 16px;
+      gap: 8px;
+
       span {
         margin-block-end: 0.3rem;
       }
@@ -119,10 +130,18 @@
         border: 2px solid rgb(17, 53, 114);
       }
     }
+    .subtitle-header {
+      opacity: 0.8;
+      margin: 8px 58px;
+      p {
+        margin: 0 0 8px;
+      }
+    }
     .task-detail-main {
       padding: 0 8px 8px 16px;
       flex-basis: 75%;
       .task-description-txt {
+        margin-inline-start: rem(40px);
         textarea {
           width: 100%;
           border: none;
@@ -173,6 +192,7 @@
             background-color: transparent;
             border: none;
             top: 4rem;
+            z-index: 10;
           }
 
           .due-date-txt {
@@ -203,6 +223,13 @@
       flex-basis: 25%;
       flex-direction: column;
       gap: 8px;
+      .trellicons {
+        font-size: 1.15rem;
+        height: 16px;
+        width: 16px;
+        color: rgb(66, 82, 110);
+        fill: inherit;
+      }
       .sidebar-btn {
         position: relative;
         display: flex;
@@ -218,12 +245,13 @@
         transition: all 85ms ease;
         background-color: rgba(9, 30, 66, 0.0392156862745098);
         width: 100%;
-        margin-block-start: rem(8px);
+        margin-block-start: 8px;
         cursor: pointer;
         svg {
-          height: 14px;
-          width: 14px;
+          height: 13px;
+          width: 13px;
         }
+
         &:hover {
           transition: all 85ms ease-in-out;
           background-color: rgba(9, 30, 66, 0.082156862745098);
@@ -231,6 +259,9 @@
       }
       .datepicker-side {
         position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
       }
       input {
         margin-bottom: rem(12px);
@@ -239,24 +270,23 @@
         font-weight: 400;
       }
       .label-list-container {
-
         .label {
           min-height: 32px;
-          margin: 0 0 4px;
-          border-radius: 2px;
-          font-size: 0.9rem;
-          color:#172b4dd2;
-          font-weight: 600;
+          font-size: rem(14px);
+          color: #fffffff3;
           cursor: pointer;
+          font-weight: 700;
+          margin: 0 0 4px;
+          position: relative;
+          transition: padding 85ms, margin 85ms, box-shadow 85ms;
           span {
             margin-left: rem(5px);
           }
-        transition: 100ms padding ease-in-out;
-        &:hover {
-          padding-inline-start: 0.5rem;
+          transition: 100ms padding ease-in-out;
+          &:hover {
+            padding-inline-start: 0.5rem;
+          }
         }
-        }
-
       }
     }
   }
