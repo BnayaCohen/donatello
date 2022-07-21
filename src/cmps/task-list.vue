@@ -1,23 +1,21 @@
 <template>
-  <ul class="container clean-list task-list">
-    <Container
-      drag-class="card-ghost"
-      drop-class="card-ghost-drop"
-      class="flex-grow overflow-y-auto overflow-x-hidden"
-      orientation="vertical"
-      group-name="col-items"
-      :drop-placeholder="dropPlaceHolderOptions"
-      :shouldAcceptDrop="
-        (e, payload) => e.groupName === 'col-items' && !payload?.loading
-      "
-      :get-child-payload="getCardPayload(groupId)"
-      @drop="(e) => onCardDrop(groupId, e)"
-    >
-      <Draggable v-for="task in tasks" :key="task.id">
-        <task-preview :task="task" />
-      </Draggable>
-    </Container>
-  </ul>
+  <Container
+    drag-class="card-ghost"
+    drop-class="card-ghost-drop"
+    class="flex-grow overflow-y-auto overflow-x-hidden"
+    orientation="vertical"
+    group-name="col-items"
+    :drop-placeholder="dropPlaceHolderOptions"
+    :shouldAcceptDrop="
+      (e, payload) => e.groupName === 'col-items' && !payload?.loading
+    "
+    :get-child-payload="getCardPayload(groupId)"
+    @drop="(e) => onCardDrop(groupId, e)"
+  >
+    <Draggable v-for="task in tasks" :key="task.id">
+      <task-preview :task="task" />
+    </Draggable>
+  </Container>
 </template>
 <script>
 import { Container, Draggable } from 'vue3-smooth-dnd'
@@ -49,17 +47,8 @@ export default {
     },
   },
   methods: {
-    getColumnHeightPx() {
-      let kanban = document.getElementById('kanbanContainer')
-      return kanban ? kanban.offsetHeight - 122 : 0
-    },
-    onColumnDrop(dropResult) {
-      const scene = Object.assign({}, this.scene)
-      scene.children = applyDrag(scene.children, dropResult)
-      this.scene = scene
-    },
     onCardDrop(groupId, dropResult) {
-      const { removedIndex, addedIndex, payload } = dropResult
+      const { removedIndex, addedIndex } = dropResult
       // check if element where ADDED or REMOVED in current collumn
       if (
         (removedIndex !== null && removedIndex !== addedIndex) ||
@@ -72,7 +61,6 @@ export default {
         // check if element was ADDED in current group
         if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
           // your action / api call
-          payload.groupId = groupId
           // simulate api call
           // setTimeout(function () {
           //   dropResult.payload.loading = false
@@ -81,7 +69,11 @@ export default {
 
         newColumn.tasks = applyDrag(newColumn.tasks, dropResult)
         // TODO:store call
-        this.$store.dispatch({ type: 'updateGroups', itemIndex, newColumn })
+        this.$store.dispatch({
+          type: 'updateGroups',
+          itemIndex,
+          newColumn: JSON.parse(JSON.stringify(newColumn)),
+        })
         scene.children.splice(itemIndex, 1, newColumn)
         this.scene = scene
       }
