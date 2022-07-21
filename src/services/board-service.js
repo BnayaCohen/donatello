@@ -31,7 +31,7 @@ const gBoard = {
     {
       id: 'l102',
       title: 'Progress',
-      color: '#6495ED',
+      color: '#008080',
     },
     {
       id: 'l103',
@@ -41,12 +41,12 @@ const gBoard = {
     {
       id: 'l104',
       title: 'Urgent',
-      color: '#FFC300',
+      color: '#FF5733',
     },
     {
       id: 'l105',
       title: 'Low Priority',
-      color: '#DAF7A6',
+      color: '#1434A4',
     },
   ],
   members: [
