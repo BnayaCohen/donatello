@@ -55,7 +55,7 @@
               <span>Move list...</span>
             </li>
             <li>
-              <span @click="">Archive list...</span>
+              <span>Archive list...</span>
             </li>
             <li>
               <span>Watch</span>

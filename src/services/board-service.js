@@ -1,4 +1,4 @@
-// import { httpService } from './http-service'
+// import { httpService }git from './http-service'
 import { storageService } from './async-storage'
 import { userService } from './user-service'
 import { utilService } from './util-service'
@@ -11,7 +11,6 @@ const BASE_URL =
 const gBoard = {
   _id: 'b101',
   title: 'Robot dev proj',
-  isStarred: false,
   archivedAt: 1589983468418,
   createdAt: 1589983468418,
   createdBy: {
@@ -20,9 +19,8 @@ const gBoard = {
     imgUrl: 'http://some-img',
   },
   style: {
-    background: `url('https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80') no-repeat 0 30%/cover`,
-    height: '150px',
-    width: '150px',
+    backgroundImage: `https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`,
+    // 'background-repeat': `no-repeat`,
   },
   labels: [
     {
@@ -33,7 +31,22 @@ const gBoard = {
     {
       id: 'l102',
       title: 'Progress',
+      color: '#6495ED',
+    },
+    {
+      id: 'l103',
+      title: 'Important',
       color: '#61bd33',
+    },
+    {
+      id: 'l104',
+      title: 'Urgent',
+      color: '#FFC300',
+    },
+    {
+      id: 'l105',
+      title: 'Low Priority',
+      color: '#DAF7A6',
     },
   ],
   members: [
@@ -214,22 +227,20 @@ function getEmptyBoard(title) {
   return {
     _id: utilService.makeId(),
     title,
-    isStarred: false,
     createdAt: Date.now(),
     labels: [],
     reviewes: [],
     createdBy: userService.getLoggedInUser(),
     style: {
-      background: `url('https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80') no-repeat 0 30%/cover`,
-      height: '150px',
-      width: '150px',
-      labels: [],
-      members: [],
-      groups: [],
-      activities: [],
+      'background-image': `https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`,
     },
+    labels: [],
+    members: [],
+    groups: [],
+    activities: [],
   }
 }
+
 function getEmptyGroup() {
   return {
     title: '',
@@ -257,7 +268,7 @@ async function saveGroup(boardId, group) {
 
   if (!group.id) {
     group.id = utilService.makeId()
-    board.groups.push(group)
+    board.push(group)
   } else {
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
     if (idx !== -1) board.groups.splice(idx, 1, group)
@@ -273,7 +284,6 @@ async function saveTask(boardId, groupId, task, activity) {
 
   if (!task.id) {
     task.id = utilService.makeId()
-    task.groupId = groupId
     group.tasks.push(task)
   } else {
     const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
