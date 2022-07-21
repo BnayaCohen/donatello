@@ -2,13 +2,13 @@
   <main class="boards-page main-layout">
     <section v-if="starredBoards" class="boards-container">
       <div class="boards-title flex">
-        <div class="board-title-icon"><!--img --></div>
+        <div class="board-title-icon"></div>
         <h3>Starred boards</h3>
       </div>
     </section>
     <section class="boards-container">
       <div class="boards-title flex">
-        <div class="board-title-icon"><!--img --></div>
+        <div class="board-title-icon"></div>
         <h3>Board templates</h3>
       </div>
       <ul class="board-list clean-list">
@@ -20,6 +20,7 @@
         >
           <li
             :style="board.style"
+            style="height: 150px; width: 150px"
             @mouseenter="showRemoveBtn(board._id)"
             @mouseleave="hideRemoveBtn"
             @click="setBoard(board._id)"
@@ -46,35 +47,35 @@ export default {
   data() {
     return {
       removeBtn: null,
-    }
+    };
   },
 
   methods: {
     setBoard(boardId) {
-      this.$store.dispatch({ type: 'loadBoard', boardId })
+      this.$store.dispatch({ type: 'loadBoard', boardId });
     },
     showRemoveBtn(boardId) {
-      this.removeBtn = boardId
+      this.removeBtn = boardId;
     },
     hideRemoveBtn() {
-      this.removeBtn = null
+      this.removeBtn = null;
     },
     removeBoard(boardId) {
-      this.$store.dispatch({ type: 'removeBoard', boardId })
+      this.$store.dispatch({ type: 'removeBoard', boardId });
     },
     openTask(boardId) {
-      this.$router.push('/board/' + boardId)
+      this.$router.push('/board/' + boardId);
     },
   },
   computed: {
     starredBoards() {
       //   this.$store.getters.starredBoards
-      return false
+      return false;
     },
     boards() {
-      return this.$store.getters.boardsForDisplay
+      return this.$store.getters.boardsForDisplay;
     },
   },
   components: {},
-}
+};
 </script>
