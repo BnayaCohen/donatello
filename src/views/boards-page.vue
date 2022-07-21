@@ -12,11 +12,11 @@
         <h3>Board templates</h3>
       </div>
       <ul class="board-list clean-list">
-        <router-link
+        <span
           v-for="board in boards"
           class="board-page-display"
           :key="board._id"
-          :to="'/board/' + board._id"
+          @click="openTask(board._id)"
         >
           <li
             :style="board.style"
@@ -34,7 +34,7 @@
               <i class="fa-regular fa-trash-can"></i
             ></span>
           </li>
-        </router-link>
+        </span>
       </ul>
     </section>
   </main>
@@ -61,6 +61,9 @@ export default {
     },
     removeBoard(boardId) {
       this.$store.dispatch({ type: 'removeBoard', boardId })
+    },
+    openTask(boardId) {
+      this.$router.push('/board/' + boardId)
     },
   },
   computed: {
