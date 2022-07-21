@@ -36,7 +36,7 @@ const gBoard = {
     {
       id: 'l103',
       title: 'Important',
-      color: '#61bd33',
+      color: '#FFC300',
     },
     {
       id: 'l104',
@@ -170,6 +170,7 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
+  getGroupById
 }
 
 function getLabels() {
@@ -344,6 +345,11 @@ async function getTaskById(boardId, groupId, taskId) {
   return group.tasks.find((task) => task.id === taskId)
 }
 
+async function getGroupById(boardId, groupId) {
+  const board = await getById(boardId)
+
+  return  board.groups.find((group) => group.id === groupId)
+}
 // function updateTask(cmpType, data) {
 //   switch (cmpType) {
 //     case 'status-picker':
