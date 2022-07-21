@@ -5,6 +5,23 @@
   overflow-y: hidden;
   padding-bottom: 8px;
   scroll-snap-type: x mandatory;
+  height: calc(100vh - 104px);
+
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  // background
+  &::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 4px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #091e4254;
+    border-radius: 4px;
+  }
 }
 
 .group-container {
@@ -95,6 +112,7 @@
   background-color: #fff;
   z-index: 20;
   color: set-text-color(#fff);
+
   .close-popup-btn {
     z-index: 25;
     position: absolute;
@@ -103,9 +121,11 @@
     top: 11px;
     right: 8px;
   }
+
   h4 {
     margin: 0.8rem;
   }
+
   ul {
     text-align: left;
 
