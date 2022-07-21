@@ -1,34 +1,19 @@
 @font-face {
-  font-family: 'Bahnschrift';
-  src: local('Bahnschrift'), url(~@/fonts/Bahnschrift/bahnschrift.ttf);
-}
-
-@font-face {
-  font-family: 'Trellicons';
-  src: local('Trellicons'), url(~@/fonts/Trellicons/trellicons.ttf);
-}
-
-@font-face {
-  font-family: 'Lato-Regular';
-  src: local('Lato-Regular'), url(~@/fonts/Lato/Lato-Regular.ttf);
-}
-
-@font-face {
-  font-family: 'Lato-Bold';
-  src: url('../fonts/lato/Lato-Bold.ttf');
-}
-
-@font-face {
   font-family: 'Roboto-Regular';
-  src: local('Roboto-Regular'), url('../fonts/Roboto/Roboto-Regular.ttf');
+  src: local('Roboto-Regular'), url('/src/assets/fonts/Roboto/Roboto-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Roboto-Bold';
-  src: url('../fonts/Roboto/Roboto-Bold.ttf');
+  src: url('/src/assets/fonts/Roboto/Roboto-Bold.ttf');
 }
 
 @font-face {
   font-family: 'Roboto-Medium';
-  src: url('../fonts/Roboto/Roboto-Medium.ttf');
+  src: url('/src/assets/fonts/Roboto/Roboto-Medium.ttf');
+}
+
+@font-face {
+  font-family: trellicons;
+  src: url('/src/assets/fonts/trellicons/trellicons.ttf');
 }
