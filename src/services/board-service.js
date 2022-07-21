@@ -170,7 +170,6 @@ export const boardService = {
   removeTask,
   saveGroup,
   getTaskById,
-  getGroupById,
   changeGroupPos,
   updateGroups,
 };
@@ -347,11 +346,6 @@ async function getTaskById(boardId, groupId, taskId) {
   return group.tasks.find((task) => task.id === taskId);
 }
 
-async function getGroupById(boardId, groupId) {
-  const board = await getById(boardId);
-
-  return board.groups.find((group) => group.id === groupId);
-}
 async function changeGroupPos(boardId, dropResult) {
   // TODO: fix bug
   const { removedIndex, addedIndex } = dropResult;
