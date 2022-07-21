@@ -19,7 +19,7 @@
 
 <script>
 import { Container, Draggable } from 'vue3-smooth-dnd'
-import { applyDrag } from '../services/util-service'
+// import { applyDrag } from '../services/util-service'
 import groupPreview from './group-preview.vue'
 import { boardService } from '../services/board-service.js'
 
