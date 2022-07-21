@@ -116,6 +116,7 @@
   box-shadow: 2 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
   background-color: #fff;
   z-index: 10;
+  padding: 0 12px 12px;
   &.show {
     display: block;
   }
@@ -126,9 +127,8 @@
     border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
     position: relative;
     color: #5e6c84;
-    padding: 0 12px 12px;
     .pop-close-btn {
-        right: 6px;
+        right: 0;
         top: 0;
         background-color: transparent;
         border: none;
@@ -137,7 +137,6 @@
   }
   .popover-content {
     overflow-y: auto;
-    padding: 0 12px 12px;
 }
 }
 
