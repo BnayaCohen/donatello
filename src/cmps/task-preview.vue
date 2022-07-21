@@ -1,20 +1,22 @@
 <template>
-  <li
-    @mouseenter="toggleOnHover"
-    @mouseleave="toggleOnHover"
-    class="task-preview"
-    @click="openTask(task.groupId, task.id)"
-  >
-    <div class="flex flex-column">
-      <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
-        ><i class="fa-solid fa-pencil"></i
-      ></span>
-      <div class="task-preview-header">
-        <div v-if="task.styles" class="image-wrapper"></div>
+  <Draggable>
+    <li
+      @mouseenter="toggleOnHover"
+      @mouseleave="toggleOnHover"
+      class="task-preview"
+      @click="openTask(task.groupId, task.id)"
+    >
+      <div class="flex flex-column">
+        <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
+          ><i class="fa-solid fa-pencil"></i
+        ></span>
+        <div class="task-preview-header">
+          <div v-if="task?.styles" class="image-wrapper"></div>
+        </div>
+        <p>{{ task?.title }}</p>
       </div>
-      <p>{{ task.title }}</p>
-    </div>
-  </li>
+    </li>
+  </Draggable>
   <div v-show="isOpen" class="quick-card-editor">
     <span
       @click="closeSideBar"
@@ -37,13 +39,13 @@
     ></span>
     <div :style="getCords" class="quick-card-editor-card">
       <div
-        :style="task.styles"
+        :style="task?.styles"
         class="list-card list-card-quick-edit is-covered"
       >
         <div class="list-card-details">
-          <div v-if="task.labels?.length" class="list-card-labels">
+          <div v-if="task?.labels?.length" class="list-card-labels">
             <span
-              v-for="label in task.labels"
+              v-for="label in task?.labels"
               :key="label.id"
               :style="`backgroundColor:${label.color}`"
               >{{ label }}</span
@@ -61,20 +63,20 @@
           ></textarea>
           <div class="badges">
             <span class="badges-container">
-              <div v-if="task.isWatched" class="badge badge-watch">
+              <div v-if="task?.isWatched" class="badge badge-watch">
                 <i class="fa-regular fa-eye"></i>
               </div>
-              <div v-if="task.comments?.length" class="badge comments">
+              <div v-if="task?.comments?.length" class="badge comments">
                 <i class="fa-regular fa-message"></i
-                ><span>{{ task.comments.length }}</span>
+                ><span>{{ task?.comments.length }}</span>
               </div>
-              <div v-if="task.attachments?.length" class="badge attachments">
+              <div v-if="task?.attachments?.length" class="badge attachments">
                 <i class="fa-regular fa-link"></i
-                ><span>{{ task.attachments.length }}</span>
+                ><span>{{ task?.attachments.length }}</span>
               </div>
             </span>
           </div>
-          <div v-if="task.members?.length" class="list-card-members">
+          <div v-if="task?.members?.length" class="list-card-members">
             <div
               v-for="member in task.members"
               :key="member._id"
@@ -87,7 +89,7 @@
       <button class="save-task-btn text-center">Save</button>
       <div class="quick-card-editor-buttons fade-in">
         <router-link
-          :to="`${$router.currentRoute._value.path}/${task.groupId}/${task.id}`"
+          :to="`${$router.currentRoute._value.path}/${task?.groupId}/${task?.id}`"
           class="quick-card-editor-buttons-item"
         >
           <span class="icon-sm icon-card"
@@ -148,6 +150,7 @@
   </div>
 </template>
 <script>
+import { Draggable } from 'vue3-smooth-dnd'
 export default {
   name: 'taskPreview',
   props: {
@@ -187,6 +190,7 @@ export default {
     },
   },
   emits: ['click'],
+  components: { Draggable },
 }
 </script>
 <style></style>
