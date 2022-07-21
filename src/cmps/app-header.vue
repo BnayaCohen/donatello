@@ -3,13 +3,15 @@
     <div class="flex justify-between align-center">
       <section class="nav-container">
         <div class="logo flex">
-          <router-link to="/">Donatello</router-link>
+<button class="btn btn-background" @click="goToHome"><i class="fa-brands fa-trello"></i>
+Donatello</button>
+<button class="btn btn-background" @click="goToBoards">Boards</button>
         </div>
       </section>
-      <section class="user-actions">
+      <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
-        <button>Noti</button>
-        <button>User</button>
+        <button class="btn btn-background"><i class="fa-solid fa-bell"></i></button>
+        <button class="btn btn-background">Avatar</button>
       </section>
     </div>
   </header>
@@ -32,11 +34,14 @@ export default {
     signup(signupInfo) {
       this.$emit('signup', signupInfo)
     },
+    goToHome() {
+      this.$router.push('/')
+    },
+    goToBoards() {
+      this.$router.push('/board')
+    }
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters.isAdmin
-    },
   },
   components: {
     // loginLogout,
@@ -44,4 +49,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>
