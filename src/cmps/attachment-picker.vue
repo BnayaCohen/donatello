@@ -60,6 +60,7 @@ export default {
       elCover.classList.toggle('show')
     },
   },
+  emits: ['attachSelected'],
 }
 </script>
 <style></style>

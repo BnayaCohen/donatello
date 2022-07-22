@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import homePage from '../views/home-page.vue';
-import boardsPage from '../views/boards-page.vue';
-import boardDetails from '../views/board-details.vue';
-import taskDetails from '../views/task-details.vue';
+import { createRouter, createWebHashHistory } from 'vue-router'
+import homePage from '../views/home-page.vue'
+import boardsPage from '../views/boards-page.vue'
+import boardDetails from '../views/board-details.vue'
+import taskDetails from '../views/task-details.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -26,11 +26,11 @@ const router = createRouter({
           path: '/board/:boardId/:groupId/:taskId',
           name: 'taskDetails',
           component: taskDetails,
-          props: true
+          // props: true,
         },
       ],
     },
   ],
-});
+})
 
-export default router;
+export default router
