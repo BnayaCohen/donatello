@@ -110,20 +110,17 @@
 // Pop over
 
 .dynamic-popover {
-  display: none;
+  // display: none;
   width: 304px;
   border-radius: 3px;
   background-color: #fff;
-  z-index: 10;
   padding: 0 12px 12px;
   background: #fff;
   box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
-  overflow: hidden;
   z-index: 70;
   &.show {
     display: block;
   }
-
   right: 0;
   top: 0;
   .popover-header {
@@ -157,7 +154,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 2;
+  z-index: 1;
 }
 
 // Member avatar

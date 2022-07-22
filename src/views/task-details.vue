@@ -81,6 +81,11 @@
                     <span>{{ label.title }}</span>
                   </div>
                 </div>
+                  <div>
+                    <button v-show="this.taskLabels.length" class="add-label-btn" @click="isLabels = !isLabels">
+                      <span class="trellicons trellicons-plus-sign"></span>
+                    </button>
+                  </div>
               </div>
             </div>
             <div
@@ -115,6 +120,9 @@
                       fill="currentColor"
                     ></path>
                   </svg>
+                </button>
+                <button class="flex align-center justify-center remove-duedate-btn" @click="removeDueDate">
+                  <span>Remove</span>
                 </button>
               </label>
               <div class="pos-absolute">
@@ -192,7 +200,11 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <label-picker :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" />
+                <button class="sidebar-btn flex align-center" @click="isLabels = !isLabels">
+                  <span class="trellicons trellicons-labels"></span>
+                  <span>Labels</span>
+                </button>
+                <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" @closeLabels="isLabels = false"/>
               </div>
               <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
@@ -241,10 +253,18 @@
                 ></datepicker>
               </div>
               <div class="sidebar-btn-container">
-                <attachment-picker @attachSelected="addAttachment" />
+                  <button class="sidebar-btn flex align-center" @click="isAttach = !isAttach">
+                    <span class="trellicons trellicons-attachment"></span>
+                    <span>Attachments</span>
+                  </button>
+                <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" />
               </div>
               <div class="sidebar-btn-container">
-                <cover-picker :labels="labels" @addCover="addCover" />
+                  <button class="sidebar-btn flex align-center" @click="isCover = !isCover">
+                    <span class="trellicons trellicons-cover"></span>
+                    <span>Cover</span>
+                  </button>
+                <cover-picker v-if="isCover" :labels="labels" @addCover="addCover" @closeCover="isCover = false"/>
               </div>
             </div>
             <div class="actions pos-relative">
@@ -289,6 +309,9 @@ export default {
       isDateSide: false,
       taskLabels: [],
       labels: null,
+      isLabels: false,
+      isCover: false,
+      isAttach: false
     }
   },
   async created() {
@@ -395,6 +418,10 @@ export default {
       this.task.style.bgColor = color
       this.updateTask()
     },
+    removeDueDate() {
+      this.task.dueDate = ''
+      this.updateTask()
+    }
   },
   components: { Datepicker, labelPicker, coverPicker, attachmentPicker },
 }

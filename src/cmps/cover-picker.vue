@@ -1,16 +1,10 @@
 <template>
-  <button class="sidebar-btn flex align-center" @click="toggleCover">
-    <span class="trellicons trellicons-cover"></span>
-    <span>Cover</span>
-  </button>
-
   <div
-    ref="coverOpts"
     class="dynamic-popover pos-absolute cover-popover-container"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Cover</h4>
-      <button class="pop-close-btn" @click="toggleCover">
+      <button class="pop-close-btn" @click="$emit('closeCover')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
