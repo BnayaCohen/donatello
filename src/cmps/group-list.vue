@@ -21,41 +21,40 @@
 </template>
 
 <script>
-import { Container, Draggable } from 'vue3-smooth-dnd';
-import { applyDrag } from '../services/util-service';
-import groupPreview from './group-preview.vue';
-import { boardService } from '../services/board-service.js';
+import { Container, Draggable } from 'vue3-smooth-dnd'
+import { applyDrag } from '../services/util-service'
+import groupPreview from './group-preview.vue'
+import { boardService } from '../services/board-service.js'
 
 export default {
   props: {
     groups: Array,
   },
   data() {
-    return {};
+    return {
+      scene: this.$store.getters.scene,
+    }
   },
   computed: {
     newGroup() {
-      return boardService.getEmptyGroup();
-    },
-    scene() {
-      return this.$store.getters.scene;
+      return boardService.getEmptyGroup()
     },
     dropPlaceHolderOptions() {
       return {
         className: 'drop-preview',
         animationDuration: '150',
         showOnTop: false,
-      };
+      }
     },
   },
   methods: {
     onGroupDrop(dropResult) {
-      if (dropResult.removedIndex === dropResult.addedIndex) return;
-      const scene = Object.assign({}, this.scene);
-      scene.children = applyDrag(scene.children, dropResult);
-      this.scene = scene;
-      console.log(dropResult);
-      this.$store.dispatch({ type: 'swap', dropResult });
+      if (dropResult.removedIndex === dropResult.addedIndex) return
+      const scene = Object.assign({}, this.scene)
+      scene.children = applyDrag(scene.children, dropResult)
+      this.scene = scene
+      console.log(dropResult)
+      this.$store.dispatch({ type: 'swap', dropResult })
     },
   },
   components: {
@@ -63,7 +62,7 @@ export default {
     Container,
     Draggable,
   },
-};
+}
 </script>
 <style>
 .card-ghost {
