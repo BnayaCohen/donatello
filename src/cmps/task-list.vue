@@ -2,7 +2,7 @@
   <Container
     drag-class="card-ghost"
     drop-class="card-ghost-drop"
-    class="flex-grow overflow-y-auto overflow-x-hidden"
+    class="flex-grow tasks-scrollbar overflow-y-auto overflow-x-hidden"
     orientation="vertical"
     group-name="col-items"
     :drop-placeholder="dropPlaceHolderOptions"
