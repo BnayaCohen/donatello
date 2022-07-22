@@ -24,9 +24,7 @@ const router = createRouter({
       children: [
         {
           path: ':groupId/:taskId',
-          name: 'taskDetails',
           component: taskDetails,
-          // props: true,
         },
       ],
     },
