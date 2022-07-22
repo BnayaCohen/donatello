@@ -21,7 +21,7 @@
     position: absolute;
     right: 2px;
     top: 2px;
-    padding: 4px ;
+    padding: 4px;
     width: 26px;
     height: 28px;
 
@@ -29,6 +29,42 @@
       background-color: #cccccdcd;
       opacity: 0.7;
       border-radius: 2px;
+    }
+  }
+
+  .task-preview-header {
+    height: em(32px);
+    margin: -1px -8px 0;
+    border-radius: 3px 3px 0 0;
+  }
+}
+
+.task-labels-container {
+  padding-top: 6px;
+
+  .board-task-label {
+    float: left;
+    height: em(8px);
+    margin-right: 4px;
+    min-width: em(40px);
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    p {
+      font-size: em(12px);
+      font-weight: 700;
+      margin: -2px 0 0;
+      padding: 0 8px;
+      color: #fff;
+    }
+
+    &.shown {
+      min-width: em(55px);
+      height: em(16px);
     }
   }
 }
