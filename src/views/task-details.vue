@@ -8,7 +8,7 @@
       position: 'absolute',
       top: 0,
       zIndex: 2,
-      cursor: 'pointer'
+      cursor: 'pointer',
     }"
     @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
   ></div>
@@ -184,45 +184,7 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <button
-                  class="sidebar-btn flex align-center"
-                  @click="toggleLabels"
-                >
-                  <span class="trellicons trellicons-labels"></span>
-                  <span>Labels</span>
-                </button>
-                <div ref="labelOpts" class="dynamic-popover pos-absolute">
-                  <div class="popover-header flex justify-center align-center">
-                    <h4>Labels</h4>
-                    <button class="pop-close-btn" @click="toggleLabels">
-                      <span class="trellicons trellicons-close-btn"></span>
-                    </button>
-                  </div>
-                  <div class="popover-content label-list-container">
-                    <div class="search-labels">
-                      <input type="text" placeholder="Search labels..." />
-                    </div>
-                    <h3 class="small-title">Labels</h3>
-                    <ul class="clean-list">
-                      <li
-                        v-for="label in labels"
-                        :key="label.id"
-                        @click.stop="addLabel(label.id)"
-                        class="label flex align-center"
-                      >
-                        <div
-                          :style="{
-                            borderRadius: '3px',
-                            width: '100%',
-                            height: '32px',
-                            backgroundColor: label.color,
-                          }"
-                        ></div>
-                        <span class="pos-absolute">{{ label.title }}</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <label-picker :labels="labels" @addLabel="addLabel" />
               </div>
               <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
@@ -307,7 +269,7 @@
 import { boardService } from '../services/board-service.js';
 import Datepicker from 'vuejs3-datepicker';
 import { ref } from 'vue';
-
+import labelPicker from '../cmps/label-picker.vue';
 export default {
   name: 'taskDetails',
   props: {
@@ -320,8 +282,8 @@ export default {
       dueDate: ref(new Date()),
       isDate: false,
       isDateSide: false,
-      labels: null,
       taskLabels: [],
+      labels: null,
     };
   },
   async created() {
@@ -387,10 +349,6 @@ export default {
     //     });
     //   });
     // },
-    toggleLabels() {
-      const elLabels = this.$refs.labelOpts;
-      elLabels.classList.toggle('show');
-    },
     addLabel(labelId) {
       if (!this.task.labelIds || !this.task.labelIds.length) {
         this.task.labelIds = [];
@@ -417,7 +375,7 @@ export default {
       this.$router.push('/board/' + boardId);
     },
   },
-  components: { Datepicker },
+  components: { Datepicker, labelPicker },
 };
 </script>
 <style></style>
