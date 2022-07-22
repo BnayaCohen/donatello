@@ -1,22 +1,17 @@
 <template>
-  <div
-    class="back-screen"
-    :style="{
-      backgroundColor: '#000000a3',
-      // width: screenWidth,
-      // height: screenHeight,
-      position: 'absolute',
-      top: 0,
-      zIndex: 2,
-      cursor: 'pointer',
-    }"
-    @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
-  ></div>
 
   <section
     class="container task-detail"
     @click=";[(isDate = false), (isDateSide = false)]"
   >
+  <div
+    class="back-screen"
+    :style="{
+      backgroundColor: '#000000a3',
+      cursor: 'pointer',
+    }"
+    @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
+  ></div>
     <div class="detail-modal-container">
       <div
         v-if="task?.style?.bgColor || task?.attachment"
@@ -80,6 +75,11 @@
                     <span>{{ label.title }}</span>
                   </div>
                 </div>
+                  <div>
+                    <button v-show="this.taskLabels.length" class="add-label-btn" @click="isLabels = !isLabels">
+                      <span class="trellicons trellicons-plus-sign"></span>
+                    </button>
+                  </div>
               </div>
             </div>
             <div
@@ -114,6 +114,9 @@
                       fill="currentColor"
                     ></path>
                   </svg>
+                </button>
+                <button class="flex align-center justify-center remove-duedate-btn" @click="removeDueDate">
+                  <span>Remove</span>
                 </button>
               </label>
               <div class="pos-absolute">
@@ -159,8 +162,11 @@
               <span class="trellicons trellicons-attachment"></span>
               <h3>Attachments</h3>
             </div>
-            <div class="flex task-image-container">
-              <img class="task-image" :src="task.attachment" />
+            <div class="flex attachment-thumbnail" >
+              <img class="task-image" :src="task.attachment"/>
+              <!-- <p class="attachment-details">
+                <span>{{task.attachment.}}</span>
+              </p> -->
             </div>
           </div>
           <div class="comment-container flex justify-between align-center">
@@ -191,7 +197,11 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <label-picker :labels="labels" @addLabel="addLabel" />
+                <button class="sidebar-btn flex align-center" @click="isLabels = !isLabels">
+                  <span class="trellicons trellicons-labels"></span>
+                  <span>Labels</span>
+                </button>
+                <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" @closeLabels="isLabels = false"/>
               </div>
               <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
@@ -240,10 +250,18 @@
                 ></datepicker>
               </div>
               <div class="sidebar-btn-container">
-                <attachment-picker @attachSelected="addAttachment" />
+                  <button class="sidebar-btn flex align-center" @click="isAttach = !isAttach">
+                    <span class="trellicons trellicons-attachment"></span>
+                    <span>Attachments</span>
+                  </button>
+                <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" />
               </div>
               <div class="sidebar-btn-container">
-                <cover-picker :labels="labels" @addCover="addCover" />
+                  <button class="sidebar-btn flex align-center" @click="isCover = !isCover">
+                    <span class="trellicons trellicons-cover"></span>
+                    <span>Cover</span>
+                  </button>
+                <cover-picker v-if="isCover" :labels="labels" @addCover="addCover" @closeCover="isCover = false"/>
               </div>
             </div>
             <div class="actions pos-relative">
@@ -290,6 +308,9 @@ export default {
       isDateSide: false,
       taskLabels: [],
       labels: null,
+      isLabels: false,
+      isCover: false,
+      isAttach: false
     }
   },
   async created() {
@@ -321,18 +342,11 @@ export default {
     taskCover() {
       if (this.task?.style?.bgColor) {
         return { backgroundColor: this.task.style.bgColor }
-      } else if (this.task?.attachment) {
-        return {
-          backgroundColor: 'transparent',
-          backgroundImage: `url(${this.task.attachment})`,
-          minHeight: '160px',
-          backgroundSize: 'contain',
-          backgroundOrigin: 'content-box',
-          padding: '0px',
-          bbackgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
-        }
-      } else return ''
+      }
+      else if (this.task?.attachment) {
+        return {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+      }
+      else return ''
     },
     groupTitle() {
       const { groupId } = this.$route.params
@@ -392,7 +406,6 @@ export default {
       this.taskLabels.push(label)
     },
     addAttachment(imageUrl) {
-      console.log(imageUrl)
       this.task.attachment = imageUrl
       this.updateTask()
     },
@@ -406,6 +419,10 @@ export default {
       this.task.style.bgColor = color
       this.updateTask()
     },
+    removeDueDate() {
+      this.task.dueDate = ''
+      this.updateTask()
+    }
   },
   components: { Datepicker, labelPicker, coverPicker, attachmentPicker },
 }
