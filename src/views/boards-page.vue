@@ -1,66 +1,58 @@
 <template>
   <main class="boards-page main-layout">
-    <section v-if="starredBoards" class="boards-container">
-      <div class="boards-title flex">
-        <div class="board-title-icon"></div>
-        <h3>Starred boards</h3>
-      </div>
-      <ul class="board-list clean-list">
-        <span
-          v-for="board in starredBoards"
-          class="board-page-display"
-          :key="board._id"
-          @click="openTask(board._id)"
-        >
-          <li
-            :style="board.style"
-            style="height: 150px; width: 150px"
-            @mouseenter="showRemoveBtn(board._id, true)"
-            @mouseleave="hideRemoveBtn"
+    <div class="boards-page-container">
+      <section v-if="starredBoards" class="boards-container">
+        <div class="boards-title flex">
+          <h3>
+            <span><i class="fa-regular fa-star"></i></span> Starred boards
+          </h3>
+        </div>
+        <ul class="board-list clean-list">
+          <span
+            v-for="board in starredBoards"
+            style="height: 100px; width: 150px"
+            class="board-page-display"
+            :key="board._id"
+            @click="openTask(board._id)"
           >
-            <span
-              v-show="board._id === removeBtn && starred"
-              class="remove-board-btn"
-              href="#"
-              @click.stop="removeBoard(board._id)"
-            >
-              <i class="fa-regular fa-trash-can"></i
-            ></span>
-          </li>
-        </span>
-      </ul>
-    </section>
-    <section class="boards-container">
-      <div class="boards-title flex">
-        <div class="board-title-icon"></div>
-        <h3>Board templates</h3>
-      </div>
-      <ul class="board-list clean-list">
-        <span
-          v-for="board in boards"
-          class="board-page-display"
-          :key="board._id"
-          @click="openTask(board._id)"
-        >
-          <li
-            :style="board.style"
-            style="height: 150px; width: 150px"
-            @mouseenter="showRemoveBtn(board._id)"
-            @mouseleave="hideRemoveBtn"
+            <li :style="board.style" style="height: 100px; width: 150px">
+              <h3>{{ board.title }}</h3>
+              <span
+                class="remove-board-btn trellicons trellicons-star starred"
+                @click.stop="toggleStarred(board)"
+              >
+              </span>
+            </li>
+          </span>
+        </ul>
+      </section>
+      <section class="boards-container">
+        <div class="boards-title flex">
+          <h3>
+            <span class="board-title-icon fa-brands fa-flipboard"></span> Board
+            templates
+          </h3>
+        </div>
+        <ul class="board-list clean-list">
+          <span
+            v-for="board in boards"
+            style="height: 100px; width: 150px"
+            class="board-page-display"
+            :key="board._id"
+            @click="openTask(board._id)"
           >
-            {{ board._id }}
-            <span
-              v-show="board._id === removeBtn && !starred"
-              class="remove-board-btn"
-              href="#"
-              @click.stop="removeBoard(board._id)"
-            >
-              <i class="fa-regular fa-trash-can"></i
-            ></span>
-          </li>
-        </span>
-      </ul>
-    </section>
+            <li :style="board.style" style="height: 100px; width: 150px">
+              <h3>{{ board.title }}</h3>
+              <span
+                class="remove-board-btn trellicons trellicons-star"
+                @click.stop="toggleStarred(board)"
+              >
+              </span>
+            </li>
+          </span>
+        </ul>
+      </section>
+    </div>
   </main>
 </template>
 
@@ -73,20 +65,19 @@ export default {
       starred: false,
     }
   },
-
+  created() {
+    document.body.classList.add('app-header-background-color-blue')
+  },
   methods: {
     setBoard(boardId) {
       this.$store.dispatch({ type: 'loadBoard', boardId })
     },
-    showRemoveBtn(boardId, starred = false) {
-      this.removeBtn = boardId
-      this.starred = starred
-    },
-    hideRemoveBtn() {
-      this.removeBtn = null
-    },
-    removeBoard(boardId) {
-      this.$store.dispatch({ type: 'removeBoard', boardId })
+    toggleStarred(board) {
+      board.isStarred = !board.isStarred
+      this.$store.dispatch({
+        type: 'saveBoard',
+        board,
+      })
     },
     openTask(boardId) {
       this.$router.push('/board/' + boardId)
@@ -100,6 +91,8 @@ export default {
       return this.$store.getters.boardsForDisplay
     },
   },
-  components: {},
+  unmounted() {
+    document.body.classList.remove('app-header-background-color-blue')
+  },
 }
 </script>

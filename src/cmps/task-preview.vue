@@ -85,7 +85,7 @@
         </div>
       </div>
       <button class="save-task-btn text-center">Save</button>
-      <div class="quick-card-editor-buttons fade-in">
+      <div @click="isOpen = false" class="quick-card-editor-buttons fade-in">
         <router-link
           :to="`${$router.currentRoute._value.path}/${task?.groupId}/${task?.id}`"
           class="quick-card-editor-buttons-item"
