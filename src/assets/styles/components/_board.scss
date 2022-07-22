@@ -2,7 +2,7 @@
   margin-bottom: 8px;
   margin-left: 2px;
   overflow-x: auto;
-  // overflow-y: hidden;
+  overflow-y: hidden;
   padding-bottom: 8px;
   // scroll-snap-type: x mandatory;
   height: calc(100vh - 104px);
@@ -27,12 +27,15 @@
 .group-container {
   background-color: #ebecf0;
   margin: 0 4px;
-  padding:6px 8px 7px 8px;
+  padding: 6px 4px 7px 8px;
   border-radius: 3px;
   height: fit-content;
-  width:em(272px);
+  width: em(272px);
 
   .group-header {
+    z-index: 8;
+    margin-right: 4px;
+
     .group-title {
       height: em(30px);
       width: 100%;
@@ -43,7 +46,7 @@
       font-size: em(14px);
       cursor: pointer;
       border-radius: 3px;
-      margin-bottom:4px;
+      margin-bottom: 4px;
       padding: 0 10px;
       transition-property: background-color, border-color, box-shadow;
       transition-timing-function: ease;
@@ -62,7 +65,7 @@
       color: #5e6c84;
       font-size: rem(18px);
       height: em(23px);
-      margin: 1px  0 ;
+      margin: 1px 0;
       margin-left: 3px;
       padding: 4px;
       cursor: pointer;
@@ -73,15 +76,50 @@
     }
   }
 
+  .tasks-scrollbar {
+    overflow-y: auto;
+    scroll-snap-type: x mandatory;
+    padding-right: 4px;
+    max-height: calc(100vh - 204px);
+
+    &::-webkit-scrollbar {
+      width: em(8px);
+      // scroll-margin-right: 2rem;
+    }
+
+    // background
+    &::-webkit-scrollbar-track {
+      background: #091e4214;
+      border-radius: 4px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #00000026;
+      border-radius: 4px;
+    }
+  }
+
   .add-task-container {
     border-radius: 3px;
     background-color: inherit;
     color: #5e6c84;
     cursor: pointer;
     gap: 2px;
+    margin-right: 4px;
+    margin-top: 2px;
+
+    .adding {
+      margin-right: 0;
+    }
 
     &:hover {
       background-color: #091e4214;
+      margin-right: 4px;
+
+      .adding {
+        margin-right: 0;
+      }
     }
   }
 }
