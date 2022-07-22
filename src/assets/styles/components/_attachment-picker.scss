@@ -1,5 +1,5 @@
 .attachment-popover-container {
-    top: 200px;
+  top: 200px;
   .upload-preview {
     margin-bottom: 8px;
     width: 100%;
@@ -17,17 +17,16 @@
       padding: 0;
       z-index: 2;
     }
-
   }
   .from-web {
     border-top: 1px solid rgba(9, 30, 66, 0.13);
   }
-
 }
 
 .attachment-container {
-    margin-bottom: rem(24px);
-    .task-image-container {
-        max-width: 112px
-    }
+  margin-bottom: rem(24px);
+  .attachment-thumbnail {
+    max-width: 112px;
+    margin-left: 12px;
+  }
 }

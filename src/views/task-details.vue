@@ -162,8 +162,11 @@
               <span class="trellicons trellicons-attachment"></span>
               <h3>Attachments</h3>
             </div>
-            <div class="flex task-image-container">
+            <div class="flex attachment-thumbnail" >
               <img class="task-image" :src="task.attachment"/>
+              <!-- <p class="attachment-details">
+                <span>{{task.attachment.}}</span>
+              </p> -->
             </div>
           </div>
           <div class="comment-container flex justify-between align-center">
@@ -324,7 +327,7 @@ export default {
         return { backgroundColor: this.task.style.bgColor }
       }
       else if (this.task?.attachment) {
-        return {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', bbackgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+        return {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
       }
       else return ''
     },
@@ -384,7 +387,6 @@ export default {
       this.taskLabels.push(label)
     },
     addAttachment(imageUrl) {
-      console.log(imageUrl)
       this.task.attachment = imageUrl
       this.updateTask()
     },
