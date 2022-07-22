@@ -1,5 +1,5 @@
 <template>
-  <header class="header-home-page">
+  <header class="header-home-page" ref="headRef">
     <div class="header-home-page-container flex">
       <router-link to="/" class="home-page-logo"
         ><svg
@@ -58,3 +58,21 @@
     </div>
   </header>
 </template>
+<script>
+export default {
+  methods: {
+    vueOnScroll() {
+      const refs = this.$refs.headRef // assign the reference in variable
+      console.log(refs)
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 0) refs.classList.add('page-header-box-shadow')
+        else refs.classList.remove('page-header-box-shadow')
+      })
+    },
+  },
+  mounted() {
+    // run the function when the component's mount
+    this.vueOnScroll()
+  },
+}
+</script>

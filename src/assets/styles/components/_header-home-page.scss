@@ -2,7 +2,12 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgba($color: #fff, $alpha: 0.95);
+  transition: 0.3s all ease;
+  background-color: rgba($color: #fff, $alpha: 1);
+  &:hover {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(9 30 66 / 15%) 0px 0.5rem 1rem 0px;
+  }
   &-container {
     justify-content: space-between;
   }
@@ -39,4 +44,8 @@
   display: flex;
   align-items: center;
   padding: 1rem;
+}
+.page-header-box-shadow {
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(9 30 66 / 15%) 0px 0.5rem 1rem 0px;
 }
