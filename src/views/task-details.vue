@@ -239,10 +239,7 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <button class="sidebar-btn flex align-center">
-                  <span class="trellicons trellicons-cover"></span>
-                  <span>Cover</span>
-                </button>
+                <cover-picker :labels="labels" @addCover="addCover"/>
               </div>
             </div>
             <div class="actions pos-relative">
@@ -270,6 +267,8 @@ import { boardService } from '../services/board-service.js';
 import Datepicker from 'vuejs3-datepicker';
 import { ref } from 'vue';
 import labelPicker from '../cmps/label-picker.vue';
+import coverPicker from '../cmps/cover-picker.vue';
+
 export default {
   name: 'taskDetails',
   props: {
@@ -374,8 +373,13 @@ export default {
       await this.$store.dispatch({ type: 'removeTask', taskId, groupId });
       this.$router.push('/board/' + boardId);
     },
+    addCover(color) {
+      if (!this.task?.style) this.task.style = {}
+      this.task.style.bgColor = color
+      this.updateTask()
+    }
   },
-  components: { Datepicker, labelPicker },
+  components: { Datepicker, labelPicker, coverPicker },
 };
 </script>
 <style></style>

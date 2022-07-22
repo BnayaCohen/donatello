@@ -11,7 +11,7 @@
     padding: 0;
   }
   textarea,
-  input {
+  input[type="text"] {
     -webkit-appearance: none;
     background-color: #fafbfc;
     border: none;
@@ -276,7 +276,7 @@
         right: 0;
         z-index: 10;
       }
-      input {
+      input[type='text'] {
         margin-bottom: rem(12px);
       }
       h4 {
