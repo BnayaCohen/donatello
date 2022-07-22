@@ -17,14 +17,14 @@
     class="container task-detail"
     @click="
       isDate = false;
-      isDateSide = false;
+      isDateSide = false
     "
   >
     <div class="detail-modal-container">
       <div
-        v-if="task?.style?.bgColor"
-        class="task-detail-bg"
-        :style="taskBgColor"
+        v-if="task?.style?.bgColor || task?.attachment"
+        class="flex justify-center task-detail-bg"
+        :style="taskCover"
       ></div>
       <div v-if="task?.style?.bgColor" class="btn-wrapper">
         <button class="cover-btn">
@@ -56,7 +56,7 @@
           placeholder="Enter title here..."
           @keydown.enter="
             saveTask;
-            $refs.taskTitle.blur();
+            $refs.taskTitle.blur()
           "
         ></textarea>
       </div>
@@ -156,6 +156,15 @@
               </div>
             </div>
           </div>
+          <div v-if="task?.attachment" class="attachment-container flex flex-column">
+            <div class="attachment-header flex align-center">
+              <span class="trellicons trellicons-attachment"></span>
+              <h3>Attachments</h3>
+            </div>
+            <div class="flex task-image-container">
+              <img class="task-image" :src="task.attachment"/>
+            </div>
+          </div>
           <div class="comment-container flex justify-between align-center">
             <div class="task-detail-title">
               <span class="trellicons trellicons-comments"></span>
@@ -233,13 +242,10 @@
                 ></datepicker>
               </div>
               <div class="sidebar-btn-container">
-                <button class="sidebar-btn flex align-center">
-                  <span class="trellicons trellicons-attachment"></span>
-                  <span>Attachments</span>
-                </button>
+                <attachment-picker @attachSelected="addAttachment" />
               </div>
               <div class="sidebar-btn-container">
-                <cover-picker :labels="labels" @addCover="addCover"/>
+                <cover-picker :labels="labels" @addCover="addCover" />
               </div>
             </div>
             <div class="actions pos-relative">
@@ -263,11 +269,12 @@
   </section>
 </template>
 <script>
-import { boardService } from '../services/board-service.js';
-import Datepicker from 'vuejs3-datepicker';
-import { ref } from 'vue';
-import labelPicker from '../cmps/label-picker.vue';
-import coverPicker from '../cmps/cover-picker.vue';
+import { boardService } from '../services/board-service.js'
+import Datepicker from 'vuejs3-datepicker'
+import { ref } from 'vue'
+import labelPicker from '../cmps/label-picker.vue'
+import coverPicker from '../cmps/cover-picker.vue'
+import attachmentPicker from '../cmps/attachment-picker.vue'
 
 export default {
   name: 'taskDetails',
@@ -283,63 +290,67 @@ export default {
       isDateSide: false,
       taskLabels: [],
       labels: null,
-    };
+    }
   },
   async created() {
-    const { boardId, taskId, groupId } = this.$route.params;
+    const { boardId, taskId, groupId } = this.$route.params
     if (!this.$store.getters.board || !this.$store.getters.getLabels) {
-      await this.$store.dispatch({ type: 'loadBoard', boardId });
+      await this.$store.dispatch({ type: 'loadBoard', boardId })
     }
-    this.labels = this.$store.getters.getLabels;
-    this.task = await boardService.getTaskById(boardId, groupId, taskId);
+    this.labels = this.$store.getters.getLabels
+    this.task = await boardService.getTaskById(boardId, groupId, taskId)
     if (this.task.labelIds) {
       this.task.labelIds.map((labelId) => {
         this.labels.forEach((label) => {
-          if (label.id === labelId) this.taskLabels.push(label);
-        });
-      });
+          if (label.id === labelId) this.taskLabels.push(label)
+        })
+      })
     }
-    this.$refs.taskTitle.value = this.task.title;
-    this.$refs.taskDescription.value = this.task.description;
+    this.$refs.taskTitle.value = this.task.title
+    this.$refs.taskDescription.value = this.task.description
   },
   computed: {
     dueDateFixed() {
       if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10);
-        console.log(fixedDate);
-        fixedDate += ' at 12:00 AM';
-        return fixedDate;
+        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
+        console.log(fixedDate)
+        fixedDate += ' at 12:00 AM'
+        return fixedDate
       }
     },
-    taskBgColor() {
-      if (this.task?.style.bgColor) {
-        return { backgroundColor: this.task.style.bgColor };
-      } else return '';
+    taskCover() {
+      if (this.task?.style?.bgColor) {
+        return { backgroundColor: this.task.style.bgColor }
+      }
+      else if (this.task?.attachment) {
+        return {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', bbackgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+      }
+      else return ''
     },
     groupTitle() {
-      const { groupId } = this.$route.params;
-      const board = this.$store.getters.board;
+      const { groupId } = this.$route.params
+      const board = this.$store.getters.board
       if (board?._id) {
-        const groups = board.groups;
-        const group = groups.find((group) => group.id === groupId);
-        return group.title;
+        const groups = board.groups
+        const group = groups.find((group) => group.id === groupId)
+        return group.title
       }
     },
   },
   methods: {
     updateTask() {
-      const { groupId } = this.$route.params;
+      const { groupId } = this.$route.params
       this.$store.dispatch({
         type: 'saveTask',
         task: JSON.parse(JSON.stringify(this.task)),
         groupId,
-      });
-      this.isEditDescription = false;
+      })
+      this.isEditDescription = false
     },
     updateDueDate() {
-      const chosenDate = new Date(this.dueDate);
-      const timestamp = chosenDate.getTime();
-      this.task.dueDate = timestamp;
+      const chosenDate = new Date(this.dueDate)
+      const timestamp = chosenDate.getTime()
+      this.task.dueDate = timestamp
     },
     // updateTaskLabels() {
     //   this.task.labelIds.map((labelId) => {
@@ -350,36 +361,41 @@ export default {
     // },
     addLabel(labelId) {
       if (!this.task.labelIds || !this.task.labelIds.length) {
-        this.task.labelIds = [];
+        this.task.labelIds = []
       }
       for (var i = 0; i < this.task.labelIds.length; i++) {
         if (this.task.labelIds[i] === labelId) {
-          this.task.labelIds.splice(i, 1);
-          this.updateTask();
+          this.task.labelIds.splice(i, 1)
+          this.updateTask()
           const idx = this.taskLabels.findIndex(
             (taskLabel) => taskLabel.id === labelId
-          );
-          this.taskLabels.splice(idx, 1);
-          return;
+          )
+          this.taskLabels.splice(idx, 1)
+          return
         }
       }
-      this.task.labelIds.push(labelId);
-      this.updateTask();
-      const label = this.labels.find((taskLabel) => taskLabel.id === labelId);
-      this.taskLabels.push(label);
+      this.task.labelIds.push(labelId)
+      this.updateTask()
+      const label = this.labels.find((taskLabel) => taskLabel.id === labelId)
+      this.taskLabels.push(label)
+    },
+    addAttachment(imageUrl) {
+      console.log(imageUrl)
+      this.task.attachment = imageUrl
+      this.updateTask()
     },
     async removeTask() {
-      const { boardId, taskId, groupId } = this.$route.params;
-      await this.$store.dispatch({ type: 'removeTask', taskId, groupId });
-      this.$router.push('/board/' + boardId);
+      const { boardId, taskId, groupId } = this.$route.params
+      await this.$store.dispatch({ type: 'removeTask', taskId, groupId })
+      this.$router.push('/board/' + boardId)
     },
     addCover(color) {
       if (!this.task?.style) this.task.style = {}
       this.task.style.bgColor = color
       this.updateTask()
-    }
+    },
   },
-  components: { Datepicker, labelPicker, coverPicker },
-};
+  components: { Datepicker, labelPicker, coverPicker, attachmentPicker },
+}
 </script>
 <style></style>
