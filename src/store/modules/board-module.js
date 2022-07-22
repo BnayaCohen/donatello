@@ -55,6 +55,8 @@ export default {
       if (!reverse) {
         const group = state.currBoard.groups.splice(removedIndex, 1)[0]
         state.currBoard.groups.splice(addedIndex, 0, group)
+        // state.scene.children.splice(removedIndex, 1)[0]
+        // state.scene.children.splice(addedIndex, group)
       } else {
         const group = state.currBoard.groups.splice(addedIndex, 1)[0]
         state.currBoard.groups.splice(removedIndex, 0, group)

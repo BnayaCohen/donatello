@@ -42,7 +42,6 @@
                 :value="label.color"
                 @click="selectCover(label.color)"
               />
-
             </label>
           </div>
         </div>
@@ -71,6 +70,7 @@ export default {
       elCover.classList.toggle('show')
     },
   },
+  emits: ['addCover'],
 }
 </script>
 <style></style>

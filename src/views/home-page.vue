@@ -3,12 +3,19 @@
   <section class="home-page home-page-layout">
     <div class="hero">
       <div class="hero-description">
-        <h1>Donatello helps teams move work forward.</h1>
-        <p>
-          Collaborate,manage projects and reach new productivity peaks. from
-          high rises to the home office,the way your team works is unique
-          —accomplish it all with Donatello.
-        </p>
+        <div class="text-container">
+          <h1>
+            Donatello helps teams move work
+            <span ref="el" data-words='["forward.","together.","better."]'
+              ><span class="txt"></span
+            ></span>
+          </h1>
+          <p>
+            Collaborate,manage projects and reach new productivity peaks. from
+            high rises to the home office,the way your team works is unique
+            —accomplish it all with Donatello.
+          </p>
+        </div>
       </div>
       <div class="hero-img">
         <img
@@ -23,7 +30,7 @@
         more features as your teamwork grows. Manage projects, organize tasks,
         and build team spirit—all in one place.
       </p>
-      <router-link to="/board">Start doing</router-link>
+      <router-link to="/board"><span>Start doing</span></router-link>
     </section>
     <img
       src="https://images.ctfassets.net/rz1oowkt5gyp/7pYWhpQ3vnntxoShaImNws/777fabbf069416489167ab92027ce086/board.png?w=1200&fm=webp"
@@ -33,8 +40,19 @@
 
 <script>
 import headerHomePage from '../cmps/header-page.vue'
+import { TypeWriter } from '../services/util-service'
 export default {
+  mounted() {
+    const el = this.$refs.el
+    const words = JSON.parse(el.getAttribute('data-words'))
+    new TypeWriter(el, words)
+  },
   components: { headerHomePage },
+  data() {
+    return {
+      el: null,
+    }
+  },
 }
 </script>
 

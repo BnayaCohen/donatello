@@ -58,6 +58,7 @@ export default {
       this.$emit('addLabel', labelId)
     },
   },
+  emits: ['addLabel'],
 }
 </script>
 <style></style>

@@ -2,10 +2,7 @@
 
   <section
     class="container task-detail"
-    @click="
-      isDate = false;
-      isDateSide = false
-    "
+    @click=";[(isDate = false), (isDateSide = false)]"
   >
   <div
     class="back-screen"
@@ -49,10 +46,7 @@
           ref="taskTitle"
           v-model="task.title"
           placeholder="Enter title here..."
-          @keydown.enter="
-            saveTask;
-            $refs.taskTitle.blur()
-          "
+          @keydown.enter=";[saveTask, $refs.taskTitle.blur()]"
         ></textarea>
       </div>
       <div class="subtitle-header">
@@ -160,7 +154,10 @@
               </div>
             </div>
           </div>
-          <div v-if="task?.attachment" class="attachment-container flex flex-column">
+          <div
+            v-if="task?.attachment"
+            class="attachment-container flex flex-column"
+          >
             <div class="attachment-header flex align-center">
               <span class="trellicons trellicons-attachment"></span>
               <h3>Attachments</h3>
@@ -297,9 +294,11 @@ import attachmentPicker from '../cmps/attachment-picker.vue'
 
 export default {
   name: 'taskDetails',
-  props: {
-    taskId: String,
-  },
+  // props: {
+  //   taskId: String,
+  //   boardId: String,
+  //   groupId: String,
+  // },
   data() {
     return {
       task: boardService.getEmptyTask(),
@@ -359,8 +358,10 @@ export default {
       }
     },
     descriptionStyle() {
-      return this.isEditDescription? 'description-textarea' : 'description-fake-textarea' 
-    }
+      return this.isEditDescription
+        ? 'description-textarea'
+        : 'description-fake-textarea'
+    },
   },
   methods: {
     updateTask() {
