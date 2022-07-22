@@ -7,7 +7,7 @@ import 'element-plus/dist/index.css'
 import { focusDirective, clickOutsideDirective } from './directives'
 
 // Styles
-import "./assets/styles/styles.scss";
+import './assets/styles/styles.scss'
 
 const app = createApp(App)
 

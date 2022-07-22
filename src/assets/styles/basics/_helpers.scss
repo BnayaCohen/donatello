@@ -113,17 +113,19 @@
   display: none;
   width: 304px;
   border-radius: 3px;
-  box-shadow: 2 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
   background-color: #fff;
   z-index: 10;
   padding: 0 12px 12px;
-
+  background: #fff;
+  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+  overflow: hidden;
+  z-index: 70;
   &.show {
     display: block;
   }
 
-    right: 0;
-    top: 0;
+  right: 0;
+  top: 0;
   .popover-header {
     margin-bottom: 8px;
     height: 40px;
@@ -145,14 +147,13 @@
   }
 }
 
-// Screen 
+// Screen
 
 .back-screen {
-    height: 100%;
-    width: 100%;
-    background-color: black;
+  height: 100%;
+  width: 100%;
+  background-color: black;
 }
-
 
 // Member avatar
 .member-avatar-big {
@@ -223,17 +224,17 @@
 }
 
 .trellicons-close-btn::before {
-  content: "\e91c";
+  content: '\e91c';
 }
 
 .trellicons-options::before {
-  content: "\e952";
+  content: '\e952';
 }
 
 .trellicons-plus-sign::before {
-  content: "\e901";
+  content: '\e901';
 }
 
 .trellicons-edit::before {
-  content: "\e928";
+  content: '\e928';
 }

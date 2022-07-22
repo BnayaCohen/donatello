@@ -194,7 +194,7 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <label-picker :labels="labels" @addLabel="addLabel" />
+                <label-picker :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" />
               </div>
               <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
