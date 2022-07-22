@@ -65,12 +65,15 @@
     v-if="isModalOpen"
     v-click-outside="toggleModal"
     @toggleModal="toggleModal"
+    @addBoard="createBoard"
     :style="getCords"
   />
 </template>
 
 <script>
 import boardCreate from '../cmps/board-create.vue'
+import { boardService } from '../services/board-service'
+import { userService } from '../services/user-service'
 export default {
   components: { boardCreate },
   name: 'boards-container',
@@ -100,7 +103,18 @@ export default {
     openTask(boardId) {
       this.$router.push('/board/' + boardId)
     },
-    createBoard(data) {},
+    async createBoard(data) {
+      const board = boardService.getEmptyBoard(data.title)
+      board.style = data.style
+      // board.createdBy:userService.getLoggedInUser()
+      board.createdBy = {
+        _id: 'u101',
+        fullname: 'Abi Abambi',
+        imgUrl: 'http://some-img',
+      }
+      const { _id } = await this.$store.dispatch({ type: 'saveBoard', board })
+      this.$router.push('/board/' + _id)
+    },
   },
   computed: {
     starredBoards() {

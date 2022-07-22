@@ -1,5 +1,5 @@
 <template>
-  <main class="main-layout board-container">
+  <main :style="board?.style" class="main-layout board-container">
     <board-header
       v-if="board"
       :board="board"
