@@ -33,8 +33,8 @@
           fill="currentColor"
           d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"
           class=""
-        ></path></svg
-    ></span>
+        ></path></svg>
+        </span>
     <div :style="getCords" class="quick-card-editor-card">
       <div
         :style="task?.styles"
@@ -86,16 +86,13 @@
       </div>
       <button class="save-task-btn text-center">Save</button>
       <div class="quick-card-editor-buttons fade-in">
-        <router-link
-          :to="`${$router.currentRoute._value.path}/${task?.groupId}/${task?.id}`"
-          class="quick-card-editor-buttons-item"
-        >
-          <span class="icon-sm icon-card"
-            ><i class="fa-solid fa-inbox"></i></span
-          ><span class="quick-card-editor-buttons-item-text"
-            >Open card</span
-          ></router-link
-        >
+          <span class="quick-card-editor-buttons-item" @click.stop="openTask(task.groupId, task.id)">
+            <span class="icon-sm icon-card"
+              ><i class="fa-solid fa-inbox"></i></span
+            ><span class="quick-card-editor-buttons-item-text"
+              >Open card</span
+            >
+          </span>
         <span href="#" class="quick-card-editor-buttons-item"
           ><span class="icon-sm icon-label"
             ><i class="fa-solid fa-tag"></i></span
@@ -179,6 +176,7 @@ export default {
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
       )
+      this.closeSideBar()
     },
   },
   computed: {
