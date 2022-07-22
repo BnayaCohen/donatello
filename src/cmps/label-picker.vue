@@ -41,11 +41,22 @@
 export default {
   props: {
     labels: Array,
+    taskLabels: Array
   },
   data() {
-    return {}
+    return {
+    }
   },
-  created() {},
+  created() {
+  },
+  computed: {
+    selectedLabel() {
+      this.taskLabels.forEach(taskLabel => {
+        if (taskLabel.id === labelId) return 'label-selected'
+        else return ''
+      })
+    }
+  },
   methods: {
     addLabel(labelId) {
       this.$emit('addLabel', labelId)
@@ -53,7 +64,6 @@ export default {
     toggleLabels() {
       const elLabels = this.$refs.labelOpts
       elLabels.classList.toggle('show')
-      console.log(this.labels)
     },
   },
 }

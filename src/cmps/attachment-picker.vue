@@ -26,7 +26,10 @@
             @input="pickFile"
           />
         </div>
-        <h3 class="small-title">From web</h3>
+        <div class="from-web">
+          <h3 class="small-title">From web</h3>
+
+        </div>
       </div>
     </div>
   </div>
