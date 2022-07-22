@@ -56,6 +56,7 @@ export default {
       console.log(this.labels)
     },
   },
+  emits: ['addLabel'],
 }
 </script>
 <style></style>
