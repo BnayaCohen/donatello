@@ -107,9 +107,7 @@
     }
     .task-detail-header {
       display: flex;
-      padding: 20px 8px 0 16px;
-      gap: 8px;
-
+      padding: 20px 8px 0 29px;
       .title-input {
         border: none;
         outline: none;
@@ -136,7 +134,7 @@
     }
     .subtitle-header {
       opacity: 0.8;
-      margin: 0 58px;
+      margin: 0 67px;
       p {
         margin: 0 0 8px;
       }
@@ -169,7 +167,7 @@
       }
       .members-labels-container {
         display: flex;
-        margin: 9px 0 24px 26px;
+        margin: 9px 0 24px 29px;
         gap: rem(8px);
         position: relative;
         flex-wrap: wrap;
