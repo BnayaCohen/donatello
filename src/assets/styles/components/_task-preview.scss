@@ -41,11 +41,12 @@
 
 .task-labels-container {
   padding-top: 6px;
+  margin-bottom: -4px;
 
   .board-task-label {
     float: left;
     height: em(8px);
-    margin-right: 4px;
+    margin: 0 4px 4px 0;
     min-width: em(40px);
     cursor: pointer;
     border-radius: 4px;
