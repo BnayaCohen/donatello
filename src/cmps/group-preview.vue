@@ -9,10 +9,16 @@
         @keyup.enter="updateTitle"
       />
 
-      <button @click="togglePopup" class="group-options-btn trellicons trellicons-options">
-        <div v-if="showPopup" class="popup">
+      <button
+        @click="togglePopup"
+        class="group-options-btn trellicons trellicons-options"
+      >
+        <div v-if="showPopup" v-click-outside="togglePopup" class="popup">
           <h4>List actions</h4>
-          <span @click.stop="togglePopup" class="close-popup-btn trellicons trellicons-close-btn"></span>
+          <span
+            @click.stop="togglePopup"
+            class="close-popup-btn trellicons trellicons-close-btn"
+          ></span>
           <ul class="popup-list clean-list">
             <li>
               <span @click="setAddTaskTrue">Add card...</span>

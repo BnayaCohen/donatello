@@ -83,16 +83,16 @@ export default {
   actions: {
     async loadBoards({ commit }) {
       try {
-        var boards = await boardService.query()
+        const boards = await boardService.query()
         commit({ type: 'setBoards', boards })
         return boards
       } catch (err) {
-        console.log('couldnt get boards for display', err)
+        console.log("couldn't get boards for display", err)
       }
     },
     async loadBoard({ commit }, { boardId }) {
       try {
-        var board = await boardService.getById(boardId)
+        const board = await boardService.getById(boardId)
         commit({ type: 'setBoard', board })
         return board
       } catch (err) {
