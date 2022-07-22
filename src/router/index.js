@@ -30,5 +30,6 @@ const router = createRouter({
     },
   ],
 })
+router.addRoute({ path: '/:groupId/:taskId', component: taskDetails })
 
 export default router

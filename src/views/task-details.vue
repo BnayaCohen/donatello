@@ -23,8 +23,7 @@
           <span class="cover-icon"> Cover </span>
         </button>
       </div>
-      <router-link :to="'/board/' + this.$route.params.boardId"
-        ><button class="close-modal-btn" @click="updateTask">
+        <button class="close-modal-btn" @click="goToBoard">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="256px"
@@ -36,7 +35,7 @@
               d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z"
             />
           </svg></button
-      ></router-link>
+      >
       <div class="task-detail-header">
         <span class="trellicons trellicons-details"></span>
         <textarea
@@ -115,7 +114,7 @@
                     ></path>
                   </svg>
                 </button>
-                <button class="flex align-center justify-center remove-duedate-btn" @click="removeDueDate">
+                <button class="flex align-center justify-center remove-duedate-btn" @click.stop="removeDueDate">
                   <span>Remove</span>
                 </button>
               </label>
@@ -377,6 +376,7 @@ export default {
       const chosenDate = new Date(this.dueDate)
       const timestamp = chosenDate.getTime()
       this.task.dueDate = timestamp
+      this.updateTask()
     },
     // updateTaskLabels() {
     //   this.task.labelIds.map((labelId) => {
@@ -407,6 +407,7 @@ export default {
     },
     addAttachment(imageUrl) {
       this.task.attachment = imageUrl
+      this.isAttach = false
       this.updateTask()
     },
     async removeTask() {
@@ -422,6 +423,9 @@ export default {
     removeDueDate() {
       this.task.dueDate = ''
       this.updateTask()
+    },
+    goToBoard() {
+      this.$router.push('/board/' + this.$route.params.boardId)
     }
   },
   components: { Datepicker, labelPicker, coverPicker, attachmentPicker },
