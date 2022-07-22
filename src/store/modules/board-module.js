@@ -9,6 +9,7 @@ export default {
       props: { orientation: 'horizontal' },
       children: null,
     },
+    lastGroup: null,
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -63,9 +64,14 @@ export default {
       }
     },
     updateGroups(state, { newColumn, itemIndex }) {
-      state.currBoard.groups.splice(itemIndex, 1, newColumn)
+      const group = state.currBoard.groups.splice(itemIndex, 1, newColumn)
+      state.lastGroup = group
     },
-    undoChanges(state, { newColumn, itemIndex }) {},
+    undoChanges(state, { itemIndex }) {
+      state.currBoard.groups.splice(itemIndex, 1, state.lastGroup)
+      state.lastGroup = null
+      state.scene = state.currBoard.groups
+    },
   },
   actions: {
     async loadBoards({ commit }) {
