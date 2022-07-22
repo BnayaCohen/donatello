@@ -146,6 +146,7 @@
                 ref="taskDescription"
                 v-model="task.description"
                 @click="isEditDescription = !isEditDescription"
+                :class="descriptionStyle"
               ></textarea>
               <div
                 v-if="isEditDescription"
@@ -336,6 +337,9 @@ export default {
         return group.title
       }
     },
+    descriptionStyle() {
+      return this.isEditDescription? 'description-textarea' : 'description-fake-textarea' 
+    }
   },
   methods: {
     updateTask() {

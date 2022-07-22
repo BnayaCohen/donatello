@@ -11,7 +11,7 @@
     padding: 0;
   }
   textarea,
-  input[type="text"] {
+  input[type='text'] {
     -webkit-appearance: none;
     background-color: #fafbfc;
     border: none;
@@ -115,7 +115,7 @@
         padding: 4px 8px;
         min-height: 33.333px;
         border-radius: 3px;
-        font-size: 1.25rem;
+        font-size: 20px;
         font-weight: 600;
         line-height: 24px;
         transition: border 0.1s;
@@ -144,6 +144,23 @@
       flex-basis: 75%;
       .description-container {
         margin-bottom: 24px;
+        .description-fake-textarea {
+          background-color: #091e420a;
+          border: none;
+          border-radius: 3px;
+          box-shadow: none;
+          display: block;
+          min-height: 40px;
+          padding: 8px 12px;
+          text-decoration: none;
+        }
+        .description-textarea {
+          background: #fff;
+          box-shadow: none;
+          min-height: 108px;
+          margin:  0 0 4px;
+          padding: 8px 12px;
+        }
         .description-header {
           padding: 8px 0;
         }
