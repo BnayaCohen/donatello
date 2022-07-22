@@ -11,18 +11,18 @@
           <span
             v-for="board in starredBoards"
             style="height: 100px; width: 150px"
+            :style="board.style"
             class="board-page-display"
             :key="board._id"
             @click="openTask(board._id)"
           >
-            <li :style="board.style" style="height: 100px; width: 150px">
-              <h3>{{ board.title }}</h3>
-              <span
-                class="remove-board-btn trellicons trellicons-star starred"
-                @click.stop="toggleStarred(board)"
-              >
-              </span>
-            </li>
+            <h3>{{ board.title }}</h3>
+            <span
+              :class="board.isStarred ? 'starred' : ''"
+              class="star-board-btn trellicons trellicons-star"
+              @click.stop="toggleStarred(board)"
+            >
+            </span>
           </span>
         </ul>
       </section>
@@ -35,42 +35,63 @@
         </div>
         <ul class="board-list clean-list">
           <span
+            class="create-board-item"
+            @click="toggleModal"
+            style="height: 100px; width: 150px"
+          >
+            <h3>Create new board</h3>
+          </span>
+          <span
             v-for="board in boards"
+            :style="board.style"
             style="height: 100px; width: 150px"
             class="board-page-display"
             :key="board._id"
             @click="openTask(board._id)"
           >
-            <li :style="board.style" style="height: 100px; width: 150px">
-              <h3>{{ board.title }}</h3>
-              <span
-                class="remove-board-btn trellicons trellicons-star"
-                @click.stop="toggleStarred(board)"
-              >
-              </span>
-            </li>
+            <h3>{{ board.title }}</h3>
+            <span
+              :class="board.isStarred ? 'starred' : ''"
+              class="star-board-btn trellicons trellicons-star"
+              @click.stop="toggleStarred(board)"
+            >
+            </span>
           </span>
         </ul>
       </section>
     </div>
   </main>
+  <board-create
+    v-if="isModalOpen"
+    v-click-outside="toggleModal"
+    @toggleModal="toggleModal"
+    @addBoard="createBoard"
+    :style="getCords"
+  />
 </template>
 
 <script>
+import boardCreate from '../cmps/board-create.vue'
+import { boardService } from '../services/board-service'
+import { userService } from '../services/user-service'
 export default {
+  components: { boardCreate },
   name: 'boards-container',
   data() {
     return {
-      removeBtn: null,
-      starred: false,
+      isModalOpen: false,
+      x: null,
+      y: null,
     }
   },
   created() {
     document.body.classList.add('app-header-background-color-blue')
   },
   methods: {
-    setBoard(boardId) {
-      this.$store.dispatch({ type: 'loadBoard', boardId })
+    toggleModal(ev) {
+      this.x = ev?.clientX
+      this.y = ev?.clientY - 230
+      this.isModalOpen = !this.isModalOpen
     },
     toggleStarred(board) {
       board.isStarred = !board.isStarred
@@ -82,6 +103,18 @@ export default {
     openTask(boardId) {
       this.$router.push('/board/' + boardId)
     },
+    async createBoard(data) {
+      const board = boardService.getEmptyBoard(data.title)
+      board.style = data.style
+      // board.createdBy:userService.getLoggedInUser()
+      board.createdBy = {
+        _id: 'u101',
+        fullname: 'Abi Abambi',
+        imgUrl: 'http://some-img',
+      }
+      const { _id } = await this.$store.dispatch({ type: 'saveBoard', board })
+      this.$router.push('/board/' + _id)
+    },
   },
   computed: {
     starredBoards() {
@@ -89,6 +122,9 @@ export default {
     },
     boards() {
       return this.$store.getters.boardsForDisplay
+    },
+    getCords() {
+      return { top: this.y + 'px', left: this.x - 228 + 'px' }
     },
   },
   unmounted() {
