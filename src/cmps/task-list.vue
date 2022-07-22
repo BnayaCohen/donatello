@@ -34,16 +34,18 @@ export default {
     return {
       isTaskDetail: false,
       items: [],
-      scene: this.$store.getters.scene,
     }
   },
   computed: {
     dropPlaceHolderOptions() {
       return {
         className: 'drop-preview',
-        animationDuration: '150',
+        animationDuration: '188',
         showOnTop: false,
       }
+    },
+    scene() {
+      return this.$store.getters.scene
     },
   },
   methods: {
@@ -62,6 +64,7 @@ export default {
         if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
           // your action / api call
           // simulate api call
+          dropResult.payload.groupId = groupId
           // setTimeout(function () {
           //   dropResult.payload.loading = false
           // }, Math.random() * 5000 + 1000)
@@ -87,3 +90,8 @@ export default {
   components: { taskPreview, taskDetails, Container, Draggable },
 }
 </script>
+<style>
+.smooth-dnd-container {
+  min-height: 1px;
+}
+</style>
