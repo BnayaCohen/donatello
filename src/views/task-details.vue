@@ -1,17 +1,4 @@
 <template>
-  <div
-    class="back-screen"
-    :style="{
-      backgroundColor: '#000000a3',
-      width: screenWidth,
-      height: screenHeight,
-      position: 'absolute',
-      top: 0,
-      zIndex: 2,
-      cursor: 'pointer',
-    }"
-    @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
-  ></div>
 
   <section
     class="container task-detail"
@@ -20,6 +7,14 @@
       isDateSide = false
     "
   >
+  <div
+    class="back-screen"
+    :style="{
+      backgroundColor: '#000000a3',
+      cursor: 'pointer',
+    }"
+    @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
+  ></div>
     <div class="detail-modal-container">
       <div
         v-if="task?.style?.bgColor || task?.attachment"
