@@ -49,6 +49,8 @@
     align-items: center;
   }
   .detail-modal-container {
+    overflow-y: hidden;
+
     .trellicons {
       width: 32px;
       height: 32px;

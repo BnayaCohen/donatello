@@ -150,9 +150,14 @@
 // Screen
 
 .back-screen {
+  display: flex;
   height: 100%;
+  left: 0;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
   width: 100%;
-  background-color: black;
+  z-index: 2;
 }
 
 // Member avatar
