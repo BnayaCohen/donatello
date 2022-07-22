@@ -1,16 +1,11 @@
 <template>
-  <button class="sidebar-btn flex align-center" @click="toggleAttachment">
-    <span class="trellicons trellicons-attachment"></span>
-    <span>Attachments</span>
-  </button>
-
   <div
     ref="attachmentContainer"
     class="dynamic-popover pos-absolute attachment-popover-container"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Attach from..</h4>
-      <button class="pop-close-btn" @click="toggleAttachment">
+      <button class="pop-close-btn" @click="$emit('closeAttach')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
