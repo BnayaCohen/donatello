@@ -1,26 +1,43 @@
+.boards-page {
+  min-height: calc(100vh - 44px);
+  color: #172b4d;
+  background-color: #fff;
+}
+.boards-container {
+  max-width: 75vw;
+  margin: 2rem auto;
+}
 .board-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: rem(20px);
-  > * {
-    justify-self: center;
-  }
   .board-page-display {
     cursor: pointer;
     position: relative;
     color: #fff;
+    border-radius: 3px;
   }
   .remove-board-btn {
-    color: inherit;
     position: absolute;
     font-size: 1rem;
-    padding: 0 0.3rem;
-    right: 3px;
-    top: 2px;
     z-index: 10;
-    &:hover {
-      background-color: #0007;
-      border-radius: 2px;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.18s ease;
+    &.starred {
+      color: yellow;
     }
+  }
+  li:hover .remove-board-btn {
+    margin-right: 6px;
+    &-hover {
+      transform: all translateZ(0) 0.15;
+    }
+    opacity: 1;
+    width: 18px;
+    height: 18px;
   }
 }
