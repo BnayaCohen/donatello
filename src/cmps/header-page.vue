@@ -52,7 +52,7 @@
       <div class="login-container">
         <router-link class="login" to="/login">Log in</router-link>
         <router-link class="signup" to="/signup"
-          >Get Trello for free</router-link
+          >Get Donatello for free</router-link
         >
       </div>
     </div>
@@ -63,7 +63,6 @@ export default {
   methods: {
     vueOnScroll() {
       const refs = this.$refs.headRef // assign the reference in variable
-      console.log(refs)
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 0) refs.classList.add('page-header-box-shadow')
         else refs.classList.remove('page-header-box-shadow')
