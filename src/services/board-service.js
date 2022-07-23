@@ -299,15 +299,16 @@ async function saveGroup(boardId, group) {
   if (!group.id) {
     group.id = utilService.makeId()
     board.groups.push(group)
+    var activity = createActivity('created a list')
   } else {
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
     if (idx !== -1) board.groups.splice(idx, 1, group)
   }
-
+  board.activities.unshift(activity)
   return await saveBoard(board)
 }
 
-async function saveTask(boardId, groupId, task, activity) {
+async function saveTask(boardId, groupId, task) {
   const board = await getById(boardId)
 
   const group = board.groups.find((group) => group.id === groupId)
@@ -315,12 +316,13 @@ async function saveTask(boardId, groupId, task, activity) {
   if (!task.id) {
     task.id = utilService.makeId()
     group.tasks.push(task)
+    var activity = createActivity('created a card', task)
   } else {
     const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
     if (idx !== -1) group.tasks.splice(idx, 1, task)
   }
 
-  activity && board.activities.unshift(activity)
+  board.activities.unshift(activity)
   return await saveBoard(board)
 }
 
@@ -341,20 +343,24 @@ function _createBoards() {
 }
 
 function createActivity(txt = '', task) {
-  return (activity = {
+  return {
     id: utilService.makeId(),
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    task,
-  })
+    task: task || '',
+  }
 }
 
 async function removeGroup(boardId, groupId) {
   const board = await getById(boardId)
 
   const idx = board.groups.findIndex((group) => group.id === groupId)
-  if (idx !== -1) board.groups.splice(idx, 1)
+  if (idx !== -1) {
+    const activity = createActivity('removed a list')
+    board.groups.splice(idx, 1)
+    board.activities.unshift(activity)
+  }
   return await saveBoard(board)
 }
 
@@ -363,7 +369,11 @@ async function removeTask(boardId, groupId, taskId) {
 
   const group = board.groups.find((group) => group.id === groupId)
   const idx = group.tasks.findIndex((task) => task.id === taskId)
-  if (idx !== -1) group.tasks.splice(idx, 1)
+  if (idx !== -1) {
+    const activity = createActivity('removed a card')
+    group.tasks.splice(idx, 1)
+    board.activities.unshift(activity)
+  }
   return await saveBoard(board)
 }
 

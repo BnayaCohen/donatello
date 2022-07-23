@@ -124,13 +124,12 @@ export default {
         console.log("Couldn't save group", err)
       }
     },
-    async saveTask({ commit, state }, { groupId, task, activity }) {
+    async saveTask({ commit, state }, { groupId, task }) {
       try {
         const board = await boardService.saveTask(
           state.currBoard._id,
           groupId,
-          task,
-          activity
+          task
         )
         commit({ type: 'setBoard', board })
       } catch (err) {
