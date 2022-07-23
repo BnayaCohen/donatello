@@ -2,6 +2,7 @@
   <div
     ref="attachmentContainer"
     class="dynamic-popover pos-absolute attachment-popover-container"
+    :style="pos"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Attach from..</h4>
@@ -22,8 +23,11 @@
           />
         </div>
         <div class="from-web">
-          <h3 class="small-title">From web</h3>
-
+          <h3 class="small-title">Attach a link</h3>
+          <label for="web-url">
+            <input type="text" v-model="attachProps.url" />
+            <button class="btn" @click="addLinkAttachment">Attach</button>
+          </label>
         </div>
       </div>
     </div>
@@ -31,12 +35,17 @@
 </template>
 <script>
 export default {
+  props: {
+    pos: Object,
+  },
   data() {
     return {
-      previewImage: null,
+      attachProps: null,
     }
   },
-  created() {},
+  created() {
+    this.attachProps = {}
+  },
   methods: {
     selectImage() {
       this.$refs.fileInput.click()
@@ -46,16 +55,21 @@ export default {
       let file = input.files
       if (file && file[0]) {
         let reader = new FileReader()
-        reader.onload = (e) => {
-          this.previewImage = e.target.result
-          this.$emit('attachSelected', this.previewImage)
-        }
         reader.readAsDataURL(file[0])
+        reader.onload = (e) => {
+          const url = e.target.result
+          this.attachProps.url = url
+          this.attachProps.title = file[0].name
+          this.attachProps.createdAt = Date.now()
+          this.$emit('attachSelected', this.attachProps)
+        }
       }
     },
-    toggleAttachment() {
-      const elCover = this.$refs.attachmentContainer
-      elCover.classList.toggle('show')
+    addLinkAttachment() {
+      if (!this.attachProps.url) return
+      this.attachProps.title = 'Web image'
+      this.attachProps.createdAt = Date.now()
+      this.$emit('attachSelected', this.attachProps)
     },
   },
   emits: ['attachSelected'],

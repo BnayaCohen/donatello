@@ -118,18 +118,42 @@
   background: #fff;
   box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
   z-index: 70;
-  &.show {
+  // &.show {
+  //   display: block;
+  // }
+  input {
+    background-color: #fafbfc;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 2px #dfe1e6;
     display: block;
+    outline: none;
+    padding: 8px 12px;
+    width: 100%;
+    &:focus-within {
+      background-color: $clr3;
+      box-shadow: inset 0 0 0 2px #0079bf;
+    }
   }
-  left: 0;
-  top: 0;
+  .small-title {
+    color: #5e6c84;
+    font-size: 0.8571428571rem;
+    font-weight: 600;
+    // letter-spacing: 0.04em;
+    font-size: 12px;
+    margin-top: 5px;
+    // text-transform: uppercase;
+  }
+
   .popover-header {
     margin-bottom: 8px;
     height: 40px;
     border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
     position: relative;
     color: #5e6c84;
-    
+    h4 {
+      font-weight: 100;
+    }
     .pop-close-btn {
       position: absolute;
       right: 0;
@@ -138,7 +162,7 @@
       cursor: pointer;
     }
   }
-  
+
   .popover-content {
     overflow-y: auto;
     .small-title {
@@ -254,6 +278,7 @@
 }
 
 .trellicons-v-check::before {
+<<<<<<< HEAD
   content: "\e916";
 }
 
@@ -268,3 +293,7 @@
 .trellicons-un-checkedbox::before {
   content: "\e919";
 }
+=======
+  content: '\e916';
+}
+>>>>>>> b1d08862cb51f2ae26474f2e52e49514c4009526

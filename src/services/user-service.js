@@ -1,4 +1,5 @@
 import { httpService } from './http-service.js'
+import { storageService } from './async-storage.js'
 
 const USER_URL =
   process.env.NODE_ENV === 'production'
@@ -8,6 +9,8 @@ const AUTH_URL =
   process.env.NODE_ENV === 'production'
     ? '/api/auth/'
     : '//localhost:3030/api/auth/'
+
+const STORAGE_KEY = 'userDB'
 
 export const userService = {
   query,
@@ -19,12 +22,13 @@ export const userService = {
   getLoggedInUser,
 }
 
-const STORAGE_KEY = 'loggedinUser'
+const STORAGE_KEY_USER = 'loggedinUser'
 
 async function query(filterBy = null) {
   try {
-    const res = await httpService.get(API, { params: filterBy })
-    return res.data
+    return await storageService.query(STORAGE_KEY)
+    // const res = await httpService.get(API, { params: filterBy })
+    // return res.data
   } catch (err) {
     console.log(err)
     console.error('Something went wrong try again later')
@@ -33,8 +37,9 @@ async function query(filterBy = null) {
 
 async function getById(userId) {
   try {
-    const res = await httpService.get(USER_URL + userId)
-    return res.data
+    return await storageService.getById(STORAGE_KEY, userId)
+    // const res = await httpService.get(USER_URL + userId)
+    // return res.data
   } catch (err) {
     console.log(err)
     console.error('Something went wrong try again later')
@@ -43,7 +48,8 @@ async function getById(userId) {
 
 async function remove(userId) {
   try {
-    await httpService.delete(USER_URL + userId)
+    return await storageService.remove(STORAGE_KEY, userId)
+    // await httpService.delete(USER_URL + userId)
   } catch (err) {
     console.log(err)
     console.error('Something went wrong try again later')
@@ -52,8 +58,8 @@ async function remove(userId) {
 
 async function login(credentials) {
   try {
-    const res = await httpService.post(API + 'login', credentials)
-    return _saveToSession(res.data)
+    // const res = await httpService.post(API + 'login', credentials)
+    // return _saveToSession(res.data)
   } catch (err) {
     console.log(err)
     throw new Error('Failed to login try again later')
@@ -62,8 +68,10 @@ async function login(credentials) {
 
 async function signup(signUpInfo) {
   try {
-    const res = await httpService.post(API + 'signup', signUpInfo)
-    return _saveToSession(res.data)
+    const user = storageService.save(STORAGE_KEY, signUpInfo)
+    return _saveToSession(user)
+    // const res = await httpService.post(API + 'signup', signUpInfo)
+    // return _saveToSession(res.data)
   } catch (err) {
     console.log(err)
     throw new Error('Failed to signup try again later')
@@ -72,7 +80,7 @@ async function signup(signUpInfo) {
 
 async function logout() {
   try {
-    await httpService.post(AUTH_URL + 'logout')
+    // await httpService.post(AUTH_URL + 'logout')
     sessionStorage.removeItem(STORAGE_KEY)
   } catch {
     throw new Error('Failed to logout try again later')
@@ -82,4 +90,9 @@ async function logout() {
 function getLoggedInUser() {
   return { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'http://some-img' }
   // return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+}
+
+function _saveToSession(value) {
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+  return value
 }

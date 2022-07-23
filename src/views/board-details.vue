@@ -61,5 +61,6 @@ export default {
     boardHeader,
     boardSideBar,
   },
+  emits: ['setBackground'],
 }
 </script>
