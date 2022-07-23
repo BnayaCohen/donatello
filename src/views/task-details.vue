@@ -19,11 +19,10 @@
         :style="currCover"
       >
       </div>
-      <div v-if="task?.style?.bgColor" class="btn-wrapper">
-        <button @click="isTopCover = !isTopCover" class="cover-btn flex align-center">
+      <div class="btn-wrapper">
+        <button @click="isCover = !isCover" class="cover-btn flex align-center">
           <span class="trellicons trellicons-cover cover-icon"></span>
           <span class="cover-txt">Cover</span>
-          <cover-picker v-if="isTopCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false"/>
         </button>
       </div>
         <button class="close-modal-btn" @click="goToBoard">
