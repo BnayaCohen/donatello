@@ -1,27 +1,18 @@
 <template>
   <article class="open-title-input" :class="addingGroup">
-    <span
-      v-if="!isEditingTitle && !edit"
-      @click="isEditingTitle = true"
-      class="add-entity-placeholder flex">
+    <span v-if="!isEditingTitle && !edit" @click="isEditingTitle = true" class="add-entity-placeholder flex">
       <i class="trellicons trellicons-plus-sign"></i>
       {{ openInputPlaceholder }}
     </span>
     <div v-else class="flex flex-column">
-      <textarea
-        class="new-title-input"
-        :class="addingGroup"
-        type="text"
-        :placeholder="inputPlaceholder"
-        v-model="titleInput"
-        v-focus
-      ></textarea>
+      <textarea class="new-title-input" :class="addingGroup" type="text" :placeholder="inputPlaceholder"
+        v-model="titleInput" v-focus></textarea>
       <div class="flex align-center">
         <button @click="addEntity" class="add-entity-btn">
           {{ btnPlaceholder }}
         </button>
         <button @click="closeAddEntity" class="close-btn trellicons trellicons-close-btn">
-          
+
         </button>
       </div>
     </div>
@@ -72,17 +63,17 @@ export default {
         task: newTask,
         activity: {
           id: 'a101',
-      txt: 'Changed Color',
-      createdAt: Date.now(),
-      byMember: {
-        _id: 'u101',
-        fullname: 'Abi Abambi',
-        imgUrl: 'http://some-img',
-      },
-      task: {
-        id: 'c101',
-        title: 'Replace Logo',
-      },
+          txt: 'Changed Color',
+          createdAt: Date.now(),
+          byMember: {
+            _id: 'u101',
+            fullname: 'Abi Abambi',
+            imgUrl: 'http://some-img',
+          },
+          task: {
+            id: 'c101',
+            title: 'Replace Logo',
+          },
         },
       })
       this.titleInput = ''
@@ -95,10 +86,10 @@ export default {
   },
   computed: {
     addingGroup() {
-      return { 
+      return {
         adding: this.isEditingTitle,
-        task: this.groupOrTask==='task'
-        }
+        task: this.groupOrTask === 'task'
+      }
     },
     openInputPlaceholder() {
       switch (this.groupOrTask) {

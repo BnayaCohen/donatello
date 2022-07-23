@@ -21,7 +21,7 @@
 
 
       <section class="task-indicators-container">
-        <div class="flex" style="height:em(28px)">
+        <div class="flex">
 <div v-if="task.dueDate" class="task-due-date"
 @mouseenter="toggleDueDateOnHover"
 @mouseleave="toggleDueDateOnHover"
@@ -44,7 +44,7 @@
 </div>
 <div v-if="task.checklists?.length" class="task-indicator">
   <span class="trellicons trellicons-checkedbox"></span>
-  <p>{{task.checklists.length}}</p>
+  <p>{{task.checklists.length}}/2</p>
 </div>
 </section>
 </div>
