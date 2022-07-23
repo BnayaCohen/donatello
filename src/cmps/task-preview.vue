@@ -19,7 +19,7 @@
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
 <section class="task-members-container">
-  <avatar-preview />
+  <!-- <avatar-preview /> -->
 </section>
     </div>
   </div>
