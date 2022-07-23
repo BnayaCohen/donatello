@@ -1,8 +1,17 @@
 .cover-popover-container {
+  .small-title {
+    color: #5e6c84;
+    font-size: 0.8571428571rem;
+    font-weight: 600;
+    // letter-spacing: 0.04em;
+    font-size: 12px;
+    margin-top: 5px;
+    // text-transform: uppercase;
+  }
+
   .selected {
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0079bf;
   }
-  top: 200px;
   .cover-pop-over-content {
     .header-cover-preview,
     .full-cover-preview {
