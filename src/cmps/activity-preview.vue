@@ -1,9 +1,7 @@
 <template>
     <li class="activity-preview flex" v-if="activity">
         <div class="img-activity-container">
-            <img class="member-avatar-big"
-                src="https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-1024.png"
-                :alt="activity.byMember?.fullname">
+            <avatar-preview :member="activity.byMember" :avatarSize="'big'" />
         </div>
         <div>
             <h3 class="member-fullname">{{ activity.byMember.fullname }}</h3>
@@ -13,6 +11,7 @@
     </li>
 </template>
 <script>
+import avatarPreview from './avatar-preview.vue'
 import { utilService } from '../services/util-service';
 
 export default {
@@ -32,6 +31,7 @@ export default {
         }
     },
     components: {
+        avatarPreview
     }
 }
 </script>

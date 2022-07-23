@@ -18,7 +18,9 @@
       </div> -->
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
-      
+<section class="task-members-container">
+  <avatar-preview />
+</section>
     </div>
   </div>
 
@@ -143,6 +145,7 @@
 </template>
 <script>
 import taskLabelList from './task-label-list.vue'
+import avatarPreview from './avatar-preview.vue'
 
 export default {
   name: 'taskPreview',
@@ -186,6 +189,7 @@ export default {
   emits: ['click'],
   components: {
     taskLabelList,
+    avatarPreview
   },
 }
 </script>
