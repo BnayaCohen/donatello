@@ -23,12 +23,25 @@
               borderRadius: '3px',
               width: '100%',
               height: '32px',
-              backgroundColor: label.color
+              backgroundColor: label.color,
             }"
-
-          ></div>
+          >
+            <span
+              v-if="isLabelInUse(label.id)"
+              class="trellicons trellicons-v-check"
+              :style="{
+                float: 'right',
+                color: '#fff',
+                margin: '7px 7px 0 0',
+                fontWeight: '400',
+              }"
+            ></span>
+          </div>
           <span class="pos-absolute">{{ label.title }}</span>
         </li>
+        <div class="label-create">
+          <button class="full-btn">Create a new label</button>
+        </div>
       </ul>
     </div>
   </div>
@@ -37,23 +50,30 @@
 export default {
   props: {
     labels: Array,
-    taskLabels: Array
+    taskLabels: Array,
   },
   data() {
-    return {
-    }
+    return {}
   },
-  created() {
-  },
+  created() {},
   computed: {
     selectedLabel() {
-      this.taskLabels.forEach(taskLabel => {
+      this.taskLabels.forEach((taskLabel) => {
         if (taskLabel.id === labelId) return 'label-selected'
         else return ''
       })
-    }
+    },
   },
   methods: {
+    isLabelInUse(labelId) {
+      let inUse = false
+      this.taskLabels.forEach((taskLabel) => {
+        if (labelId === taskLabel.id) {
+          inUse = true
+        }
+      })
+      return inUse
+    },
     addLabel(labelId) {
       this.$emit('addLabel', labelId)
     },

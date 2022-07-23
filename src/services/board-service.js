@@ -21,13 +21,56 @@ const gBoard = {
   style: {
     background: `url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80') no-repeat 0 20%/cover`,
   },
+  coverColors: [
+    {
+      id: 'c101',
+      colorStr: '#61bd4f',
+    },
+    {
+      id: 'c102',
+      colorStr: '#008080',
+    },
+    {
+      id: 'c103',
+      colorStr: '#FFC300',
+    },
+    {
+      id: 'c104',
+      colorStr: '#FF5733',
+    },
+    {
+      id: 'c105',
+      colorStr: '#1434A4',
+    },
+    {
+      id: 'c106',
+      colorStr: '#FF8ED4',
+    },
+    {
+      id: 'c107',
+      colorStr: '#29CCE5',
+    },
+    {
+      id: 'c108',
+      colorStr: '#CD8DE5',
+    },
+    {
+      id: 'c109',
+      colorStr: '#172B4D',
+    },
+    {
+      id: 'c110',
+      colorStr: '#6DECA9',
+    },
+  ],
   labels: [
-    { id: 'l101', title: 'Done', color: '#51e898' },
-    { id: 'l102', title: 'Progress', color: '#0079bf' },
-    { id: 'l103', title: 'Important', color: '#f2d600' },
-    { id: 'l104', title: 'Urgent', color: '#eb5a46' },
-    { id: 'l105', title: 'Low Priority', color: '#00c2e0' },
-    { id: 'l106', title: 'Design Team', color: '#c377e0' },
+    { id: 'l100', title: 'Copy Request', color: '#f2d600' },
+    { id: 'l101', title: 'One more step', color: '#ff9f1a' },
+    { id: 'l102', title: 'Priority', color: '#eb5a46' },
+    { id: 'l103', title: 'Design Team', color: '#c377e0' },
+    { id: 'l104', title: 'Product Marketing', color: '#0079bf' },
+    { id: 'l105', title: 'Trello Tip', color: '#00c2e0' },
+    { id: 'l106', title: 'Help', color: '#51e898' },
   ],
   members: [
     {
@@ -97,7 +140,7 @@ const gBoard = {
               ],
             },
           ],
-          memberIds: ['u101'],
+          memberIds: ['u101', 'u101'],
           labelIds: ['l101', 'l102'],
           createdAt: 1590999730348,
           dueDate: 16156215211,
