@@ -4,7 +4,7 @@
     <h3>Attachments</h3>
   </div>
   <div class="flex attachment-thumbnail">
-    <img class="task-image" :src="attachment.url" @click="updateCurrCover" />
+    <img class="task-image" :src="attachment.url" @click.stop="updateCurrCover" />
     <div class="attachment-details flex flex-column">
       <span>{{ attachment.title }}</span>
       <div class="attach-actions flex">
@@ -25,8 +25,7 @@ export default {
   methods: {
     updateCurrCover() {
       this.$emit('updateCurrCover', {
-        backgroundColor: 'transparent',
-        backgroundImage: `url(${this.attachment.url})`,
+        backgroundImage: `url(${this.attachment.url}) no-repeat center center/cover`
       })
     },
   },
