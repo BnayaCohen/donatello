@@ -45,7 +45,7 @@
           ref="taskTitle"
           v-model="task.title"
           placeholder="Enter title here..."
-          @keydown.enter=";[saveTask, $refs.taskTitle.blur()]"
+          @keydown.enter=";[updateTask, $refs.taskTitle.blur()]"
         ></textarea>
       </div>
       <div class="subtitle-header">
@@ -90,10 +90,9 @@
               <label
                 class="flex"
                 for="due-date-picker"
-                @click.stop="isDate = !isDate"
               >
-                <input type="checkbox" class="date-checkbox" @input="toggleIsDone" :value="task.status === 'done'"/>
-                <button class="due-date-btn">
+              <input type="checkbox" class="date-checkbox" @input.stop="toggleIsDone" :checked="task.status === 'done'"/>
+                <button class="due-date-btn" @click.stop="isDate = !isDate">
                   <span class="due-date-txt">{{ dueDateFixed }}</span>
                   <span class="task-complete" v-if="task.status === 'done'">complete</span>
                   <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.2929 16.7071L4.22185 9.63606C3.83132 9.24554 3.83132 8.61237 4.22185 8.22185C4.61237 7.83133 5.24554 7.83133 5.63606 8.22185L12 14.5858L18.364 8.22185C18.7545 7.83132 19.3877 7.83132 19.7782 8.22185C20.1687 8.61237 20.1687 9.24554 19.7782 9.63606L12.7071 16.7071C12.3166 17.0977 11.6834 17.0977 11.2929 16.7071Z" fill="currentColor"></path></svg>
@@ -143,10 +142,14 @@
           >
           <attachment-preview :attachment="task.attachment" @updateCurrCover="updateCurrCover"/>
           </div>
-          <div class="comment-container flex justify-between align-center">
+          <div class="comment-container flex flex-column justify-between">
             <div class="task-detail-title">
               <span class="trellicons trellicons-comments"></span>
               <h3>Comments</h3>
+            </div>
+            <div class="flex comment-input-container">
+              <avatar-preview :member="task.byMember" :avatarSize="'big'"/>
+              <textarea class="comment-input" row="1"></textarea>
             </div>
           </div>
         </div>
@@ -229,7 +232,7 @@
                   </button>
               </div>
               <div class="sidebar-btn-container">
-                  <button  v-show="!currCover" class="sidebar-btn flex align-center" @click.stop="isCover = !isCover">
+                  <button  v-show="!currCover" class="sidebar-btn flex align-center" @click.stop="toggleCover">
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
                   </button>
@@ -267,7 +270,7 @@ import labelPicker from '../cmps/label-picker.vue'
 import coverPicker from '../cmps/cover-picker.vue'
 import attachmentPicker from '../cmps/attachment-picker.vue'
 import attachmentPreview from '../cmps/attachment-preview.vue'
-
+import avatarPreview from '../cmps/avatar-preview.vue'
 export default {
   name: 'taskDetails',
   // props: {
@@ -339,7 +342,7 @@ export default {
         : 'description-fake-textarea'
     },
     getCords() {
-      return { top: this.clickPos.y + 'px', left: this.clickPos.x - 200 + 'px' }
+      return { top: this.clickPos.y - 150 + 'px', left: this.clickPos.x - 200 + 'px' }
     },
   },
   methods: {
@@ -353,6 +356,7 @@ export default {
       this.isCover = !this.isCover
     },
     updateTask() {
+      console.log(this.task.title)
       const { groupId } = this.$route.params
       this.$store.dispatch({
         type: 'saveTask',
@@ -451,7 +455,7 @@ export default {
       this.updateTask()
     },
     backToBoard() {
-      console.log('hi')
+      this.updateTask()
       this.$router.push('/board/' + this.$route.params.boardId)
     },
     updateCurrCover(coverStyle) {
@@ -461,7 +465,7 @@ export default {
       this.updateTask()
     }
   },
-  components: { Datepicker, labelPicker, coverPicker, attachmentPicker, attachmentPreview },
+  components: { Datepicker, labelPicker, coverPicker, attachmentPicker, attachmentPreview, avatarPreview },
 }
 </script>
 <style></style>

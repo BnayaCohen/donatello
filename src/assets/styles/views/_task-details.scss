@@ -90,7 +90,7 @@
     gap: 8px;
     align-items: center;
   }
-  .detail-modal-container {  
+  .detail-modal-container {
     .task-detail-header,
     .task-detail-main {
       .trellicons {
@@ -301,7 +301,7 @@
             z-index: 10;
             padding: 0.6rem 0;
           }
-          
+
           .due-date-txt {
             border-radius: 5px;
             margin-inline-start: 0.5rem;
@@ -311,8 +311,8 @@
             background-color: transparent;
             border: none;
             svg {
-              filter: invert(43%) sepia(31%) saturate(358%) hue-rotate(179deg) brightness(87%) contrast(85%);
-    
+              filter: invert(43%) sepia(31%) saturate(358%) hue-rotate(179deg)
+                brightness(87%) contrast(85%);
             }
             cursor: pointer;
             display: flex;
@@ -398,6 +398,22 @@
       h4 {
         font-weight: 400;
       }
+    }
+  }
+  .comment-container {
+    .comment-input {
+      overflow: hidden;
+      overflow-wrap: break-word;
+      height: 20px;
+      background: #fff !important;
+      box-sizing: initial;
+      min-height: 20px;
+      resize: none;
+      width: 100%;
+      box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+    }
+    .cover-input-container {
+      gap: 0.5rem;
     }
   }
 }
