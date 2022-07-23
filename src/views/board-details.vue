@@ -21,7 +21,6 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-import BoardSideBar from '../cmps/board-side-bar.vue'
 
 export default {
   name: 'board-details',
@@ -43,8 +42,6 @@ export default {
       return this.board.activities
     },
     board() {
-      document.body.style.background =
-        this.$store.getters.board?.style.background
       return this.$store.getters.board
     },
   },
