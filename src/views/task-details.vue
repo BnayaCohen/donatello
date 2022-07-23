@@ -85,7 +85,7 @@
               </div>
             </div>
             <div
-              v-if="task?.dueDate"
+              v-if="task?.dueDate?.at"
               class="due-date-container flex align-center"
             >
               <h3 class="small-title">Due Date</h3>
@@ -94,7 +94,7 @@
                 for="due-date-picker"
                 @click.stop="isDate = !isDate"
               >
-                <el-checkbox type="checkbox" class="date-checkbox" />
+                <el-checkbox type="checkbox" class="date-checkbox" @input="toggleIsDone" />
                 <button class="due-date-btn">
                   <span class="due-date-txt">{{ dueDateFixed }}</span>
                   <svg
@@ -339,7 +339,7 @@ export default {
   computed: {
     dueDateFixed() {
       if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
+        var fixedDate = (new Date(this.task.dueDate.at) + '').slice(4, 10)
         console.log(fixedDate)
         fixedDate += ' at 12:00 AM'
         return fixedDate
@@ -393,7 +393,7 @@ export default {
     updateDueDate() {
       const chosenDate = new Date(this.dueDate)
       const timestamp = chosenDate.getTime()
-      this.task.dueDate = timestamp
+      this.task.dueDate.at = timestamp
       this.updateTask()
     },
     // updateTaskLabels() {
@@ -423,6 +423,9 @@ export default {
       const label = this.labels.find((taskLabel) => taskLabel.id === labelId)
       this.taskLabels.push(label)
     },
+    toggleIsDone() {
+      this.task.dueDate.isDone = !this.task.dueDate.isDone
+    },
     addAttachment(attachProps) {
       const {url, title, createdAt} = attachProps
       if (!this.task?.attachment) this.task.attachment = {}
@@ -449,7 +452,7 @@ export default {
       this.updateTask()
     },
     removeDueDate() {
-      this.task.dueDate = ''
+      this.task.dueDate.at = ''
       this.updateTask()
     },
     goToBoard() {

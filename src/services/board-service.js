@@ -156,7 +156,10 @@ const gBoard = {
           memberIds: ['u101', 'u102'],
           labelIds: ['l101', 'l102'],
           createdAt: 1590999730348,
-          dueDate: 16156215211,
+          dueDate: {
+            at: 16156215211,
+            isDone: false
+          },
           byMember: {
             _id: 'u101',
             username: 'Tal',
@@ -296,7 +299,7 @@ function getEmptyTask() {
     memberIds: [],
     labelIds: [],
     createdAt: Date.now(),
-    dueDate: null,
+    dueDate: {},
     byMember: userService.getLoggedInUser(),
     style: {},
   }
