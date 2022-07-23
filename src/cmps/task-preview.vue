@@ -10,14 +10,44 @@
         ><i class="trellicons trellicons-edit"></i
       ></span>
       <div
-        v-if="task.style"
+        v-if="task.style?.background"
         class="task-preview-header"
         :style="task.style"
       >
       <img class="task-img-cover" :src="task.style.background" alt="">
       </div>
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
-      <p>{{ task?.title }}</p>
+      <p>{{ task.title }}</p>
+
+
+      <section class="task-indicators-container">
+        <div class="flex">
+<div v-if="task.dueDate" class="task-due-date"
+@mouseenter="toggleDueDateOnHover"
+@mouseleave="toggleDueDateOnHover"
+@click.stop="toggleDueDateCheck"
+:style="dueDateStyle">
+<div class="due-date-icon">
+  <i class="trellicons" :class="'trellicons-'+getDueDateIconName"></i></div>
+  <p>{{getFixedDueDate}}</p>
+</div>
+
+<section class="task-indicators">
+  <span v-if="task.description" class="task-indicator trellicons trellicons-description"></span>
+<div v-if="task.comments?.length" class="task-indicator">
+  <span class="trellicons trellicons-comment"></span>
+  <p>{{task.comments.length}}</p>
+</div>
+<div v-if="task.attachment?.length" class="task-indicator">
+  <span class="trellicons trellicons-attachment"></span>
+  <p>{{task.attachment.length}}</p>
+</div>
+<div v-if="task.checklists?.length" class="task-indicator">
+  <span class="trellicons trellicons-checkedbox"></span>
+  <p>{{task.checklists.length}}/2</p>
+</div>
+</section>
+</div>
       <section v-if="task.memberIds?.length" class="task-members-container">
         <avatar-preview
           v-for="memberId in task.memberIds"
@@ -25,6 +55,7 @@
           :member="getMemberById(memberId)"
           :avatarSize="'small'"
         />
+      </section>
       </section>
     </div>
   </div>
@@ -162,6 +193,7 @@ export default {
   data() {
     return {
       onHover: false,
+      onDueDateHover: false,
       isOpen: false,
       x: 0,
       y: 0,
@@ -170,6 +202,19 @@ export default {
   methods: {
     toggleOnHover() {
       this.onHover = !this.onHover
+    },
+    toggleDueDateOnHover() {
+      this.onDueDateHover = !this.onDueDateHover
+    },
+    toggleDueDateCheck(){
+      const newStatus= this.task.status==='in-progress'? 'done':'in-progress'
+      const savedTask=this.task
+      savedTask.status=newStatus
+      this.$store.dispatch({
+        type: 'saveTask',
+        task: JSON.parse(JSON.stringify(savedTask)),
+        groupId:this.task.groupId,
+      })
     },
     openQuickEdit(ev) {
       this.x = ev.clientX
@@ -195,6 +240,18 @@ export default {
     getCords() {
       return { top: this.y + 'px', left: this.x - 228 + 'px' }
     },
+    getFixedDueDate(){
+      return (new Date(this.task.dueDate) + '').slice(4, 10)
+    },
+    dueDateStyle(){
+      return{
+        backgroundColor:this.task.status==='in-progress'?(this.onDueDateHover?'#eb5a46':'#ec9488'):(this.onDueDateHover?'#519839':'#61bd4f')
+      }
+    },
+    getDueDateIconName(){
+      const currCheckbox=this.task.status==='in-progress'?'un-checkedbox':'checkedbox'
+return this.onDueDateHover?currCheckbox:'clock'
+    }
   },
   emits: ['click'],
   components: {
