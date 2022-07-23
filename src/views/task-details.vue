@@ -3,20 +3,18 @@
   <section
     class="container task-detail"
     @click=";[(isDate = false), (isDateSide = false)]"
-  >
+     >
   <div
     class="back-screen"
     :style="{
       backgroundColor: '#000000a3',
       cursor: 'pointer',
-    }"
-    @click="this.$router.push(`/board/${this.$route.params.boardId}`)"
-  ></div>
-    <div class="detail-modal-container">
+    }"  >
+    <div class="detail-modal-container" v-click-outside="backToBoard">
       <div
-        v-if="currCover"
+        v-if="task.style"
         class="flex justify-center task-detail-bg"
-        :style="currCover"
+        :style="task.style"
       >
       </div>
       <div class="btn-wrapper">
@@ -25,7 +23,7 @@
           <span class="cover-txt">Cover</span>
         </button>
       </div>
-        <button class="close-modal-btn" @click="goToBoard">
+        <button class="close-modal-btn" @click="backToBoard">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="256px"
@@ -68,7 +66,7 @@
                   class="label-prev"
                   v-for="label in taskLabels"
                   :key="label.id"
-                  @click="toggleLabels"
+                  @click.stop="toggleLabels"
                 >
                   <div
                     class="label-bg flex align-center justify-center"
@@ -78,14 +76,14 @@
                   </div>
                 </div>
                   <div>
-                    <button v-show="this.taskLabels.length" class="add-label-btn" @click="toggleLabels">
+                    <button v-show="this.taskLabels.length" class="add-label-btn" @click.stop="toggleLabels">
                       <span class="trellicons trellicons-plus-sign"></span>
                     </button>
                   </div>
               </div>
             </div>
             <div
-              v-if="task?.dueDate?.at"
+              v-if="task?.dueDate"
               class="due-date-container flex align-center"
             >
               <h3 class="small-title">Due Date</h3>
@@ -94,29 +92,11 @@
                 for="due-date-picker"
                 @click.stop="isDate = !isDate"
               >
-                <el-checkbox type="checkbox" class="date-checkbox" @input="toggleIsDone" />
+                <input type="checkbox" class="date-checkbox" @input="toggleIsDone" :value="task.status === 'done'"/>
                 <button class="due-date-btn">
                   <span class="due-date-txt">{{ dueDateFixed }}</span>
-                  <svg
-                    width="24"
-                    height="24"
-                    role="presentation"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    :style="{filter: 'invert(13%) sepia(35%) saturate(1443%) hue-rotate(182deg) brightness(98%) contrast(94%)', opacity: '0.75', width: '16px', marginInlineStart: '3px', marginBlockEnd: '2px'}"
-                  >
-                    <path
-                      d="M13 6C13 5.44772 12.5523 5 12 5C11.4477 5 11 5.44772 11 6V12C11 12.2652 11.1054 12.5196 11.2929 12.7071L13.7929 15.2071C14.1834 15.5976 14.8166 15.5976 15.2071 15.2071C15.5976 14.8166 15.5976 14.1834 15.2071 13.7929L13 11.5858V6Z"
-                      fill="currentColor"
-                    ></path>
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
+                  <span class="task-complete" v-if="task.status === 'done'">complete</span>
+                  <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.2929 16.7071L4.22185 9.63606C3.83132 9.24554 3.83132 8.61237 4.22185 8.22185C4.61237 7.83133 5.24554 7.83133 5.63606 8.22185L12 14.5858L18.364 8.22185C18.7545 7.83132 19.3877 7.83132 19.7782 8.22185C20.1687 8.61237 20.1687 9.24554 19.7782 9.63606L12.7071 16.7071C12.3166 17.0977 11.6834 17.0977 11.2929 16.7071Z" fill="currentColor"></path></svg>
                 </button>
                 <button class="flex align-center justify-center remove-duedate-btn" @click.stop="removeDueDate">
                   <span>Remove</span>
@@ -145,15 +125,15 @@
                 placeholder="Add a more detailed description..."
                 ref="taskDescription"
                 v-model="task.description"
-                @click="isEditDescription = !isEditDescription"
+                @click.stop="isEditDescription = !isEditDescription"
                 :class="descriptionStyle"
               ></textarea>
               <div
                 v-if="isEditDescription"
                 class="description-btns flex align-center"
               >
-                <el-button @click="updateTask">Save</el-button>
-                <el-button @click="isEditDescription = false">X</el-button>
+                <el-button @click.stop="updateTask">Save</el-button>
+                <el-button @click.stop="isEditDescription = false">X</el-button>
               </div>
             </div>
           </div>
@@ -243,13 +223,13 @@
                 ></datepicker>
               </div>
               <div class="sidebar-btn-container">
-                  <button class="sidebar-btn flex align-center" @click="toggleAttach">
+                  <button class="sidebar-btn flex align-center" @click.stop="toggleAttach">
                     <span class="trellicons trellicons-attachment"></span>
                     <span>Attachments</span>
                   </button>
               </div>
               <div class="sidebar-btn-container">
-                  <button  v-show="!currCover" class="sidebar-btn flex align-center" @click="isCover = !isCover">
+                  <button  v-show="!currCover" class="sidebar-btn flex align-center" @click.stop="isCover = !isCover">
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
                   </button>
@@ -261,7 +241,7 @@
                 <div class="sidebar-btn-container">
                   <button
                     class="sidebar-btn flex align-center"
-                    @click="removeTask"
+                    @click.stop="removeTask"
                   >
                     <span class="trellicons trellicons-archive"></span>
                     <span>Archive</span>
@@ -273,10 +253,11 @@
         </div>
       </div>
     </div>
+  </div>
   </section>
-  <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" :pos="getCords"/>
-  <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false" :pos="getCords"/>
-  <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" @closeLabels="isLabels = false" :pos="getCords"/>
+  <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" :pos="getCords" v-click-outside="closeAttach"/>
+  <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false" :pos="getCords" v-click-outside="closeCover"/>
+  <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" @closeLabels="isLabels = false" :pos="getCords" v-click-outside="closeLabels"/>
 </template>
 <script>
 import { boardService } from '../services/board-service.js'
@@ -331,16 +312,14 @@ export default {
       })
     }
     this.coverColors = this.$store.getters.getCoverColors
-    if (this.task?.style?.bgColor) this.currCover = { backgroundColor: this.task.style.bgColor }
-    else if (this.task?.attachment) this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment.url})`}
+    if (this.task?.style?.background) this.currCover = { background: this.task.style.background }
     this.$refs.taskTitle.value = this.task.title
     this.$refs.taskDescription.value = this.task.description
   },
   computed: {
     dueDateFixed() {
       if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate.at) + '').slice(4, 10)
-        console.log(fixedDate)
+        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
         fixedDate += ' at 12:00 AM'
         return fixedDate
       }
@@ -364,6 +343,15 @@ export default {
     },
   },
   methods: {
+    closeLabels() {
+      this.isLabels = !this.isLabels
+    },
+    closeAttach() {
+      this.isAttach = !this.isAttach
+    },
+    closeCover() {
+      this.isCover = !this.isCover
+    },
     updateTask() {
       const { groupId } = this.$route.params
       this.$store.dispatch({
@@ -393,7 +381,7 @@ export default {
     updateDueDate() {
       const chosenDate = new Date(this.dueDate)
       const timestamp = chosenDate.getTime()
-      this.task.dueDate.at = timestamp
+      this.task.dueDate = timestamp
       this.updateTask()
     },
     // updateTaskLabels() {
@@ -424,7 +412,15 @@ export default {
       this.taskLabels.push(label)
     },
     toggleIsDone() {
-      this.task.dueDate.isDone = !this.task.dueDate.isDone
+      switch(this.task.status) {
+        case 'done':
+          this.task.status = 'in-progress'
+          break
+        case 'in-progress':
+          this.task.status = 'done'
+          break
+      }
+      this.updateTask()
     },
     addAttachment(attachProps) {
       const {url, title, createdAt} = attachProps
@@ -436,8 +432,7 @@ export default {
       this.task.style.background = attachProps.url
       if(this.task.style?.bgColor) this.task.style.bgColor = ''
       this.isAttach = false
-      console.log(url)
-      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment.url})`}
+      this.currCover = { background: this.task.style.background }      
       this.updateTask()
     },
     async removeTask() {
@@ -447,20 +442,23 @@ export default {
     },
     addCover(color) {
       if (!this.task?.style) this.task.style = {}
-      this.task.style.bgColor = color
-      this.currCover = { backgroundColor: this.task.style.bgColor }
+      this.task.style.background = color
+      this.currCover = { background: this.task.style.background }      
       this.updateTask()
     },
     removeDueDate() {
       this.task.dueDate.at = ''
       this.updateTask()
     },
-    goToBoard() {
+    backToBoard() {
+      console.log('hi')
       this.$router.push('/board/' + this.$route.params.boardId)
     },
     updateCurrCover(coverStyle) {
-      console.log(coverStyle)
+      if (!this.task?.style) this.task.style = {}
+      this.task.style.background = coverStyle.backgroundImage
       this.currCover = coverStyle
+      this.updateTask()
     }
   },
   components: { Datepicker, labelPicker, coverPicker, attachmentPicker, attachmentPreview },

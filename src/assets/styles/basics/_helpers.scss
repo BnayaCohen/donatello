@@ -177,11 +177,11 @@
   display: flex;
   height: 100%;
   left: 0;
-  overflow-y: auto;
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
+  overflow-y: auto;
 }
 
 // Member avatar
@@ -278,17 +278,17 @@
 }
 
 .trellicons-v-check::before {
-  content: "\e916";
+  content: '\e916';
 }
 
 .trellicons-clock::before {
-  content: "\e91b";
+  content: '\e91b';
 }
 
 .trellicons-checkedbox::before {
-  content: "\e918";
+  content: '\e918';
 }
 
 .trellicons-un-checkedbox::before {
-  content: "\e919";
+  content: '\e919';
 }
