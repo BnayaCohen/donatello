@@ -140,7 +140,7 @@ const gBoard = {
               ],
             },
           ],
-          memberIds: ['u101'],
+          memberIds: ['u101', 'u101'],
           labelIds: ['l101', 'l102'],
           createdAt: 1590999730348,
           dueDate: 16156215211,
