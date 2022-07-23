@@ -13,12 +13,14 @@
   grid-template-columns: 150px 150px 150px 150px;
   grid-gap: rem(50px);
   .board-page-display,
-  .create-board-item {
+  span {
     cursor: pointer;
     color: #fff;
     border-radius: 3px;
     h3 {
       margin: 0;
+      margin-inline-start: 8px;
+      margin-top: 8px;
     }
   }
   .create-board-item {
@@ -55,5 +57,13 @@
     &:hover {
       transform: scale(1.2);
     }
+  }
+}
+.boards-title {
+  margin-inline-start: 8px;
+}
+.board-list .create-board-item {
+  h3 {
+    margin: 0;
   }
 }
