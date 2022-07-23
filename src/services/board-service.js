@@ -127,19 +127,19 @@ const gBoard = {
           status: 'in-progress',
           description: 'description',
           groupId: 'g102',
-          comments: [
-            {
-              id: 'ZdPnm',
-              txt: 'also @yaronb please CR this',
-              createdAt: 1590999817436.0,
-              byMember: {
-                _id: 'u101',
-                fullname: 'Tal Tarablus',
-                imgUrl:
-                  'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-              },
-            },
-          ],
+          // comments: [
+          //   {
+          //     id: 'ZdPnm',
+          //     txt: 'also @yaronb please CR this',
+          //     createdAt: 1590999817436.0,
+          //     byMember: {
+          //       _id: 'u101',
+          //       fullname: 'Tal Tarablus',
+          //       imgUrl:
+          //         'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+          //     },
+          //   },
+          // ],
           checklists: [
             {
               id: 'YEhmF',
@@ -290,13 +290,13 @@ function getEmptyGroup() {
 function getEmptyTask() {
   return {
     title: '',
-    status: '',
+    status: 'in-progress',
     description: '',
     comments: [],
     memberIds: [],
     labelIds: [],
     createdAt: Date.now(),
-    dueDate: {},
+    dueDate: null,
     byMember: userService.getLoggedInUser(),
     style: {},
   }
