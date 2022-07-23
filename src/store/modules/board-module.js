@@ -24,6 +24,9 @@ export default {
     getLabels({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard.labels))
     },
+    getMembers({ currBoard }) {
+      return JSON.parse(JSON.stringify(currBoard.members))
+    },
     getCoverColors({currBoard}) {
       return JSON.parse(JSON.stringify(currBoard.coverColors))
     },

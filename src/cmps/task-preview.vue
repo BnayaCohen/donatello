@@ -18,8 +18,8 @@
       </div> -->
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
-<section class="task-members-container">
-  <!-- <avatar-preview /> -->
+<section v-if="task.memberIds?.length" class="task-members-container">
+  <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)" :avatarSize="'small'" />
 </section>
     </div>
   </div>
@@ -180,6 +180,10 @@ export default {
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
       )
     },
+    getMemberById(memberId) {
+      const members = this.$store.getters.getMembers
+      return members.find(member => member._id === memberId)
+    }
   },
   computed: {
     getCords() {
