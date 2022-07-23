@@ -76,6 +76,11 @@ const gBoard = {
     {
       _id: 'u101',
       fullname: 'Tal Tarablus',
+      imgUrl: '#000',
+    },
+    {
+      _id: 'u102',
+      fullname: 'Jeff Mesos',
       imgUrl: 'https://www.google.com',
     },
   ],
@@ -140,7 +145,7 @@ const gBoard = {
               ],
             },
           ],
-          memberIds: ['u101', 'u101'],
+          memberIds: ['u101', 'u102'],
           labelIds: ['l101', 'l102'],
           createdAt: 1590999730348,
           dueDate: 16156215211,
