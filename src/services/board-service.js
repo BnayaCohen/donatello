@@ -60,8 +60,8 @@ const gBoard = {
     },
     {
       id: 'c110',
-      colorStr: '#6DECA9'
-    }
+      colorStr: '#6DECA9',
+    },
   ],
   labels: [
     { id: 'l100', title: 'Copy Request', color: '#f2d600' },
@@ -320,7 +320,7 @@ async function saveTask(boardId, groupId, task, activity) {
     if (idx !== -1) group.tasks.splice(idx, 1, task)
   }
 
-  board.activities.unshift(activity)
+  activity && board.activities.unshift(activity)
   return await saveBoard(board)
 }
 
@@ -387,8 +387,6 @@ async function updateGroups(board) {
   const newBoard = JSON.parse(JSON.stringify(board))
   return await saveBoard(newBoard)
 }
-
-
 
 // function updateTask(cmpType, data) {
 //   switch (cmpType) {
