@@ -24,6 +24,9 @@ export default {
     getLabels({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard.labels))
     },
+    getCoverColors({currBoard}) {
+      return JSON.parse(JSON.stringify(currBoard.coverColors))
+    },
     showLabelsOnTask({ showLabelsOnTask }) {
       return showLabelsOnTask
     },
