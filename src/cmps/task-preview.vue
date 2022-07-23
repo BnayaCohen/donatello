@@ -9,22 +9,29 @@
       <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
         ><i class="trellicons trellicons-edit"></i
       ></span>
-      <div v-if="task.style?.bgColor" class="task-preview-header" :style="{backgroundColor:task.style.bgColor}">
-        </div>
-        <!-- <div v-if="task?.style" class="image-wrapper">
+      <div
+        v-if="task.style?.bgColor"
+        class="task-preview-header"
+        :style="{ backgroundColor: task.style.bgColor }"
+      ></div>
+      <!-- <div v-if="task?.style" class="image-wrapper">
       </div> -->
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
       
     </div>
   </div>
-  
+
   <div v-show="isOpen" class="quick-card-editor">
     <span
-      @click="closeSideBar"
-      class="icon-lg icon-close quick-card-editor-close-icon trellicons trellicons-close-btn">
+      class="icon-lg icon-close quick-card-editor-close-icon trellicons trellicons-close-btn"
+    >
     </span>
-    <div :style="getCords" class="quick-card-editor-card">
+    <div
+      :style="getCords"
+      v-click-outside="closeSideBar"
+      class="quick-card-editor-card"
+    >
       <div
         :style="task?.styles"
         class="list-card list-card-quick-edit is-covered"
@@ -165,10 +172,10 @@ export default {
       this.isOpen = false
     },
     openTask(groupId, taskId) {
+      this.closeSideBar()
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
       )
-      this.closeSideBar()
     },
   },
   computed: {
@@ -177,9 +184,9 @@ export default {
     },
   },
   emits: ['click'],
-  components:{
-    taskLabelList
-  }
+  components: {
+    taskLabelList,
+  },
 }
 </script>
 <style></style>

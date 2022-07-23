@@ -43,6 +43,8 @@ export default {
       return this.board.activities
     },
     board() {
+      document.body.style.background =
+        this.$store.getters.board?.style.background
       return this.$store.getters.board
     },
   },
