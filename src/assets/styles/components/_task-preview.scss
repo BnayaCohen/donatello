@@ -43,6 +43,10 @@
   padding-top: 6px;
   margin-bottom: -4px;
 
+  &:hover {
+    opacity: 0.8;
+  }
+
   .board-task-label {
     float: left;
     height: em(8px);
@@ -50,12 +54,6 @@
     min-width: em(40px);
     cursor: pointer;
     border-radius: 4px;
-
-    &:hover {
-      >.task-labels-container {
-      opacity: 0.8;
-      }
-    }
 
     p {
       font-size: em(12px);
