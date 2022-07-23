@@ -14,14 +14,16 @@
   ></div>
     <div class="detail-modal-container">
       <div
-        v-if="task?.style?.bgColor || task?.attachment"
+        v-if="currCover"
         class="flex justify-center task-detail-bg"
         :style="currCover"
-      ></div>
+      >
+      </div>
       <div v-if="task?.style?.bgColor" class="btn-wrapper">
-        <button @click="isCover = !isCover" class="cover-btn flex align-center">
+        <button @click="isTopCover = !isTopCover" class="cover-btn flex align-center">
           <span class="trellicons trellicons-cover cover-icon"></span>
           <span class="cover-txt">Cover</span>
+          <cover-picker v-if="isTopCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false"/>
         </button>
       </div>
         <button class="close-modal-btn" @click="goToBoard">
@@ -258,7 +260,7 @@
                 <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" />
               </div>
               <div class="sidebar-btn-container">
-                  <button class="sidebar-btn flex align-center" @click="isCover = !isCover">
+                  <button  v-show="!currCover" class="sidebar-btn flex align-center" @click="isCover = !isCover">
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
                   </button>
@@ -311,9 +313,10 @@ export default {
       labels: null,
       isLabels: false,
       isCover: false,
+      isTopCover: false,
       isAttach: false,
       coverColors: null,
-      currCover: null
+      currCover: null,
     }
   },
   async created() {
@@ -332,7 +335,8 @@ export default {
       })
     }
     this.coverColors = this.$store.getters.getCoverColors
-    this.currCover = this.task?.style?.bgColor? { backgroundColor: this.task.style.bgColor } : {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+    if (this.task?.style?.bgColor) this.currCover = { backgroundColor: this.task.style.bgColor }
+    else if (this.task?.attachment) this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
     this.$refs.taskTitle.value = this.task.title
     this.$refs.taskDescription.value = this.task.description
   },
@@ -370,6 +374,10 @@ export default {
       })
       this.isEditDescription = false
     },
+    toggleCover() {
+      console.log(this.isCover)
+      this.isCover = !this.isCover
+    },
     updateDueDate() {
       const chosenDate = new Date(this.dueDate)
       const timestamp = chosenDate.getTime()
@@ -405,8 +413,9 @@ export default {
     },
     addAttachment(imageUrl) {
       this.task.attachment = imageUrl
+      if(this.task.style?.bgColor) this.task.style.bgColor = ''
       this.isAttach = false
-      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}
       this.updateTask()
     },
     async removeTask() {

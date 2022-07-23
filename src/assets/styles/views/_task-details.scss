@@ -126,6 +126,10 @@
       float: right;
       margin-top: -42px;
       margin-right: 8px;
+      & .dynamic-popover {
+        top: 0;
+        right: 0;
+      }
     }
     .task-detail-header {
       display: flex;
