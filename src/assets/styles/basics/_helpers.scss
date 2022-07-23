@@ -118,18 +118,18 @@
   background: #fff;
   box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
   z-index: 70;
-  &.show {
-    display: block;
-  }
-  left: 0;
-  top: 0;
+  // &.show {
+  //   display: block;
+  // }
   .popover-header {
     margin-bottom: 8px;
     height: 40px;
     border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
     position: relative;
     color: #5e6c84;
-    
+    h4 {
+      font-weight: 100;
+    }
     .pop-close-btn {
       position: absolute;
       right: 0;

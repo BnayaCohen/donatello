@@ -2,6 +2,7 @@
   <div
     ref="attachmentContainer"
     class="dynamic-popover pos-absolute attachment-popover-container"
+    :style="pos"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Attach from..</h4>
@@ -31,6 +32,9 @@
 </template>
 <script>
 export default {
+  props: {
+    pos: Object
+  },
   data() {
     return {
       previewImage: null,
