@@ -184,10 +184,9 @@
           </div>
           <div class="detail-sidebar">
             <div class="pos-relative">
-              <div class="suggested-btns">
+              <div v-if="!userAssigned" class="suggested-btns">
                 <h3 class="small-title">Suggested</h3>
                 <button
-                  v-if="!userAssigned"
                   class="sidebar-btn flex align-center"
                 >
                   <span class="trellicons trellicons-member"></span>
