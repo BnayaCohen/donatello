@@ -7,9 +7,9 @@
     :size="formSize"
     @keyup.enter="submitForm(ruleFormRef)"
   >
-    <h2>
+    <!-- <h2>
       {{ ruleForm.signup ? 'Sign up' : 'Sign in ' }}
-    </h2>
+    </h2> -->
     <el-form-item v-if="ruleForm.signup" label="fullname" prop="fullname">
       <el-input v-model="ruleForm.fullname" />
     </el-form-item>
