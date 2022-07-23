@@ -44,7 +44,7 @@
             ref="taskTitle"
             v-model="task.title"
             placeholder="Enter title here..."
-            @keydown.enter=";[saveTask, $refs.taskTitle.blur()]"
+            @keydown.enter=";[updateTask, $refs.taskTitle.blur()]"
           ></textarea>
         </div>
         <div class="subtitle-header">
@@ -76,15 +76,15 @@
                       <span>{{ label.title }}</span>
                     </div>
                   </div>
-                  <div>
-                    <button
-                      v-show="this.taskLabels.length"
-                      class="add-label-btn"
-                      @click.stop="toggleLabels"
-                    >
-                      <span class="trellicons trellicons-plus-sign"></span>
-                    </button>
-                  </div>
+                <div>
+                  <button
+                    v-show="this.taskLabels.length"
+                    class="add-label-btn"
+                    @click.stop="toggleLabels"
+                  >
+                    <span class="trellicons trellicons-plus-sign"></span>
+                  </button>
+                </div>
                 </div>
               </div>
               <div
@@ -184,14 +184,14 @@
           </div>
           <div class="detail-sidebar">
             <div class="pos-relative">
-              <div class="suggested-btns">
+              <div v-if="!userAssigned" class="suggested-btns">
                 <h3 class="small-title">Suggested</h3>
                 <button
-                  v-if="!userAssigned"
                   class="sidebar-btn flex align-center"
+                   @click="addUserToTask"
                 >
                   <span class="trellicons trellicons-member"></span>
-                  <span @click="addUserToTask">Join</span>
+                  <span>Join</span>
                 </button>
               </div>
 
@@ -333,6 +333,7 @@ import labelPicker from '../cmps/label-picker.vue'
 import coverPicker from '../cmps/cover-picker.vue'
 import attachmentPicker from '../cmps/attachment-picker.vue'
 import attachmentPreview from '../cmps/attachment-preview.vue'
+import avatarPreview from '../cmps/avatar-preview.vue'
 import { userService } from '../services/user-service.js'
 
 export default {
@@ -408,7 +409,10 @@ export default {
         : 'description-fake-textarea'
     },
     getCords() {
-      return { top: this.clickPos.y + 'px', left: this.clickPos.x - 200 + 'px' }
+      return {
+        top: this.clickPos.y - 150 + 'px',
+        left: this.clickPos.x - 200 + 'px',
+      }
     },
     userAssigned() {
       return this.task.memberIds?.find(
@@ -436,6 +440,7 @@ export default {
       this.isCover = !this.isCover
     },
     updateTask() {
+      console.log(this.task.title)
       const { groupId } = this.$route.params
       this.$store.dispatch({
         type: 'saveTask',
@@ -532,7 +537,7 @@ export default {
       this.updateTask()
     },
     backToBoard() {
-      console.log('hi')
+      this.updateTask()
       this.$router.push('/board/' + this.$route.params.boardId)
     },
     updateCurrCover(coverStyle) {
@@ -548,6 +553,14 @@ export default {
     coverPicker,
     attachmentPicker,
     attachmentPreview,
+  },
+  components: {
+    Datepicker,
+    labelPicker,
+    coverPicker,
+    attachmentPicker,
+    attachmentPreview,
+    avatarPreview,
   },
 }
 </script>
