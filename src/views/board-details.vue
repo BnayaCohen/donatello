@@ -1,5 +1,5 @@
 <template>
-  <main :style="board?.style" class="main-layout board-container">
+  <main class="main-layout board-container">
     <board-header
       v-if="board"
       :board="board"
@@ -33,6 +33,7 @@ export default {
   async created() {
     const { boardId } = this.$route.params
     await this.$store.dispatch({ type: 'loadBoard', boardId })
+    this.$emit('setBackground', this.board.style.background)
   },
   computed: {
     groups() {

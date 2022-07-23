@@ -15,6 +15,7 @@
       </div> -->
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
+      
     </div>
   </div>
   
