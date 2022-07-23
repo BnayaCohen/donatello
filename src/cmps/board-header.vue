@@ -6,9 +6,10 @@
         <input class="board-name-input clean-input btn-background" type="text" v-model="board.title" placeholder="Board name..."  @keyup.enter="updateBoardTitle" />
         <button class="btn-background starred-btn" :class="isBoardStarred"  @click="toggleStarBoard"><i class="fa-regular fa-star"></i></button>
 
-        <div class="members-container flex align-center">
-          <p>(board members)</p>
+        <div v-if="board.members.length" class="members-container flex align-center">
+        <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
         </div>
+        
         <button class="btn-background">Invite</button>
       </section>
 
@@ -20,6 +21,8 @@
   </header>
 </template>
 <script>
+import avatarPreview from './avatar-preview.vue'
+
 export default {
   name: 'boardHeader',
   props: {
@@ -46,7 +49,10 @@ export default {
     isBoardStarred() {
       return { starred: this.isCurrBoardStarred }
     }
-  }
+  },
+   components: {
+    avatarPreview
+  },
 }
 </script>
 <style>
