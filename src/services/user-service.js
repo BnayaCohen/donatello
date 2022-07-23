@@ -88,7 +88,7 @@ async function logout() {
 }
 
 function getLoggedInUser() {
-  return { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'http://some-img' }
+  return { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg' }
   // return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
 }
 

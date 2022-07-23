@@ -61,20 +61,6 @@ export default {
         type: 'saveTask',
         groupId: this.groupId,
         task: newTask,
-        activity: {
-          id: 'a101',
-          txt: 'Changed Color',
-          createdAt: Date.now(),
-          byMember: {
-            _id: 'u101',
-            fullname: 'Abi Abambi',
-            imgUrl: 'http://some-img',
-          },
-          task: {
-            id: 'c101',
-            title: 'Replace Logo',
-          },
-        },
       })
       this.titleInput = ''
     },
