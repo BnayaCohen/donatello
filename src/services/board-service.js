@@ -16,7 +16,7 @@ const gBoard = {
   createdBy: {
     _id: 'u101',
     fullname: 'Abi Abambi',
-    imgUrl: 'http://some-img',
+    imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
   },
   style: {
     background: `url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80') no-repeat 0 20%/cover`,
@@ -76,12 +76,12 @@ const gBoard = {
     {
       _id: 'u101',
       fullname: 'Tal Tarablus',
-      imgUrl: '#000',
+      imgUrl: '',
     },
     {
       _id: 'u102',
       fullname: 'Jeff Mesos',
-      imgUrl: 'https://www.google.com',
+      imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
   ],
   groups: [
@@ -94,6 +94,9 @@ const gBoard = {
           id: 'c101',
           title: 'Replace logo',
           groupId: 'g101',
+          style: {
+            background: 'https://c.tenor.com/u9tIJjToes4AAAAC/tmnt-leonardo.gif',
+          },
         },
         {
           id: 'c102',
@@ -157,7 +160,7 @@ const gBoard = {
               'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
           },
           style: {
-            bgColor: '#26de81',
+            background: '#26de81',
           },
         },
       ],
@@ -172,7 +175,7 @@ const gBoard = {
       byMember: {
         _id: 'u101',
         fullname: 'Abi Abambi',
-        imgUrl: 'http://some-img',
+        imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
       },
       task: {
         id: 'c101',
@@ -299,15 +302,16 @@ async function saveGroup(boardId, group) {
   if (!group.id) {
     group.id = utilService.makeId()
     board.groups.push(group)
+    var activity = createActivity('created a list')
   } else {
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
     if (idx !== -1) board.groups.splice(idx, 1, group)
   }
-
+  board.activities.unshift(activity)
   return await saveBoard(board)
 }
 
-async function saveTask(boardId, groupId, task, activity) {
+async function saveTask(boardId, groupId, task) {
   const board = await getById(boardId)
 
   const group = board.groups.find((group) => group.id === groupId)
@@ -315,12 +319,13 @@ async function saveTask(boardId, groupId, task, activity) {
   if (!task.id) {
     task.id = utilService.makeId()
     group.tasks.push(task)
+    var activity = createActivity('created a card', task)
   } else {
     const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
     if (idx !== -1) group.tasks.splice(idx, 1, task)
   }
 
-  activity && board.activities.unshift(activity)
+  board.activities.unshift(activity)
   return await saveBoard(board)
 }
 
@@ -341,20 +346,24 @@ function _createBoards() {
 }
 
 function createActivity(txt = '', task) {
-  return (activity = {
+  return {
     id: utilService.makeId(),
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    task,
-  })
+    task: task || '',
+  }
 }
 
 async function removeGroup(boardId, groupId) {
   const board = await getById(boardId)
 
   const idx = board.groups.findIndex((group) => group.id === groupId)
-  if (idx !== -1) board.groups.splice(idx, 1)
+  if (idx !== -1) {
+    const activity = createActivity('removed a list')
+    board.groups.splice(idx, 1)
+    board.activities.unshift(activity)
+  }
   return await saveBoard(board)
 }
 
@@ -363,7 +372,11 @@ async function removeTask(boardId, groupId, taskId) {
 
   const group = board.groups.find((group) => group.id === groupId)
   const idx = group.tasks.findIndex((task) => task.id === taskId)
-  if (idx !== -1) group.tasks.splice(idx, 1)
+  if (idx !== -1) {
+    const activity = createActivity('removed a card')
+    group.tasks.splice(idx, 1)
+    board.activities.unshift(activity)
+  }
   return await saveBoard(board)
 }
 
