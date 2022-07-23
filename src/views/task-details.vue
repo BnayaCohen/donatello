@@ -16,11 +16,12 @@
       <div
         v-if="task?.style?.bgColor || task?.attachment"
         class="flex justify-center task-detail-bg"
-        :style="taskCover"
+        :style="currCover"
       ></div>
       <div v-if="task?.style?.bgColor" class="btn-wrapper">
-        <button class="cover-btn">
-          <span class="cover-icon"> Cover </span>
+        <button @click="isCover = !isCover" class="cover-btn flex align-center">
+          <span class="trellicons trellicons-cover cover-icon"></span>
+          <span class="cover-txt">Cover</span>
         </button>
       </div>
         <button class="close-modal-btn" @click="goToBoard">
@@ -101,6 +102,7 @@
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
+                    :style="{filter: 'invert(13%) sepia(35%) saturate(1443%) hue-rotate(182deg) brightness(98%) contrast(94%)', opacity: '0.75', width: '16px', marginInlineStart: '3px', marginBlockEnd: '2px'}"
                   >
                     <path
                       d="M13 6C13 5.44772 12.5523 5 12 5C11.4477 5 11 5.44772 11 6V12C11 12.2652 11.1054 12.5196 11.2929 12.7071L13.7929 15.2071C14.1834 15.5976 14.8166 15.5976 15.2071 15.2071C15.5976 14.8166 15.5976 14.1834 15.2071 13.7929L13 11.5858V6Z"
@@ -162,7 +164,7 @@
               <h3>Attachments</h3>
             </div>
             <div class="flex attachment-thumbnail" >
-              <img class="task-image" :src="task.attachment"/>
+              <img class="task-image" :src="task.attachment" @click="updateCurrCover"/>
               <!-- <p class="attachment-details">
                 <span>{{task.attachment.}}</span>
               </p> -->
@@ -260,7 +262,7 @@
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
                   </button>
-                <cover-picker v-if="isCover" :labels="labels" @addCover="addCover" @closeCover="isCover = false"/>
+                <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false"/>
               </div>
             </div>
             <div class="actions pos-relative">
@@ -309,12 +311,15 @@ export default {
       labels: null,
       isLabels: false,
       isCover: false,
-      isAttach: false
+      isAttach: false,
+      coverColors: null,
+      currCover: null
     }
   },
   async created() {
     const { boardId, taskId, groupId } = this.$route.params
-    if (!this.$store.getters.board || !this.$store.getters.getLabels) {
+    const currBoard = this.$store.getters.board
+    if (!currBoard || !currBoard.labels.length) {
       await this.$store.dispatch({ type: 'loadBoard', boardId })
     }
     this.labels = this.$store.getters.getLabels
@@ -326,6 +331,8 @@ export default {
         })
       })
     }
+    this.coverColors = this.$store.getters.getCoverColors
+    this.currCover = this.task?.style?.bgColor? { backgroundColor: this.task.style.bgColor } : {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
     this.$refs.taskTitle.value = this.task.title
     this.$refs.taskDescription.value = this.task.description
   },
@@ -337,15 +344,6 @@ export default {
         fixedDate += ' at 12:00 AM'
         return fixedDate
       }
-    },
-    taskCover() {
-      if (this.task?.style?.bgColor) {
-        return { backgroundColor: this.task.style.bgColor }
-      }
-      else if (this.task?.attachment) {
-        return {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
-      }
-      else return ''
     },
     groupTitle() {
       const { groupId } = this.$route.params
@@ -408,6 +406,7 @@ export default {
     addAttachment(imageUrl) {
       this.task.attachment = imageUrl
       this.isAttach = false
+      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
       this.updateTask()
     },
     async removeTask() {
@@ -418,6 +417,7 @@ export default {
     addCover(color) {
       if (!this.task?.style) this.task.style = {}
       this.task.style.bgColor = color
+      this.currCover = { backgroundColor: this.task.style.bgColor }
       this.updateTask()
     },
     removeDueDate() {
@@ -426,6 +426,9 @@ export default {
     },
     goToBoard() {
       this.$router.push('/board/' + this.$route.params.boardId)
+    },
+    updateCurrCover() {
+      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
     }
   },
   components: { Datepicker, labelPicker, coverPicker, attachmentPicker },

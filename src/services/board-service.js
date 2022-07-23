@@ -21,32 +21,56 @@ const gBoard = {
   style: {
     background: `url('https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80') no-repeat 0 20%/cover`,
   },
+  coverColors: [
+    {
+      id: 'c101',
+      colorStr: '#61bd4f',
+    },
+    {
+      id: 'c102',
+      colorStr: '#008080',
+    },
+    {
+      id: 'c103',
+      colorStr: '#FFC300',
+    },
+    {
+      id: 'c104',
+      colorStr: '#FF5733',
+    },
+    {
+      id: 'c105',
+      colorStr: '#1434A4',
+    },
+    {
+      id: 'c106',
+      colorStr: '#FF8ED4',
+    },
+    {
+      id: 'c107',
+      colorStr: '#29CCE5',
+    },
+    {
+      id: 'c108',
+      colorStr: '#CD8DE5',
+    },
+    {
+      id: 'c109',
+      colorStr: '#172B4D',
+    },
+    {
+      id: 'c110',
+      colorStr: '#6DECA9'
+    }
+  ],
   labels: [
-    {
-      id: 'l101',
-      title: 'Done',
-      color: '#61bd4f',
-    },
-    {
-      id: 'l102',
-      title: 'Progress',
-      color: '#008080',
-    },
-    {
-      id: 'l103',
-      title: 'Important',
-      color: '#FFC300',
-    },
-    {
-      id: 'l104',
-      title: 'Urgent',
-      color: '#FF5733',
-    },
-    {
-      id: 'l105',
-      title: 'Low Priority',
-      color: '#1434A4',
-    },
+    { id: 'l100', title: 'Copy Request', color: '#f2d600' },
+    { id: 'l101', title: 'One more step', color: '#ff9f1a' },
+    { id: 'l102', title: 'Priority', color: '#eb5a46' },
+    { id: 'l103', title: 'Design Team', color: '#c377e0' },
+    { id: 'l104', title: 'Product Marketing', color: '#0079bf' },
+    { id: 'l105', title: 'Trello Tip', color: '#00c2e0' },
+    { id: 'l106', title: 'Help', color: '#51e898' },
   ],
   members: [
     {
@@ -358,6 +382,8 @@ async function updateGroups(board) {
   const newBoard = JSON.parse(JSON.stringify(board))
   return await saveBoard(newBoard)
 }
+
+
 
 // function updateTask(cmpType, data) {
 //   switch (cmpType) {
