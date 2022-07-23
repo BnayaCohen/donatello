@@ -10,12 +10,12 @@
         ><i class="trellicons trellicons-edit"></i
       ></span>
       <div
-        v-if="task.style?.bgColor"
+        v-if="task.style"
         class="task-preview-header"
-        :style="{ backgroundColor: task.style.bgColor }"
-      ></div>
-      <!-- <div v-if="task?.style" class="image-wrapper">
-      </div> -->
+        :style="task.style"
+      >
+      <img class="task-img-cover" :src="task.style.background" alt="">
+      </div>
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
       <section v-if="task.memberIds?.length" class="task-members-container">
@@ -180,6 +180,7 @@ export default {
       this.isOpen = false
     },
     openTask(groupId, taskId) {
+      console.log(this.task.style);
       this.closeQuickEdit()
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`

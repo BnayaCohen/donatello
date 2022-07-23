@@ -2,6 +2,7 @@
   <div
     ref="attachmentContainer"
     class="dynamic-popover pos-absolute attachment-popover-container"
+    :style="pos"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Attach from..</h4>
@@ -22,8 +23,13 @@
           />
         </div>
         <div class="from-web">
-          <h3 class="small-title">From web</h3>
-
+          <h3 class="small-title">Attach a link</h3>
+          <label for="web-url">
+            <input type="text" v-model="webUrl" />
+            <button class="btn" @click="addLinkAttachment">
+              Attach
+            </button>
+          </label>
         </div>
       </div>
     </div>
@@ -31,9 +37,13 @@
 </template>
 <script>
 export default {
+  props: {
+    pos: Object
+  },
   data() {
     return {
       previewImage: null,
+      webUrl: null
     }
   },
   created() {},
@@ -53,9 +63,9 @@ export default {
         reader.readAsDataURL(file[0])
       }
     },
-    toggleAttachment() {
-      const elCover = this.$refs.attachmentContainer
-      elCover.classList.toggle('show')
+    addLinkAttachment() {
+      if (!this.webUrl) return
+      this.$emit('attachSelected', this.webUrl)
     },
   },
   emits: ['attachSelected'],

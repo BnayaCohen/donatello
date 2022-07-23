@@ -1,6 +1,6 @@
 <template>
   <div
-    class="dynamic-popover pos-absolute cover-popover-container"
+    class="dynamic-popover pos-absolute cover-popover-container" :style="pos"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Cover</h4>
@@ -53,13 +53,16 @@
 export default {
   props: {
     colors: Array,
+    pos: Object
   },
   data() {
     return {
       selectedCover: '#5e6c84',
     }
   },
-  created() {},
+  created() {
+
+  },
   methods: {
     selectCover(color) {
       this.selectedCover = color
