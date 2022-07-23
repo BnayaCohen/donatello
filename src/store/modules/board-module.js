@@ -27,7 +27,7 @@ export default {
     getMembers({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard.members))
     },
-    getCoverColors({currBoard}) {
+    getCoverColors({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard.coverColors))
     },
     showLabelsOnTask({ showLabelsOnTask }) {
@@ -124,13 +124,12 @@ export default {
         console.log("Couldn't save group", err)
       }
     },
-    async saveTask({ commit, state }, { groupId, task, activity }) {
+    async saveTask({ commit, state }, { groupId, task }) {
       try {
         const board = await boardService.saveTask(
           state.currBoard._id,
           groupId,
-          task,
-          activity
+          task
         )
         commit({ type: 'setBoard', board })
       } catch (err) {
@@ -149,9 +148,12 @@ export default {
         console.log("couldn't remove task", err)
       }
     },
-    async removeGroup({ commit }, { groupId }) {
+    async removeGroup({ commit, state }, { groupId }) {
       try {
-        const board = await boardService.removeGroup(board, groupId)
+        const board = await boardService.removeGroup(
+          state.currBoard._id,
+          groupId
+        )
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove group", err)
