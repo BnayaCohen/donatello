@@ -210,6 +210,7 @@
 // Icons
 .trellicons {
   font-family: 'trellicons';
+  font-style: normal;
 }
 
 .trellicons-member::before {
@@ -252,6 +253,10 @@
   content: '\e900';
 }
 
+.trellicons-comment::before {
+  content: '\e91e';
+}
+
 .trellicons-close-btn::before {
   content: '\e91c';
 }
@@ -261,7 +266,6 @@
 }
 
 .trellicons-plus-sign::before {
-  font-style: normal;
   content: '\e901';
 }
 
@@ -274,5 +278,17 @@
 }
 
 .trellicons-v-check::before {
-  content: '\e916';
+  content: "\e916";
+}
+
+.trellicons-clock::before {
+  content: "\e91b";
+}
+
+.trellicons-checkedbox::before {
+  content: "\e918";
+}
+
+.trellicons-un-checkedbox::before {
+  content: "\e919";
 }

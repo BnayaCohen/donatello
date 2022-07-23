@@ -2,16 +2,18 @@
   min-height: calc(100vh - 44px);
   color: #172b4d;
   background-color: #fff;
+  i {
+    font-size: 1.6rem;
+  }
 }
 .boards-container {
-  min-height: 40vh;
-  max-width: 75vw;
+  max-width: max-content;
   margin: 2rem auto;
 }
 .board-list {
   display: grid;
-  grid-template-columns: 150px 150px 150px 150px;
-  grid-gap: rem(50px);
+  grid-template-columns: 196px 196px 196px 196px;
+  grid-gap: rem(16px);
   .board-page-display,
   span {
     cursor: pointer;
@@ -40,11 +42,11 @@
     color: #fff;
     font-size: 14px;
     opacity: 0;
-    right: -6px;
-    bottom: 0px;
+    right: 0;
+    bottom: 9px;
     transition: 0.18s ease;
     &.starred {
-      color: yellow;
+      color: #f2d600;
     }
   }
   span {
@@ -52,7 +54,9 @@
   }
   span:hover .star-board-btn {
     margin-right: 9px;
-
+    &.starred {
+      margin-right: 0;
+    }
     opacity: 1;
     &:hover {
       transform: scale(1.2);
