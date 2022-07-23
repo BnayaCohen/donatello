@@ -1,16 +1,14 @@
 <template>
   <main class="boards-page main-layout">
     <div class="boards-page-container">
-      <section v-if="starredBoards" class="boards-container">
+      <section v-if="starredBoards.length" class="boards-container">
         <div class="boards-title flex">
-          <h3>
-            <span><i class="fa-regular fa-star"></i></span> Starred boards
-          </h3>
+          <h3><i class="fa-regular fa-star"></i> Starred boards</h3>
         </div>
         <ul class="board-list clean-list">
           <span
             v-for="board in starredBoards"
-            style="height: 100px; width: 150px"
+            style="height: 96px; width: 196px"
             :style="board.style"
             class="board-page-display"
             :key="board._id"
@@ -18,8 +16,9 @@
           >
             <h3>{{ board.title }}</h3>
             <span
-              :class="board.isStarred ? 'starred' : ''"
+              :style="board.isStarred ? getStyle : ''"
               class="star-board-btn trellicons trellicons-star"
+              :class="board.isStarred ? 'starred' : ''"
               @click.stop="toggleStarred(board)"
             >
             </span>
@@ -29,7 +28,7 @@
       <section class="boards-container">
         <div class="boards-title flex">
           <h3>
-            <span class="board-title-icon fa-brands fa-flipboard"></span> Board
+            <i class="board-title-icon fa-brands fa-flipboard"></i> Board
             templates
           </h3>
         </div>
@@ -37,14 +36,14 @@
           <span
             class="create-board-item"
             @click="toggleModal"
-            style="height: 100px; width: 150px"
+            style="height: 96px; width: 196px"
           >
             <h3>Create new board</h3>
           </span>
           <span
             v-for="board in boards"
             :style="board.style"
-            style="height: 100px; width: 150px"
+            style="height: 96px; width: 196px"
             class="board-page-display"
             :key="board._id"
             @click="openTask(board._id)"
@@ -52,6 +51,7 @@
             <h3>{{ board.title }}</h3>
             <span
               :class="board.isStarred ? 'starred' : ''"
+              :style="board.isStarred ? getStyle : ''"
               class="star-board-btn trellicons trellicons-star"
               @click.stop="toggleStarred(board)"
             >
@@ -73,7 +73,7 @@
 <script>
 import boardCreate from '../cmps/board-create.vue'
 import { boardService } from '../services/board-service'
-import { userService } from '../services/user-service'
+// import { userService } from '../services/user-service'
 export default {
   components: { boardCreate },
   name: 'boards-container',
@@ -110,7 +110,7 @@ export default {
       board.createdBy = {
         _id: 'u101',
         fullname: 'Abi Abambi',
-        imgUrl: 'http://some-img',
+        imgUrl: '',
       }
       const { _id } = await this.$store.dispatch({ type: 'saveBoard', board })
       this.$router.push('/board/' + _id)
@@ -126,7 +126,20 @@ export default {
     getCords() {
       return { top: this.y + 'px', left: this.x - 228 + 'px' }
     },
+    getStyle() {
+      return {
+        position: 'absolute',
+        fontSize: `1rem`,
+        zIndex: 10,
+        opacity: 1,
+        right: `9px`,
+        bottom: `9px`,
+        transition: `0.18s ease`,
+        color: `#f2d600`,
+      }
+    },
   },
+
   unmounted() {
     document.body.classList.remove('app-header-background-color-blue')
   },
