@@ -20,7 +20,7 @@
       >
       </div>
       <div class="btn-wrapper">
-        <button @click="isCover = !isCover" class="cover-btn flex align-center">
+        <button @click.stop="toggleCover" class="cover-btn flex align-center">
           <span class="trellicons trellicons-cover cover-icon"></span>
           <span class="cover-txt">Cover</span>
         </button>
@@ -68,6 +68,7 @@
                   class="label-prev"
                   v-for="label in taskLabels"
                   :key="label.id"
+                  @click="toggleLabels"
                 >
                   <div
                     class="label-bg flex align-center justify-center"
@@ -77,14 +78,14 @@
                   </div>
                 </div>
                   <div>
-                    <button v-show="this.taskLabels.length" class="add-label-btn" @click="isLabels = !isLabels">
+                    <button v-show="this.taskLabels.length" class="add-label-btn" @click="toggleLabels">
                       <span class="trellicons trellicons-plus-sign"></span>
                     </button>
                   </div>
               </div>
             </div>
             <div
-              v-if="task?.dueDate"
+              v-if="task?.dueDate?.at"
               class="due-date-container flex align-center"
             >
               <h3 class="small-title">Due Date</h3>
@@ -93,7 +94,7 @@
                 for="due-date-picker"
                 @click.stop="isDate = !isDate"
               >
-                <el-checkbox type="checkbox" class="date-checkbox" />
+                <el-checkbox type="checkbox" class="date-checkbox" @input="toggleIsDone" />
                 <button class="due-date-btn">
                   <span class="due-date-txt">{{ dueDateFixed }}</span>
                   <svg
@@ -160,16 +161,7 @@
             v-if="task?.attachment"
             class="attachment-container flex flex-column"
           >
-            <div class="attachment-header flex align-center">
-              <span class="trellicons trellicons-attachment"></span>
-              <h3>Attachments</h3>
-            </div>
-            <div class="flex attachment-thumbnail" >
-              <img class="task-image" :src="task.attachment" @click="updateCurrCover"/>
-              <!-- <p class="attachment-details">
-                <span>{{task.attachment.}}</span>
-              </p> -->
-            </div>
+          <attachment-preview :attachment="task.attachment" @updateCurrCover="updateCurrCover"/>
           </div>
           <div class="comment-container flex justify-between align-center">
             <div class="task-detail-title">
@@ -199,11 +191,10 @@
                 </button>
               </div>
               <div class="sidebar-btn-container">
-                <button class="sidebar-btn flex align-center" @click="isLabels = !isLabels">
+                <button class="sidebar-btn flex align-center" @click.stop="toggleLabels">
                   <span class="trellicons trellicons-labels"></span>
                   <span>Labels</span>
                 </button>
-                <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" @closeLabels="isLabels = false"/>
               </div>
               <div class="sidebar-btn-container">
                 <button class="sidebar-btn flex align-center">
@@ -252,18 +243,16 @@
                 ></datepicker>
               </div>
               <div class="sidebar-btn-container">
-                  <button class="sidebar-btn flex align-center" @click="isAttach = !isAttach">
+                  <button class="sidebar-btn flex align-center" @click="toggleAttach">
                     <span class="trellicons trellicons-attachment"></span>
                     <span>Attachments</span>
                   </button>
-                <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" />
               </div>
               <div class="sidebar-btn-container">
                   <button  v-show="!currCover" class="sidebar-btn flex align-center" @click="isCover = !isCover">
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
                   </button>
-                <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false"/>
               </div>
             </div>
             <div class="actions pos-relative">
@@ -285,6 +274,9 @@
       </div>
     </div>
   </section>
+  <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @closeAttach="isAttach = false" :pos="getCords"/>
+  <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="isCover = false" :pos="getCords"/>
+  <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel" @closeLabels="isLabels = false" :pos="getCords"/>
 </template>
 <script>
 import { boardService } from '../services/board-service.js'
@@ -293,6 +285,7 @@ import { ref } from 'vue'
 import labelPicker from '../cmps/label-picker.vue'
 import coverPicker from '../cmps/cover-picker.vue'
 import attachmentPicker from '../cmps/attachment-picker.vue'
+import attachmentPreview from '../cmps/attachment-preview.vue'
 
 export default {
   name: 'taskDetails',
@@ -316,6 +309,10 @@ export default {
       isAttach: false,
       coverColors: null,
       currCover: null,
+      clickPos: {
+        x: null,
+        y: null
+      }
     }
   },
   async created() {
@@ -335,14 +332,14 @@ export default {
     }
     this.coverColors = this.$store.getters.getCoverColors
     if (this.task?.style?.bgColor) this.currCover = { backgroundColor: this.task.style.bgColor }
-    else if (this.task?.attachment) this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+    else if (this.task?.attachment) this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment.url})`}
     this.$refs.taskTitle.value = this.task.title
     this.$refs.taskDescription.value = this.task.description
   },
   computed: {
     dueDateFixed() {
       if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
+        var fixedDate = (new Date(this.task.dueDate.at) + '').slice(4, 10)
         console.log(fixedDate)
         fixedDate += ' at 12:00 AM'
         return fixedDate
@@ -362,6 +359,9 @@ export default {
         ? 'description-textarea'
         : 'description-fake-textarea'
     },
+    getCords() {
+      return { top: this.clickPos.y + 'px', left: this.clickPos.x - 200 + 'px' }
+    },
   },
   methods: {
     updateTask() {
@@ -373,14 +373,27 @@ export default {
       })
       this.isEditDescription = false
     },
-    toggleCover() {
-      console.log(this.isCover)
+    toggleCover(ev) {
+      this.clickPos.x = ev.clientX
+      this.clickPos.y = ev.clientY
       this.isCover = !this.isCover
+    },
+    toggleLabels(ev) {
+      this.clickPos.x = ev.clientX
+      this.clickPos.y = ev.clientY
+      this.isLabels = !this.isLabels
+
+    },
+    toggleAttach(ev) {
+      this.clickPos.x = ev.clientX
+      this.clickPos.y = ev.clientY
+      this.isAttach = !this.isAttach
+
     },
     updateDueDate() {
       const chosenDate = new Date(this.dueDate)
       const timestamp = chosenDate.getTime()
-      this.task.dueDate = timestamp
+      this.task.dueDate.at = timestamp
       this.updateTask()
     },
     // updateTaskLabels() {
@@ -410,11 +423,21 @@ export default {
       const label = this.labels.find((taskLabel) => taskLabel.id === labelId)
       this.taskLabels.push(label)
     },
-    addAttachment(imageUrl) {
-      this.task.attachment = imageUrl
+    toggleIsDone() {
+      this.task.dueDate.isDone = !this.task.dueDate.isDone
+    },
+    addAttachment(attachProps) {
+      const {url, title, createdAt} = attachProps
+      if (!this.task?.attachment) this.task.attachment = {}
+      this.task.attachment.url = url
+      this.task.attachment.title = title
+      this.task.attachment.createdAt = createdAt
+      if(!this.task.style) this.task.style = {}
+      this.task.style.background = attachProps.url
       if(this.task.style?.bgColor) this.task.style.bgColor = ''
       this.isAttach = false
-      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}
+      console.log(url)
+      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment.url})`}
       this.updateTask()
     },
     async removeTask() {
@@ -429,17 +452,18 @@ export default {
       this.updateTask()
     },
     removeDueDate() {
-      this.task.dueDate = ''
+      this.task.dueDate.at = ''
       this.updateTask()
     },
     goToBoard() {
       this.$router.push('/board/' + this.$route.params.boardId)
     },
-    updateCurrCover() {
-      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+    updateCurrCover(coverStyle) {
+      console.log(coverStyle)
+      this.currCover = coverStyle
     }
   },
-  components: { Datepicker, labelPicker, coverPicker, attachmentPicker },
+  components: { Datepicker, labelPicker, coverPicker, attachmentPicker, attachmentPreview },
 }
 </script>
 <style></style>

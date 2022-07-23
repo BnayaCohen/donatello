@@ -4,20 +4,23 @@
   background-color: #fff;
 }
 .boards-container {
-  max-width: 50vw;
+  min-height: 40vh;
+  max-width: 75vw;
   margin: 2rem auto;
 }
 .board-list {
   display: grid;
   grid-template-columns: 150px 150px 150px 150px;
-  grid-gap: rem(20px);
+  grid-gap: rem(50px);
   .board-page-display,
-  .create-board-item {
+  span {
     cursor: pointer;
     color: #fff;
     border-radius: 3px;
     h3 {
       margin: 0;
+      margin-inline-start: 8px;
+      margin-top: 8px;
     }
   }
   .create-board-item {
@@ -37,21 +40,30 @@
     color: #fff;
     font-size: 14px;
     opacity: 0;
-    right: 0;
-    bottom: 0;
+    right: -6px;
+    bottom: 0px;
     transition: 0.18s ease;
     &.starred {
       color: yellow;
     }
   }
-  li:hover .star-board-btn {
-    margin-right: 6px;
+  span {
+    position: relative;
+  }
+  span:hover .star-board-btn {
+    margin-right: 9px;
 
     opacity: 1;
-    width: 18px;
-    height: 18px;
     &:hover {
       transform: scale(1.2);
     }
+  }
+}
+.boards-title {
+  margin-inline-start: 8px;
+}
+.board-list .create-board-item {
+  h3 {
+    margin: 0;
   }
 }
