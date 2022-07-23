@@ -9,7 +9,7 @@
     &:hover {
       background-color: rgb(246, 246, 246);
     }
-    input[type='file'] {
+    input[type=file] {
       margin: 0;
       opacity: 0;
       padding: 0;
@@ -43,7 +43,14 @@
     margin-left: 12px;
     .task-image {
       cursor: pointer;
+      min-height: 160px;
+      background-size: contain; 
+      background-origin: content-box; 
+      padding: 0px;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
+
     margin: 8px 12px;
   }
 }
