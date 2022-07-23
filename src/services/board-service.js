@@ -159,14 +159,7 @@ const gBoard = {
           memberIds: ['u101', 'u102'],
           labelIds: ['l101', 'l102'],
           createdAt: 1590999730348,
-<<<<<<< HEAD
           dueDate: 16156215211,
-=======
-          dueDate: {
-            at: 16156215211,
-            isDone: false,
-          },
->>>>>>> d668681e47e37fa1932c869f921c045efbf8c5ed
           byMember: {
             _id: 'u101',
             username: 'Tal',
