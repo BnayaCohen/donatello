@@ -6,7 +6,7 @@
     @click.stop="openTask(task.groupId, task.id)"
   >
     <div class="flex flex-column">
-      <span v-if="onHover" @click.stop="openSideBar" class="hover-edit-btn"
+      <span v-if="onHover" @click.stop="openQuickEdit" class="hover-edit-btn"
         ><i class="trellicons trellicons-edit"></i
       ></span>
       <div
@@ -18,9 +18,14 @@
       </div> -->
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
-<section v-if="task.memberIds?.length" class="task-members-container">
-  <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)" :avatarSize="'small'" />
-</section>
+      <section v-if="task.memberIds?.length" class="task-members-container">
+        <avatar-preview
+          v-for="memberId in task.memberIds"
+          :key="memberId"
+          :member="getMemberById(memberId)"
+          :avatarSize="'small'"
+        />
+      </section>
     </div>
   </div>
 
@@ -31,7 +36,7 @@
     </span>
     <div
       :style="getCords"
-      v-click-outside="closeSideBar"
+      v-click-outside="closeQuickEdit"
       class="quick-card-editor-card"
     >
       <div
@@ -166,24 +171,24 @@ export default {
     toggleOnHover() {
       this.onHover = !this.onHover
     },
-    openSideBar(ev) {
+    openQuickEdit(ev) {
       this.x = ev.clientX
       this.y = ev.clientY
       this.isOpen = true
     },
-    closeSideBar() {
+    closeQuickEdit() {
       this.isOpen = false
     },
     openTask(groupId, taskId) {
-      this.closeSideBar()
+      this.closeQuickEdit()
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
       )
     },
     getMemberById(memberId) {
       const members = this.$store.getters.getMembers
-      return members.find(member => member._id === memberId)
-    }
+      return members.find((member) => member._id === memberId)
+    },
   },
   computed: {
     getCords() {
@@ -193,7 +198,7 @@ export default {
   emits: ['click'],
   components: {
     taskLabelList,
-    avatarPreview
+    avatarPreview,
   },
 }
 </script>
