@@ -29,18 +29,18 @@
         </div>
         <h3 class="small-title">Color</h3>
         <div class="color-palette">
-          <div v-for="label in labels" :key="label.id">
+          <div v-for="color in colors" :key="color.id">
             <label
               class="flex align-center justify-center"
-              name="label-color"
-              :for="'color-' + label.color"
-              :style="{ backgroundColor: label.color }"
+              name="cover-color"
+              :for="'color-' + color.colorStr"
+              :style="{ backgroundColor: color.colorStr }"
               ><input
                 type="radio"
                 name="color"
-                :id="'color-' + label.color"
-                :value="label.color"
-                @click="selectCover(label.color)"
+                :id="'color-' + color.colorStr"
+                :value="color.colorStr"
+                @click="selectCover(color.colorStr)"
               />
             </label>
           </div>
@@ -52,7 +52,7 @@
 <script>
 export default {
   props: {
-    labels: Array,
+    colors: Array,
   },
   data() {
     return {

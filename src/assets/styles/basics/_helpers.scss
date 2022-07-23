@@ -121,7 +121,7 @@
   &.show {
     display: block;
   }
-  right: 0;
+  left: 0;
   top: 0;
   .popover-header {
     margin-bottom: 8px;
@@ -129,7 +129,7 @@
     border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
     position: relative;
     color: #5e6c84;
-
+    
     .pop-close-btn {
       position: absolute;
       right: 0;
@@ -138,9 +138,12 @@
       cursor: pointer;
     }
   }
-
+  
   .popover-content {
     overflow-y: auto;
+    .small-title {
+      margin-block-end: rem(4px);
+    }
   }
 }
 
@@ -244,4 +247,8 @@
 
 .trellicons-star::before {
   content: '\e967';
+}
+
+.trellicons-v-check::before {
+  content: "\e916";
 }
