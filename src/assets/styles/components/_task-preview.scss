@@ -34,10 +34,12 @@
 
   .task-preview-header {
     min-height: em(32px);
+    max-height: em(400px);
     margin: -1px -8px 0;
     border-radius: 3px 3px 0 0;
 
     .task-img-cover {
+      background-color: #00000070;
       border-radius: 3px 3px 0 0;
     }
   }
@@ -81,13 +83,13 @@
 
   .task-due-date {
     display: flex;
-    height: em(28px);
     border-radius: 3px;
     height: em(24px);
     width: fit-content;
     padding: 1.5px 4px;
     padding-right: 5px;
     color: #fff;
+    margin-bottom: 5px;
 
     i {
       font-size: em(16px);
@@ -134,10 +136,11 @@
   }
 
   .task-members-container {
-    text-align: right;
-    // align-self: flex-end;
     margin-right: -3px;
+    display: flex;
+    height: em(32px);
 
+    // text-align: right;
     .member-avatar-small {
       margin-left: 4px;
     }
