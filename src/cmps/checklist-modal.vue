@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="toggleModal" class="checklist-component">
+  <div v-click-outside="toggleModal" class="checklist-modal-component">
     <header class="checklist-header">
       <h3>Add checklist</h3>
       <span class="close-btn trellicons trellicons-close-btn"></span>
