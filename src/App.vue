@@ -9,6 +9,7 @@
 import appHeader from '@/cmps/app-header.vue'
 
 export default {
+  emits: ['setBackground'],
   name: 'app',
   data() {
     return {
@@ -21,14 +22,14 @@ export default {
   methods: {
     initBackground(background) {
       this.background = background
-    }
+    },
   },
   computed: {
     bgStyle() {
       return {
-        background: this.background
+        background: this.background,
       }
-    }
+    },
   },
   components: {
     appHeader,
