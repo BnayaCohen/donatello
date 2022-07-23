@@ -39,8 +39,8 @@ export default {
   computed: {
     dropPlaceHolderOptions() {
       return {
-        className: 'drop-preview',
-        animationDuration: '188',
+        className: 'drop-preview-card',
+        animationDuration: '150',
         showOnTop: false,
       }
     },
