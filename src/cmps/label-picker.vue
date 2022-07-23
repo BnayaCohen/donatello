@@ -1,5 +1,5 @@
 <template>
-  <div class="dynamic-popover pos-absolute">
+  <div class="dynamic-popover pos-absolute" :style="pos">
     <div class="popover-header flex justify-center align-center">
       <h4>Labels</h4>
       <button class="pop-close-btn" @click="$emit('closeLabels')">
@@ -51,11 +51,14 @@ export default {
   props: {
     labels: Array,
     taskLabels: Array,
+    pos: Object
   },
   data() {
     return {}
   },
-  created() {},
+  created() {
+    console.log(this.pos)
+  },
   computed: {
     selectedLabel() {
       this.taskLabels.forEach((taskLabel) => {
