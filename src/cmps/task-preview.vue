@@ -18,9 +18,9 @@
       </div> -->
       <task-label-list v-if="task.labelIds?.length" :labelIds="task.labelIds" />
       <p>{{ task?.title }}</p>
-<section v-if="task.memberIds?.length" class="task-members-container">
-  <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)" :avatarSize="'small'" />
-</section>
+      <section v-if="task.memberIds?.length" class="task-members-container">
+        <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)" :avatarSize="'small'" />
+      </section>
     </div>
   </div>
 
