@@ -245,12 +245,15 @@ export default {
     },
     dueDateStyle(){
       return{
-        backgroundColor:this.task.status==='in-progress'?(this.onDueDateHover?'#eb5a46':'#ec9488'):(this.onDueDateHover?'#519839':'#61bd4f')
+        backgroundColor:this.task.status==='in-progress'
+        ?(Date.now()-this.task.dueDate > 0?(this.onDueDateHover?'#eb5a46':'#ec9488'):(this.onDueDateHover?'#00000014':'#00000000'))
+        :(this.onDueDateHover?'#519839':'#61bd4f'),
+        color: (Date.now()-this.task.dueDate > 0 ||this.task.status!=='in-progress') ?'#fff':'#5e6c84'
       }
     },
     getDueDateIconName(){
       const currCheckbox=this.task.status==='in-progress'?'un-checkedbox':'checkedbox'
-return this.onDueDateHover?currCheckbox:'clock'
+      return this.onDueDateHover?currCheckbox:'clock'
     }
   },
   emits: ['click'],
