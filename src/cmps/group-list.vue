@@ -43,7 +43,7 @@ export default {
       return {
         className: 'drop-preview',
         animationDuration: '150',
-        showOnTop: false,
+        showOnTop: true,
       }
     },
   },
@@ -68,6 +68,7 @@ export default {
 .card-ghost {
   transition: transform 0.18s ease;
   transform: rotateZ(5deg);
+  cursor: grabbing;
 }
 .card-ghost-drop {
   transition: transform 0.18s ease-in-out;
@@ -75,11 +76,11 @@ export default {
 }
 .drop-preview-card,
 .drop-preview {
-  background-color: rgba(0, 0, 0, 0.14);
   border-radius: 3px;
   width: 100%;
 }
 .drop-preview-card {
+  background-color: rgba(0, 0, 0, 0.14);
   height: 100%;
 }
 
