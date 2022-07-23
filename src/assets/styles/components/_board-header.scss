@@ -1,11 +1,18 @@
 .board-header {
-    padding: 2px 0 2px;
+    padding: 8px 0 8px;
+    margin-right: -5px;
     flex-wrap: wrap;
 
     .board-name-input {
         font-weight: 800;
+        background-color: transparent;
         transition-property: background-color, border-color, box-shadow;
         transition-timing-function: ease;
+        width: 140px;
+
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.2);
+        }
 
         &:focus {
             background-color: #fff;
@@ -26,6 +33,14 @@
                 transition: .1s;
                 transform: scale(1.15);
             }
+        }
+    }
+
+    .members-container {
+        margin: 0 4px;
+
+        .member-avatar-small {
+            margin-left: -4px;
         }
     }
 }
