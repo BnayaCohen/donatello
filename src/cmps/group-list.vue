@@ -10,7 +10,7 @@
       orientation="horizontal"
       @drop="onGroupDrop($event)"
     >
-      <Draggable v-for="group in groups" :group="group" :key="group.id">
+      <Draggable v-for="group in groups" :key="group.id">
         <group-preview :group="group" />
       </Draggable>
       <article class="new-group">
@@ -73,11 +73,22 @@ export default {
   transition: transform 0.18s ease-in-out;
   transform: rotateZ(0deg);
 }
+.drop-preview-card,
 .drop-preview {
   background-color: rgba(0, 0, 0, 0.14);
   margin: 1rem 2rem 1rem 0.3rem;
   border-radius: 3px;
-  height: 100%;
   width: 100%;
+}
+.drop-preview-card {
+  height: 100%;
+}
+
+.smooth-dnd-container.horizontal {
+  display: flex;
+}
+.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+  display: flex;
+  height: fit-content;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <main :style="board?.style" class="main-layout board-container">
+  <main class="main-layout board-container">
     <board-header
       v-if="board"
       :board="board"
@@ -42,6 +42,8 @@ export default {
       return this.board.activities
     },
     board() {
+      document.body.style.background =
+        this.$store.getters.board?.style.background
       return this.$store.getters.board
     },
   },

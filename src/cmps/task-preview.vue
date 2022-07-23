@@ -16,9 +16,7 @@
     </div>
   </div>
   <div v-show="isOpen" class="quick-card-editor">
-    <span
-      @click="closeSideBar"
-      class="icon-lg icon-close quick-card-editor-close-icon"
+    <span class="icon-lg icon-close quick-card-editor-close-icon"
       ><svg
         aria-hidden="true"
         focusable="false"
@@ -36,7 +34,11 @@
         ></path>
       </svg>
     </span>
-    <div :style="getCords" class="quick-card-editor-card">
+    <div
+      :style="getCords"
+      v-click-outside="closeSideBar"
+      class="quick-card-editor-card"
+    >
       <div
         :style="task?.styles"
         class="list-card list-card-quick-edit is-covered"
@@ -175,10 +177,10 @@ export default {
       this.isOpen = false
     },
     openTask(groupId, taskId) {
+      this.closeSideBar()
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
       )
-      this.closeSideBar()
     },
   },
   computed: {
