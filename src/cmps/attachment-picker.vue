@@ -25,10 +25,8 @@
         <div class="from-web">
           <h3 class="small-title">Attach a link</h3>
           <label for="web-url">
-            <input type="text" v-model="webUrl" />
-            <button class="btn" @click="addLinkAttachment">
-              Attach
-            </button>
+            <input type="text" v-model="attachProps.url" />
+            <button class="btn" @click="addLinkAttachment">Attach</button>
           </label>
         </div>
       </div>
@@ -38,15 +36,16 @@
 <script>
 export default {
   props: {
-    pos: Object
+    pos: Object,
   },
   data() {
     return {
-      previewImage: null,
-      webUrl: null
+      attachProps: null,
     }
   },
-  created() {},
+  created() {
+    this.attachProps = {}
+  },
   methods: {
     selectImage() {
       this.$refs.fileInput.click()
@@ -56,16 +55,21 @@ export default {
       let file = input.files
       if (file && file[0]) {
         let reader = new FileReader()
-        reader.onload = (e) => {
-          this.previewImage = e.target.result
-          this.$emit('attachSelected', this.previewImage)
-        }
         reader.readAsDataURL(file[0])
+        reader.onload = (e) => {
+          const url = e.target.result
+          this.attachProps.url = url
+          this.attachProps.title = file[0].name
+          this.attachProps.createdAt = Date.now()
+          this.$emit('attachSelected', this.attachProps)
+        }
       }
     },
     addLinkAttachment() {
-      if (!this.webUrl) return
-      this.$emit('attachSelected', this.webUrl)
+      if (!this.attachProps.url) return
+      this.attachProps.title = 'Web image'
+      this.attachProps.createdAt = Date.now()
+      this.$emit('attachSelected', this.attachProps)
     },
   },
   emits: ['attachSelected'],

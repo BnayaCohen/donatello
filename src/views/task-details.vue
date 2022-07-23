@@ -161,16 +161,7 @@
             v-if="task?.attachment"
             class="attachment-container flex flex-column"
           >
-            <div class="attachment-header flex align-center">
-              <span class="trellicons trellicons-attachment"></span>
-              <h3>Attachments</h3>
-            </div>
-            <div class="flex attachment-thumbnail" >
-              <img class="task-image" :src="task.attachment" @click="updateCurrCover"/>
-              <!-- <p class="attachment-details">
-                <span>{{task.attachment.}}</span>
-              </p> -->
-            </div>
+          <attachment-preview :attachment="task.attachment" @updateCurrCover="updateCurrCover"/>
           </div>
           <div class="comment-container flex justify-between align-center">
             <div class="task-detail-title">
@@ -294,6 +285,7 @@ import { ref } from 'vue'
 import labelPicker from '../cmps/label-picker.vue'
 import coverPicker from '../cmps/cover-picker.vue'
 import attachmentPicker from '../cmps/attachment-picker.vue'
+import attachmentPreview from '../cmps/attachment-preview.vue'
 
 export default {
   name: 'taskDetails',
@@ -340,7 +332,7 @@ export default {
     }
     this.coverColors = this.$store.getters.getCoverColors
     if (this.task?.style?.bgColor) this.currCover = { backgroundColor: this.task.style.bgColor }
-    else if (this.task?.attachment) this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+    else if (this.task?.attachment) this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment.url})`}
     this.$refs.taskTitle.value = this.task.title
     this.$refs.taskDescription.value = this.task.description
   },
@@ -431,13 +423,18 @@ export default {
       const label = this.labels.find((taskLabel) => taskLabel.id === labelId)
       this.taskLabels.push(label)
     },
-    addAttachment(imageUrl) {
-      this.task.attachment = imageUrl
+    addAttachment(attachProps) {
+      const {url, title, createdAt} = attachProps
+      if (!this.task?.attachment) this.task.attachment = {}
+      this.task.attachment.url = url
+      this.task.attachment.title = title
+      this.task.attachment.createdAt = createdAt
       if(!this.task.style) this.task.style = {}
-      this.task.style.background = imageUrl
+      this.task.style.background = attachProps.url
       if(this.task.style?.bgColor) this.task.style.bgColor = ''
       this.isAttach = false
-      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}
+      console.log(url)
+      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment.url})`}
       this.updateTask()
     },
     async removeTask() {
@@ -458,11 +455,12 @@ export default {
     goToBoard() {
       this.$router.push('/board/' + this.$route.params.boardId)
     },
-    updateCurrCover() {
-      this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}
+    updateCurrCover(coverStyle) {
+      console.log(coverStyle)
+      this.currCover = coverStyle
     }
   },
-  components: { Datepicker, labelPicker, coverPicker, attachmentPicker },
+  components: { Datepicker, labelPicker, coverPicker, attachmentPicker, attachmentPreview },
 }
 </script>
 <style></style>
