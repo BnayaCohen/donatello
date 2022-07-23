@@ -290,13 +290,13 @@ function getEmptyGroup() {
 function getEmptyTask() {
   return {
     title: '',
-    status: '',
+    status: 'in-progress',
     description: '',
     comments: [],
     memberIds: [],
     labelIds: [],
     createdAt: Date.now(),
-    dueDate: {},
+    dueDate: null,
     byMember: userService.getLoggedInUser(),
     style: {},
   }
