@@ -33,9 +33,13 @@
   }
 
   .task-preview-header {
-    height: em(32px);
+    min-height: em(32px);
     margin: -1px -8px 0;
     border-radius: 3px 3px 0 0;
+
+    .task-img-cover {
+      border-radius: 3px 3px 0 0;
+    }
   }
 }
 
