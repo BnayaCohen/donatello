@@ -5,7 +5,7 @@
       <span class="close-btn trellicons trellicons-close-btn"></span>
     </header>
     <section class="checklist-inputs">
-      <h3>Title</h3>
+      <label>Title</label>
       <input type="text" v-model="title" />
       <button class="add-checklist-btn">Add</button>
     </section>
