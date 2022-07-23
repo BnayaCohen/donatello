@@ -30,7 +30,7 @@
               <span>Move list...</span>
             </li>
             <li>
-              <span>Archive list...</span>
+              <span @click="removeGroup">Archive list...</span>
             </li>
             <li>
               <span>Watch</span>
@@ -88,6 +88,9 @@ export default {
     },
     togglePopup() {
       this.showPopup = !this.showPopup
+    },
+    removeGroup() {
+      this.$store.dispatch({ type: 'removeGroup', groupId: this.group.id })
     },
   },
   components: {
