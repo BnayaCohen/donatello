@@ -4,28 +4,38 @@
     <h3>Attachments</h3>
   </div>
   <div class="flex attachment-thumbnail">
-    <img class="task-image" :src="attachment.url" @click.stop="updateCurrCover" />
+    <img
+      class="task-image"
+      :src="attachment.url"
+    />
     <div class="attachment-details flex flex-column">
-      <span>{{ attachment.title }}</span>
-      <div class="attach-actions flex">
-        <span>{{ attachment.createdAt }} </span>
-        <span class="attachment-option">Comment</span>
-        <span class="attachment-option">Delete</span>
-        <span class="attachment-option"> Edit</span>
+        <div class="attach-header flex flex-column">
+        <span class="attach-title">{{ attachment.title }}</span>
+        <span class="attach-time-ago">{{ timeAgo }} </span>
       </div>
-      <span class="trellicons trellicons-cover">Make cover</span>
+      <div class="flex align-center">
+        <span class="trellicons trellicons-cover cover-icon"></span>
+        <span class="make-cover" @click.stop="updateCurrCover">Make cover</span>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import { utilService } from '../services/util-service.js'
+
 export default {
   props: {
     attachment: Object,
   },
+  computed: {
+    timeAgo() {
+      return 'Added ' + utilService.timeAgo(this.attachment.createdAt)
+    },
+  },
   methods: {
     updateCurrCover() {
       this.$emit('updateCurrCover', {
-        backgroundImage: `url(${this.attachment.url}) no-repeat center center/cover`
+        backgroundImage: `url(${this.attachment.url}) no-repeat center center/cover`,
       })
     },
   },
