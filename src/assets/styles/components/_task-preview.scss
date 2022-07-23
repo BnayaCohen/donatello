@@ -69,3 +69,13 @@
     }
   }
 }
+
+.task-members-container {
+  text-align: right;
+  float: right;
+  width: auto;
+
+  .member-avatar-small {
+    margin-left: 4px;
+  }
+}

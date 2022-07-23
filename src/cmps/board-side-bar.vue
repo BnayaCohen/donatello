@@ -65,7 +65,7 @@ export default {
         }
     },
     created() {
-        console.log(this.activities);
+        // console.log(this.activities);
     },
     components: {
         activityPreview
