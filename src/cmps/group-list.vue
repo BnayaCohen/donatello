@@ -76,7 +76,6 @@ export default {
 .drop-preview-card,
 .drop-preview {
   background-color: rgba(0, 0, 0, 0.14);
-  margin: 1rem 2rem 1rem 0.3rem;
   border-radius: 3px;
   width: 100%;
 }
