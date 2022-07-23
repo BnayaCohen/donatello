@@ -22,31 +22,12 @@ const gBoard = {
     background: `url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80') no-repeat 0 20%/cover`,
   },
   labels: [
-    {
-      id: 'l101',
-      title: 'Done',
-      color: '#61bd4f',
-    },
-    {
-      id: 'l102',
-      title: 'Progress',
-      color: '#008080',
-    },
-    {
-      id: 'l103',
-      title: 'Important',
-      color: '#FFC300',
-    },
-    {
-      id: 'l104',
-      title: 'Urgent',
-      color: '#FF5733',
-    },
-    {
-      id: 'l105',
-      title: 'Low Priority',
-      color: '#1434A4',
-    },
+    { id: 'l101', title: 'Done', color: '#51e898' },
+    { id: 'l102', title: 'Progress', color: '#0079bf' },
+    { id: 'l103', title: 'Important', color: '#f2d600' },
+    { id: 'l104', title: 'Urgent', color: '#eb5a46' },
+    { id: 'l105', title: 'Low Priority', color: '#00c2e0' },
+    { id: 'l106', title: 'Design Team', color: '#c377e0' },
   ],
   members: [
     {
@@ -291,7 +272,7 @@ async function saveTask(boardId, groupId, task, activity) {
     if (idx !== -1) group.tasks.splice(idx, 1, task)
   }
 
-  board.activities.unshift(activity)
+  activity && board.activities.unshift(activity)
   return await saveBoard(board)
 }
 
