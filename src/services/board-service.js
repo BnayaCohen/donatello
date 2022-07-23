@@ -16,7 +16,8 @@ const gBoard = {
   createdBy: {
     _id: 'u101',
     fullname: 'Abi Abambi',
-    imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+    imgUrl:
+      'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
   },
   style: {
     background: `url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80') no-repeat 0 20%/cover`,
@@ -81,7 +82,8 @@ const gBoard = {
     {
       _id: 'u102',
       fullname: 'Jeff Mesos',
-      imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+      imgUrl:
+        'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
   ],
   groups: [
@@ -95,13 +97,14 @@ const gBoard = {
           title: 'Replace logo',
           groupId: 'g101',
           style: {
-            background: 'https://c.tenor.com/u9tIJjToes4AAAAC/tmnt-leonardo.gif',
+            background:
+              'https://c.tenor.com/u9tIJjToes4AAAAC/tmnt-leonardo.gif',
           },
           attachment: {
             title: 'tmnt.gif',
             url: 'https://c.tenor.com/u9tIJjToes4AAAAC/tmnt-leonardo.gif',
-            createdAt: '1639128472485'
-          }
+            createdAt: '1639128472485',
+          },
         },
         {
           id: 'c102',
@@ -158,7 +161,7 @@ const gBoard = {
           createdAt: 1590999730348,
           dueDate: {
             at: 16156215211,
-            isDone: false
+            isDone: false,
           },
           byMember: {
             _id: 'u101',
@@ -183,7 +186,8 @@ const gBoard = {
       byMember: {
         _id: 'u101',
         fullname: 'Abi Abambi',
-        imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+        imgUrl:
+          'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
       },
       task: {
         id: 'c101',
