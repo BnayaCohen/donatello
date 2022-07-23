@@ -68,7 +68,6 @@ export default {
 .card-ghost {
   transition: transform 0.18s ease;
   transform: rotateZ(5deg);
-  cursor: grabbing;
 }
 .card-ghost-drop {
   transition: transform 0.18s ease-in-out;
