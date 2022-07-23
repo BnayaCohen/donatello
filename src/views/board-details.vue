@@ -1,5 +1,5 @@
 <template>
-  <main :style="board?.style" class="main-layout board-container">
+  <main class="main-layout board-container">
     <board-header
       v-if="board"
       :board="board"
@@ -21,7 +21,6 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-import BoardSideBar from '../cmps/board-side-bar.vue'
 
 export default {
   name: 'board-details',
@@ -33,6 +32,7 @@ export default {
   async created() {
     const { boardId } = this.$route.params
     await this.$store.dispatch({ type: 'loadBoard', boardId })
+    this.$emit('setBackground', this.board.style.background)
   },
   computed: {
     groups() {
