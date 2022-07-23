@@ -10,6 +10,7 @@ export default {
       children: null,
     },
     lastGroup: null,
+    showLabelsOnTask: false,
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -22,6 +23,9 @@ export default {
     },
     getLabels({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard.labels))
+    },
+    showLabelsOnTask({ showLabelsOnTask }) {
+      return showLabelsOnTask
     },
     board({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard))
@@ -71,6 +75,9 @@ export default {
       state.currBoard.groups.splice(itemIndex, 1, state.lastGroup)
       state.lastGroup = null
       state.scene = state.currBoard.groups
+    },
+    toggleTaskLabels(state) {
+      state.showLabelsOnTask = !state.showLabelsOnTask
     },
   },
   actions: {
