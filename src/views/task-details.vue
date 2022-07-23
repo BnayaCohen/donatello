@@ -12,7 +12,7 @@
     >
       <div class="detail-modal-container" v-click-outside="backToBoard">
         <div
-          v-if="task.style"
+          v-if="task.style.background"
           class="flex justify-center task-detail-bg"
           :style="task.style"
         ></div>
@@ -76,15 +76,15 @@
                       <span>{{ label.title }}</span>
                     </div>
                   </div>
-                <div>
-                  <button
-                    v-show="this.taskLabels.length"
-                    class="add-label-btn"
-                    @click.stop="toggleLabels"
-                  >
-                    <span class="trellicons trellicons-plus-sign"></span>
-                  </button>
-                </div>
+                  <div>
+                    <button
+                      v-show="this.taskLabels.length"
+                      class="add-label-btn"
+                      @click.stop="toggleLabels"
+                    >
+                      <span class="trellicons trellicons-plus-sign"></span>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div
@@ -188,7 +188,7 @@
                 <h3 class="small-title">Suggested</h3>
                 <button
                   class="sidebar-btn flex align-center"
-                   @click="addUserToTask"
+                  @click="addUserToTask"
                 >
                   <span class="trellicons trellicons-member"></span>
                   <span>Join</span>
@@ -273,7 +273,7 @@
                   <button
                     v-show="!currCover"
                     class="sidebar-btn flex align-center"
-                    @click.stop="isCover = !isCover"
+                    @click.stop="toggleCover"
                   >
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
