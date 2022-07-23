@@ -97,6 +97,7 @@ const gBoard = {
           style: {
             background: 'https://c.tenor.com/u9tIJjToes4AAAAC/tmnt-leonardo.gif',
           },
+          attachment: 'https://c.tenor.com/u9tIJjToes4AAAAC/tmnt-leonardo.gif'
         },
         {
           id: 'c102',

@@ -19,6 +19,21 @@
   .from-web {
     border-top: 1px solid rgba(9, 30, 66, 0.13);
   }
+  .btn {
+    border: none;
+    border-radius: 3px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 6px 12px;
+    text-decoration: none;
+    background-color: #091e420a;
+    color: #172b4d;
+    cursor: pointer;
+    &:hover {
+      background-color: #091e4218;
+    }
+  }
+
 }
 
 .attachment-container {

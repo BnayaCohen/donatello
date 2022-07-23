@@ -433,6 +433,8 @@ export default {
     },
     addAttachment(imageUrl) {
       this.task.attachment = imageUrl
+      if(!this.task.style) this.task.style = {}
+      this.task.style.background = imageUrl
       if(this.task.style?.bgColor) this.task.style.bgColor = ''
       this.isAttach = false
       this.currCover = {backgroundColor: 'transparent', backgroundImage: `url(${this.task.attachment})`, minHeight: '160px', backgroundSize: 'contain', backgroundOrigin: 'content-box', padding: '0px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}
