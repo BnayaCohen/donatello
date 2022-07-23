@@ -27,5 +27,8 @@
   .attachment-thumbnail {
     max-width: 112px;
     margin-left: 12px;
+    .task-image {
+      cursor: pointer;
+    }
   }
 }
