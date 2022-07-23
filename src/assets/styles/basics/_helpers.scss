@@ -121,6 +121,16 @@
   // &.show {
   //   display: block;
   // }
+  .small-title {
+    color: #5e6c84;
+    font-size: 0.8571428571rem;
+    font-weight: 600;
+    // letter-spacing: 0.04em;
+    font-size: 12px;
+    margin-top: 5px;
+    // text-transform: uppercase;
+  }
+
   .popover-header {
     margin-bottom: 8px;
     height: 40px;
@@ -138,7 +148,7 @@
       cursor: pointer;
     }
   }
-  
+
   .popover-content {
     overflow-y: auto;
     .small-title {
@@ -250,5 +260,5 @@
 }
 
 .trellicons-v-check::before {
-  content: "\e916";
+  content: '\e916';
 }
