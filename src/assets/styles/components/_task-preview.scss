@@ -81,7 +81,7 @@
 
   .task-due-date {
     display: flex;
-
+    height: em(28px);
     border-radius: 3px;
     height: em(24px);
     width: fit-content;
@@ -135,8 +135,7 @@
 
   .task-members-container {
     text-align: right;
-    align-self: flex-end;
-    // width: auto;
+    // align-self: flex-end;
     margin-right: -3px;
 
     .member-avatar-small {
