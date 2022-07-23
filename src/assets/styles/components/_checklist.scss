@@ -1,7 +1,64 @@
 .checklist-component {
   color: #172b4d;
   font-size: rem(14px);
-}
-.checklist-header {
-  text-align: center;
+
+  .checklist-header {
+    text-align: center;
+    position: relative;
+    .close-btn {
+      position: absolute;
+    }
+  }
+  .checklist-inputs {
+    label {
+      color: #5e6c84;
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 16px;
+      margin-bottom: 4px;
+    }
+    input[type='text'] {
+      margin: 4px 0 12px;
+      width: 100%;
+      -webkit-appearance: none;
+      background-color: #fafbfc;
+      border: none;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 2px #dfe1e6;
+      box-sizing: border-box;
+      display: block;
+      line-height: 20px;
+      margin-bottom: 12px;
+      outline: none;
+      padding: 8px 12px;
+      transition-duration: 85ms;
+      transition-property: background-color, border-color, box-shadow;
+      transition-timing-function: ease;
+    }
+    button.add-checklist-btn {
+      padding-left: 24px;
+      padding-right: 24px;
+      background-color: #0079bf;
+      border: none;
+      box-shadow: none;
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      justify-content: center;
+      line-height: 20px;
+      padding: 6px 12px;
+      text-decoration: none;
+      transition-duration: 85ms;
+      transition-property: background-color, border-color, box-shadow;
+      transition-timing-function: ease;
+      white-space: normal;
+      align-items: center;
+      border-radius: 3px;
+    }
+  }
 }
