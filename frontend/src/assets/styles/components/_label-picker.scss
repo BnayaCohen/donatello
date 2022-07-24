@@ -1,0 +1,38 @@
+.label-list-container {
+  .label {
+    min-height: 32px;
+    font-size: 1rem;
+    color: #fffffff3;
+    cursor: pointer;
+    font-weight: 700;
+    margin: 0 0 4px;
+    position: relative;
+    transition: padding 85ms, margin 85ms, box-shadow 85ms;
+    span {
+      margin-left: 1rem;
+    }
+    transition: 100ms padding ease-in-out;
+    &:hover {
+      padding-inline-start: 0.3rem;
+    }
+  }
+  .full-btn {
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: inline-block;
+    line-height: 20px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 6px 12px;
+    position: relative;
+    text-decoration: none;
+    background-color: #091e420a;
+    width: 100%;
+    color: #172b4d;
+    cursor: pointer;
+    &:hover {
+      background-color: #091e4218;
+    }
+  }
+}
