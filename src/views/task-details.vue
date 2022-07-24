@@ -1,8 +1,5 @@
 <template>
-  <section
-    class="container task-detail"
-    @click=";[(isDate = false), (isDateSide = false)]"
-  >
+  <section class="container task-detail">
     <div
       class="back-screen"
       :style="{
@@ -11,11 +8,7 @@
       }"
     >
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg
-          :task="task"
-          @coverClicked="toggleCover"
-          @closeModal="backToBoard"
-        />
+        <cover-bg :task="task" @toggle="toggle" @closeModal="backToBoard" />
         <div class="task-detail-header">
           <span class="trellicons trellicons-details"></span>
           <textarea
@@ -39,10 +32,7 @@
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
-              <label-prev
-                :taskLabels="taskLabels"
-                @labelClicked="toggleLabels"
-              />
+              <label-prev :taskLabels="taskLabels" @toggle="toggle" />
               <date-picker
                 v-if="task.dueDate"
                 :task="task"
@@ -95,13 +85,8 @@
           <task-detail-sidebar
             :task="task"
             :currCover="currCover"
-            @toggleLabels="toggleLabels"
-            @toggleDate="toggleDate"
-            @toggleAttach="toggleAttach"
+            @toggle="toggle"
             @addUserToTask="addUserToTask"
-            @toggleCover="toggleCover"
-            @removeTask="removeTask"
-            @toggleChecklist="toggleChecklist"
           />
         </div>
       </div>
@@ -110,7 +95,7 @@
   <attachment-picker
     v-if="isAttach"
     @attachSelected="addAttachment"
-    @closeAttach="isAttach = false"
+    @toggle="toggle"
     :pos="getCords"
     v-click-outside="closeAttach"
   />
@@ -118,7 +103,7 @@
     v-if="isCover"
     :colors="coverColors"
     @addCover="addCover"
-    @closeCover="isCover = false"
+    @closeCover="closeCover"
     :pos="getCords"
     v-click-outside="closeCover"
   />
@@ -127,7 +112,7 @@
     :labels="labels"
     :taskLabels="taskLabels"
     @addLabel="addLabel"
-    @closeLabels="isLabels = false"
+    @toggle="isLabels = !isLabels"
     :pos="getCords"
     v-click-outside="closeLabels"
   />
@@ -136,12 +121,14 @@
     @updateDueDate="updateDueDate"
     :pos="getCords"
     :dueDate="dueDate"
+    v-click-outside="closeDate"
   />
   <checklist-modal
     v-if="isChecklist"
     @addChecklist="addChecklist"
     :pos="getCords"
-    v-click-outside="toggleChecklist"
+    v-click-outside="closeChecklist"
+    @toggle="toggle"
   />
 </template>
 <script>
@@ -163,17 +150,11 @@ import { ref } from 'vue'
 
 export default {
   name: 'taskDetails',
-  // props: {
-  //   taskId: String,
-  //   boardId: String,
-  //   groupId: String,
-  // },
   data() {
     return {
       task: boardService.getEmptyTask(),
       isEditDescription: false,
       isDate: false,
-      isDateSide: false,
       taskLabels: [],
       labels: null,
       isLabels: false,
@@ -212,13 +193,6 @@ export default {
     this.$refs.taskDescription.value = this.task.description
   },
   computed: {
-    dueDateFixed() {
-      if (this.task?.dueDate) {
-        var fixedDate = (new Date(this.task.dueDate) + '').slice(4, 10)
-        fixedDate += ' at 12:00 AM'
-        return fixedDate
-      }
-    },
     groupTitle() {
       const { groupId } = this.$route.params
       const board = this.$store.getters.board
@@ -257,6 +231,12 @@ export default {
     closeCover() {
       this.isCover = !this.isCover
     },
+    closeChecklist() {
+      this.isChecklist = !this.isChecklist
+    },
+    closeDate() {
+      this.isDate = false
+    },
     updateTask() {
       console.log(this.task.title)
       const { groupId } = this.$route.params
@@ -267,37 +247,20 @@ export default {
       })
       this.isEditDescription = false
     },
-    toggleChecklist(ev) {
-      console.log(ev)
+    toggleDate(ev) {
       this.clickPos.x = ev?.clientX
       this.clickPos.y = ev?.clientY
-      this.isChecklist = !this.isChecklist
-    },
-    toggleCover(ev) {
-      this.clickPos.x = ev.clientX
-      this.clickPos.y = ev.clientY
-      this.isCover = !this.isCover
-    },
-    toggleLabels(ev) {
-      this.clickPos.x = ev.clientX
-      this.clickPos.y = ev.clientY
-      this.isLabels = !this.isLabels
-    },
-    toggleAttach(ev) {
-      this.clickPos.x = ev.clientX
-      this.clickPos.y = ev.clientY
-      this.isAttach = !this.isAttach
-    },
-    toggleDate(ev) {
-      console.log(this.isDate)
-      this.clickPos.x = ev.clientX
-      this.clickPos.y = ev.clientY
       this.isDate = !this.isDate
+    },
+    toggle(customEv) {
+      this.clickPos.x = customEv?.ev?.clientX
+      this.clickPos.y = customEv?.ev?.clientY
+      this['is' + customEv.type] = !this['is' + customEv.type]
     },
     updateDueDate(dueDate) {
       this.dueDate = dueDate
       const timestamp = dueDate.getTime()
-      this.task.dueDate = timestamp
+      this.task.dueDate = ref(timestamp)
       this.updateTask()
     },
     // updateTaskLabels() {
@@ -375,6 +338,12 @@ export default {
       if (!this.task?.style) this.task.style = {}
       this.task.style.background = coverStyle.backgroundImage
       this.currCover = coverStyle
+      this.updateTask()
+    },
+    addChecklist(checklist) {
+      this.task.checklist = this.task.checklist
+        ? [...this.task.checklist, checklist]
+        : [checklist]
       this.updateTask()
     },
   },

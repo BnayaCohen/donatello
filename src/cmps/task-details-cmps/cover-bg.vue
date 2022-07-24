@@ -32,10 +32,10 @@ export default {
   created() {},
   methods: {
     coverClicked(ev) {
-      this.$emit('coverClicked', ev)
+      this.$emit('toggle', { ev, type: 'Cover' })
     },
   },
-  emits: ['coverClicked', 'closeModal']
+  emits: ['toggle', 'closeModal'],
 }
 </script>
 <style></style>
