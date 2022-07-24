@@ -1,0 +1,424 @@
+.task-detail {
+  line-height: rem(20px);
+  z-index: 20;
+  .btn {
+    border: none;
+    border-radius: 3px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 6px 12px;
+    text-decoration: none;
+    background-color: #091e420a;
+    color: #172b4d;
+    cursor: pointer;
+    &:hover {
+      background-color: #091e4218;
+    }
+    &.remove-attach-btn {
+      margin: 0;
+    }
+  }
+
+  h3 {
+    display: inline-block;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+  }
+  h4 {
+    margin: 0;
+    padding: 0;
+  }
+  .cover-btn {
+    background-color: #00000014;
+    border-radius: 3px;
+    color: #172b4d;
+    padding: 6px 12px 6px 6px;
+    text-decoration: none;
+    border: none;
+    font-size: 1rem;
+    gap: 3px;
+    line-height: 20px;
+    font-family: inherit;
+    cursor: pointer;
+    .cover-icon {
+      font-size: 16px;
+    }
+    .cover-txt {
+      font-size: 1rem;
+      color: black;
+    }
+    &:hover {
+      background-color: #091e422d;
+    }
+  }
+  textarea,
+  input[type='text'] {
+    -webkit-appearance: none;
+    background-color: #fafbfc;
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: block;
+    line-height: rem(20px);
+    outline: none;
+    padding: rem(8px) rem(12px);
+    width: 100%;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+    resize: none;
+  }
+
+  .small-title {
+    color: #5e6c84;
+    font-size: 0.8571428571rem;
+    font-weight: 600;
+    // letter-spacing: 0.04em;
+    font-size: 12px;
+    margin-top: 5px;
+    // text-transform: uppercase;
+  }
+
+  svg {
+    width: 24px;
+    height: 18px;
+  }
+  .task-detail-title {
+    display: flex;
+    grid-gap: 8px;
+    gap: 8px;
+    align-items: center;
+  }
+  .detail-modal-container {
+    .task-detail-header,
+    .task-detail-main {
+      .trellicons {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        color: #42526e;
+      }
+    }
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    min-height: 600px;
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+    height: fit-content;
+    width: 768px;
+    display: block;
+    color: #172b4d;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f4f5f7;
+    border-radius: 2px;
+    cursor: auto;
+    .close-modal-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: #42526e;
+      height: 35px;
+      width: 35px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+      border-radius: 50%;
+      &:hover {
+        transition: all 250ms;
+        // padding: 10px;
+        background-color: rgba(0, 0, 0, 0.0784313725490196);
+      }
+    }
+    .task-detail-bg {
+      cursor: pointer;
+      min-height: em(116px);
+      border-radius: 2px 2px 0 0;
+      background-size: contain;
+      background-origin: content-box;
+      padding: 0px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cover-btn {
+      position: relative;
+      float: right;
+      margin-top: -42px;
+      margin-right: 8px;
+      & .dynamic-popover {
+        top: 0;
+      }
+    }
+    .task-detail-header {
+      display: flex;
+      padding: 16px 8px 0 20px;
+      .title-input {
+        border: none;
+        outline: none;
+        // min-height: 24px;
+        padding: 4px 8px;
+        min-height: 33.333px;
+        border-radius: 3px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+        transition: border 0.1s;
+        font-family: inherit;
+        width: 100%;
+        margin-right: 50px;
+        background-color: transparent;
+        overflow-y: hidden;
+        overflow-wrap: break-word;
+        color: #172b4d;
+      }
+      .title-input:focus-within {
+        background-color: $clr3;
+        box-shadow: inset 0 0 0 2px #0079bf;
+      }
+    }
+    .subtitle-header {
+      opacity: 0.8;
+      margin: 0 58px;
+      p {
+        margin: 0 0 8px;
+      }
+    }
+    .task-detail-main {
+      padding: 0 8px 8px 20px;
+      flex-basis: 75%;
+      .description-container {
+        margin-bottom: 24px;
+        h3{
+          margin-left:5px;
+        }
+        .description-fake-textarea {
+          background-color: #091e420a;
+          border: none;
+          border-radius: 3px;
+          box-shadow: none;
+          display: block;
+          min-height: 40px;
+          padding: 8px 12px;
+          text-decoration: none;
+        }
+        .description-textarea {
+          background: #fff;
+          box-shadow: none;
+          min-height: 108px;
+          margin: 0 0 4px;
+          padding: 8px 12px;
+          box-shadow: inset 0 0 0 2px #0079bf;
+        }
+        .description-header {
+          padding: 8px 0;
+        }
+      }
+      .task-description-txt {
+        margin-inline-start: rem(40px);
+        textarea {
+          width: 100%;
+          border: none;
+          outline: none;
+          border-radius: 3px;
+          background-color: #eaecf0;
+          cursor: pointer;
+          padding: 8px 12px;
+          resize: none;
+          color: #172b4d;
+          font-family: inherit;
+          font-size: 1rem;
+          overflow-wrap: break-word;
+        }
+      }
+      .members-labels-container {
+        display: flex;
+        margin: 9px 0 24px 29px;
+        gap: rem(8px);
+        position: relative;
+        flex-wrap: wrap;
+        .add-label-btn,
+        .remove-duedate-btn {
+          background-color: #091e420a;
+          border: none;
+          display: flex;
+          align-items: center;
+          border-radius: 3px;
+          cursor: pointer;
+          span {
+            font-size: 16px;
+            color: #42526e;
+          }
+          &:hover {
+            background-color: #091e4218;
+          }
+        }
+        .add-label-btn {
+          width: 32px;
+          height: 32px;
+        }
+        .remove-duedate-btn span {
+          font-size: 1rem;
+        }
+        .task-labels {
+          display: flex;
+          padding: 0.5rem 0;
+          flex-wrap: wrap;
+          .label-prev {
+            min-width: 40px;
+            min-height: 32px;
+            margin: 0 rem(4px) rem(4px) 0;
+            font-size: 0.9rem;
+            color: #f4f5f7;
+            font-weight: 600;
+            user-select: none;
+            cursor: pointer;
+            .label-bg {
+              height: 100%;
+              width: 100%;
+              border-radius: 3px;
+              padding: 0 rem(12px);
+            }
+          }
+        }
+        .due-date-container {
+          flex-direction: column;
+          align-items: flex-start;
+          label {
+            padding: 0.5rem 0;
+            padding-inline-end: 0.3rem;
+          }
+          .due-date-txt {
+            border-radius: 5px;
+            margin-inline-start: 0.5rem;
+            color: #172b4ddd;
+          }
+          .due-date-btn {
+            background-color: transparent;
+            border: none;
+            svg {
+              filter: invert(43%) sepia(31%) saturate(358%) hue-rotate(179deg)
+                brightness(87%) contrast(85%);
+            }
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background-color: rgba(9, 30, 66, 0.0392156862745098);
+            padding: 0.2rem;
+            border-radius: 3px;
+            margin-inline-end: 0.25rem;
+            .task-complete {
+              color: #ffffff;
+              background-color: #61bd4f;
+              font-size: 12px;
+              line-height: 16px;
+              padding: 0 4px;
+              border-radius: 2px;
+              margin: auto 0 auto 8px;
+            }
+            &:hover {
+              transition: all 85ms ease-in-out;
+              background-color: rgba(9, 30, 66, 0.082156862745098);
+            }
+          }
+        }
+      }
+    }
+    .detail-sidebar {
+      padding: 0 16px 8px 8px;
+      display: flex;
+      flex-basis: 25%;
+      flex-direction: column;
+      gap: 8px;
+      width: calc(100% - 600px);
+      .trellicons {
+        font-size: 1.15rem;
+        height: 16px;
+        width: 16px;
+        color: rgb(66, 82, 110);
+        fill: inherit;
+        &.trellicons-close-btn {
+          color: #6b778c;
+          &:hover {
+            color: #172b4d;
+          }
+        }
+      }
+
+      .sidebar-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        border: none;
+        border-radius: 3px;
+        color: #172b4d;
+        font-family: inherit;
+        gap: rem(9px);
+        font-size: 1rem;
+        line-height: rem(20px);
+        padding: rem(8px) rem(7.7px);
+        transition: all 85ms ease;
+        background-color: rgba(9, 30, 66, 0.0392156862745098);
+        width: 100%;
+        margin-top: rem(8.9px);
+        cursor: pointer;
+        svg {
+          height: 13px;
+          width: 13px;
+        }
+
+        &:hover {
+          transition: all 85ms ease-in-out;
+          background-color: rgba(9, 30, 66, 0.082156862745098);
+        }
+      }
+      .datepicker-side {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+      }
+      input[type='text'] {
+        margin-bottom: rem(12px);
+      }
+      h4 {
+        font-weight: 400;
+      }
+    }
+  }
+  .comment-container {
+    h3{
+      margin-left: -4px;
+    }
+    .comment-input {
+      overflow: hidden;
+      overflow-wrap: break-word;
+      height: 20px;
+      background: #fff !important;
+      box-sizing: initial;
+      min-height: 20px;
+      resize: none;
+      width: 100%;
+      box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+    }
+    .cover-input-container {
+    }
+  }
+  .due-date-picker {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    top: 0;
+    z-index: 10;
+    padding: 0.6rem 0;
+  }
+}
