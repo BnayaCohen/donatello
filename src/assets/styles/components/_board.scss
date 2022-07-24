@@ -22,4 +22,8 @@
     background: #ffffff64;
     border-radius: 4px;
   }
+
+  &::-webkit-scrollbar-button {
+    width: 24px
+  }
 }

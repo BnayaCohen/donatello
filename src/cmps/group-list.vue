@@ -1,15 +1,8 @@
 <template>
-  <section class="group-list-container flex">
-    <Container
-      class="h-full flex overflow-x-auto gap-8 p-8"
-      group-name="cols"
-      drag-class="card-ghost"
-      drop-class="card-ghost-drop"
-      :drop-placeholder="dropPlaceHolderOptions"
-      tag="div"
-      orientation="horizontal"
-      @drop="onGroupDrop($event)"
-    >
+  <section class="group-list-container flex" :style="groupListWidth" >
+    <Container class="h-full flex overflow-x-auto gap-8 p-8" group-name="cols" drag-class="card-ghost"
+      drop-class="card-ghost-drop" :drop-placeholder="dropPlaceHolderOptions" tag="div"
+      orientation="horizontal" @drop="onGroupDrop($event)">
       <Draggable v-for="group in groups" :key="group.id">
         <group-preview :group="group" />
       </Draggable>
@@ -25,10 +18,12 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../services/util-service'
 import groupPreview from './group-preview.vue'
 import { boardService } from '../services/board-service.js'
+import { emitChangeFn } from 'element-plus'
 
 export default {
   props: {
     groups: Array,
+    isSideBarOpen: Boolean
   },
   data() {
     return {
@@ -46,6 +41,12 @@ export default {
         showOnTop: true,
       }
     },
+    groupListWidth() {
+      console.log(this.isSideBarOpen);
+      return {
+        width: this.isSideBarOpen ? 'calc(100% - 305px)' : '100%'
+      }
+    }
   },
   methods: {
     onGroupDrop(dropResult) {
@@ -69,15 +70,18 @@ export default {
   transition: transform 0.18s ease;
   transform: rotateZ(5deg);
 }
+
 .card-ghost-drop {
   transition: transform 0.18s ease-in-out;
   transform: rotateZ(0deg);
 }
+
 .drop-preview-card,
 .drop-preview {
   border-radius: 3px;
   width: 100%;
 }
+
 .drop-preview-card {
   background-color: rgba(0, 0, 0, 0.14);
   padding: 0 0 -55px -5px;
@@ -87,7 +91,8 @@ export default {
 .smooth-dnd-container.horizontal {
   display: flex;
 }
-.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+
+.smooth-dnd-container.horizontal>.smooth-dnd-draggable-wrapper {
   display: flex;
   height: fit-content;
 }
