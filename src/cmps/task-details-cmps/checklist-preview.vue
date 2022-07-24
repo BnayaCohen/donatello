@@ -22,14 +22,16 @@
         :key="todo.id"
         class="checklist-item"
       >
-        <input @change="toggleIsDone" v-model="todo.isDone" type="checkbox" />
+        <input
+          @change="toggleIsDone(todo)"
+          v-model="todo.isDone"
+          type="checkbox"
+        />
         <div class="checklist-item-text">
-          <input
-            type="text"
-            @input="saveTodo"
+          <textarea
             v-model="todo.title"
             :style="todo.isDone ? { textDecoration: 'line-through' } : ''"
-          />
+          ></textarea>
           <div class="actions">
             <span class="fa-solid fa-user-plus"></span>
             <span
@@ -48,9 +50,12 @@
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
-      <input type="text" v-model="newTodo" />
+      <textarea v-model="newTodo.title"></textarea>
       <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
-      <span class="close-btn trellicons trellicons-close-btn"></span>
+      <span
+        @click="emptyTodo"
+        class="close-btn trellicons trellicons-close-btn"
+      ></span>
     </div>
   </section>
 </template>
@@ -68,13 +73,22 @@ export default {
     }
   },
   methods: {
+    emptyTodo() {
+      this.newTodo = { title: '', isDone: false }
+      this.editingTodo = false
+    },
     saveTodo(todo) {
       if (!todo.title) return
       const idx = this.checklistToEdit.todos.findIndex(
         (curTodo) => curTodo.id === todo.id
       )
       if (idx !== -1) this.checklistToEdit.todos.splice(idx, 1, todo)
-      else this.checklistToEdit.todos.push(todo)
+      else {
+        todo.id = utilService.makeId()
+        this.checklistToEdit.todos.push(todo)
+        this.newTodo = { title: '', isDone: false }
+      }
+      this.editingTodo = false
       this.save()
     },
     removeTodo(todoId) {
@@ -84,19 +98,20 @@ export default {
       if (idx !== -1) this.checklistToEdit.todos.splice(idx, 1)
       this.save()
     },
-    toggleIsDone(todoId) {
-      console.log(todoId)
-      const todo = this.checklistToEdit.todos.find((todo) => todo.id === todoId)
-      todo.isDone = !todo.isDone
+    toggleIsDone(todo) {
+      const idx = this.checklistToEdit.todos.findIndex(
+        (curTodo) => todo.id === curTodo.id
+      )
+      if (idx !== -1) this.checklistToEdit.todos.splice(idx, 1, todo)
       this.save()
     },
     save() {
-      this.$emit('saveChecklist', { checklist: this.checklistToEdit })
+      this.$emit('saveChecklist', this.checklistToEdit)
     },
   },
   computed: {
     doneTodos() {
-      if (!this.checklistToEdit.todos.length) return `0%`
+      if (!this.checklistToEdit?.todos?.length) return `0%`
       return Math.floor(
         (this.checklist.todos.reduce(
           (acc, curr) => (acc = curr.isDone ? acc + 1 : acc),

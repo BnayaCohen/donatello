@@ -222,7 +222,6 @@ export default {
   },
   methods: {
     saveChecklists(checklists) {
-      console.log(checklists)
       this.task.checklists = checklists
       this.updateTask()
     },
@@ -249,8 +248,8 @@ export default {
       this.isDate = false
     },
     updateTask() {
-      console.log(this.task.title)
       const { groupId } = this.$route.params
+      console.log(this.task.checklists)
       this.$store.dispatch({
         type: 'saveTask',
         task: JSON.parse(JSON.stringify(this.task)),
