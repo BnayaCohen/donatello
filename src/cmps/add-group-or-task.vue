@@ -1,6 +1,6 @@
 <template>
   <article class="open-title-input" :class="addingGroup">
-    <span v-if="!isEditingTitle && !edit" @click="isEditingTitle = true" class="add-entity-placeholder flex">
+    <span v-if="!isEditingTitle && !edit" @click="$emit('toggleAddEntity')" class="add-entity-placeholder flex">
       <i class="trellicons trellicons-plus-sign"></i>
       {{ openInputPlaceholder }}
     </span>
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       titleInput: '',
-      isEditingTitle: false,
+      isEditingTitle: this.edit,
     }
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
     closeAddEntity() {
       this.titleInput = ''
       this.isEditingTitle = false
-      this.$emit('closeAddEntity')
+      this.$emit('toggleAddEntity')
     },
   },
   computed: {
@@ -101,9 +101,6 @@ export default {
           return 'Add card'
       }
     },
-    isEditMode() {
-
-    }
   },
 }
 </script>

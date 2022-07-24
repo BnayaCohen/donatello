@@ -29,15 +29,15 @@
       </button>
     </div>
 
-    <task-list :groupId="group.id" :tasks="group.tasks" />
-    <section class="add-task-container">
-      <add-group-or-task @closeAddEntity="setAddTaskFalse" :edit="addTask" :groupOrTask="'task'"
+    <task-list :groupId="group.id" :tasks="group.tasks" :addTask="addTask" @toggleAddEntity="toggleAddTask" />
+    <section v-if="!addTask" class="add-task-container">
+      <add-group-or-task @toggleAddEntity="toggleAddTask" :edit="addTask" :groupOrTask="'task'"
         :groupId="group.id" />
     </section>
   </article>
   <section v-else class="new-group-container">
     <section class="add-group-container">
-      <add-group-or-task :groupOrTask="'group'" />
+      <add-group-or-task :groupOrTask="'group'" @toggleAddEntity="toggleAddTask" :edit="addTask" />
     </section>
   </section>
 </template>
@@ -66,8 +66,8 @@ export default {
     setAddTaskTrue() {
       this.addTask = true
     },
-    setAddTaskFalse() {
-      this.addTask = false
+    toggleAddTask() {
+      this.addTask = !this.addTask
     },
     togglePopup() {
       this.showPopup = !this.showPopup
