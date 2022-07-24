@@ -14,11 +14,6 @@
 import checklistPreview from './checklist-preview.vue'
 export default {
   props: { checklists: Array },
-  data() {
-    return {
-      txt: '',
-    }
-  },
   methods: {
     removeChecklist(checklistId) {
       const idx = this.copyChecklists.findIndex(

@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { utilService } from '../../services/util-service'
+
 export default {
   created() {},
   data() {
@@ -26,7 +28,12 @@ export default {
   methods: {
     addChecklist() {
       if (!this.title) return
-      this.$emit('addChecklist', this.title)
+      const checklist = {
+        id: utilService.makeId(),
+        todos: [],
+        title: this.title,
+      }
+      this.$emit('addChecklist', checklist)
       this.title = ''
       this.$emit('toggle', { ev: '', type: 'Checklist' })
     },
