@@ -71,14 +71,11 @@
 </template>
 
 <script>
-import checklistModal from '../cmps/checklist-modal.vue'
-import checklistList from '../cmps/checklist-list.vue'
-import checklistPreview from '../cmps/checklist-preview.vue'
 import boardCreate from '../cmps/board-create.vue'
 import { boardService } from '../services/board-service'
 // import { userService } from '../services/user-service'
 export default {
-  components: { boardCreate, checklistList, checklistModal, checklistPreview },
+  components: { boardCreate },
   name: 'boards-container',
   data() {
     return {
