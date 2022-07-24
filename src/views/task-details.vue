@@ -101,7 +101,7 @@
             @addUserToTask="addUserToTask"
             @toggleCover="toggleCover"
             @removeTask="removeTask"
-            @toggledChecklist="toggleChecklist"
+            @toggleChecklist="toggleChecklist"
           />
         </div>
       </div>

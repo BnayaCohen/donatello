@@ -30,7 +30,7 @@
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <button class="sidebar-btn flex align-center">
+          <button class="sidebar-btn flex align-center" @click="$emit('toggleChecklist', $event)">
             <span class="trellicons trellicons-checklist"></span>
             <span>Checklist</span>
           </button>
@@ -129,6 +129,9 @@ export default {
     },
     toggleAttach(ev) {
       this.$emit('toggleAttach', ev)
+    },
+    toggleChecklist(ev) {
+      this.$emit('toggleChecklist', ev)
     },
     toggleDate(ev) {
       this.$emit('toggleDate', ev)
