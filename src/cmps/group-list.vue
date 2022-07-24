@@ -80,6 +80,7 @@ export default {
 }
 .drop-preview-card {
   background-color: rgba(0, 0, 0, 0.14);
+  padding: 0 0 -55px -5px;
   height: 100%;
 }
 
