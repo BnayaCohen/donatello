@@ -47,7 +47,7 @@
                     type="checkbox"
                     class="date-checkbox"
                     @input="toggleIsDone"
-                    :value="task.status === 'done'"
+                    :checked="task.status === 'done'"
                   />
                   <button class="due-date-btn" @click.stop="isDate = !isDate">
                     <span class="due-date-txt">{{ dueDateFixed }}</span>
@@ -480,6 +480,7 @@ export default {
     },
     removeDueDate() {
       this.task.dueDate = ''
+      this.task.status = 'in-progress'
       this.updateTask()
     },
     backToBoard() {
