@@ -34,58 +34,7 @@
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
               <label-prev :taskLabels="taskLabels" @labelClicked="toggleLabels"/>
-              <div
-                v-if="task?.dueDate"
-                class="due-date-container flex align-center"
-              >
-                <h3 class="small-title">Due Date</h3>
-                <label
-                  class="flex"
-                  for="due-date-picker"
-                >
-                  <input
-                    type="checkbox"
-                    class="date-checkbox"
-                    @input="toggleIsDone"
-                    :checked="task.status === 'done'"
-                  />
-                  <button class="due-date-btn" @click.stop="isDate = !isDate">
-                    <span class="due-date-txt">{{ dueDateFixed }}</span>
-                    <span class="task-complete" v-if="task.status === 'done'"
-                      >complete</span
-                    >
-                    <svg
-                      width="24"
-                      height="24"
-                      role="presentation"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11.2929 16.7071L4.22185 9.63606C3.83132 9.24554 3.83132 8.61237 4.22185 8.22185C4.61237 7.83133 5.24554 7.83133 5.63606 8.22185L12 14.5858L18.364 8.22185C18.7545 7.83132 19.3877 7.83132 19.7782 8.22185C20.1687 8.61237 20.1687 9.24554 19.7782 9.63606L12.7071 16.7071C12.3166 17.0977 11.6834 17.0977 11.2929 16.7071Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button
-                    class="flex align-center justify-center remove-duedate-btn"
-                    @click.stop="removeDueDate"
-                  >
-                    <span>Remove</span>
-                  </button>
-                </label>
-                <div class="pos-absolute">
-                  <datepicker
-                    v-if="isDate"
-                    :inline="true"
-                    class="due-date-picker"
-                    id="due-date-picker"
-                    v-model="dueDate"
-                    @update:modelValue="updateDueDate"
-                  ></datepicker>
-                </div>
-              </div>
+              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone" @removeDueDate="removeDueDate"/>
             </div>
             <div class="description-container flex flex-column">
               <div class="description-header flex align-center">
@@ -128,120 +77,7 @@
               </div>
             </div>
           </div>
-          <div class="detail-sidebar">
-            <div class="pos-relative">
-              <div v-if="!userAssigned" class="suggested-btns">
-                <h3 class="small-title">Suggested</h3>
-                <button
-                  class="sidebar-btn flex align-center"
-                  @click="addUserToTask"
-                >
-                  <span class="trellicons trellicons-member"></span>
-                  <span>Join</span>
-                </button>
-              </div>
-
-              <h3 class="small-title" :style="{ marginTop: '15.5px' }">
-                Add to card
-              </h3>
-              <div class="sidebar-btns flex flex-column">
-                <div class="sidebar-btn-container">
-                  <button class="sidebar-btn flex align-center">
-                    <span class="trellicons trellicons-member"></span>
-                    <span>Members</span>
-                  </button>
-                </div>
-                <div class="sidebar-btn-container">
-                  <button
-                    class="sidebar-btn flex align-center"
-                    @click.stop="toggleLabels"
-                  >
-                    <span class="trellicons trellicons-labels"></span>
-                    <span>Labels</span>
-                  </button>
-                </div>
-                <div class="sidebar-btn-container">
-                  <button class="sidebar-btn flex align-center">
-                    <span class="trellicons trellicons-checklist"></span>
-                    <span>Checklist</span>
-                  </button>
-                </div>
-                <div class="sidebar-btn-container">
-                  <label
-                    for="date-picker-side"
-                    @click.stop="isDateSide = !isDateSide"
-                  >
-                    <button class="sidebar-btn flex align-center">
-                      <div :style="{ width: '16px', height: '16px' }">
-                        <svg
-                          stroke="currentColor"
-                          fill="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 16 16"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M8 15A7 7 0 108 1a7 7 0 000 14zm8-7A8 8 0 110 8a8 8 0 0116 0z"
-                            clip-rule="evenodd"
-                          ></path>
-                          <path
-                            fill-rule="evenodd"
-                            d="M7.5 3a.5.5 0 01.5.5v5.21l3.248 1.856a.5.5 0 01-.496.868l-3.5-2A.5.5 0 017 9V3.5a.5.5 0 01.5-.5z"
-                            clip-rule="evenodd"
-                          ></path>
-                        </svg>
-                      </div>
-                      <span>Dates</span>
-                    </button>
-                  </label>
-                  <datepicker
-                    v-if="isDateSide"
-                    :inline="true"
-                    class="datepicker-side"
-                    id="date-picker-side"
-                    v-model="dueDate"
-                    @update:modelValue="updateDueDate"
-                  ></datepicker>
-                </div>
-                <div class="sidebar-btn-container">
-                  <button
-                    class="sidebar-btn flex align-center"
-                    @click.stop="toggleAttach"
-                  >
-                    <span class="trellicons trellicons-attachment"></span>
-                    <span>Attachments</span>
-                  </button>
-                </div>
-                <div class="sidebar-btn-container">
-                  <button
-                    v-show="!currCover"
-                    class="sidebar-btn flex align-center"
-                    @click.stop="toggleCover"
-                  >
-                    <span class="trellicons trellicons-cover"></span>
-                    <span>Cover</span>
-                  </button>
-                </div>
-              </div>
-              <div class="actions pos-relative">
-                <h3 class="small-title">Actions</h3>
-                <div class="sidebar-btns flex flex-column">
-                  <div class="sidebar-btn-container">
-                    <button
-                      class="sidebar-btn flex align-center"
-                      @click.stop="removeTask"
-                    >
-                      <span class="trellicons trellicons-archive"></span>
-                      <span>Archive</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <task-detail-sidebar :task="task" :currCover="currCover" @toggleLabels="toggleLabels" @toggleDate="toggleDate" @toggleAttach="toggleAttach" @addUserToTask="addUserToTask" @toggleCover="toggleCover" @removeTask="removeTask"/>
         </div>
       </div>
     </div>
@@ -270,11 +106,10 @@
     :pos="getCords"
     v-click-outside="closeLabels"
   />
+  <date v-if="isDate" @updateDueDate="updateDueDate" :pos="getCords" :dueDate="dueDate"/>
 </template>
 <script>
 import { boardService } from '../services/board-service.js'
-import Datepicker from 'vuejs3-datepicker'
-import { ref } from 'vue'
 import labelPicker from '../cmps/task-details-cmps/label-picker.vue'
 import coverPicker from '../cmps/task-details-cmps/cover-picker.vue'
 import attachmentPicker from '../cmps/task-details-cmps/attachment-picker.vue'
@@ -283,6 +118,12 @@ import avatarPreview from '../cmps/avatar-preview.vue'
 import { userService } from '../services/user-service.js'
 import coverBg from '../cmps/task-details-cmps/cover-bg.vue'
 import labelPrev from '../cmps/task-details-cmps/label-prev.vue'
+import datePicker from '../cmps/task-details-cmps/date-picker.vue'
+import date from '../cmps/date.vue'
+import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
+import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
+import { ref } from 'vue'
+
 export default {
   name: 'taskDetails',
   // props: {
@@ -294,7 +135,6 @@ export default {
     return {
       task: boardService.getEmptyTask(),
       isEditDescription: false,
-      dueDate: ref(new Date()),
       isDate: false,
       isDateSide: false,
       taskLabels: [],
@@ -304,11 +144,12 @@ export default {
       isTopCover: false,
       isAttach: false,
       coverColors: null,
-      currCover: null,
       clickPos: {
         x: null,
         y: null,
       },
+      currCover: null,
+      dueDate: ref(new Date()),
     }
   },
   async created() {
@@ -360,13 +201,6 @@ export default {
         left: this.clickPos.x - 100 + 'px',
       }
     },
-    userAssigned() {
-      return this.task.memberIds?.find(
-        (id) => id === userService.getLoggedInUser()._id
-      )
-        ? true
-        : false
-    },
   },
   methods: {
     addUserToTask() {
@@ -410,9 +244,16 @@ export default {
       this.clickPos.y = ev.clientY
       this.isAttach = !this.isAttach
     },
-    updateDueDate() {
-      const chosenDate = new Date(this.dueDate)
-      const timestamp = chosenDate.getTime()
+    toggleDate(ev) {
+      console.log(this.isDate)
+      this.clickPos.x = ev.clientX
+      this.clickPos.y = ev.clientY
+      this.isDate = !this.isDate
+
+    },
+    updateDueDate(dueDate) {
+      this.dueDate = dueDate
+      const timestamp = dueDate.getTime()
       this.task.dueDate = timestamp
       this.updateTask()
     },
@@ -495,15 +336,18 @@ export default {
     },
   },
   components: {
-    Datepicker,
     labelPicker,
     coverPicker,
     attachmentPicker,
     attachmentPreview,
     avatarPreview,
     coverBg,
-    labelPrev
-  },
+    labelPrev,
+    datePicker,
+    date,
+    taskDetailSidebar,
+    TaskDetailSidebar
+},
 }
 </script>
 <style></style>

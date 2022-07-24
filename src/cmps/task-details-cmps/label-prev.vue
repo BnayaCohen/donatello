@@ -8,7 +8,7 @@
                     class="label-prev"
                     v-for="label in taskLabels"
                     :key="label.id"
-                    @click="labelClicked"
+                    @click.stop="labelClicked"
                   >
                     <div
                       class="label-bg flex align-center justify-center"
@@ -21,7 +21,7 @@
                   <button
                     v-show="this.taskLabels.length"
                     class="add-label-btn"
-                    @click.stop="toggleLabels"
+                    @click.stop="labelClicked"
                   >
                     <span class="trellicons trellicons-plus-sign"></span>
                   </button>
@@ -39,7 +39,7 @@ export default {
             this.$emit('labelClicked', ev)
         }
     },
-    emits: ['labelClicked']
+    emits: ['labelClicked', 'closeLabels']
 
 }
 </script>

@@ -2,7 +2,7 @@
   <div class="dynamic-popover pos-absolute" :style="pos">
     <div class="popover-header flex justify-center align-center">
       <h4>Labels</h4>
-      <button class="pop-close-btn" @click="$emit('closeLabels')">
+      <button class="pop-close-btn" @click.stop="$emit('closeLabels')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -15,7 +15,7 @@
         <li
           v-for="label in labels"
           :key="label.id"
-          @click="addLabel(label.id)"
+          @click.stop="addLabel(label.id)"
           class="label flex align-center"
         >
           <div

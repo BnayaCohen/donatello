@@ -297,15 +297,6 @@
             padding: 0.5rem 0;
             padding-inline-end: 0.3rem;
           }
-          .due-date-picker {
-            position: absolute;
-            background-color: transparent;
-            border: none;
-            top: 0;
-            z-index: 10;
-            padding: 0.6rem 0;
-          }
-
           .due-date-txt {
             border-radius: 5px;
             margin-inline-start: 0.5rem;
@@ -421,5 +412,13 @@
     }
     .cover-input-container {
     }
+  }
+  .due-date-picker {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    top: 0;
+    z-index: 10;
+    padding: 0.6rem 0;
   }
 }

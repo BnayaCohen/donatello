@@ -1,16 +1,16 @@
 <template>
   <div
-    v-if="task.style.background"
+    v-if="task.style?.background"
     class="flex justify-center task-detail-bg"
     :style="task.style"
   ></div>
   <div class="btn-wrapper" v-if="task.style?.background">
-    <button @click="coverClicked" class="cover-btn flex align-center">
+    <button @click.stop="coverClicked" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
       <span class="cover-txt">Cover</span>
     </button>
   </div>
-  <button class="close-modal-btn" @click="$emit('closeModal')">
+  <button class="close-modal-btn" @click.stop="$emit('closeModal')">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="256px"
