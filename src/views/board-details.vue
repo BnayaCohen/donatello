@@ -12,7 +12,7 @@
       :isSideBarOpen="isSideBarOpen"
       @sideBarClosed="closeSideBar"
     />
-    <group-list v-if="board" :groups="groups" @add-task="addTask" />
+    <group-list v-if="board" :groups="groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
     <router-view />
   </main>
 </template>
