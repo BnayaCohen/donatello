@@ -73,7 +73,7 @@
             <div class="comment-container flex justify-between align-center">
               <div class="task-detail-title">
                 <span class="trellicons trellicons-comments"></span>
-                <h3>Comments</h3>
+                <h3>Activity</h3>
               </div>
             </div>
           </div>

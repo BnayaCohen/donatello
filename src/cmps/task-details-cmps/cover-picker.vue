@@ -4,7 +4,7 @@
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Cover</h4>
-      <button class="pop-close-btn" @click="$emit('closeCover')">
+      <button class="pop-close-btn" @click.stop="$emit('closeCover')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -35,12 +35,12 @@
               name="cover-color"
               :for="'color-' + color.colorStr"
               :style="{ backgroundColor: color.colorStr }"
+                @click.stop="selectCover(color.colorStr)"
               ><input
                 type="radio"
                 name="color"
                 :id="'color-' + color.colorStr"
                 :value="color.colorStr"
-                @click="selectCover(color.colorStr)"
               />
             </label>
           </div>

@@ -1,0 +1,294 @@
+// Flex
+.flex {
+  display: flex;
+}
+
+.flex.inline-flex {
+  display: inline-flex;
+}
+
+.flex.flex-column {
+  flex-direction: column;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+// List
+.clean-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+// Input
+.clean-input {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  transition: border 0.1s;
+}
+
+// Buttons
+.btn-background {
+  background-color: #00000014;
+  border: none;
+  border-radius: 3px;
+  color: inherit;
+  box-shadow: none;
+  cursor: pointer;
+  height: em(30px);
+  margin: 0 4px 4px 0;
+  padding: 0 9px;
+  font-family: inherit;
+  font-size: em(15px);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 85ms;
+  transition-timing-function: ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.close-btn {
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+  background-color: transparent;
+  color: #979ca3;
+  font-size: em(24px);
+
+  &:hover {
+    color: #172b4d;
+  }
+}
+
+// Text
+.vertical-text {
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.tag-text {
+  color: $clr1;
+  text-transform: uppercase;
+  @include type(boldCondensed);
+}
+
+// Aspect ratios
+
+.ratio-16-9 {
+  @include aspect-ratio(100, 56);
+}
+
+.ratio-square {
+  @include aspect-ratio(100, 100);
+}
+
+.ratio-card {
+  @include aspect-ratio(100, 80);
+}
+
+.ratio-poster {
+  @include aspect-ratio(100, 150);
+}
+
+// Pop over
+
+.dynamic-popover {
+  // display: none;
+  width: 304px;
+  border-radius: 3px;
+  background-color: #fff;
+  padding: 0 12px 12px;
+  background: #fff;
+  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+  z-index: 70;
+  // &.show {
+  //   display: block;
+  // }
+  input {
+    background-color: #fafbfc;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 2px #dfe1e6;
+    display: block;
+    outline: none;
+    padding: 8px 12px;
+    width: 100%;
+    &:focus-within {
+      background-color: $clr3;
+      box-shadow: inset 0 0 0 2px #0079bf;
+    }
+  }
+  .small-title {
+    color: #5e6c84;
+    font-size: 0.8571428571rem;
+    font-weight: 600;
+    // letter-spacing: 0.04em;
+    font-size: 12px;
+    margin-top: 5px;
+    // text-transform: uppercase;
+  }
+
+  .popover-header {
+    margin-bottom: 8px;
+    height: 40px;
+    border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
+    position: relative;
+    color: #5e6c84;
+    h4 {
+      font-weight: 100;
+    }
+    .pop-close-btn {
+      position: absolute;
+      right: 0;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .popover-content {
+    overflow-y: auto;
+    .small-title {
+      margin-block-end: rem(4px);
+    }
+  }
+}
+
+// Screen
+
+.back-screen {
+  display: flex;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  overflow-y: auto;
+}
+
+// Member avatar
+.member-avatar-big {
+  width: em(32px);
+  height: em(32px);
+  border-radius: 50%;
+}
+
+.member-avatar-small {
+  width: em(28px);
+  height: em(28px);
+  border-radius: 50%;
+}
+
+// Position
+
+.pos-absolute {
+  position: absolute;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+// Icons
+.trellicons {
+  font-family: 'trellicons';
+  font-style: normal;
+}
+
+.trellicons-member::before {
+  content: '\e946';
+}
+
+.trellicons-activities::before {
+  content: '\e900';
+}
+
+.trellicons-labels::before {
+  content: '\e93f';
+}
+
+.trellicons-checklist::before {
+  content: '\e91a';
+}
+
+.trellicons-attachment::before {
+  content: '\e908';
+}
+
+.trellicons-cover::before {
+  content: '\e914';
+}
+
+.trellicons-archive::before {
+  content: '\e907';
+}
+
+.trellicons-details::before {
+  content: '\e912';
+}
+
+.trellicons-description::before {
+  content: '\e922';
+}
+
+.trellicons-comments::before {
+  content: '\e900';
+}
+
+.trellicons-comment::before {
+  content: '\e91e';
+}
+
+.trellicons-close-btn::before {
+  content: '\e91c';
+}
+
+.trellicons-options::before {
+  content: '\e952';
+}
+
+.trellicons-plus-sign::before {
+  content: '\e901';
+}
+
+.trellicons-edit::before {
+  content: '\e928';
+}
+
+.trellicons-star::before {
+  content: '\e967';
+}
+
+.trellicons-v-check::before {
+  content: '\e916';
+}
+
+.trellicons-clock::before {
+  content: '\e91b';
+}
+
+.trellicons-checkedbox::before {
+  content: '\e918';
+}
+
+.trellicons-un-checkedbox::before {
+  content: '\e919';
+}
