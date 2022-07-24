@@ -27,10 +27,7 @@
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <button
-            @click="$emit('toggledChecklist', ev)"
-            class="sidebar-btn flex align-center"
-          >
+          <button @click="func" class="sidebar-btn flex align-center">
             <span class="trellicons trellicons-checklist"></span>
             <span>Checklist</span>
           </button>
@@ -139,6 +136,9 @@ export default {
     },
     removeTask() {
       this.$emit('removeTask')
+    },
+    func() {
+      console.log('hi')
     },
   },
   emits: [
