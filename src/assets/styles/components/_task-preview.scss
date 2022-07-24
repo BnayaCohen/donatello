@@ -34,13 +34,17 @@
 
   .task-preview-header {
     min-height: em(32px);
-    max-height: em(400px);
-    margin: -1px -8px 0;
+    // max-height: em(400px);
+    margin: -1px -8px 0px;
     border-radius: 3px 3px 0 0;
-
+text-align: center;
+background-color: #949899;
     .task-img-cover {
       background-color: #00000070;
       border-radius: 3px 3px 0 0;
+      width: auto;
+      min-height: em(32px);
+      max-height: em(260px);
     }
   }
 }
