@@ -3,7 +3,7 @@
     <div class="flex justify-between align-center">
       <section class="nav-container">
         <div class="logo flex">
-<button class="btn btn-background" @click="goToHome"><i class="fa-brands fa-trello"></i>
+<button class="btn btn-background" @click="goToHome" style="font-weight: 600;"><i class="fa-brands fa-trello"></i>
 Donatello</button>
 <button class="btn btn-background" @click="goToBoards">Boards</button>
         </div>

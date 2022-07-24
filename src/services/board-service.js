@@ -24,27 +24,27 @@ const gBoard = {
   coverColors: [
     {
       id: 'c101',
-      colorStr: '#61bd4f',
+      colorStr: '#7BC86C',
     },
     {
       id: 'c102',
-      colorStr: '#008080',
+      colorStr: '#F5DD29',
     },
     {
       id: 'c103',
-      colorStr: '#FFC300',
+      colorStr: '#FFAF3F',
     },
     {
       id: 'c104',
-      colorStr: '#FF5733',
+      colorStr: '#EF7564',
     },
     {
       id: 'c105',
-      colorStr: '#1434A4',
+      colorStr: '#CD8DE5',
     },
     {
       id: 'c106',
-      colorStr: '#FF8ED4',
+      colorStr: '#5BA4CF',
     },
     {
       id: 'c107',
@@ -52,15 +52,15 @@ const gBoard = {
     },
     {
       id: 'c108',
-      colorStr: '#CD8DE5',
+      colorStr: '#6DECA9',
     },
     {
       id: 'c109',
-      colorStr: '#172B4D',
+      colorStr: '#FF8ED4',
     },
     {
       id: 'c110',
-      colorStr: '#6DECA9',
+      colorStr: '#172B4D',
     },
   ],
   labels: [
