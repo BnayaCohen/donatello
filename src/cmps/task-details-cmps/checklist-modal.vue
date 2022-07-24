@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="toggleModal" class="checklist-modal-component">
+  <div :style="pos" class="checklist-modal-component">
     <header class="checklist-header">
       <h3>Add checklist</h3>
       <span class="close-btn trellicons trellicons-close-btn"></span>
@@ -7,7 +7,7 @@
     <section class="checklist-inputs">
       <label>Title</label>
       <input type="text" v-model="title" />
-      <button class="add-checklist-btn">Add</button>
+      <button @click="addChecklist" class="add-checklist-btn">Add</button>
     </section>
   </div>
 </template>
@@ -16,16 +16,15 @@
 export default {
   data() {
     return {
-      isOpen: false,
       title: '',
     }
   },
   methods: {
-    toggleModal() {
-      this.isOpen = !this.isOpen
+    addChecklist() {
+      if (!this.title) return
+      $emit('addChecklist', title)
     },
   },
+  props: { pos: Object },
 }
 </script>
-
-<style lang="scss" scoped></style>

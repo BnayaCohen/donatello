@@ -21,22 +21,22 @@
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <button
-            class="sidebar-btn flex align-center"
-            @click.stop="toggleLabels"
-          >
+          <button class="sidebar-btn flex align-center" @click="toggleLabels">
             <span class="trellicons trellicons-labels"></span>
             <span>Labels</span>
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <button class="sidebar-btn flex align-center">
+          <button
+            @click="$emit('toggledChecklist', ev)"
+            class="sidebar-btn flex align-center"
+          >
             <span class="trellicons trellicons-checklist"></span>
             <span>Checklist</span>
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <label for="date-picker-side" @click.stop="toggleDate">
+          <label for="date-picker-side" @click="toggleDate">
             <button class="sidebar-btn flex align-center">
               <div :style="{ width: '16px', height: '16px' }">
                 <svg
@@ -102,11 +102,11 @@
   </div>
 </template>
 <script>
-import {userService} from '../../services/user-service.js'
+import { userService } from '../../services/user-service.js'
 export default {
   props: {
     currCover: Object,
-    task: Object
+    task: Object,
   },
   data() {
     return {}
@@ -134,7 +134,8 @@ export default {
       this.$emit('toggleDate', ev)
     },
     addUserToTask() {
-      this.$emit('addUseToTask')
+      console.log('hi')
+      this.$emit('addUserToTask')
     },
     removeTask() {
       this.$emit('removeTask')
@@ -150,4 +151,3 @@ export default {
   ],
 }
 </script>
-<style></style>
