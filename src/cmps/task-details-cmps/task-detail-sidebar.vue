@@ -102,11 +102,11 @@
   </div>
 </template>
 <script>
-import {userService} from '../../services/user-service.js'
+import { userService } from '../../services/user-service.js'
 export default {
   props: {
     currCover: Object,
-    task: Object
+    task: Object,
   },
   data() {
     return {}
@@ -134,7 +134,7 @@ export default {
       this.$emit('toggleDate', ev)
     },
     addUserToTask() {
-      this.$emit('addUseToTask')
+      this.$emit('addUserToTask')
     },
     removeTask() {
       this.$emit('removeTask')
