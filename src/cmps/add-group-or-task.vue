@@ -73,7 +73,7 @@ export default {
   computed: {
     addingGroup() {
       return {
-        adding: this.isEditingTitle,
+        adding: this.isEditingTitle || this.edit,
         task: this.groupOrTask === 'task'
       }
     },
@@ -101,6 +101,9 @@ export default {
           return 'Add card'
       }
     },
+    isEditMode() {
+
+    }
   },
 }
 </script>
