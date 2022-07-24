@@ -4,11 +4,13 @@
     flex-wrap: wrap;
 
     .board-name-input {
-        font-weight: 800;
+        font-weight: 700;
         background-color: transparent;
         transition-property: background-color, border-color, box-shadow;
         transition-timing-function: ease;
         width: 140px;
+        font-size: em(18px);
+        height: em(24.9px);
 
         &:hover{
             background-color: rgba(0, 0, 0, 0.2);

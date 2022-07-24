@@ -54,7 +54,8 @@
       overflow-y: auto;
       scroll-snap-type: x mandatory;
       padding-right: 4px;
-      max-height: calc(100vh - 204px);
+      // margin-bottom: 7px;
+      // max-height: calc(100vh - 204px);
   
       &::-webkit-scrollbar {
         width: em(8px);
@@ -90,9 +91,8 @@
       &:hover {
         background-color: #091e4214;
         margin-right: 4px;
-  
-        .adding {
-          margin-right: 0;
+          &.task{
+            margin-right: -4px;
         }
       }
     }

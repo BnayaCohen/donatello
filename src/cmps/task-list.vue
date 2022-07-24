@@ -3,18 +3,21 @@
     drag-class="card-ghost"
     drop-class="card-ghost-drop"
     class="flex-grow tasks-scrollbar"
+    :style="groupMaxHeight"
     orientation="vertical"
     group-name="col-items"
     :drop-placeholder="dropPlaceHolderOptions"
-    :shouldAcceptDrop="
-      (e, payload) => e.groupName === 'col-items' && !payload?.loading
-    "
+    :shouldAcceptDrop="(e, payload) => e.groupName === 'col-items' && !payload?.loading"
     :get-child-payload="getCardPayload(groupId)"
     @drop="(e) => onCardDrop(groupId, e)"
   >
     <Draggable v-for="task in tasks" :key="task.id">
       <task-preview :task="task" />
     </Draggable>
+    <section v-if="addTask" class="add-task-container">
+      <add-group-or-task @toggleAddEntity="$emit('toggleAddEntity')" :edit="addTask" :groupOrTask="'task'"
+        :groupId="groupId" />
+    </section>
   </Container>
 </template>
 <script>
@@ -22,6 +25,8 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../services/util-service'
 import taskPreview from './task-preview.vue'
 import taskDetails from '../views/task-details.vue'
+import addGroupOrTask from '../cmps/add-group-or-task.vue'
+
 export default {
   name: 'taskList',
   props: {
@@ -29,6 +34,7 @@ export default {
       type: Array,
     },
     groupId: String,
+    addTask:Boolean,
   },
   data() {
     return {
@@ -47,6 +53,11 @@ export default {
     scene() {
       return this.$store.getters.scene
     },
+    groupMaxHeight(){
+if(this.addTask)return{maxHeight: 'calc(100vh - 170px)'}
+else return{maxHeight: 'calc(100vh - 204px)'}
+
+    }
   },
   methods: {
     onCardDrop(groupId, dropResult) {
@@ -87,7 +98,7 @@ export default {
       }
     },
   },
-  components: { taskPreview, taskDetails, Container, Draggable },
+  components: { taskPreview, taskDetails, Container, Draggable ,addGroupOrTask,},
 }
 </script>
 <style>
