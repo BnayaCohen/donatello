@@ -134,7 +134,7 @@
                 <h3 class="small-title">Suggested</h3>
                 <button
                   class="sidebar-btn flex align-center"
-                   @click="addUserToTask"
+                  @click="addUserToTask"
                 >
                   <span class="trellicons trellicons-member"></span>
                   <span>Join</span>
