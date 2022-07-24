@@ -11,7 +11,11 @@
       }"
     >
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg :task="task" @coverClicked="toggleCover" @closeModal="backToBoard"/>
+        <cover-bg
+          :task="task"
+          @coverClicked="toggleCover"
+          @closeModal="backToBoard"
+        />
         <div class="task-detail-header">
           <span class="trellicons trellicons-details"></span>
           <textarea
@@ -27,14 +31,25 @@
         <div class="subtitle-header">
           <p>
             in list
-            <span :style="{ textDecoration: 'underline' }">{{ groupTitle }}</span>
+            <span :style="{ textDecoration: 'underline' }">{{
+              groupTitle
+            }}</span>
           </p>
         </div>
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
-              <label-prev :taskLabels="taskLabels" @labelClicked="toggleLabels"/>
-              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone" @removeDueDate="removeDueDate"/>
+              <label-prev
+                :taskLabels="taskLabels"
+                @labelClicked="toggleLabels"
+              />
+              <date-picker
+                v-if="task.dueDate"
+                :task="task"
+                @toggleDate="toggleDate"
+                @toggleIsDone="toggleIsDone"
+                @removeDueDate="removeDueDate"
+              />
             </div>
             <div class="description-container flex flex-column">
               <div class="description-header flex align-center">
@@ -77,7 +92,17 @@
               </div>
             </div>
           </div>
-          <task-detail-sidebar :task="task" :currCover="currCover" @toggleLabels="toggleLabels" @toggleDate="toggleDate" @toggleAttach="toggleAttach" @addUserToTask="addUserToTask" @toggleCover="toggleCover" @removeTask="removeTask"/>
+          <task-detail-sidebar
+            :task="task"
+            :currCover="currCover"
+            @toggleLabels="toggleLabels"
+            @toggleDate="toggleDate"
+            @toggleAttach="toggleAttach"
+            @addUserToTask="addUserToTask"
+            @toggleCover="toggleCover"
+            @removeTask="removeTask"
+            @toggledChecklist="toggleChecklist"
+          />
         </div>
       </div>
     </div>
@@ -106,9 +131,21 @@
     :pos="getCords"
     v-click-outside="closeLabels"
   />
-  <date v-if="isDate" @updateDueDate="updateDueDate" :pos="getCords" :dueDate="dueDate"/>
+  <date
+    v-if="isDate"
+    @updateDueDate="updateDueDate"
+    :pos="getCords"
+    :dueDate="dueDate"
+  />
+  <checklist-modal
+    v-if="isChecklist"
+    @addChecklist="addChecklist"
+    :pos="getCords"
+    v-click-outside="toggleChecklist"
+  />
 </template>
 <script>
+import checklistModal from '../cmps/task-details-cmps/checklist-modal.vue'
 import { boardService } from '../services/board-service.js'
 import labelPicker from '../cmps/task-details-cmps/label-picker.vue'
 import coverPicker from '../cmps/task-details-cmps/cover-picker.vue'
@@ -150,6 +187,7 @@ export default {
       },
       currCover: null,
       dueDate: ref(new Date()),
+      isChecklist: false,
     }
   },
   async created() {
@@ -229,6 +267,12 @@ export default {
       })
       this.isEditDescription = false
     },
+    toggleChecklist(ev) {
+      console.log(ev)
+      this.clickPos.x = ev?.clientX
+      this.clickPos.y = ev?.clientY
+      this.isChecklist = !this.isChecklist
+    },
     toggleCover(ev) {
       this.clickPos.x = ev.clientX
       this.clickPos.y = ev.clientY
@@ -249,7 +293,6 @@ export default {
       this.clickPos.x = ev.clientX
       this.clickPos.y = ev.clientY
       this.isDate = !this.isDate
-
     },
     updateDueDate(dueDate) {
       this.dueDate = dueDate
@@ -346,8 +389,9 @@ export default {
     datePicker,
     date,
     taskDetailSidebar,
-    TaskDetailSidebar
-},
+    TaskDetailSidebar,
+    checklistModal,
+  },
 }
 </script>
 <style></style>
