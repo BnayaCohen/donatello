@@ -1,14 +1,14 @@
 <template>
   <div class="due-date-container flex align-center">
     <h3 class="small-title">Due Date</h3>
-    <label class="flex" for="due-date-picker" @click="dateClicked">
+    <label class="flex" for="due-date-picker">
       <input
         type="checkbox"
         class="date-checkbox"
         @input="toggleIsDone"
-        :value="task.status === 'done'"
+        :checked="task.status === 'done'"
       />
-      <button class="due-date-btn">
+      <button class="due-date-btn"  @click.stop="dateClicked">
         <span class="due-date-txt">{{ dueDateFixed }}</span>
         <span class="task-complete" v-if="task.status === 'done'"
           >complete</span
@@ -37,14 +37,12 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
 export default {
   props: {
     task: Object,
   },
   data() {
     return {
-      dueDate: ref(new Date()),
     }
   },
   computed: {
@@ -68,7 +66,7 @@ export default {
     }
   },
   emits: ['toggleDate', 'removeDueDate', 'toggleIsDone'],
-  components: ['Datepicker'],
+
 }
 </script>
 <style></style>
