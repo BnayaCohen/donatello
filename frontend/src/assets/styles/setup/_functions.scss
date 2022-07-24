@@ -1,0 +1,23 @@
+@function rem($size) {
+  $remSize: $size / 16px;
+  @return ($remSize) * 1rem;
+}
+
+@function em($pixels, $context: 14px) {
+  @return ($pixels/$context) * 1em;
+}
+
+@function lh($pixels, $context: 14px) {
+  @return ($pixels/$context);
+}
+
+// Transitions
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}

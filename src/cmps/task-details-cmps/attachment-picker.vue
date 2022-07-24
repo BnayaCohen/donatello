@@ -6,7 +6,7 @@
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Attach from..</h4>
-      <button class="pop-close-btn" @click="$emit('closeAttach')">
+      <button class="pop-close-btn" @click.stop="$emit('closeAttach')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -72,7 +72,7 @@ export default {
       this.$emit('attachSelected', this.attachProps)
     },
   },
-  emits: ['attachSelected'],
+  emits: ['attachSelected', 'closeAttach'],
 }
 </script>
 <style></style>
