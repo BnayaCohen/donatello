@@ -8,7 +8,7 @@
         @input="toggleIsDone"
         :checked="task.status === 'done'"
       />
-      <button class="due-date-btn"  @click.stop="dateClicked">
+      <button class="due-date-btn" @click.stop="dateClicked">
         <span class="due-date-txt">{{ dueDateFixed }}</span>
         <span class="task-complete" v-if="task.status === 'done'"
           >complete</span
@@ -42,8 +42,7 @@ export default {
     task: Object,
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     dueDateFixed() {
@@ -62,11 +61,10 @@ export default {
       this.$emit('removeDueDate')
     },
     toggleIsDone() {
-        this.$emit('toggleIsDone')
-    }
+      this.$emit('toggleIsDone')
+    },
   },
-  emits: ['toggleDate', 'removeDueDate', 'toggleIsDone'],
-
+  emits: ['toggle', 'removeDueDate', 'toggleIsDone'],
 }
 </script>
 <style></style>

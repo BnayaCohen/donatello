@@ -3,10 +3,7 @@
     <div class="pos-relative">
       <div v-if="!userAssigned" class="suggested-btns">
         <h3 class="small-title">Suggested</h3>
-        <button
-          class="sidebar-btn flex align-center"
-          @click.stop="addUserToTask"
-        >
+        <button class="sidebar-btn flex align-center" @click="addUserToTask">
           <span class="trellicons trellicons-member"></span>
           <span>Join</span>
         </button>
@@ -23,20 +20,23 @@
         <div class="sidebar-btn-container">
           <button
             class="sidebar-btn flex align-center"
-            @click.stop="toggleLabels"
+            @click="toggle($event, 'Labels')"
           >
             <span class="trellicons trellicons-labels"></span>
             <span>Labels</span>
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <button class="sidebar-btn flex align-center" @click="$emit('toggleChecklist', $event)">
+          <button
+            class="sidebar-btn flex align-center"
+            @click="toggle($event, 'Checklist')"
+          >
             <span class="trellicons trellicons-checklist"></span>
             <span>Checklist</span>
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <label for="date-picker-side" @click.stop="toggleDate">
+          <label for="date-picker-side" @click="toggle($event, 'Date')">
             <button class="sidebar-btn flex align-center">
               <div :style="{ width: '16px', height: '16px' }">
                 <svg
@@ -67,7 +67,7 @@
         <div class="sidebar-btn-container">
           <button
             class="sidebar-btn flex align-center"
-            @click.stop="toggleAttach"
+            @click="toggle($event, 'Attach')"
           >
             <span class="trellicons trellicons-attachment"></span>
             <span>Attachments</span>
@@ -77,7 +77,7 @@
           <button
             v-show="!currCover"
             class="sidebar-btn flex align-center"
-            @click.stop="toggleCover"
+            @click="toggle($event, 'Cover')"
           >
             <span class="trellicons trellicons-cover"></span>
             <span>Cover</span>
@@ -88,10 +88,7 @@
         <h3 class="small-title">Actions</h3>
         <div class="sidebar-btns flex flex-column">
           <div class="sidebar-btn-container">
-            <button
-              class="sidebar-btn flex align-center"
-              @click.stop="removeTask"
-            >
+            <button class="sidebar-btn flex align-center" @click="removeTask">
               <span class="trellicons trellicons-archive"></span>
               <span>Archive</span>
             </button>
@@ -121,21 +118,10 @@ export default {
     },
   },
   methods: {
-    toggleCover(ev) {
-      this.$emit('toggleCover', ev)
+    toggle(ev, type) {
+      this.$emit('toggle', { ev, type })
     },
-    toggleLabels(ev) {
-      this.$emit('toggleLabels', ev)
-    },
-    toggleAttach(ev) {
-      this.$emit('toggleAttach', ev)
-    },
-    toggleChecklist(ev) {
-      this.$emit('toggleChecklist', ev)
-    },
-    toggleDate(ev) {
-      this.$emit('toggleDate', ev)
-    },
+
     addUserToTask() {
       this.$emit('addUserToTask')
     },
@@ -143,14 +129,7 @@ export default {
       this.$emit('removeTask')
     },
   },
-  emits: [
-    'toggleCover',
-    'toggleLabels',
-    'toggleAttach',
-    'toggleDate',
-    'addUserToTask',
-    'removeTask',
-  ],
+  emits: ['toggle', , 'addUserToTask', 'removeTask'],
 }
 </script>
 <style></style>
