@@ -2,7 +2,7 @@
   <div class="dynamic-popover pos-absolute" :style="pos">
     <div class="popover-header flex justify-center align-center">
       <h4>Labels</h4>
-      <button class="pop-close-btn" @click.stop="$emit('closeLabels')">
+      <button class="pop-close-btn" @click.stop="$emit('toggle')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -51,7 +51,7 @@ export default {
   props: {
     labels: Array,
     taskLabels: Array,
-    pos: Object
+    pos: Object,
   },
   data() {
     return {}
@@ -81,7 +81,7 @@ export default {
       this.$emit('addLabel', labelId)
     },
   },
-  emits: ['addLabel'],
+  emits: ['addLabel', 'toggle'],
 }
 </script>
 <style></style>
