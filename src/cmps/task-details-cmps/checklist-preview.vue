@@ -24,13 +24,18 @@
       >
         <input @change="toggleIsDone" v-model="todo.isDone" type="checkbox" />
         <div class="checklist-item-text">
-          <textarea
+          <input
+            type="text"
+            @input="saveTodo"
+            v-model="todo.title"
             :style="todo.isDone ? { textDecoration: 'line-through' } : ''"
-            >{{ todo.txt }}</textarea
-          >
+          />
           <div class="actions">
             <span class="fa-solid fa-user-plus"></span>
-            <span @click="removeTodo" class="fa-regular fa-trash-can"></span>
+            <span
+              @click="removeTodo(todo.id)"
+              class="fa-regular fa-trash-can"
+            ></span>
           </div>
         </div>
       </div>
@@ -38,44 +43,49 @@
     <button
       class="add-todo-btn card-sidebar-btn"
       v-if="!editingTodo"
-      @click="focusOnEl"
+      @click="editingTodo = !editingTodo"
     >
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
-      <button class="save-todo-btn" @click="saveTodo()">Add</button>
+      <input type="text" v-model="newTodo" />
+      <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
       <span class="close-btn trellicons trellicons-close-btn"></span>
     </div>
   </section>
 </template>
 
 <script>
+import { utilService } from '../../services/util-service'
 export default {
   props: { checklist: Object },
+  mounted() {},
   data() {
     return {
-      checklistToEdit: this.checklistCopy,
+      checklistToEdit: this.checklist,
       editingTodo: false,
-      newTodo: { id: utilService.makeId(), txt: '', isDone: false },
+      newTodo: { title: '', isDone: false },
     }
   },
   methods: {
-    saveTodo() {
-      // if new todo has no txt it means we are editing an existing todo
-      if (!this.newTodo.txt) return this.save()
-      this.checklistToEdit.todos.push({ ...this.newTodo })
-      this.newTodo = { id: utilService.makeId(), txt: '', isDone: false }
-      this.editingTodo = !this.editingTodo
+    saveTodo(todo) {
+      if (!todo.title) return
+      const idx = this.checklistToEdit.todos.findIndex(
+        (curTodo) => curTodo.id === todo.id
+      )
+      if (idx !== -1) this.checklistToEdit.todos.splice(idx, 1, todo)
+      else this.checklistToEdit.todos.push(todo)
       this.save()
     },
     removeTodo(todoId) {
       const idx = this.checklistToEdit.todos.findIndex(
         (todo) => todo.id === todoId
       )
-      if (idx !== -1) this.checklistToEdit.splice(idx, 1)
+      if (idx !== -1) this.checklistToEdit.todos.splice(idx, 1)
       this.save()
     },
     toggleIsDone(todoId) {
+      console.log(todoId)
       const todo = this.checklistToEdit.todos.find((todo) => todo.id === todoId)
       todo.isDone = !todo.isDone
       this.save()
@@ -83,25 +93,18 @@ export default {
     save() {
       this.$emit('saveChecklist', { checklist: this.checklistToEdit })
     },
-    focusOnEl() {
-      this.$refs.text.focus()
-      this.editingTodo = !this.editingTodo
-    },
   },
   computed: {
     doneTodos() {
+      if (!this.checklistToEdit.todos.length) return `0%`
       return Math.floor(
         (this.checklist.todos.reduce(
-          acc,
-          (curr) => (acc = curr.isDone ? acc + 1 : acc),
+          (acc, curr) => (acc = curr.isDone ? acc + 1 : acc),
           0
         ) /
           this.checklist.todos.length) *
           100
       )
-    },
-    checklistCopy() {
-      return JSON.parse(JSON.stringify(this.checklist))
     },
   },
 }

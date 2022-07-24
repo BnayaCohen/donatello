@@ -75,10 +75,15 @@
                 @updateCurrCover="updateCurrCover"
               />
             </div>
+            <checklist-list
+              v-if="task.checklists?.length"
+              :checklists="task.checklists"
+              @saveChecklists="saveChecklists"
+            />
             <div class="comment-container flex justify-between align-center">
               <div class="task-detail-title">
                 <span class="trellicons trellicons-comments"></span>
-                <h3>Comments</h3>
+                <h3>Activitiy</h3>
               </div>
             </div>
           </div>
@@ -132,6 +137,7 @@
   />
 </template>
 <script>
+import checklistList from '../cmps/task-details-cmps/checklist-list.vue'
 import checklistModal from '../cmps/task-details-cmps/checklist-modal.vue'
 import { boardService } from '../services/board-service.js'
 import labelPicker from '../cmps/task-details-cmps/label-picker.vue'
@@ -215,6 +221,11 @@ export default {
     },
   },
   methods: {
+    saveChecklists(checklists) {
+      console.log(checklists)
+      this.task.checklists = checklists
+      this.updateTask()
+    },
     addUserToTask() {
       if (!this.task.memberIds)
         this.task.memberIds = [userService.getLoggedInUser()._id]
@@ -341,8 +352,8 @@ export default {
       this.updateTask()
     },
     addChecklist(checklist) {
-      this.task.checklist = this.task.checklist
-        ? [...this.task.checklist, checklist]
+      this.task.checklists = this.task.checklists?.length
+        ? [...this.task.checklists, checklist]
         : [checklist]
       this.updateTask()
     },
@@ -360,6 +371,7 @@ export default {
     taskDetailSidebar,
     TaskDetailSidebar,
     checklistModal,
+    checklistList,
   },
 }
 </script>
