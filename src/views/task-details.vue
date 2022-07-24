@@ -11,30 +11,7 @@
       }"
     >
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <div
-          v-if="task.style"
-          class="flex justify-center task-detail-bg"
-          :style="task.style"
-        ></div>
-        <div class="btn-wrapper">
-          <button @click.stop="toggleCover" class="cover-btn flex align-center">
-            <span class="trellicons trellicons-cover cover-icon"></span>
-            <span class="cover-txt">Cover</span>
-          </button>
-        </div>
-        <button class="close-modal-btn" @click="backToBoard">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="256px"
-            height="256px"
-            viewBox="0 0 256 256"
-            id="Flat"
-          >
-            <path
-              d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z"
-            />
-          </svg>
-        </button>
+        <cover-bg :task="task" @coverClicked="toggleCover" @closeModal="backToBoard"/>
         <div class="task-detail-header">
           <span class="trellicons trellicons-details"></span>
           <textarea
@@ -44,49 +21,19 @@
             ref="taskTitle"
             v-model="task.title"
             placeholder="Enter title here..."
-            @keydown.enter=";[updateTask, $refs.taskTitle.blur()]"
+            @keydown.enter="$refs.taskTitle.blur()"
           ></textarea>
         </div>
         <div class="subtitle-header">
           <p>
             in list
-            <span :style="{ textDecoration: 'underline' }">{{
-              groupTitle
-            }}</span>
+            <span :style="{ textDecoration: 'underline' }">{{ groupTitle }}</span>
           </p>
         </div>
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
-              <div class="labels-container">
-                <h3 v-show="this.taskLabels.length" class="small-title">
-                  Labels
-                </h3>
-                <div class="task-labels">
-                  <div
-                    class="label-prev"
-                    v-for="label in taskLabels"
-                    :key="label.id"
-                    @click.stop="toggleLabels"
-                  >
-                    <div
-                      class="label-bg flex align-center justify-center"
-                      :style="{ backgroundColor: label.color }"
-                    >
-                      <span>{{ label.title }}</span>
-                    </div>
-                  </div>
-                <div>
-                  <button
-                    v-show="this.taskLabels.length"
-                    class="add-label-btn"
-                    @click.stop="toggleLabels"
-                  >
-                    <span class="trellicons trellicons-plus-sign"></span>
-                  </button>
-                </div>
-                </div>
-              </div>
+              <label-prev :taskLabels="taskLabels" @labelClicked="toggleLabels"/>
               <div
                 v-if="task?.dueDate"
                 class="due-date-container flex align-center"
@@ -95,7 +42,6 @@
                 <label
                   class="flex"
                   for="due-date-picker"
-                  @click.stop="isDate = !isDate"
                 >
                   <input
                     type="checkbox"
@@ -103,7 +49,7 @@
                     @input="toggleIsDone"
                     :value="task.status === 'done'"
                   />
-                  <button class="due-date-btn">
+                  <button class="due-date-btn" @click.stop="isDate = !isDate">
                     <span class="due-date-txt">{{ dueDateFixed }}</span>
                     <span class="task-complete" v-if="task.status === 'done'"
                       >complete</span
@@ -273,7 +219,7 @@
                   <button
                     v-show="!currCover"
                     class="sidebar-btn flex align-center"
-                    @click.stop="isCover = !isCover"
+                    @click.stop="toggleCover"
                   >
                     <span class="trellicons trellicons-cover"></span>
                     <span>Cover</span>
@@ -329,13 +275,14 @@
 import { boardService } from '../services/board-service.js'
 import Datepicker from 'vuejs3-datepicker'
 import { ref } from 'vue'
-import labelPicker from '../cmps/label-picker.vue'
-import coverPicker from '../cmps/cover-picker.vue'
-import attachmentPicker from '../cmps/attachment-picker.vue'
-import attachmentPreview from '../cmps/attachment-preview.vue'
+import labelPicker from '../cmps/task-details-cmps/label-picker.vue'
+import coverPicker from '../cmps/task-details-cmps/cover-picker.vue'
+import attachmentPicker from '../cmps/task-details-cmps/attachment-picker.vue'
+import attachmentPreview from '../cmps/task-details-cmps/attachment-preview.vue'
 import avatarPreview from '../cmps/avatar-preview.vue'
 import { userService } from '../services/user-service.js'
-
+import coverBg from '../cmps/task-details-cmps/cover-bg.vue'
+import labelPrev from '../cmps/task-details-cmps/label-prev.vue'
 export default {
   name: 'taskDetails',
   // props: {
@@ -383,7 +330,6 @@ export default {
     this.coverColors = this.$store.getters.getCoverColors
     if (this.task?.style?.background)
       this.currCover = { background: this.task.style.background }
-    this.$refs.taskTitle.value = this.task.title
     this.$refs.taskDescription.value = this.task.description
   },
   computed: {
@@ -410,8 +356,8 @@ export default {
     },
     getCords() {
       return {
-        top: this.clickPos.y - 150 + 'px',
-        left: this.clickPos.x - 200 + 'px',
+        top: this.clickPos.y + 'px',
+        left: this.clickPos.x - 100 + 'px',
       }
     },
     userAssigned() {
@@ -533,7 +479,7 @@ export default {
       this.updateTask()
     },
     removeDueDate() {
-      this.task.dueDate.at = ''
+      this.task.dueDate = ''
       this.updateTask()
     },
     backToBoard() {
@@ -553,14 +499,9 @@ export default {
     coverPicker,
     attachmentPicker,
     attachmentPreview,
-  },
-  components: {
-    Datepicker,
-    labelPicker,
-    coverPicker,
-    attachmentPicker,
-    attachmentPreview,
     avatarPreview,
+    coverBg,
+    labelPrev
   },
 }
 </script>
