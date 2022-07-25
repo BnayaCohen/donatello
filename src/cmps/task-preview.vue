@@ -47,9 +47,9 @@
               <span class="trellicons trellicons-comment"></span>
               <p>{{ task.comments.length }}</p>
             </div>
-            <div v-if="task.attachment?.length" class="task-indicator">
+            <div v-if="task.attachments?.length" class="task-indicator">
               <span class="trellicons trellicons-attachment"></span>
-              <p>{{ task.attachment.length }}</p>
+              <p>{{ task.attachments.length }}</p>
             </div>
             <div v-if="task.checklists?.length" class="task-indicator">
               <span class="trellicons trellicons-checkedbox"></span>
