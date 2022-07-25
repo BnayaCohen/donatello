@@ -10,9 +10,18 @@ export const userService = {
   login,
   logout,
   getLoggedInUser,
+  query
 }
 
 const USER_STORAGE_KEY = 'loggedinUser'
+
+async function query(filterBy = null) {
+  try {
+    return await httpService.get('user', { params: filterBy })
+  } catch (err) {
+    console.log('Cannot get boards', err)
+  }
+}
 
 async function getById(userId) {
   try {
@@ -37,7 +46,7 @@ async function login(credentials) {
 
 async function signup(signupInfo) {
   try {
-    const user = storageService.save('auth/signup', signupInfo)
+    const user = httpService.post('auth/signup', signupInfo)
     _saveToSession(user)
     return user
   } catch (err) {

@@ -31,6 +31,7 @@
         position: relative;
         text-decoration: none;
         border: 0px;
+        cursor: pointer;
       }
 
       .google-login-btn {
@@ -67,6 +68,40 @@
         font-family: 'Roboto-Light';
         opacity: 0.8;
       }
+    }
+  }
+  .upload-preview {
+    margin-bottom: 8px;
+    height: 32px;
+    padding: 6px 12px;
+    .file-upload {
+        padding: 1rem;
+    }
+    &:hover {
+      background-color: rgb(246, 246, 246);
+    }
+    input[type='file'] {
+      margin: 0;
+      opacity: 0;
+      padding: 0;
+      z-index: 2;
+    }
+  }
+  .from-web {
+    border-top: 1px solid rgba(9, 30, 66, 0.13);
+  }
+  .btn {
+    border: none;
+    border-radius: 3px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 6px 12px;
+    text-decoration: none;
+    background-color: #091e420a;
+    color: #172b4d;
+    cursor: pointer;
+    &:hover {
+      background-color: #091e4218;
     }
   }
 }

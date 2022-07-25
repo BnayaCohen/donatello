@@ -3,14 +3,18 @@
     <nav class="flex justify-between board-header">
 
       <section class="board-options flex align-center justify-center">
-        <input class="board-name-input clean-input btn-background" type="text" v-model="board.title" placeholder="Board name..."  @keyup.enter="updateBoardTitle" />
-        <button class="btn-background starred-btn" :class="isBoardStarred"  @click="toggleStarBoard"><i class="fa-regular fa-star"></i></button>
+        <input class="board-name-input clean-input btn-background" type="text" v-model="board.title"
+          placeholder="Board name..." @keyup.enter="updateBoardTitle" />
+        <button class="btn-background starred-btn" :class="isBoardStarred" @click="toggleStarBoard"><i
+            class="fa-regular fa-star"></i></button>
 
         <div v-if="board.members.length" class="members-container flex align-center">
-        <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
+          <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
         </div>
-        
-        <button class="btn-background">Invite</button>
+
+        <button @click="toggleInvite" class="btn-background" style="position:relative;">Invite
+          <users-modal v-if="isInviteOpen" v-click-outside="toggleInvite" @toggleInvite="toggleInvite" />
+        </button>
       </section>
 
       <section v-if="!isSideBarOpen" class="more-options flex align-center justify-center">
@@ -22,6 +26,7 @@
 </template>
 <script>
 import avatarPreview from './avatar-preview.vue'
+import usersModal from './users-modal.vue'
 
 export default {
   name: 'boardHeader',
@@ -31,27 +36,34 @@ export default {
   },
   data() {
     return {
-      isCurrBoardStarred:this.board.isStarred
+      isCurrBoardStarred: this.board.isStarred,
+      isInviteOpen: false,
     }
   },
   methods: {
+    toggleInvite() {
+      this.isInviteOpen = !this.isInviteOpen
+      console.log('madeIt')
+    },
     toggleStarBoard() {
-      this.isCurrBoardStarred=!this.isCurrBoardStarred
+      this.isCurrBoardStarred = !this.isCurrBoardStarred
       this.board.isStarred = !this.board.isStarred
       this.$store.dispatch({ type: 'saveBoard', board: this.board })
     },
-    updateBoardTitle(){
-       if (this.board.title === '') return
-           this.$store.dispatch({ type: 'saveBoard', board: this.board })
-    }
+    updateBoardTitle() {
+      if (this.board.title === '') return
+      this.$store.dispatch({ type: 'saveBoard', board: this.board })
+    },
   },
   computed: {
     isBoardStarred() {
       return { starred: this.isCurrBoardStarred }
     }
   },
-   components: {
-    avatarPreview
+  components: {
+    avatarPreview,
+    usersModal,
+
   },
 }
 </script>
