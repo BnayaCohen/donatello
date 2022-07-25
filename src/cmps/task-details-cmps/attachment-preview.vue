@@ -1,27 +1,24 @@
 <template>
-  <div class="attachment-header flex align-center">
-    <span class="trellicons trellicons-attachment"></span>
-    <h3>Attachments</h3>
-  </div>
-  <div class="flex attachment-thumbnail">
-    <img
-      class="task-image"
-      :src="attachment.url"
-    />
+  <article class="attachment-preview flex">
+    <div class="flex attachment-thumbnail">
+      <img :src="attachment.url" alt="" />
+    </div>
+
     <div class="attachment-details flex flex-column">
-        <div class="attach-header flex flex-column">
-        <span class="attach-title">{{ attachment.title }}</span>
-        <span class="attach-time-ago">{{ timeAgo }} </span>
+      <div class="attach-header flex flex-column">
+        <h3 class="attach-title">{{ attachment.title }}</h3>
+        <p class="attach-time-ago">{{ timeAgo }} - <span style="text-decoration:underline;">Delete</span> - </p>
       </div>
       <div class="flex align-center">
         <span class="trellicons trellicons-cover cover-icon"></span>
-        <span class="make-cover" @click.stop="updateCurrCover">Make cover</span>
+        <p class="make-cover-btn" @click="updateCurrCover">Make cover</p>
       </div>
     </div>
-  </div>
+  </article>
 </template>
+
 <script>
-import { utilService } from '../../services/util-service.js'
+import { utilService } from '@/services/util-service.js'
 
 export default {
   props: {
@@ -34,12 +31,11 @@ export default {
   },
   methods: {
     updateCurrCover() {
-      this.$emit('updateCurrCover', {
-        backgroundImage: `url(${this.attachment.url}) no-repeat center center/cover`,
-      })
+      this.$emit('updateCurrCover',  `url(${this.attachment.url}) no-repeat center center/cover`)
     },
   },
   emits: ['updateCurrCover'],
 }
 </script>
-<style></style>
+<style>
+</style>
