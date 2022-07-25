@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: 'Roboto-Light';
+  src: local('Roboto-Regular'), url('/src/assets/fonts/Roboto/Roboto-Light.ttf');
+}
+
+@font-face {
   font-family: 'Roboto-Bold';
   src: url('/src/assets/fonts/Roboto/Roboto-Bold.ttf');
 }
