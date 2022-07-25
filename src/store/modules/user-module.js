@@ -28,5 +28,14 @@ export default {
         console.log('Cannot sign in', err)
       }
     },
+    async signup({commit}, {signupInfo}) {
+        try {
+            const user = await userService.signup(signupInfo)
+            commit({ type: 'setUser', user })
+            return user    
+        } catch (err) {
+            console.error('cannot signup', err)
+        }
+    }
   },
 }
