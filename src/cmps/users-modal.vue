@@ -1,8 +1,8 @@
 <template>
-    <section class="users-modal">
+    <section @click.stop="''" class="users-modal">
         <header class="modal-header">
             <span>Invite to board</span>
-            <span @click="$emit('toggleInvite')" class="close-btn trellicons trellicons-close-btn"></span>
+            <span @click.stop="$emit('toggleInvite')" class="close-btn trellicons trellicons-close-btn"></span>
         </header>
         <div class="modal-content"></div>
         <input @input="getUsers" v-model="txt" type="text" placeholder="Search users" class="modal-input">
@@ -50,49 +50,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss">
-.user-modal {
-    position: absolute;
-
-    .modal-header {
-        align-items: center;
-        border-bottom: 1px solid #091e4221;
-        color: #5e6c84;
-        display: flex;
-        justify-content: center;
-        line-height: 40px;
-        margin: 0 12px;
-        padding: 0 32px;
-        position: relative;
-    }
-
-    .modal-input {
-        background-color: #fafbfc;
-        border: none;
-        border-radius: 3px;
-        box-shadow: inset 0 0 0 2px #dfe1e6;
-        margin: 4px 0 12px;
-        outline: none;
-        padding: 8px 12px;
-        width: 100%;
-
-        &:focus {
-            background-color: #fff;
-            border: 0 #fff;
-            box-shadow: inset 0 0 0 2px #0079bf;
-        }
-    }
-
-    .user-preview {
-        p {
-            flex: 1;
-        }
-
-        .trellicons-check {
-            padding: 5px 11px 5px 5px;
-            // trellicons check icon is "\e916"
-        }
-    }
-}
-</style>
