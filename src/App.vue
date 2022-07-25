@@ -46,7 +46,7 @@ export default {
       }
     },
     getCords() {
-      return { top: this.y + 30 + 'px', left: this.x - 278 + 'px' }
+      return { top: this.y + 35 + 'px', left: this.x - 290 + 'px' }
     },
   },
   components: {
