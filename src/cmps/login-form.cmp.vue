@@ -118,13 +118,15 @@ import { uploadImg } from '@/services/img-upload.service'
 
 export default {
   name: 'loginForm',
+  props: {
+    isSignIn: Boolean
+  },
   data() {
     return {
       credentials: {
         username: null,
         password: null,
       },
-      isSignIn: true,
       fullname: null,
       userImgUrl: null,
     }

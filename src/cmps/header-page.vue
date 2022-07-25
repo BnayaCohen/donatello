@@ -6,8 +6,8 @@
       /></router-link>
       <div class="login-container">
         <router-link class="login" to="/login">Log in</router-link>
-        <a class="signup" 
-          >Get Donatello for free</a
+        <router-link class="signup" to="/signup"
+          >Get Donatello for free</router-link
         >
       </div>
     </div>

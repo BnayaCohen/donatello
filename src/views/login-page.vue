@@ -29,7 +29,7 @@
       </h1>
     </div>
     <div class="form-container">
-      <login-form @login="onLogin" @signup="onSignup" />
+      <login-form @login="onLogin" @signup="onSignup" :isSignIn="isSignIn"/>
     </div>
     <div class="right-svg"></div>
     <div class="left-svg"></div>
@@ -40,7 +40,14 @@ import loginForm from '../cmps/login-form.cmp.vue'
 export default {
   name: 'loginPage',
   components: { loginForm },
+  data() {
+    return {
+        isSignIn: true
+    }
+  },
   created() {
+    const {path} = this.$route
+    if (path === '/signup') this.isSignIn = false
     this.$emit('setBackground', '#fff')
   },
   methods: {
