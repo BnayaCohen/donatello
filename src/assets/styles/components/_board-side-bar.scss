@@ -150,13 +150,9 @@
       font-family: inherit;
       font-size: em(14px);
 
-      &::before{
-        content: "\e960";
-      }
-
-      &:focus {
-        box-shadow: inset 0 0 0 2px #0079bf;
-      }
+      // &:focus {
+      //   box-shadow: inset 0 0 0 2px #0079bf;
+      // }
     }
   }
 
