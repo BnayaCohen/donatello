@@ -6,7 +6,7 @@
   position: relative;
   flex-direction: column;
   background-color: #fff;
-  box-shadow: 0 1px 0 rgb(22 24 27 / 25%);
+  box-shadow: 0 1px 0 #091e4240;
   border-radius: 3px;
   padding: 1px 8px;
 
@@ -34,13 +34,19 @@
 
   .task-preview-header {
     min-height: em(32px);
-    max-height: em(400px);
-    margin: -1px -8px 0;
+    // max-height: em(400px);
+    margin: -1px -8px 0px;
     border-radius: 3px 3px 0 0;
+    text-align: center;
+    background-color: #949899;
 
     .task-img-cover {
       background-color: #00000070;
       border-radius: 3px 3px 0 0;
+      margin-bottom: -3px;
+      // width: 100%;
+      min-height: em(32px);
+      max-height: em(260px);
     }
   }
 }
@@ -139,8 +145,7 @@
     margin-right: -3px;
     display: flex;
     height: em(32px);
-
-    // text-align: right;
+    
     .member-avatar-small {
       margin-left: 4px;
     }

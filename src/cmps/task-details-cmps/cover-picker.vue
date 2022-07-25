@@ -1,6 +1,7 @@
 <template>
   <div
-    class="dynamic-popover pos-absolute cover-popover-container" :style="pos"
+    class="dynamic-popover pos-absolute cover-popover-container"
+    :style="pos"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Cover</h4>
@@ -35,7 +36,7 @@
               name="cover-color"
               :for="'color-' + color.colorStr"
               :style="{ backgroundColor: color.colorStr }"
-                @click.stop="selectCover(color.colorStr)"
+              @click.stop="selectCover(color.colorStr)"
               ><input
                 type="radio"
                 name="color"
@@ -53,16 +54,14 @@
 export default {
   props: {
     colors: Array,
-    pos: Object
+    pos: Object,
   },
   data() {
     return {
       selectedCover: '#5e6c84',
     }
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     selectCover(color) {
       this.selectedCover = color
@@ -73,7 +72,7 @@ export default {
       elCover.classList.toggle('show')
     },
   },
-  emits: ['addCover'],
+  emits: ['addCover', 'closeCover'],
 }
 </script>
 <style></style>

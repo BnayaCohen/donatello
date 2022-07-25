@@ -6,7 +6,7 @@
 
     .add-entity-placeholder {
         background-color: transparent;
-        padding:0px 0 0 12px;
+        padding: 0px 0 0 10px;
         gap: 4px;
         margin: 0;
     }
@@ -14,13 +14,15 @@
     &.adding {
         background-color: #ebecf0;
         cursor: auto;
-        &.task{
-            padding-top: 0;
+
+        &.task {
+            padding: 0;
+            margin-right: -4px;
         }
     }
 
-    &.task{
-        padding:6px 0;
+    &.task {
+        padding: 6px 0;
         margin-right: 4px;
     }
 }
@@ -38,14 +40,14 @@
     overflow-wrap: break-word;
     z-index: 20;
 
-    &.task{
-    box-shadow: none;
-    border: none;
-    box-shadow: 0 1px 0 rgb(22 24 27 / 25%);
-    margin-bottom: 4px;
-    padding: 8px;
-    font-size: em(14px);
-    min-height: em(68px);
+    &.task {
+        box-shadow: none;
+        border: none;
+        box-shadow: 0 1px 0 rgb(22 24 27 / 25%);
+        margin-bottom: 4px;
+        padding: 8px;
+        font-size: em(14px);
+        min-height: em(68px);
     }
 }
 

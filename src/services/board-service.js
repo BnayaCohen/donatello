@@ -3,7 +3,6 @@ import { httpService } from './http-service'
 import { userService } from './user-service'
 import { utilService } from './util-service'
 // const STORAGE_KEY = 'boardDB'
-const BASE_URL = 'board'
 
 // _createBoards()
 

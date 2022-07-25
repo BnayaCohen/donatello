@@ -1,12 +1,17 @@
 .checklist-modal-component {
   color: #172b4d;
   font-size: rem(14px);
-
+  position: absolute;
+  z-index: 20;
+  background: #fff;
   .checklist-header {
     text-align: center;
     position: relative;
     .close-btn {
       position: absolute;
+      font-size: rem(16px);
+      right: 8px;
+      top: -2px;
     }
   }
   .checklist-inputs {
