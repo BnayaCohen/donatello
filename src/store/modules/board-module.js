@@ -11,6 +11,7 @@ export default {
       children: null,
     },
     lastGroup: null,
+    lastTask: null,
     showLabelsOnTask: false,
     currTask: null
   },
