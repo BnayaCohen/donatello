@@ -12,12 +12,13 @@ export default {
   mutations: {
     setUser(state, { user }) {
       state.user = user
+      console.log(state.user)
     },
   },
   actions: {
     async logout({ commit }) {
       await userService.logout()
-      commit({ type: 'saveUser', user: null })
+      commit({ type: 'setUser', user: null })
     },
     async login({ commit }, { credentials }) {
       try {
