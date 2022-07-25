@@ -5,21 +5,25 @@
             <h3>Attachments</h3>
         </div>
         <attachment-preview v-for="attachment in attachments" :key="attachment.id" :attachment="attachment"
-            @updateCurrCover="$emit('updateCurrCover', $event)" />
+            @updateCurrCover="$emit('updateCurrCover', $event)" @removeAttachment="$emit('removeAttachment',$event)"/>
+        <div>
+            <button class="add-attach-btn btn-background" @click="$emit('toggle', { ev: $event, type: 'Attach' })">
+            Add an attachment</button>
+        </div>
     </section>
 </template>
 <script>
 import attachmentPreview from '@/cmps/task-details-cmps/attachment-preview.vue'
+import attachmentPicker from '@/cmps/task-details-cmps/attachment-picker.vue'
 
 export default {
     props: {
         attachments: Object,
     },
-    methods: {
-    },
     emits: ['updateCurrCover'],
     components: {
         attachmentPreview,
+        attachmentPicker
     }
 }
 </script>

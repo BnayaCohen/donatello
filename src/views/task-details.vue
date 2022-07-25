@@ -8,19 +8,21 @@
       }"
     >
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg :task="task" @toggle="toggle" @closeModal="backToBoard" />
+        <cover-bg :currCover="currCover" @toggle="toggle" @closeModal="backToBoard" />
         <div class="task-detail-header">
+          <div>
           <span class="trellicons trellicons-details"></span>
-          <textarea
-            rows="1"
-            class="title-input"
-            type="text"
-            ref="taskTitle"
-            v-model="task.title"
-            placeholder="Enter title here..."
-            @keydown.enter="$refs.taskTitle.blur()"
-          ></textarea>
-        </div>
+          </div>
+          <div>
+            <textarea
+              rows="1"
+              class="title-input"
+              type="text"
+              ref="taskTitle"
+              v-model="task.title"
+              placeholder="Enter title here..."
+              @keydown.enter="$refs.taskTitle.blur()"
+            ></textarea>
         <div class="subtitle-header">
           <p>
             in list
@@ -28,6 +30,8 @@
               groupTitle
             }}</span>
           </p>
+        </div>
+        </div>
         </div>
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
@@ -70,6 +74,8 @@
               v-if="task.attachments?.length"
                 :attachments="task.attachments"
                 @updateCurrCover="updateCurrCover"
+                @toggle="toggle"
+                @removeAttachment="removeAttachment"
               />
             <checklist-list
               v-if="task.checklists?.length"
@@ -88,6 +94,7 @@
             :currCover="currCover"
             @toggle="toggle"
             @addUserToTask="addUserToTask"
+            @removeTask="removeTask"
           />
         </div>
       </div>
@@ -195,10 +202,13 @@ export default {
       this.coverColors = this.$store.getters.getCoverColors
 
       if (!this.task.style) this.task.style = {}
-      if (this.task.style.background)
-        this.currCover = { background: this.task.style.background }
+      if (this.task.style.background){
+      // if(this.task.style.background.length>10)
+      //   this.currCover = { background: `url(${this.task.style.background}) no-repeat center center/contain` }
+         this.currCover = { background: this.task.style.background }
+        }
+        
       this.$refs.taskDescription.value = this.task.description
-
        if (!this.task.attachments) this.task.attachments = []
     } catch(err) {
 
@@ -321,8 +331,13 @@ export default {
     addAttachment(attachProps) {
       const newAttachment = attachProps
       newAttachment.id=utilService.makeId()
-      this.task.attachments.push(newAttachment)
+      this.task.attachments.unshift(newAttachment)
       this.isAttach = false
+      this.updateTask()
+    },
+    removeAttachment(attachId){
+      const attachIdx = this.task.attachments.findIndex(attach=>attach.id===attachId)
+      this.task.attachments.splice(attachIdx,1)
       this.updateTask()
     },
     removeTask() {
@@ -345,7 +360,7 @@ export default {
     },
     updateCurrCover(cover) {
       this.task.style.background = cover
-      this.currCover = cover
+      this.currCover = { background:cover}
       this.updateTask()
     },
     addChecklist(checklist) {

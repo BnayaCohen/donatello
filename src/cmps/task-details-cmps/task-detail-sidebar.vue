@@ -88,7 +88,7 @@
         <h3 class="small-title">Actions</h3>
         <div class="sidebar-btns flex flex-column">
           <div class="sidebar-btn-container">
-            <button class="sidebar-btn flex align-center" @click="removeTask">
+            <button class="sidebar-btn flex align-center" @click="$emit('removeTask')">
               <span class="trellicons trellicons-archive"></span>
               <span>Archive</span>
             </button>
