@@ -164,6 +164,12 @@
       padding: 0px;
       background-position: center center;
       background-repeat: no-repeat;
+      
+      img{
+        max-height: 160px;
+      object-fit: contain;
+
+      }
     }
 
     .cover-btn {
@@ -209,7 +215,7 @@
 
     .subtitle-header {
       opacity: 0.8;
-      margin: 0 58px;
+      padding: 0 10px;
 
       p {
         margin: 0 0 8px;
@@ -379,33 +385,71 @@
         }
       }
     }
-
+    .attachment-header{
+      margin-bottom: 8px;
+      h3{
+        margin-left: 4px;
+        font-size: em(16px);
+      }
+    }
+    
     .attachment-preview {
       height: em(80px);
-      margin-left: 40px;
+      margin-left: 36px;
+      margin-bottom: 12px;
       padding: 1px 0;
-
-      img {
-        border-radius: 3px;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      h3 {
-        font-size: em(14px);
-        font-weight: 700;
-      }
-
+      
+      // &:hover{
+        //   background-color: #00000014;
+        // }
+        
+        img {
+          border-radius: 3px;
+        }
+        
+        p {
+          margin: 2px 0;
+          color: #5e6c84;
+        }
+        
+        .attach-btn {
+          text-decoration: underline;
+          cursor: pointer;
+          
+          &:hover {
+            color: #172b4d;
+          }
+        }
+        
+        h3 {
+          font-size: em(14px);
+          font-weight: 700;
+        }
+        
       .attachment-details {
         padding: 7px 16px;
-        gap: 2px;
+        gap: 1px;
         justify-content: space-between;
 
         .cover-icon {
+          width: auto;
+          margin-left: 2px;
+          margin-right: 6px;
+          font-size: em(16px);
           color: #42526e;
         }
+      }
+    }
+
+    .add-attach-btn{
+      margin-top: 8px;
+      margin-left: 36px;
+      font-size: em(14px);
+      background-color: #091e420a;
+      padding:0 12px;
+      white-space: normal;
+      &:hover{
+        background-color: #091e4214;
       }
     }
 
