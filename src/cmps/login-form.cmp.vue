@@ -29,8 +29,9 @@
             />
             <div class="upload-for-signup flex flex-column" v-if="!isSignIn">
               <h4>Add an avatar (optional)</h4>
+              <h3 class="small-title">Upload from computer</h3>
               <div class="upload-preview">
-                <label for="file-upload"><span>Computer</span></label
+                <label for="file-upload"><span>Upload</span></label
                 ><input
                   type="file"
                   accept="img/*"
@@ -41,8 +42,7 @@
               <div class="from-web">
                 <h3 class="small-title">Attach a link</h3>
                 <label for="web-url">
-                  <input class="login-input" type="text" v-model="userImgUrl" :style="{display: 'inline'}"/>
-                  <button class="btn" @click="addLinkAttachment">Attach</button>
+                  <input placeholder="Enter an image url here..." class="login-input" type="text" v-model="userImgUrl" :style="{display: 'inline', width: '100%'}"/>
                 </label>
               </div>
             </div>
@@ -61,7 +61,7 @@
               @click="signup"
             />
           </form>
-          <span :style="{ textAlign: 'center' }">Or</span>
+          <span :style="{ textAlign: 'center', padding: '0.6em' }">Or</span>
           <div
             class="login-options flex flex-column justify-center align-center"
           >
