@@ -1,44 +1,72 @@
 <template>
-    <div class="header-hide" :style="{height: '44px', backgroundColor: '#fff', position: 'fixed', top: 0, width: '100%'}"></div>
+  <div
+    class="header-hide"
+    :style="{
+      height: '44px',
+      backgroundColor: '#fff',
+      position: 'fixed',
+      top: 0,
+      width: '100%',
+    }"
+  ></div>
   <section>
-    <div class="login-page-header flex justify-center align-center" :style="{height: '196px'}">
-        <img src="../assets/img/trello-logo.png" :style="{maxHeight: '43px', maxWidth: '43px', marginInlineEnd: '11px'}"/>
-        <h1 :style="{letterSpacing: '0.8px', fontSize: '54.5px', height:  '26px'}">Donatello</h1>
+    <div
+      class="login-page-header flex justify-center align-center"
+      :style="{ height: '196px' }"
+    >
+      <img
+        src="../assets/img/trello-logo.png"
+        :style="{
+          maxHeight: '43px',
+          maxWidth: '43px',
+          marginInlineEnd: '11px',
+        }"
+      />
+      <h1
+        :style="{ letterSpacing: '0.8px', fontSize: '54.5px', height: '26px' }"
+      >
+        Donatello
+      </h1>
     </div>
     <div class="form-container">
-      <login-form @login="onLogin"/>
+      <login-form @login="onLogin" @signup="onSignup" :isSignIn="isSignIn"/>
     </div>
-    <div class="right-svg">
-    </div>
-    <div class="left-svg">
-    </div>
+    <div class="right-svg"></div>
+    <div class="left-svg"></div>
   </section>
 </template>
 <script>
 import loginForm from '../cmps/login-form.cmp.vue'
-import { userService } from '../services/user-service'
 export default {
   name: 'loginPage',
   components: { loginForm },
-    created() {
+  data() {
+    return {
+        isSignIn: true
+    }
+  },
+  created() {
+    const {path} = this.$route
+    if (path === '/signup') this.isSignIn = false
     this.$emit('setBackground', '#fff')
   },
   methods: {
     onLogin(credentials) {
       this.$store.dispatch({ type: 'login', credentials })
+      this.$router.push('/board')
     },
     // onLogout() {
     //   this.$store.dispatch({ type: 'logout' })
     // },
-    // onSignup(signupInfo) {
-    //   this.$store.dispatch({ type: 'signup', signupInfo })
-    // },
+    onSignup(signupInfo) {
+      this.$store.dispatch({ type: 'signup', signupInfo })
+      this.$router.push('/board')
+    },
   },
 }
 </script>
 <style>
 .form-container {
-    font-family: inherit;
+  font-family: inherit;
 }
-
 </style>

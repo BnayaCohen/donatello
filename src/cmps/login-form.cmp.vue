@@ -3,23 +3,68 @@
     <div class="section-wrapper">
       <div class="account-form">
         <div class="login flex flex-column">
-          <h3>Log in to Donatello</h3>
+          <h3 v-if="isSignIn">Log in to Donatello</h3>
+          <h3 v-else>Sign up to Donatello</h3>
           <form class="login-form flex flex-column" @submit.prevent="login">
+            <input
+              class="login-input fullname"
+              type="text"
+              placeholder="Enter full name"
+              v-model="fullname"
+              v-if="!isSignIn"
+            />
+
             <input
               class="login-input username"
               type="username"
               placeholder="Enter username"
               v-model="credentials.username"
-            /><input
+            />
+            <input
               class="login-input password"
               type="password"
               placeholder="Enter password"
               autocomplete="off"
               v-model="credentials.password"
-            /><input class="login-btn" type="submit" value="Log in"/>
+            />
+            <div class="upload-for-signup flex flex-column align-center" v-if="!isSignIn">
+              <h4>Add an avatar (optional)</h4>
+              <div class="upload-preview">
+                <label for="file-upload"><span>Computer</span></label
+                ><input
+                  type="file"
+                  accept="img/*"
+                  id="file-upload"
+                  @change="handleFile"
+                />
+              </div>
+              <div class="from-web">
+                <h3 class="small-title">Attach a link</h3>
+                <label for="web-url">
+                  <input type="text" v-model="userImgUrl" />
+                  <button class="btn" @click="addLinkAttachment">Attach</button>
+                </label>
+              </div>
+            </div>
+            <input
+              v-if="isSignIn"
+              class="login-btn"
+              type="submit"
+              value="Log in"
+              @click="login"
+            />
+            <input
+              v-else
+              class="login-btn"
+              type="submit"
+              value="Sign up"
+              @click="signup"
+            />
           </form>
-          <span :style="{textAlign: 'center'}">Or</span>
-          <div class="login-options flex flex-column justify-center align-center">
+          <span :style="{ textAlign: 'center' }">Or</span>
+          <div
+            class="login-options flex flex-column justify-center align-center"
+          >
             <button
               type="button"
               class="google-login-btn flex align-center justify-center"
@@ -57,7 +102,10 @@
               <span style="padding: 10px 10px 10px 0px; font-weight: 500"
                 >Continue with Google</span
               ></button
-            ><a to="/login">Sign up for an account</a>
+            ><a v-if="isSignIn"
+              ><span class="link" @click="isSignIn = false">Sign up</span> for an account</a
+            >
+            <a v-else >Already have an account? <span class="link" @click="isSignIn = true">Log in</span></a>
           </div>
         </div>
       </div>
@@ -66,15 +114,21 @@
 </template>
 
 <script>
+import { uploadImg } from '@/services/img-upload.service'
+
 export default {
   name: 'loginForm',
+  props: {
+    isSignIn: Boolean
+  },
   data() {
     return {
       credentials: {
         username: null,
         password: null,
       },
-      loggedinUser: null,
+      fullname: null,
+      userImgUrl: null,
     }
   },
   created() {
@@ -92,14 +146,30 @@ export default {
       this.$router.push('/')
     },
     signup() {
-      this.$emit('signup', this.signupInfo)
-      this.signupInfo.fullname = ''
-      this.signupInfo.username = ''
-      this.signupInfo.password = ''
-      this.closeModal()
+      if (!this.fullname || !this.credentials.username || !this.credentials.password) return
+      const signupInfo = JSON.parse(JSON.stringify(this.credentials))
+      signupInfo.fullname = this.fullname
+      this.userImgUrl? signupInfo.userImgUrl = this.userImgUrl : signupInfo.userImgUrl = ''
+      this.$emit('signup', signupInfo)
+      this.credentials.fullname = ''
+      this.credentials.username = ''
+      this.credentials.password = ''
+      this.userImgUrl = ''
+    },
+    handleFile(ev) {
+      console.log(ev)
+      var file
+      if (ev.type === 'change') file = ev.target.files[0]
+      else if (ev.type === 'drop') file = ev.dataTransfer.files[0]
+      this.onUploadFile(file)
+    },
+    async onUploadFile(file) {
+      // this.isLoading = true
+      const res = await uploadImg(file)
+      // this.isLoading = false
+      this.userImgUrl = res.url
     },
   },
 }
 </script>
-<style>
-</style>
+<style></style>
