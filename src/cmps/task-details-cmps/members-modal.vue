@@ -48,6 +48,12 @@ export default {
 <style lang="scss">
 .member-modal {
     position: absolute;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
+    min-height: 50px;
+    width: 321px;
+    z-index: 35;
 
     .modal-header {
         align-items: center;
