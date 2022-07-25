@@ -47,12 +47,14 @@
         :edit="addTask"
         :groupOrTask="status || 'task'"
         :groupId="group.id"
+        @add-task="addTask"
+        @x="x"
       />
     </section>
   </article>
   <section v-else class="new-group-container">
     <section class="add-group-container">
-      <add-group-or-task :groupOrTask="'group'" />
+      <add-group-or-task :groupOrTask="'group'"/>
     </section>
   </section>
 </template>
@@ -74,6 +76,9 @@ export default {
     }
   },
   methods: {
+    x(board){
+      this.$emit('x', board)
+    },
     updateTitle() {
       if (this.group.title === '') return
       this.$store.dispatch({ type: 'saveGroup', group: this.group })

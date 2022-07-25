@@ -52,17 +52,22 @@ export default {
       this.$store.dispatch({ type: 'saveGroup', group: newGroup })
       this.titleInput = ''
     },
-    addTask() {
+    async addTask() {
       if (this.titleInput === '') return
-      const newTask = boardService.getEmptyTask()
-      newTask.title = this.titleInput
-      newTask.groupId = this.groupId
-      this.$store.dispatch({
-        type: 'saveTask',
-        groupId: this.groupId,
-        task: newTask,
-      })
-      this.titleInput = ''
+      try {
+        const newTask = boardService.getEmptyTask()
+        newTask.title = this.titleInput
+        newTask.groupId = this.groupId
+        const board = await this.$store.dispatch({
+          type: 'saveTask',
+          groupId: this.groupId,
+          task: newTask,
+        })
+        this.titleInput = ''
+        this.$emit('x', board)
+      } catch(err) {
+
+      }
     },
     closeAddEntity() {
       this.titleInput = ''
