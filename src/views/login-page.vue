@@ -16,10 +16,11 @@
 </template>
 <script>
 import loginForm from '../cmps/login-form.cmp.vue'
+import { userService } from '../services/user-service'
 export default {
   name: 'loginPage',
   components: { loginForm },
-  created() {
+    created() {
     this.$emit('setBackground', '#fff')
   },
   methods: {
