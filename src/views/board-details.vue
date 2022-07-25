@@ -8,11 +8,11 @@
     />
     <board-side-bar
       v-if="board"
-      :activities="activities"
+      :activities="board.activities"
       :isSideBarOpen="isSideBarOpen"
       @sideBarClosed="closeSideBar"
     />
-    <group-list v-if="board" :groups="groups" @add-task="addTask" />
+    <group-list v-if="board" :groups="board.groups" @add-task="addTask"/>
     <router-view />
   </main>
 </template>
@@ -29,23 +29,26 @@ export default {
       isSideBarOpen: false,
     }
   },
-  async created() {
-    const { boardId } = this.$route.params
-    await this.$store.dispatch({ type: 'loadBoard', boardId })
-    this.$emit('setBackground', this.board.style.background)
-  },
   computed: {
-    groups() {
-      return this.board.groups
-    },
-    activities() {
-      return this.board.activities
-    },
     board() {
       return this.$store.getters.board
-    },
+    }
+  },
+  async created() {
+    try {
+      const { boardId } = this.$route.params
+      await this.$store.dispatch({ type: 'loadBoard', boardId })
+      this.board = this.$store.getters.board
+      this.$emit('setBackground', this.board?.style?.background)
+    } catch(err) {
+      console.log('Cannot load board to front', err)
+    }
   },
   methods: {
+    // x(board){
+    //   console.log(board)
+    //   this.board = board
+    // },
     addTask(groupId) {
       console.log(groupId)
     },

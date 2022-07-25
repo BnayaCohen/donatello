@@ -134,7 +134,7 @@ export default {
       this.$emit('toggleDate', ev)
     },
     addUserToTask() {
-      this.$emit('addUseToTask')
+      this.$emit('addUserToTask')
     },
     removeTask() {
       this.$emit('removeTask')
