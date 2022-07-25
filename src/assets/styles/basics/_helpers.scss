@@ -310,3 +310,11 @@
 .trellicons-back::before {
   content: '\e90a';
 }
+
+// Links
+
+.link {
+  text-decoration: underline;
+  color: #0e367a;
+  cursor: pointer;
+}

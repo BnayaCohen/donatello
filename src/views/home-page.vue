@@ -53,6 +53,8 @@ export default {
       el: null,
     }
   },
+  methods: {
+  }
 }
 </script>
 
