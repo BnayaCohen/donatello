@@ -7,11 +7,11 @@
     <div class="attachment-details flex flex-column">
       <div class="attach-header flex flex-column">
         <h3 class="attach-title">{{ attachment.title }}</h3>
-        <p class="attach-time-ago">{{ timeAgo }} - <span style="text-decoration:underline;">Delete</span> - </p>
+        <p class="attach-time-ago">{{ timeAgo }} - <span @click="$emit('removeAttachment',attachment.id)" class="attach-btn">Delete</span></p>
       </div>
       <div class="flex align-center">
         <span class="trellicons trellicons-cover cover-icon"></span>
-        <p class="make-cover-btn" @click="updateCurrCover">Make cover</p>
+        <p class="attach-btn make-cover-btn" @click="updateCurrCover">Make cover</p>
       </div>
     </div>
   </article>
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     updateCurrCover() {
-      this.$emit('updateCurrCover',  `url(${this.attachment.url}) no-repeat center center/cover`)
+      this.$emit('updateCurrCover',  this.attachment.url)
     },
   },
   emits: ['updateCurrCover'],
