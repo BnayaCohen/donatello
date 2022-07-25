@@ -46,7 +46,7 @@ async function login(credentials) {
 
 async function signup(signupInfo) {
   try {
-    const user = storageService.save('auth/signup', signupInfo)
+    const user = httpService.post('auth/signup', signupInfo)
     _saveToSession(user)
     return user
   } catch (err) {
