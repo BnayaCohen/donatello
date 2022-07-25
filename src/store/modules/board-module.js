@@ -105,7 +105,6 @@ export default {
         const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
         if (idx !== -1) {
           !state.lastGroup.id && state.currBoard.groups.splice(idx, 1)
-
           state.lastGroup.id && state.currBoard.groups.splice(idx, 1, state.lastGroup)
         }
         state.lastGroup = null
