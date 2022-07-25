@@ -14,11 +14,6 @@
 import checklistPreview from './checklist-preview.vue'
 export default {
   props: { checklists: Array },
-  data() {
-    return {
-      txt: '',
-    }
-  },
   methods: {
     removeChecklist(checklistId) {
       const idx = this.copyChecklists.findIndex(
@@ -32,11 +27,13 @@ export default {
         (curChecklist) => curChecklist.id === checklist.id
       )
       this.copyChecklists.splice(idx, 1, checklist)
+      this.save()
     },
     save() {
-      this.$emit('saveChecklists', {
-        checklists: JSON.parse(JSON.stringify(this.copyChecklists)),
-      })
+      this.$emit(
+        'saveChecklists',
+        JSON.parse(JSON.stringify(this.copyChecklists))
+      )
     },
   },
   computed: {
