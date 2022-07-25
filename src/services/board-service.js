@@ -258,7 +258,7 @@ async function updateGroups(board) {
 //       task.labels = task.labels ? [...task.labels, data] : [data]
 //       break
 //     case 'attachment-picker':
-//       task.attachment = data
+//       task.attachments = data
 //       break
 //   }
 
