@@ -1,7 +1,6 @@
 <template>
   <main v-if="board" class="main-layout board-container">
-    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar"
-      @toggleInvite="toggleInvite" />
+    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar" />
     <board-side-bar :activities="board.activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar" />
     <group-list :groups="board.groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
     <router-view />

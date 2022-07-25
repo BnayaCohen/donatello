@@ -2,7 +2,8 @@
     <section class="member-modal">
         <header class="modal-header">
             <span class="header-title">Members</span>
-            <span @click="toggle($event, 'Member')" class="close-btn trellicons trellicons-close-btn"></span>
+            <span @click="$emit('toggle', { ev: $event, type: 'Memberlist' })"
+                class="close-btn trellicons trellicons-close-btn"></span>
         </header>
         <div class="modal-content">
             <input @input="filterMembers" type="text" placeholder="Search members" class="modal-input">
@@ -12,9 +13,9 @@
                 <p style="padding:24px 6px;">No results</p>
             </div>
             <section class="member-list">
-                <div v-for="member in board.members" class="member-preview flex">
-                    <div @click="$emit('toggleUser', member._id)" class="member-avatar"
-                        :style="`background:${member.imgUrl}`"></div>
+                <div v-for="member in board.members" class="member-preview flex"
+                    @click="$emit('toggleMember', member._id)">
+                    <avatar-preview :member="member" :avatarSize="'small'" />
                     <p>{{ member.fullname }}</p>
                     <span v-if="memberIds.find(m => m === member._id)" class="trellicons trellicons-check"></span>
                 </div>
@@ -24,7 +25,9 @@
 </template>
 
 <script>
+import avatarPreview from '../avatar-preview.vue'
 export default {
+    components: { avatarPreview },
     props: { memberIds: Array },
 
     data() {
@@ -42,7 +45,7 @@ export default {
 
         }
     },
-    emits: ['toggle', 'saveMember']
+    emits: ['toggle', 'toggleMember']
 }
 </script>
 <style lang="scss">
