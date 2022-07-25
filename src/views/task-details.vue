@@ -66,15 +66,11 @@
                 </div>
               </div>
             </div>
-            <div
-              v-if="task?.attachment"
-              class="attachment-container flex flex-column"
-            >
-              <attachment-preview
-                :attachment="task.attachment"
+              <attachment-list
+              v-if="task.attachments?.length"
+                :attachments="task.attachments"
                 @updateCurrCover="updateCurrCover"
               />
-            </div>
             <checklist-list
               v-if="task.checklists?.length"
               :checklists="task.checklists"
@@ -140,10 +136,11 @@
 import checklistList from '../cmps/task-details-cmps/checklist-list.vue'
 import checklistModal from '../cmps/task-details-cmps/checklist-modal.vue'
 import { boardService } from '../services/board-service.js'
+import { utilService } from '../services/util-service.js'
 import labelPicker from '../cmps/task-details-cmps/label-picker.vue'
 import coverPicker from '../cmps/task-details-cmps/cover-picker.vue'
 import attachmentPicker from '../cmps/task-details-cmps/attachment-picker.vue'
-import attachmentPreview from '../cmps/task-details-cmps/attachment-preview.vue'
+import attachmentList from '../cmps/task-details-cmps/attachment-list.vue'
 import avatarPreview from '../cmps/avatar-preview.vue'
 import { userService } from '../services/user-service.js'
 import coverBg from '../cmps/task-details-cmps/cover-bg.vue'
@@ -196,9 +193,13 @@ export default {
         })
       }
       this.coverColors = this.$store.getters.getCoverColors
-      if (this.task?.style?.background)
+
+      if (!this.task.style) this.task.style = {}
+      if (this.task.style.background)
         this.currCover = { background: this.task.style.background }
       this.$refs.taskDescription.value = this.task.description
+
+       if (!this.task.attachments) this.task.attachments = []
     } catch(err) {
 
     }
@@ -254,7 +255,6 @@ export default {
     },
     updateTask() {
       const { groupId } = this.$route.params
-      console.log(this.task.checklists)
       this.$store.dispatch({
         type: 'saveTask',
         task: JSON.parse(JSON.stringify(this.task)),
@@ -319,16 +319,10 @@ export default {
       this.updateTask()
     },
     addAttachment(attachProps) {
-      const { url, title, createdAt } = attachProps
-      if (!this.task?.attachment) this.task.attachment = {}
-      this.task.attachment.url = url
-      this.task.attachment.title = title
-      this.task.attachment.createdAt = createdAt
-      if (!this.task.style) this.task.style = {}
-      this.task.style.background = attachProps.url
-      if (this.task.style?.bgColor) this.task.style.bgColor = ''
+      const newAttachment = attachProps
+      newAttachment.id=utilService.makeId()
+      this.task.attachments.push(newAttachment)
       this.isAttach = false
-      this.currCover = { background: this.task.style.background }
       this.updateTask()
     },
     removeTask() {
@@ -337,7 +331,6 @@ export default {
       this.$router.push('/board/' + boardId)
     },
     addCover(color) {
-      if (!this.task?.style) this.task.style = {}
       this.task.style.background = color
       this.currCover = { background: this.task.style.background }
       this.updateTask()
@@ -350,10 +343,9 @@ export default {
     backToBoard() {
       this.$router.push('/board/' + this.$route.params.boardId)
     },
-    updateCurrCover(coverStyle) {
-      if (!this.task?.style) this.task.style = {}
-      this.task.style.background = coverStyle.backgroundImage
-      this.currCover = coverStyle
+    updateCurrCover(cover) {
+      this.task.style.background = cover
+      this.currCover = cover
       this.updateTask()
     },
     addChecklist(checklist) {
@@ -367,7 +359,7 @@ export default {
     labelPicker,
     coverPicker,
     attachmentPicker,
-    attachmentPreview,
+    attachmentList,
     avatarPreview,
     coverBg,
     labelPrev,
@@ -380,4 +372,3 @@ export default {
   },
 }
 </script>
-<style></style>
