@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     initBackground(background) {
+      console.log(this.$route)
       this.background = background
     },
   },
