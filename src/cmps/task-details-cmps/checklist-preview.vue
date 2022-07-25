@@ -13,12 +13,12 @@
     <div class="checklist-progress">
       <span class="progressbar-percentage">{{ doneTodos }}</span>
       <div class="checklist-progress-bar">
-        <div width="doneTodos" class="checklist-progress-bar-current"></div>
+        <div :style="progressBarStyle" class="checklist-progress-bar-current"></div>
       </div>
     </div>
     <div class="checklist-items-list">
       <div
-        v-for="todo in checklist.todos"
+        v-for="(todo,idx) in checklist.todos"
         :key="todo.id"
         class="checklist-item"
       >
@@ -29,33 +29,44 @@
         />
         <div class="checklist-item-text">
           <textarea
-            v-model="todo.title"
-            :style="todo.isDone ? { textDecoration: 'line-through' } : ''"
-          ></textarea>
-          <div class="actions">
+          ref="todo"
+          @click="focusOnEl('todo',idx)"
+          v-model="todo.title"
+          :style="todo.isDone ? { textDecoration: 'line-through' } : ''"
+          >
+          <div class="actions flex">
             <span class="fa-solid fa-user-plus"></span>
             <span
               @click="removeTodo(todo.id)"
               class="fa-regular fa-trash-can"
             ></span>
           </div>
+          </textarea>
+        </div>
+        <div v-if="editingTodo===todo.id" class="save-todo-container">
+          <button class="save-todo-btn" @click="saveTodo(todo)">Save</button>
+          <span
+            @click="editingTodo=false"
+            class="close-btn trellicons trellicons-close-btn"
+          ></span>
         </div>
       </div>
     </div>
+    
     <button
       class="add-todo-btn card-sidebar-btn"
-      v-if="!editingTodo"
-      @click="editingTodo = !editingTodo"
+      v-if="!addingTodo"
+      @click="[addingTodo=!addingTodo,editingTodo=false]"
     >
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
-      <textarea v-model="newTodo.title"></textarea>
+      <textarea ref="newTodo" v-model="newTodo.title"></textarea>
       <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
-      <span
+      <button
         @click="emptyTodo"
-        class="close-btn trellicons trellicons-close-btn"
-      ></span>
+        class="close-new-todo-btn"
+      >Cancel</button>
     </div>
   </section>
 </template>
@@ -68,14 +79,15 @@ export default {
   data() {
     return {
       checklistToEdit: this.checklist,
-      editingTodo: false,
+      editingTodo: null,
+      addingTodo: false,
       newTodo: { title: '', isDone: false },
     }
   },
   methods: {
     emptyTodo() {
       this.newTodo = { title: '', isDone: false }
-      this.editingTodo = false
+      this.addingTodo = false
     },
     saveTodo(todo) {
       if (!todo.title) return
@@ -87,8 +99,9 @@ export default {
         todo.id = utilService.makeId()
         this.checklistToEdit.todos.push(todo)
         this.newTodo = { title: '', isDone: false }
+      this.addingTodo= false
       }
-      this.editingTodo = false
+      this.editingTodo = null
       this.save()
     },
     removeTodo(todoId) {
@@ -108,8 +121,17 @@ export default {
     save() {
       this.$emit('saveChecklist', this.checklistToEdit)
     },
+    focusOnEl(ref,idx=0){
+      this.$refs[ref][idx].focus()
+      this.editingTodo=this.checklist.todos[idx].id
+      this.addingTodo=false
+    }
   },
   computed: {
+    progressBarStyle(){
+      const background=this.doneTodos==='100%' ? '#61bd4f': '#5ba4cf'
+      return {width:this.doneTodos,background}
+    },
     doneTodos() {
       if (!this.checklistToEdit?.todos?.length) return `0%`
       return Math.floor(
@@ -119,7 +141,7 @@ export default {
         ) /
           this.checklist.todos.length) *
           100
-      )
+      )+'%'
     },
   },
 }
