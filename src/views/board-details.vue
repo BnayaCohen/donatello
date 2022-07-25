@@ -45,10 +45,6 @@ export default {
     }
   },
   methods: {
-    // x(board){
-    //   console.log(board)
-    //   this.board = board
-    // },
     addTask(groupId) {
       console.log(groupId)
     },
