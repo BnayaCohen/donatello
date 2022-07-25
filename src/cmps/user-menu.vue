@@ -1,7 +1,6 @@
 <template>
   <div
     class="dynamic-popover pos-absolute user-menu-popover"
-    :style="pos"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Account</h4>
