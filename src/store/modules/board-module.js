@@ -11,6 +11,7 @@ export default {
     },
     lastGroup: null,
     showLabelsOnTask: false,
+    currTask: null
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -39,6 +40,9 @@ export default {
     scene({ scene }) {
       return JSON.parse(JSON.stringify(scene))
     },
+    task({currTask}) {
+      return JSON.parse(JSON.stringify(currTask))
+    }
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -50,6 +54,9 @@ export default {
     },
     addBoard(state, { board }) {
       state.boards.push(board)
+    },
+    setTask(state, {task}){
+      state.currTask = task
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex(
@@ -105,6 +112,15 @@ export default {
         console.log('cannot get board', err)
       }
     },
+    async loadTask({commit, state}, {boardId, groupId, taskId}) {
+      try {
+        const task = await boardService.getTaskById(boardId, groupId, taskId)
+        console.log(task)
+        commit({type: 'setTask', task})
+      }catch(err) {
+
+      }
+    },
     async saveBoard({ commit }, { board }) {
       const actionType = board._id ? 'updateBoard' : 'addBoard'
       try {
@@ -130,8 +146,9 @@ export default {
           state.currBoard._id,
           groupId,
           task
-        )
-        commit({ type: 'setBoard', board })
+          )
+          commit({ type: 'setBoard', board })
+          return board
       } catch (err) {
         console.log("Couldn't save task", err)
       }

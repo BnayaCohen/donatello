@@ -1,6 +1,8 @@
 <template>
     <section class="board-side-bar flex flex-column align-center" :class="isOpen">
         <header class="flex">
+            <button class="side-bar-go-back close-btn trellicons trellicons-back" @click="goBack"
+                :style="backBtnPos"></button>
             <span class="side-bar-title">{{ currHeader }}</span>
             <button class="close-side-bar close-btn trellicons trellicons-close-btn"
                 @click="$emit('sideBarClosed')"></button>
@@ -40,25 +42,28 @@
                 </ul>
             </section>
         </main>
-        <main v-else-if="currHeader==='Colors'" class="bg-items-select">
-            <div v-for="(bgColor, i) in bgColors" :key="i" class="bg-item-select" :style="'background-color:' + bgColor"
+        <main v-else-if="currHeader === 'Colors'" class="bg-items-select">
+            <div v-for="(bgColor, i) in bgColors" :key="i" class="bg-item-select" :style="'background:' + bgColor"
                 @click="setBoardColor(bgColor)">
             </div>
         </main>
         <main v-else class="bg-items-select">
             <div class="search-photos-input">
                 <span class="trellicons trellicons-search"></span>
-                <input type="search" v-model="searchPhoto" placeholder="Photos" class="clean-input" />
+                <input type="text" v-model="searchPhoto" placeholder="Photos" class="clean-input"
+                    @keyup.enter="unsplashPhotos" />
             </div>
-        
-            <!-- <div v-for="(bgColor, i) in bgColors" :key="i" class="bg-item-select" :style="'background-color:' + bgColor"
-                @click="setBoardColor(bgColor)">
-            </div> -->
+
+            <div v-for="(bgPhoto, i) in currPhotos" :key="i" class="bg-item-select"
+                :style="`background:url(${bgPhoto.thumb}) no-repeat center center/cover`"
+                @click="setBoardColor(`url(${bgPhoto.full}) no-repeat center center/cover`)">
+            </div>
         </main>
     </section>
 </template>
 <script>
 import activityPreview from '../cmps/activity-preview.vue'
+import Axios from 'axios'
 
 export default {
     name: 'board-side-bar',
@@ -70,7 +75,8 @@ export default {
         return {
             isOnBackgroundSelect: false,
             currHeader: 'Menu',
-            searchPhoto:'',
+            searchPhoto: '',
+            currPhotos: [],
         }
     },
     methods: {
@@ -78,11 +84,21 @@ export default {
             this.isOnBackgroundSelect = true
             this.currHeader = header
         },
+        goBack() {
+            this.isOnBackgroundSelect = false
+            this.currHeader = 'Menu'
+        },
         setBoardColor(selectedBg) {
             const currBoard = this.$store.getters.board
             currBoard.style.background = selectedBg
             this.$store.dispatch({ type: 'saveBoard', board: currBoard })
-        }
+        },
+        async unsplashPhotos() {
+            const ACCESS_KEY = 'WpMt7KfY0FhRPZe_gPbcr3XltzyDXQURaEGcBWBfoRE'
+            const res = await Axios.get(`https://api.unsplash.com/search/photos?query=${this.searchPhoto}&client_id=${ACCESS_KEY}`)
+            const photoUrls = res.data.results.map(photo => ({ thumb: photo.urls.thumb, full: photo.urls.full }))
+            this.currPhotos = photoUrls
+        },
     },
     computed: {
         isOpen() {
@@ -92,7 +108,12 @@ export default {
             return ['#0079bf', '#d29034', '#519839'
                 , '#b04632', '#89609e', '#cd5a91'
                 , '#4bbf6b', '#00aecc', '#838c91']
-        }
+        },
+        backBtnPos() {
+            if(this.isOnBackgroundSelect)
+            return {transform:'translateX(48px)',opacity:1}
+            // return { left:this.isOnBackgroundSelect? '12px':'-24px' }
+        },
     },
     created() {
     },

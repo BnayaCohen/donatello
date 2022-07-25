@@ -1,24 +1,32 @@
-import { userService } from "../../services/user-service.js"
+import { userService } from '../../services/user-service.js'
 
 export default {
-    state: {
-        user: null
+  state: {
+    user: null,
+  },
+  getters: {
+    user({ user }) {
+      return user
     },
-    getters: {
-        user({ user }) { return user }
+  },
+  mutations: {
+    setUser(state, { user }) {
+      state.user = user
     },
-    mutations: {
-        saveUser(state, { user }) {
-            state.user = JSON.parse(JSON.stringify(user))
-        },
+  },
+  actions: {
+    async logout({ commit }) {
+      await userService.logout()
+      commit({ type: 'saveUser', user: null })
     },
-    actions: {
-        loadUser({ commit }) {
-            commit({ type: 'saveUser', user: userService.getLoggedInUser() })
-        },
-        async logout({commit}){
-           await userService.logout()
-           commit({ type: 'saveUser', user: null })
-        }
-    }
+    async login({ commit }, { credentials }) {
+      try {
+        const user = await userService.login(credentials)
+        commit({ type: 'setUser', user })
+        return user
+      } catch (err) {
+        console.log('Cannot sign in', err)
+      }
+    },
+  },
 }
