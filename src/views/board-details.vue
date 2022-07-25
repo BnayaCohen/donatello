@@ -2,11 +2,6 @@
   <main v-if="board" class="main-layout board-container">
     <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar"
       @toggleInvite="toggleInvite" />
-    <!-- <member-modal
-    v-if="isInviteOpen"
-    v-click-outside="toggleInvite" 
-    @toggleInvite="toggleInvite"
-    /> -->
     <board-side-bar :activities="board.activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar" />
     <group-list :groups="board.groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
     <router-view />
@@ -17,12 +12,10 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-// import membersModal from '../cmps/members-modal.vue'
 export default {
   name: 'board-details',
   data() {
     return {
-      // isInviteOpen:false,
       isSideBarOpen: false,
     }
   },
@@ -51,15 +44,12 @@ export default {
     closeSideBar() {
       this.isSideBarOpen = false
     },
-    //   toggleInvite(){
-    //   this.isInviteOpen=!this.isInviteOpen
-    // }
+
   },
   components: {
     groupList,
     boardHeader,
     boardSideBar,
-    // membersModal,
   },
   emits: ['setBackground'],
 }
