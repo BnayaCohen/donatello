@@ -27,7 +27,7 @@
               autocomplete="off"
               v-model="credentials.password"
             />
-            <div class="upload-for-signup flex flex-column align-center" v-if="!isSignIn">
+            <div class="upload-for-signup flex flex-column" v-if="!isSignIn">
               <h4>Add an avatar (optional)</h4>
               <div class="upload-preview">
                 <label for="file-upload"><span>Computer</span></label
@@ -41,7 +41,7 @@
               <div class="from-web">
                 <h3 class="small-title">Attach a link</h3>
                 <label for="web-url">
-                  <input type="text" v-model="userImgUrl" />
+                  <input class="login-input" type="text" v-model="userImgUrl" :style="{display: 'inline'}"/>
                   <button class="btn" @click="addLinkAttachment">Attach</button>
                 </label>
               </div>
@@ -149,7 +149,7 @@ export default {
       if (!this.fullname || !this.credentials.username || !this.credentials.password) return
       const signupInfo = JSON.parse(JSON.stringify(this.credentials))
       signupInfo.fullname = this.fullname
-      this.userImgUrl? signupInfo.userImgUrl = this.userImgUrl : signupInfo.userImgUrl = ''
+      this.userImgUrl? signupInfo.imgUrl = this.userImgUrl : signupInfo.imgUrl = ''
       this.$emit('signup', signupInfo)
       this.credentials.fullname = ''
       this.credentials.username = ''

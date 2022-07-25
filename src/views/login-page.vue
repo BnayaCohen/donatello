@@ -23,7 +23,8 @@
         }"
       />
       <h1
-        :style="{ letterSpacing: '0.8px', fontSize: '54.5px', height: '26px' }"
+        :style="{ letterSpacing: '0.8px', fontSize: '54.5px', height: '26px', cursor: 'pointer'}"
+        @click="$router.push('/')"
       >
         Donatello
       </h1>
