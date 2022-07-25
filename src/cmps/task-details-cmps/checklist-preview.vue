@@ -33,11 +33,11 @@
         :key="todo.id"
         class="checklist-item"
       >
-        <input
+        <el-checkbox
           @change="toggleIsDone(todo)"
           v-model="todo.isDone"
           type="checkbox"
-        />
+        ></el-checkbox>
         <div class="checklist-item-text">
           <p v-if="!editing"
           @click="focusOnEl('todo',idx)">{{todo.title}}</p>
