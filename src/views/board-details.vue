@@ -1,18 +1,14 @@
 <template>
-  <main class="main-layout board-container">
-    <board-header
-      v-if="board"
-      :board="board"
-      :isSideBarOpen="isSideBarOpen"
-      @sideBarOpened="openSideBar"
-    />
-    <board-side-bar
-      v-if="board"
-      :activities="board.activities"
-      :isSideBarOpen="isSideBarOpen"
-      @sideBarClosed="closeSideBar"
-    />
-    <group-list v-if="board" :groups="board.groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
+  <main v-if="board" class="main-layout board-container">
+    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar"
+      @toggleInvite="toggleInvite" />
+    <!-- <member-modal
+    v-if="isInviteOpen"
+    v-click-outside="toggleInvite" 
+    @toggleInvite="toggleInvite"
+    /> -->
+    <board-side-bar :activities="board.activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar" />
+    <group-list :groups="board.groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
     <router-view />
   </main>
 </template>
@@ -21,11 +17,12 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-
+// import membersModal from '../cmps/members-modal.vue'
 export default {
   name: 'board-details',
   data() {
     return {
+      // isInviteOpen:false,
       isSideBarOpen: false,
     }
   },
@@ -40,7 +37,7 @@ export default {
       await this.$store.dispatch({ type: 'loadBoard', boardId })
       this.board = this.$store.getters.board
       this.$emit('setBackground', this.board?.style?.background)
-    } catch(err) {
+    } catch (err) {
       console.log('Cannot load board to front', err)
     }
   },
@@ -54,11 +51,15 @@ export default {
     closeSideBar() {
       this.isSideBarOpen = false
     },
+    //   toggleInvite(){
+    //   this.isInviteOpen=!this.isInviteOpen
+    // }
   },
   components: {
     groupList,
     boardHeader,
     boardSideBar,
+    // membersModal,
   },
   emits: ['setBackground'],
 }
