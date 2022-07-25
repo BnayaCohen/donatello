@@ -11,7 +11,7 @@ Donatello</button>
       <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
         <button class="btn btn-background"><i class="fa-solid fa-bell"></i></button>
-        <img class="member-avatar-big" :src="loggedInUser?.imgUrl" :style="{cursor: 'pointer'}"/>
+        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="loggedInUser?.imgUrl" :style="{cursor: 'pointer'}"/>
       </section>
     </div>
   </header>
