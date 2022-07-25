@@ -56,10 +56,16 @@ async function logout() {
 }
 
 function getLoggedInUser() {
-  return JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY) || null)
+  const guest=JSON.stringify({
+    _id: "62de4d3609b63fc45f8e3541",
+    username: "guest",
+    fullname: "Guest",
+    imgUrl: "https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-1024.png"
+  })
+  return JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY) || guest )
 }
 
 function _saveToSession(value) {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+  sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(value))
   return value
 }

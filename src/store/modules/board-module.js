@@ -188,11 +188,10 @@ export default {
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
       try {
-        const board = await boardService.changeGroupPos(
+         boardService.changeGroupPos(
           state.currBoard._id,
           dropResult
         )
-        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log(err)
         commit({ type: 'changeGroupPos', dropResult, reverse: true })
@@ -201,8 +200,7 @@ export default {
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
       commit({ type: 'updateGroups', itemIndex, newColumn })
       try {
-        const board = await boardService.updateGroups(state.currBoard)
-        commit({ type: 'setBoard', board })
+        boardService.updateGroups(state.currBoard)
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
