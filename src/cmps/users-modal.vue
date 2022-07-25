@@ -5,11 +5,11 @@
             <span @click="$emit('toggleInvite')" class="close-btn trellicons trellicons-close-btn"></span>
         </header>
         <div class="modal-content"></div>
-        <input @input="setFilterBy" v-model="txt" type="text" placeholder="Search users" class="modal-input">
+        <input @input="getUsers" v-model="txt" type="text" placeholder="Search users" class="modal-input">
         <div v-if="loading" class="loading skeleton"></div>
-        <!-- <div v-if="!board.members.length" class="no-results">
+        <div v-if="!users || !users.length" class="no-results">
             <p style="padding:24px 6px;">No results</p>
-        </div> -->
+        </div>
         <section class="user-list">
             <div v-for="user in users" class="user-preview flex">
                 <div @click="$emit('toggleUser', user._id)" class="user-avatar" :style="`background:${user.imgUrl}`">
@@ -32,17 +32,21 @@ export default {
         }
     },
     created() {
-        this.setFilterBy = utilService.debounce(this.setFilterBy)
+        this.getUsers = utilService.debounce(this.getUsers)
+        this.$store.dispatch({ type: 'getUsers', filterBy: this.txt })
     },
     methods: {
-        setFilterBy() {
-            this.$emit('setFilterBy', txt)
+        getUsers() {
+            this.$store.dispatch({ type: 'getUsers', filterBy: this.txt })
         }
     },
     computed: {
         board() {
             return this.$store.getters.board
         },
+        users() {
+            return this.$store.getters.users
+        }
     },
 }
 </script>
