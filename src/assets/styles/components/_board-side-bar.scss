@@ -18,9 +18,25 @@
     transform: translateX(0);
   }
 
+  .side-bar-go-back {
+    font-size: em(20px);
+    color: #4d6183;
+    position: absolute;
+    left: -36px;
+    overflow-x: hidden;
+    top: 9px;
+    transition: all .12s ease-in;
+    opacity: 0;
+
+    &:hover {
+      color: #091e42;
+    }
+  }
+
   .side-bar-title {
     line-height: rem(20px);
     margin: 16px 32px;
+    padding-left: 6px;
     font-size: em(16px);
     font-weight: 600;
     overflow: hidden;
@@ -35,6 +51,11 @@
     right: 0;
     padding: 10px 12px;
     font-size: em(20px);
+    color: #4d6183;
+
+    &:hover {
+      color: #091e42;
+    }
   }
 
   .side-header-hr {
@@ -44,7 +65,7 @@
     height: 1px;
     margin: 0;
     padding: 0;
-    width: 95%;
+    width: 92%;
   }
 
   .main-side-bar-content {
@@ -99,6 +120,7 @@
   }
 
   .bg-items-select {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -110,7 +132,7 @@
     display: flex;
     background: #fafbfc;
     border-radius: 3px;
-    box-shadow: inset 0 0 0 2px #dfe1e6;
+    box-shadow: $box-shadow;
     margin: 0 6px 4px 0;
     padding: 8px 10px;
     transition-duration: 85ms;
@@ -127,12 +149,11 @@
       width: 100%;
       font-family: inherit;
       font-size: em(14px);
-    }
 
-    &:active {
-      box-shadow: inset 0 0 0 2px #0079bf;
+      &:focus {
+        $box-shadow: inset 0 0 0 2px #0079bf !default;
+      }
     }
-
   }
 
   .side-bar-options {

@@ -83,7 +83,7 @@
             <div class="comment-container flex justify-between align-center">
               <div class="task-detail-title">
                 <span class="trellicons trellicons-comments"></span>
-                <h3>Activitiy</h3>
+                <h3>Activity</h3>
               </div>
             </div>
           </div>
@@ -178,25 +178,30 @@ export default {
     }
   },
   async created() {
-    const { boardId, taskId, groupId } = this.$route.params
-    const currBoard = this.$store.getters.board
-    if (!currBoard || !currBoard.labels.length) {
-      await this.$store.dispatch({ type: 'loadBoard', boardId })
-    }
-    this.labels = this.$store.getters.getLabels
-    this.task = await boardService.getTaskById(boardId, groupId, taskId)
-    // TODO: add labels to each board in service
-    if (this.task.labelIds) {
-      this.task.labelIds.map((labelId) => {
-        this.labels.forEach((label) => {
-          if (label.id === labelId) this.taskLabels.push(label)
+    try {
+      const { boardId, taskId, groupId } = this.$route.params
+      const currBoard = this.$store.getters.board
+      if (!currBoard) {
+        await this.$store.dispatch({ type: 'loadBoard', boardId })
+      }
+      this.labels = this.$store.getters.getLabels
+      await this.$store.dispatch({ type: 'loadTask', boardId, groupId, taskId })
+      this.task = this.$store.getters.task
+      // TODO: add labels to each board in service
+      if (this.task.labelIds) {
+        this.task.labelIds.map((labelId) => {
+          this.labels.forEach((label) => {
+            if (label.id === labelId) this.taskLabels.push(label)
+          })
         })
-      })
+      }
+      this.coverColors = this.$store.getters.getCoverColors
+      if (this.task?.style?.background)
+        this.currCover = { background: this.task.style.background }
+      this.$refs.taskDescription.value = this.task.description
+    } catch(err) {
+
     }
-    this.coverColors = this.$store.getters.getCoverColors
-    if (this.task?.style?.background)
-      this.currCover = { background: this.task.style.background }
-    this.$refs.taskDescription.value = this.task.description
   },
   computed: {
     groupTitle() {
@@ -284,6 +289,7 @@ export default {
       if (!this.task.labelIds || !this.task.labelIds.length) {
         this.task.labelIds = []
       }
+      
       for (var i = 0; i < this.task.labelIds.length; i++) {
         if (this.task.labelIds[i] === labelId) {
           this.task.labelIds.splice(i, 1)
@@ -324,9 +330,9 @@ export default {
       this.currCover = { background: this.task.style.background }
       this.updateTask()
     },
-    async removeTask() {
+    removeTask() {
       const { boardId, taskId, groupId } = this.$route.params
-      await this.$store.dispatch({ type: 'removeTask', taskId, groupId })
+      this.$store.dispatch({ type: 'removeTask', taskId, groupId })
       this.$router.push('/board/' + boardId)
     },
     addCover(color) {
@@ -341,7 +347,6 @@ export default {
       this.updateTask()
     },
     backToBoard() {
-      this.updateTask()
       this.$router.push('/board/' + this.$route.params.boardId)
     },
     updateCurrCover(coverStyle) {

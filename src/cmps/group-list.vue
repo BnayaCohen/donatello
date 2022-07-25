@@ -4,10 +4,10 @@
       drop-class="card-ghost-drop" :drop-placeholder="dropPlaceHolderOptions" tag="div"
       orientation="horizontal" @drop="onGroupDrop($event)">
       <Draggable v-for="group in groups" :key="group.id">
-        <group-preview :group="group" />
+        <group-preview :group="group" @x="x"/>
       </Draggable>
       <article class="new-group">
-        <group-preview :group="newGroup" />
+        <group-preview :group="newGroup" @x="x"/>
       </article>
     </Container>
   </section>
@@ -49,6 +49,9 @@ export default {
     }
   },
   methods: {
+    x(board) {
+      this.$emit('x',board)
+    },
     onGroupDrop(dropResult) {
       if (dropResult.removedIndex === dropResult.addedIndex) return
       const scene = Object.assign({}, this.scene)

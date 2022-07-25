@@ -59,6 +59,9 @@ export default {
     }
   },
   methods: {
+    x(board){
+      this.$emit('x', board)
+    },
     updateTitle() {
       if (this.group.title === '') return
       this.$store.dispatch({ type: 'saveGroup', group: this.group })
