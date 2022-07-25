@@ -1,13 +1,16 @@
 <template>
+    <div class="header-hide" :style="{height: '44px', backgroundColor: '#fff', position: 'fixed', top: 0, width: '100%'}"></div>
   <section>
+    <div class="login-page-header flex justify-center align-center" :style="{height: '196px'}">
+        <img src="../assets/img/trello-logo.png" :style="{maxHeight: '43px', maxWidth: '43px', marginInlineEnd: '11px'}"/>
+        <h1 :style="{letterSpacing: '0.8px', fontSize: '54.5px', height:  '26px'}">Donatello</h1>
+    </div>
     <div class="form-container">
       <login-form @login="onLogin"/>
     </div>
     <div class="right-svg">
-      <img src="/static/media/login-svg-right.df08073f.svg" alt="right-svg" />
     </div>
     <div class="left-svg">
-      <img src="/static/media/login-svg-left.ff7c7688.svg" alt="left-svg" />
     </div>
   </section>
 </template>
@@ -16,6 +19,9 @@ import loginForm from '../cmps/login-form.cmp.vue'
 export default {
   name: 'loginPage',
   components: { loginForm },
+  created() {
+    this.$emit('setBackground', '#fff')
+  },
   methods: {
     onLogin(credentials) {
       this.$store.dispatch({ type: 'login', credentials })
@@ -31,6 +37,7 @@ export default {
 </script>
 <style>
 .form-container {
+    font-family: inherit;
 }
 
 </style>
