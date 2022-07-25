@@ -74,9 +74,8 @@
 import boardCreate from '../cmps/board-create.vue'
 import { boardService } from '../services/board-service'
 // import { userService } from '../services/user-service'
-import userMenu from '../cmps/user-menu.vue'
 export default {
-  components: { boardCreate, userMenu },
+  components: { boardCreate },
   name: 'boards-container',
   data() {
     return {

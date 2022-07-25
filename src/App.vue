@@ -1,13 +1,13 @@
 <template>
   <div :style="bgStyle">
-    <app-header @toggleUserMenu="toggleUserMenu"/>
+    <app-header @toggleUserMenu="toggleUserMenu" />
     <router-view @setBackground="initBackground" />
   </div>
   <user-menu
     v-if="isUserMenuOpen"
     @toggleUserMenu="toggleUserMenu"
     v-click-outside="toggleUserMenu"
-    :pos="getCords"
+    @logout="logout"
   />
 </template>
 
@@ -38,6 +38,11 @@ export default {
       this.y = ev?.clientY
       this.isUserMenuOpen = !this.isUserMenuOpen
     },
+    logout() {
+      this.$store.dispatch('logout')
+      this.isUserMenuOpen = false
+      this.$router.push('/')
+    },
   },
   computed: {
     bgStyle() {
@@ -45,13 +50,10 @@ export default {
         background: this.background,
       }
     },
-    getCords() {
-      return { top: this.y + 35 + 'px', left: this.x - 290 + 'px' }
-    },
   },
   components: {
     appHeader,
-    userMenu
+    userMenu,
   },
 }
 </script>

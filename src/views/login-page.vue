@@ -30,7 +30,7 @@
       </h1>
     </div>
     <div class="form-container">
-      <login-form @login="onLogin" @signup="onSignup" :isSignIn="isSignIn"/>
+      <login-form @login="onLogin" @signup="onSignup"/>
     </div>
     <div class="right-svg"></div>
     <div class="left-svg"></div>
@@ -43,7 +43,6 @@ export default {
   components: { loginForm },
   data() {
     return {
-        isSignIn: true
     }
   },
   created() {
