@@ -25,6 +25,9 @@ export default {
     groups: Array,
     isSideBarOpen: Boolean
   },
+  created() {
+    console.log(this.groups)
+  },
   data() {
     return {
       scene: this.$store.getters.scene,

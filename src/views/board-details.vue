@@ -12,7 +12,7 @@
       :isSideBarOpen="isSideBarOpen"
       @sideBarClosed="closeSideBar"
     />
-    <group-list v-if="board" :groups="groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
+    <group-list v-if="board" :groups="board.groups" @add-task="addTask" :isSideBarOpen="isSideBarOpen" />
     <router-view />
   </main>
 </template>
@@ -45,10 +45,6 @@ export default {
     }
   },
   methods: {
-    // x(board){
-    //   console.log(board)
-    //   this.board = board
-    // },
     addTask(groupId) {
       console.log(groupId)
     },
