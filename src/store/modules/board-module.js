@@ -49,6 +49,7 @@ export default {
       state.boards = boards
     },
     setBoard(state, { board }) {
+      console.log(board)
       state.currBoard = board
       state.scene.children = board.groups
     },
