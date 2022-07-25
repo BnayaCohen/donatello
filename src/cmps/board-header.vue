@@ -10,7 +10,7 @@
         <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
         </div>
         
-        <button class="btn-background">Invite</button>
+        <button @click="$emit('toggleInvite')" class="btn-background">Invite</button>
       </section>
 
       <section v-if="!isSideBarOpen" class="more-options flex align-center justify-center">
@@ -43,7 +43,7 @@ export default {
     updateBoardTitle(){
        if (this.board.title === '') return
            this.$store.dispatch({ type: 'saveBoard', board: this.board })
-    }
+    },
   },
   computed: {
     isBoardStarred() {
