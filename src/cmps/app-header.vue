@@ -34,9 +34,6 @@ export default {
     login(credentials) {
       this.$emit('login', credentials)
     },
-    logout() {
-      this.$emit('logout')
-    },
     signup(signupInfo) {
       this.$emit('signup', signupInfo)
     },

@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div :style="{padding: '6px 0'}">
-                <button class="full-btn" @click="logout">Log out</button>
+                <button class="full-btn" @click="$emit('logout')">Log out</button>
             </div>
         </div>
       </div>
@@ -38,11 +38,6 @@ export default {
         }
     },
     methods: {
-        logout() {
-            this.$store.dispatch('logout')
-            this.$router.push('/')
-            this.$emit('toggleUserMenu')
-        }
     },
     created() {
         this.loggedInUser = this.$store.getters.user
