@@ -1,18 +1,29 @@
 <template>
   <section class="checklist-preview">
-    <span class="trellicons trellicons-checklist"></span>
-    <div class="checklist-title">
-      <h3>{{ checklist.title }}</h3>
-      <button
-        @click="$emit('removeChecklist', checklist.id)"
-        class="remove-checklist"
-      >
+    <div class="checklist-header flex align-center">
+      <span class="trellicons trellicons-checklist"></span>
+      <div v-if="editing!==checklist.id" style="width:100%;" class="checklist-header-title flex justify-between">
+        <h3 @click="focusOnEl('checklist')"
+        >{{ checklist.title }}</h3>
+        <button
+          @click="$emit('removeChecklist', checklist.id)"
+          class="remove-checklist"
+        >
         Delete
-      </button>
+        </button>
+      </div>
+      <div v-else class="save-container">
+        <textarea class="edit-textarea" v-model="checklistToEdit.title" ref="checklist"></textarea>
+        <button class="save-btn" @click=";[editing=null,save()]">Save</button>
+          <span
+            @click="editing=null"
+            class="close-btn trellicons trellicons-close-btn"
+          ></span>
+      </div>
     </div>
-    <div class="checklist-progress">
+    <div class="checklist-progress flex">
       <span class="progressbar-percentage">{{ doneTodos }}</span>
-      <div class="checklist-progress-bar">
+      <div class="checklist-progress-bar self-center" style="height: 8px;width:100%;background:#091e4214;">
         <div :style="progressBarStyle" class="checklist-progress-bar-current"></div>
       </div>
     </div>
@@ -28,27 +39,30 @@
           type="checkbox"
         />
         <div class="checklist-item-text">
-          <textarea
+          <p v-if="!editing"
+          @click="focusOnEl('todo',idx)">{{todo.title}}</p>
+          <textarea v-else-if="editing===todo.id"
+          class="edit-textarea"
           ref="todo"
-          @click="focusOnEl('todo',idx)"
           v-model="todo.title"
+          style="width:100%;"
           :style="todo.isDone ? { textDecoration: 'line-through' } : ''"
           >
-          <div class="actions flex">
+          <!-- <div class="actions flex">
             <span class="fa-solid fa-user-plus"></span>
             <span
               @click="removeTodo(todo.id)"
               class="fa-regular fa-trash-can"
             ></span>
-          </div>
+          </div> -->
           </textarea>
-        </div>
-        <div v-if="editingTodo===todo.id" class="save-todo-container">
-          <button class="save-todo-btn" @click="saveTodo(todo)">Save</button>
+          <div v-if="editing===todo.id" class="save-container">
+          <button class="save-btn" @click="saveTodo(todo)">Save</button>
           <span
-            @click="editingTodo=false"
+            @click="editing=null"
             class="close-btn trellicons trellicons-close-btn"
           ></span>
+        </div>
         </div>
       </div>
     </div>
@@ -56,12 +70,12 @@
     <button
       class="add-todo-btn card-sidebar-btn"
       v-if="!addingTodo"
-      @click="[addingTodo=!addingTodo,editingTodo=false]"
+      @click="[addingTodo=!addingTodo,editing=null]"
     >
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
-      <textarea ref="newTodo" v-model="newTodo.title"></textarea>
+      <textarea v-model="newTodo.title"></textarea>
       <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
       <button
         @click="emptyTodo"
@@ -79,7 +93,7 @@ export default {
   data() {
     return {
       checklistToEdit: this.checklist,
-      editingTodo: null,
+      editing: null,
       addingTodo: false,
       newTodo: { title: '', isDone: false },
     }
@@ -101,7 +115,7 @@ export default {
         this.newTodo = { title: '', isDone: false }
       this.addingTodo= false
       }
-      this.editingTodo = null
+      this.editing = null
       this.save()
     },
     removeTodo(todoId) {
@@ -122,15 +136,25 @@ export default {
       this.$emit('saveChecklist', this.checklistToEdit)
     },
     focusOnEl(ref,idx=0){
-      this.$refs[ref][idx].focus()
-      this.editingTodo=this.checklist.todos[idx].id
+      if(ref!=='todo'){
+        this.editing=this.checklist.id
+        setTimeout(()=>{this.$refs[ref].focus()},300)
+      }
+      else{
+        this.editing=this.checklist.todos[idx].id
+        setTimeout(()=>{
+          console.log(this.$refs)
+          this.$refs[ref][0].focus()},300)
+      }
+
       this.addingTodo=false
+      
     }
   },
   computed: {
     progressBarStyle(){
       const background=this.doneTodos==='100%' ? '#61bd4f': '#5ba4cf'
-      return {width:this.doneTodos,background}
+      return {width:this.doneTodos,background,height:'100%',borderRadius:`4px` }
     },
     doneTodos() {
       if (!this.checklistToEdit?.todos?.length) return `0%`
