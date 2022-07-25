@@ -1,4 +1,5 @@
 import { boardService } from '../../services/board-service.js'
+import { utilService } from '../../services/util-service.js'
 
 export default {
   state: {
@@ -10,6 +11,7 @@ export default {
       children: null,
     },
     lastGroup: null,
+    lastTask: null,
     showLabelsOnTask: false,
     currTask: null
   },
@@ -40,7 +42,7 @@ export default {
     scene({ scene }) {
       return JSON.parse(JSON.stringify(scene))
     },
-    task({currTask}) {
+    task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
     }
   },
@@ -55,7 +57,7 @@ export default {
     addBoard(state, { board }) {
       state.boards.push(board)
     },
-    setTask(state, {task}){
+    setTask(state, { task }) {
       state.currTask = task
     },
     updateBoard(state, { board }) {
@@ -73,8 +75,6 @@ export default {
       if (!reverse) {
         const group = state.currBoard.groups.splice(removedIndex, 1)[0]
         state.currBoard.groups.splice(addedIndex, 0, group)
-        // state.scene.children.splice(removedIndex, 1)[0]
-        // state.scene.children.splice(addedIndex, group)
       } else {
         const group = state.currBoard.groups.splice(addedIndex, 1)[0]
         state.currBoard.groups.splice(removedIndex, 0, group)
@@ -92,6 +92,44 @@ export default {
     toggleTaskLabels(state) {
       state.showLabelsOnTask = !state.showLabelsOnTask
     },
+    saveGroup(state, { group, reverse = false }) {
+      if (!reverse) {
+        const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
+        if (idx !== -1) state.currBoard.groups.splice(idx, 1, group)
+        else state.currBoard.groups.push(group)
+
+        state.lastGroup = { ...group }
+        group.id = group.id || utilService.makeId()
+      }
+      else {
+        const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
+        if (idx !== -1) {
+          !state.lastGroup.id && state.currBoard.groups.splice(idx, 1)
+          state.lastGroup.id && state.currBoard.groups.splice(idx, 1, state.lastGroup)
+        }
+        state.lastGroup = null
+      }
+    },
+    saveTask(state, { groupId, task, reverse = false }) {
+      const group = state.currBoard.groups.find(group => group.id === groupId)
+      if (!reverse) {
+        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
+        if (idx !== -1) group.tasks.splice(idx, 1, task)
+        else group.tasks.push(task)
+
+        state.lastTask = { ...task }
+        task.id = task.id || utilService.makeId()
+      }
+      else {
+        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
+        if (idx !== -1) {
+          !state.lastTask && group.tasks.splice(idx, 1)
+          state.lastTask && group.tasks.splice(idx, 1, state.latTask)
+
+        }
+        state.lastTask = null
+      }
+    }
   },
   actions: {
     async loadBoards({ commit }) {
@@ -112,12 +150,12 @@ export default {
         console.log('cannot get board', err)
       }
     },
-    async loadTask({commit, state}, {boardId, groupId, taskId}) {
+    async loadTask({ commit }, { boardId, groupId, taskId }) {
       try {
         const task = await boardService.getTaskById(boardId, groupId, taskId)
         console.log(task)
-        commit({type: 'setTask', task})
-      }catch(err) {
+        commit({ type: 'setTask', task })
+      } catch (err) {
 
       }
     },
@@ -125,7 +163,6 @@ export default {
       const actionType = board._id ? 'updateBoard' : 'addBoard'
       try {
         const savedBoard = await boardService.saveBoard(board)
-        // const savedBoard = await boardService.getById(savedBoard._id)
         commit({ type: actionType, board: savedBoard })
         return savedBoard
       } catch (err) {
@@ -133,24 +170,25 @@ export default {
       }
     },
     async saveGroup({ commit, state }, { group }) {
+      commit({ type: 'saveGroup', group })
       try {
-        const board = await boardService.saveGroup(state.currBoard._id, group)
-        commit({ type: 'setBoard', board })
+        boardService.saveGroup(state.currBoard._id, group)
       } catch (err) {
         console.log("Couldn't save group", err)
+        commit({ type: 'saveGroup', group, reverse: true })
       }
     },
     async saveTask({ commit, state }, { groupId, task }) {
+      commit({ type: 'saveTask', groupId, task })
       try {
-        const board = await boardService.saveTask(
+        boardService.saveTask(
           state.currBoard._id,
           groupId,
           task
-          )
-          commit({ type: 'setBoard', board })
-          return board
+        )
       } catch (err) {
         console.log("Couldn't save task", err)
+        commit({ type: 'saveTask', groupId, task, reverse: false })
       }
     },
     async removeTask({ commit, state }, { groupId, taskId }) {
@@ -188,11 +226,10 @@ export default {
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
       try {
-        const board = await boardService.changeGroupPos(
+        boardService.changeGroupPos(
           state.currBoard._id,
           dropResult
         )
-        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log(err)
         commit({ type: 'changeGroupPos', dropResult, reverse: true })
@@ -201,8 +238,7 @@ export default {
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
       commit({ type: 'updateGroups', itemIndex, newColumn })
       try {
-        const board = await boardService.updateGroups(state.currBoard)
-        commit({ type: 'setBoard', board })
+        boardService.updateGroups(state.currBoard)
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })

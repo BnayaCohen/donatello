@@ -57,7 +57,7 @@ async function getById(boardId) {
 
 async function remove(boardId) {
   // await storageService.remove(STORAGE_KEY, boardId)
-    await httpService.delete(`board/${boardId}`)
+  await httpService.delete(`board/${boardId}`)
 }
 
 async function saveBoard(board) {
@@ -69,7 +69,8 @@ async function saveBoard(board) {
       return await httpService.put(`board/${board._id}`, board)
     } else {
       return await httpService.post('board', board)
-    }  } catch {
+    }
+  } catch {
     console.log('cannot save board')
   }
 }
@@ -117,18 +118,15 @@ function getEmptyTask() {
 async function saveGroup(boardId, group) {
   try {
     const board = await getById(boardId)
-  
-    if (!group.id) {
-      group.id = utilService.makeId()
-      board.groups.push(group)
-      var activity = createActivity('created a list')
-    } else {
-      const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
-      if (idx !== -1) board.groups.splice(idx, 1, group)
-    }
+
+    var activity = createActivity('created a list')
+    const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
+    if (idx !== -1) board.groups.splice(idx, 1, group)
+    else board.groups.push(group)
+
     board.activities.unshift(activity)
-    return await saveBoard(board)
-  }catch(err) {
+    saveBoard(board)
+  } catch (err) {
     console.log('Cannot save group!', err)
   }
 }
@@ -137,17 +135,20 @@ async function saveTask(boardId, groupId, task) {
   try {
     const board = await getById(boardId)
     const group = board.groups.find((group) => group.id === groupId)
-    if (!task.id) {
-      task.id = utilService.makeId()
-      group.tasks.push(task)
-      var activity = createActivity('created a card', task)
-      board.activities.unshift(activity)
-    } else {
-      const idx = group.tasks.findIndex((curTask) => task.id === curTask.id)
-      if (idx !== -1) group.tasks.splice(idx, 1, task)
+    const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
+    let activity
+    if (idx !== -1) {
+      group.tasks.splice(idx, 1, task)
+      activity = createActivity('Updated a card')
     }
-    return await saveBoard(board)
-  } catch(err) {
+    else {
+      activity = createActivity('Created a card', task)
+      group.tasks.push(task)
+    }
+
+    board.activities.unshift(activity)
+    saveBoard(board)
+  } catch (err) {
     console.log('ERROR WHILE SAVING TASK!!!', err)
   }
 }
@@ -181,7 +182,7 @@ function createActivity(txt = '', task) {
 async function removeGroup(boardId, groupId) {
   try {
     const board = await getById(boardId)
-  
+
     const idx = board.groups.findIndex((group) => group.id === groupId)
     if (idx !== -1) {
       const activity = createActivity('removed a list')
@@ -189,7 +190,7 @@ async function removeGroup(boardId, groupId) {
       board.activities.unshift(activity)
     }
     return await saveBoard(board)
-  }catch(err) {
+  } catch (err) {
     console.log('Cannot remove group', err)
   }
 }
@@ -205,7 +206,7 @@ async function removeTask(boardId, groupId, taskId) {
       board.activities.unshift(activity)
     }
     return await saveBoard(board)
-  }catch(err) {
+  } catch (err) {
     console.log('Cannot remove task', err)
   }
 }
@@ -215,10 +216,9 @@ async function getTaskById(boardId, groupId, taskId) {
     const board = await getById(boardId)
     const group = board.groups.find((group) => group.id === groupId)
     return group.tasks.find((task) => task.id === taskId)
-  }catch(err) {
+  } catch (err) {
     console.log('Cannot get Task!!!!', err)
   }
-
 }
 
 async function changeGroupPos(boardId, dropResult) {
@@ -228,8 +228,8 @@ async function changeGroupPos(boardId, dropResult) {
     const board = await getById(boardId)
     const group = board.groups.splice(removedIndex, 1)[0]
     board.groups.splice(addedIndex, 0, group)
-    return await saveBoard(board)
-  } catch(err) {
+    saveBoard(board)
+  } catch (err) {
     console.log('Cannot Change Group Pos', err)
   }
 }
@@ -237,8 +237,8 @@ async function changeGroupPos(boardId, dropResult) {
 async function updateGroups(board) {
   try {
     const newBoard = JSON.parse(JSON.stringify(board))
-    return await saveBoard(newBoard)
-  } catch(err) {
+    saveBoard(newBoard)
+  } catch (err) {
     console.log('Cannot update groups', err)
   }
 }

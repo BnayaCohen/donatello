@@ -268,6 +268,7 @@ export default {
       this.isDate = !this.isDate
     },
     toggle(customEv) {
+      console.log(customEv)
       this.clickPos.x = customEv?.ev?.clientX
       this.clickPos.y = customEv?.ev?.clientY
       this['is' + customEv.type] = !this['is' + customEv.type]
