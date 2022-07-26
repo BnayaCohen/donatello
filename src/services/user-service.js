@@ -25,9 +25,7 @@ async function query(filterBy = null) {
 
 async function getById(userId) {
   try {
-    return await storageService.getById(STORAGE_KEY, userId)
-    // const res = await httpService.get(USER_URL + userId)
-    // return res.data
+    return await httpService.get(`user/${userId}`)
   } catch (err) {
     console.log(err)
     console.error('Something went wrong try again later')
