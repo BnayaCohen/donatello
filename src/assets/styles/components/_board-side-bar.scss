@@ -184,7 +184,6 @@
     width: 100%;
 
     p {
-      margin: 0 12px;
       font-size: rem(16px);
       font-weight: 700;
     }
@@ -195,6 +194,10 @@
       font-weight: 600;
       line-height: 20px;
       width: 30px;
+
+      p {
+        margin: 0 12px;
+      }
 
       span {
         font-size: em(16px);

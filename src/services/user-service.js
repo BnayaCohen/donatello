@@ -10,6 +10,7 @@ export const userService = {
   login,
   logout,
   getLoggedInUser,
+  getDefaultGuest,
   query
 }
 
@@ -57,18 +58,13 @@ async function logout() {
   try {
     sessionStorage.removeItem(USER_STORAGE_KEY)
     return await httpService.post('auth/logout')
-  } catch(err) {
+  } catch (err) {
     console.log('cannot logout', err)
   }
 }
 
 function getLoggedInUser() {
-  const guest={
-    _id: "62de4d3609b63fc45f8e3541",
-    username: "guest",
-    fullname: "Guest",
-    imgUrl: "https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-1024.png"
-  }
+  const guest = getDefaultGuest()
   if (!sessionStorage.getItem(USER_STORAGE_KEY)) return _saveToSession(guest)
   else return JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY))
 }
@@ -76,4 +72,13 @@ function getLoggedInUser() {
 function _saveToSession(value) {
   sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(value))
   return value
+}
+
+function getDefaultGuest() {
+  return {
+    _id: "62de4d3609b63fc45f8e3541",
+    username: "guest",
+    fullname: "Guest",
+    imgUrl: "https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-1024.png"
+  }
 }
