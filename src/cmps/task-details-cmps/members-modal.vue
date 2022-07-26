@@ -58,6 +58,12 @@ export default {
     width: 321px;
     z-index: 35;
 
+    .close-btn.trellicons-close-btn {
+        position: absolute;
+        font-size: 1.2rem;
+        right: 0;
+    }
+
     .modal-header {
         align-items: center;
         border-bottom: 1px solid #091e4221;
