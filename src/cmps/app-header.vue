@@ -12,7 +12,7 @@
       <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
         <button class="btn btn-background" :class="{'dark-theme':isDark}"><i class="fa-solid fa-bell"></i></button>
-        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="loggedInUser?.imgUrl"
+        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="user?.imgUrl"
           :style="{ cursor: 'pointer' }" />
       </section>
     </div>

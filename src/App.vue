@@ -3,7 +3,7 @@
     <app-header @toggleUserMenu="toggleUserMenu" :bgColor="headerColor" :isDark="isDarkTheme" />
     <router-view @setBackground="initBackground" :isDark="isDarkTheme" />
   </div>
-  <user-menu v-if="isUserMenuOpen" @toggleUserMenu="toggleUserMenu" v-click-outside="toggleUserMenu" @logout="logout" />
+  <user-menu v-if="isUserMenu" @toggleUserMenu="toggleUserMenu" v-click-outside="toggleUserMenu" @logout="logout" />
 </template>
 
 <script>
