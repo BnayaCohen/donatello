@@ -1,3 +1,5 @@
+// import { FastAverageColor } from 'fast-average-color';
+
 export const utilService = {
   makeId,
   getRandomIntInc,
@@ -7,6 +9,9 @@ export const utilService = {
   timeAgo,
   makeRandNum,
   getRandomColor,
+  getImgAvgColor,
+  isDarkImg,
+  isDarkColor,
 }
 
 function makeRandNum() {
@@ -73,7 +78,7 @@ function timeAgo(input) {
         time = time.replace('ago', '')
         time += ' ago'
       }
-      return time //? time : 'Just now'
+      return time ? time : 'Just now'
     }
   }
 }
@@ -153,4 +158,35 @@ export const TypeWriter = class TypeWriter {
 
     setTimeout(() => this.type(), typeSpeed)
   }
+}
+
+async function getImgAvgColor(imgUrl) {
+  try {
+    const fac = new FastAverageColor();
+    const color = await fac.getColorAsync(imgUrl)
+    return color.hexa
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+
+async function isDarkImg(imgUrl) {
+  try {
+    const fac = new FastAverageColor();
+    const color = await fac.getColorAsync(imgUrl)
+    return color.isDark
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+
+function isDarkColor(color) {
+  const hex = color.replace('#', '');
+  const c_r = parseInt(hex.substr(0, 2), 16);
+  const c_g = parseInt(hex.substr(2, 2), 16);
+  const c_b = parseInt(hex.substr(4, 2), 16);
+  const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+  return brightness < 155;
 }

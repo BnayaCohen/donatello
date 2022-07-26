@@ -44,7 +44,7 @@
         </main>
         <main v-else-if="currHeader === 'Colors'" class="bg-items-select">
             <div v-for="(bgColor, i) in bgColors" :key="i" class="bg-item-select" :style="'background:' + bgColor"
-                @click="setBoardColor(bgColor)">
+                @click="setBoardBg(bgColor)">
             </div>
         </main>
         <main v-else class="bg-items-select">
@@ -56,7 +56,7 @@
 
             <div v-for="(bgPhoto, i) in currPhotos" :key="i" class="bg-item-select"
                 :style="`background:url(${bgPhoto.thumb}) no-repeat center center/cover`"
-                @click="setBoardColor(`url(${bgPhoto.full}) no-repeat center center/cover`)">
+                @click="setBoardBg(bgPhoto.full)">
             </div>
         </main>
     </section>
@@ -88,7 +88,7 @@ export default {
             this.isOnBackgroundSelect = false
             this.currHeader = 'Menu'
         },
-        setBoardColor(selectedBg) {
+        setBoardBg(selectedBg) {
             const currBoard = this.$store.getters.board
             currBoard.style.background = selectedBg
             this.$store.dispatch({ type: 'saveBoard', board: currBoard })
