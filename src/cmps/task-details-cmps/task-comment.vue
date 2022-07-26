@@ -29,7 +29,7 @@
     </div>
     <seciton class="all-comments-container" v-if="comments.length">
       <div v-for="comment in comments" :key="comment.id">
-        <comment-preview :comment="comment" :loggedInUser="loggedInUser"/>
+        <comment-preview :comment="comment" :loggedInUser="loggedInUser" @deleteComment="deleteComment"/>
       </div>
     </seciton>
   </div>
@@ -45,6 +45,7 @@ export default {
     return {
       comment: {
         byMember: null,
+        createdAt: null,
         txt: null,
       },
     }
@@ -69,10 +70,14 @@ export default {
       if (!this.comment.txt) return
       this.$emit('saveComment', this.comment)
     },
+    deleteComment(commentId) {
+      this.$emit('deleteComment', commentId)
+    }
   },
   components: {
     commentPreview
-  }
+  },
+  emits: ['saveComment', 'deleteComment']
 }
 </script>
 <style></style>

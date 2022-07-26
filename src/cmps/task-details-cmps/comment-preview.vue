@@ -19,7 +19,7 @@
             @click="openComment"
             v-model="comment.txt"
             disabled
-            :style="{cursor: 'default'}"
+            :style="{ cursor: 'default' }"
           ></textarea>
           <div ref="commentControl" class="comment-control">
             <button class="submit-comment-btn flex align-center justify-center">
@@ -27,6 +27,11 @@
             </button>
           </div>
         </div>
+      </div>
+      <div class="comment-actions">
+        <span class="quiet-a edit-comment">Edit</span>
+        <span class="dash">-</span>
+        <span class="quiet-a delete-comment">Delete</span>
       </div>
     </form>
   </div>
@@ -36,7 +41,6 @@ import { utilService } from '../../services/util-service.js'
 export default {
   props: {
     loggedInUser: Object,
-
     comment: Object,
   },
   created() {
@@ -47,6 +51,12 @@ export default {
       return utilService.timeAgo(this.comment.createdAt)
     },
   },
+  methods: {
+    deleteComment() {
+      this.$emit('deleteComment', this.comment.id)
+    },
+  },
+  emits: ['deleteComment'],
 }
 </script>
 <style></style>
