@@ -227,7 +227,7 @@ export default {
           this.taskComments.unshift(comment)
         })
       }
-          console.log(this.taskComments)
+      console.log(this.taskComments)
       this.coverColors = this.$store.getters.getCoverColors
 
       if (!this.task?.style) this.task.style = {}
@@ -415,17 +415,23 @@ export default {
     },
     saveComment(comment) {
       comment.id = utilService.makeId()
-      comment.byMember = this.loggedUser.fullname
+      comment.byMember = {
+        fullname: this.loggedUser.fullname,
+        imgUrl: this.loggedUser.imgUrl,
+      }
+      console.log(comment.byMember.imgUrl)
       comment.createdAt = Date.now()
       this.task.comments.unshift(comment)
       this.updateTask()
     },
     deleteComment(commentId) {
       console.log('hi')
-      const idx = this.task.comments.findIndex(comment => comment.id === commentId)
-      if(idx !== -1) this.task.comments.splice(idx, 1)
+      const idx = this.task.comments.findIndex(
+        (comment) => comment.id === commentId
+      )
+      if (idx !== -1) this.task.comments.splice(idx, 1)
       this.updateTask()
-    }
+    },
   },
   components: {
     labelPicker,
