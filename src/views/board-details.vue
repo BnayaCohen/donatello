@@ -1,6 +1,6 @@
 <template>
   <main v-if="board" class="main-layout board-container">
-    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar" />
+    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar" :isDark="isDark" />
     <board-side-bar :activities="board.activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar" />
     <group-list :groups="board.groups" :isSideBarOpen="isSideBarOpen" />
     <router-view />
@@ -15,6 +15,9 @@ import { socketService, SOCKET_EVENT_TASK_UPDATED, SOCKET_EVENT_GROUP_UPDATED, S
 
 export default {
   name: 'board-details',
+  props: {
+    isDark: Boolean,
+  },
   data() {
     return {
       isSideBarOpen: false,

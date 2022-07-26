@@ -52,14 +52,14 @@ export default {
   },
   methods: {
     onLogin(credentials) {
-      this.$store.dispatch({ type: 'login', credentials })
-      this.$router.push('/board')
+        this.$store.dispatch({ type: 'login', credentials })
+        this.$router.push('/board')
     },
     // onLogout() {
     //   this.$store.dispatch({ type: 'logout' })
     // },
-    onSignup(signupInfo) {
-      this.$store.dispatch({ type: 'signup', signupInfo })
+    async onSignup(signupInfo) {
+      await this.$store.dispatch({ type: 'signup', signupInfo })
       this.$router.push('/board')
     },
   },

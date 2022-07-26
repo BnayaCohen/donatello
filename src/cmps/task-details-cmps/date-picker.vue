@@ -27,12 +27,6 @@
           ></path>
         </svg>
       </button>
-      <button
-        class="flex align-center justify-center remove-duedate-btn"
-        @click.stop="removeDueDate"
-      >
-        <span>Remove</span>
-      </button>
     </label>
   </div>
 </template>
@@ -64,7 +58,7 @@ export default {
       this.$emit('toggleIsDone')
     },
   },
-  emits: ['toggle', 'removeDueDate', 'toggleIsDone'],
+  emits: ['toggleDate', 'removeDueDate', 'toggleIsDone'],
 }
 </script>
 <style></style>

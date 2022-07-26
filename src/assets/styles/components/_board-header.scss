@@ -12,7 +12,7 @@
         font-size: em(18px);
         height: em(24.9px);
 
-        &:hover{
+        &:hover {
             background-color: rgba(0, 0, 0, 0.2);
         }
 
@@ -29,8 +29,6 @@
         }
 
         &:hover {
-            background-color: rgba(110, 110, 48, 0.3) !important;
-
             &>i {
                 transition: .1s;
                 transform: scale(1.15);

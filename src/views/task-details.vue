@@ -139,6 +139,8 @@
     :dueDate="dueDate"
     v-click-outside="closeDate"
     @click.stop="''"
+    @toggleDate="toggleDate"
+    @removeDueDate="removeDueDate"
   />
   <checklist-modal
     v-if="isChecklist"
@@ -233,8 +235,6 @@ export default {
       if (!this.task?.style) this.task.style = {}
       this.taskComments = this.task.comments
       if (this.task.style?.background) {
-        // if(this.task.style.background.length>10)
-        //   this.currCover = { background: `url(${this.task.style.background}) no-repeat center center/contain` }
         this.currCover = { background: this.task.style.background }
       }
 
