@@ -1,0 +1,215 @@
+.checklist-preview {
+  > * {
+    position: relative;
+  }
+  //   Regular mode
+  .checklist-header {
+    margin: 0 0 4px 40px;
+    padding: 8px 0;
+    > span {
+      position: absolute;
+      left: -40px;
+      font-size: rem(24px);
+      line-height: lh(32px);
+    }
+    &-title {
+      flex-flow: row wrap;
+    }
+    .remove-checklist {
+      align-items: center;
+      background-color: #091e420a;
+      border: none;
+      border-radius: 3px;
+      box-shadow: none;
+      box-sizing: border-box;
+      color: #172b4d;
+      cursor: pointer;
+      display: inline-flex;
+      font-size: 14px;
+      font-weight: 400;
+      justify-content: center;
+      line-height: 20px;
+      padding: 6px 12px;
+      text-decoration: none;
+      transition-duration: 85ms;
+      transition-property: background-color, border-color, box-shadow;
+      transition-timing-function: ease;
+      white-space: normal;
+      &:hover {
+        background-color: #091e4214;
+      }
+    }
+  }
+  //   Editing mode
+  .save-container {
+    display: block;
+    padding-bottom: 9px;
+    width: 100%;
+    .edit-textarea {
+      color: #172b4d;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      resize: none;
+      height: 54px;
+      background: #091e420a;
+      border-color: #091e4221;
+      box-shadow: inset 0 0 0 1px #091e4221;
+      margin-bottom: 4px;
+      font-size: 1rem;
+      line-height: lh(19px);
+      &.bold {
+        font-weight: 700;
+      }
+    }
+    .edit-controls {
+      display: flex;
+      color: #172b4d;
+      font-size: rem(14px);
+      font-weight: 400;
+      line-height: lh(20px);
+      .save-btn {
+        margin: 0 4px 0 0;
+        background-color: #0079bf;
+        border: none;
+        box-shadow: none;
+        color: #fff;
+        border-radius: 3px;
+        padding: 6px 12px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+      .close-btn.trellicons.trellicons-close-btn {
+        color: #42526e;
+        display: inline-block;
+        position: relative;
+      }
+    }
+  }
+  //   Progressbar
+  .checklist-progress {
+    margin-bottom: 6px;
+    span {
+      color: #5e6c84;
+      font-size: rem(11px);
+      line-height: lh(10px);
+      position: absolute;
+      left: 0;
+      text-align: center;
+      top: -1;
+      width: 32px;
+    }
+    > div {
+      background: #091e4214;
+      border-radius: 4px;
+      width: 100%;
+      height: 8px;
+      margin: 0 0 0 40px;
+      overflow: hidden;
+      position: relative;
+      > div {
+        transition: width 0.3s;
+      }
+    }
+  }
+  //   Todo preview
+  .checklist-item {
+    border-radius: 3px;
+    padding-left: 40px;
+    position: relative;
+    transform-origin: left bottom;
+    transition-duration: 0.14s;
+    transition-property: transform, opacity, height, padding, margin;
+    color: #172b4d;
+    &:hover {
+      background-color: #091e420a;
+      cursor: pointer;
+    }
+    .el-checkbox {
+      border-radius: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+      height: 16px;
+      left: 0;
+      margin: 6px;
+      overflow: hidden;
+      position: absolute;
+      text-align: center;
+      top: 5px;
+      transition: all 0.2s ease-in-out;
+      white-space: nowrap;
+      width: 16px;
+    }
+    &-text {
+      padding: 9.25px 0;
+      p {
+        flex: 1;
+        margin: 0;
+      }
+    }
+  }
+  .add-todo-btn {
+    margin: 8px 0;
+    align-items: center;
+    background-color: #091e420a;
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #172b4d;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 400;
+    justify-content: center;
+    line-height: 20px;
+    padding: 6px 12px;
+    text-decoration: none;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+    white-space: normal;
+  }
+  .add-todo-container {
+    textarea {
+      background-color: #fff;
+      box-shadow: inset 0 0 0 2px #0079bf;
+      color: #172b4d;
+      cursor: text;
+      float: none;
+      resize: vertical;
+      width: 100%;
+      margin: 4px 0 0;
+      min-height: 32px;
+      border-radius: 3px;
+      padding: 8px 12px;
+    }
+    .edit-controls {
+      margin-top: 8px;
+      .save-todo-btn {
+        cursor: pointer;
+        margin: 0 4px 0 0;
+        background-color: #0079bf;
+        border: none;
+        box-shadow: none;
+        color: #fff;
+        // display: inline-flex;
+        // align-items: center;
+        border-radius: 3px;
+        padding: 6px 12px;
+        line-height: lh(20px);
+      }
+      .close-new-todo-btn {
+        cursor: pointer;
+        background-color: initial;
+        border: none;
+        border-radius: 3px;
+        color: #172b4d;
+        padding: 6px 12px;
+        &:hover {
+          background-color: #091e4214;
+          line-height: lh(20px);
+        }
+      }
+    }
+  }
+}
