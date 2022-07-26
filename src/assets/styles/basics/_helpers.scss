@@ -194,7 +194,7 @@
     position: relative;
     color: #5e6c84;
     h4 {
-      font-weight: 100;
+      font-weight: 400;
     }
     .pop-close-btn {
       position: absolute;
@@ -202,7 +202,7 @@
       background-color: transparent;
       border: none;
       cursor: pointer;
-      font-size: 8px;
+      font-size: em(16px);
     }
   }
 
