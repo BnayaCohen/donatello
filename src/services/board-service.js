@@ -64,11 +64,9 @@ async function saveBoard(board) {
     // return board._id
     //   ? await storageService.put(STORAGE_KEY, board)
     //   : await storageService.post(STORAGE_KEY, board)
-    if (board._id) {
-      return await httpService.put(`board/${board._id}`, board)
-    } else {
-      return await httpService.post('board', board)
-    }
+    return board._id ?
+      await httpService.put(`board/${board._id}`, board)
+      : await httpService.post('board', board)
   } catch {
     console.log('cannot save board')
   }
@@ -190,7 +188,7 @@ async function removeGroup(boardId, groupId) {
     }
     return await saveBoard(board)
   } catch (err) {
-    console.log('Cannot remove group', err)
+    throw err
   }
 }
 
@@ -206,7 +204,7 @@ async function removeTask(boardId, groupId, taskId) {
     }
     return await saveBoard(board)
   } catch (err) {
-    console.log('Cannot remove task', err)
+    throw err
   }
 }
 
