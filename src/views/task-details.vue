@@ -1,23 +1,38 @@
 <template>
   <section class="container task-detail">
-    <div class="back-screen" :style="{
-      backgroundColor: '#000000a3',
-      cursor: 'pointer',
-    }">
+    <div
+      class="back-screen"
+      :style="{
+        backgroundColor: '#000000a3',
+        cursor: 'pointer',
+      }"
+    >
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg :currCover="currCover" @toggle="toggle" @closeModal="backToBoard" />
+        <cover-bg
+          :currCover="currCover"
+          @toggle="toggle"
+          @closeModal="backToBoard"
+        />
         <div class="task-detail-header">
           <div>
             <span class="trellicons trellicons-details"></span>
           </div>
           <div class="task-title-container">
-            <textarea rows="1" class="title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
+            <textarea
+              rows="1"
+              class="title-input"
+              type="text"
+              ref="taskTitle"
+              v-model="task.title"
+              placeholder="Enter title here..."
+              @keydown.enter="$refs.taskTitle.blur()"
+              @blur="updateTask"
+            ></textarea>
             <div class="subtitle-header">
               <p>
                 in list
                 <span :style="{ textDecoration: 'underline' }">{{
-                    groupTitle
+                  groupTitle
                 }}</span>
               </p>
             </div>
@@ -27,8 +42,13 @@
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
               <label-prev :taskLabels="taskLabels" @toggle="toggle" />
-              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
-                @removeDueDate="removeDueDate" />
+              <date-picker
+                v-if="task.dueDate"
+                :task="task"
+                @toggleDate="toggleDate"
+                @toggleIsDone="toggleIsDone"
+                @removeDueDate="removeDueDate"
+              />
             </div>
             <div class="description-container flex flex-column">
               <div class="description-header flex align-center">
@@ -36,39 +56,106 @@
                 <h3>Description</h3>
               </div>
               <div class="task-description-txt">
-                <textarea rows="3" placeholder="Add a more detailed description..." ref="taskDescription"
-                  v-model="task.description" @click.stop="isEditDescription = !isEditDescription"
-                  :class="descriptionStyle"></textarea>
-                <div v-if="isEditDescription" class="description-btns flex align-center">
+                <textarea
+                  rows="3"
+                  placeholder="Add a more detailed description..."
+                  ref="taskDescription"
+                  v-model="task.description"
+                  @click.stop="isEditDescription = !isEditDescription"
+                  :class="descriptionStyle"
+                ></textarea>
+                <div
+                  v-if="isEditDescription"
+                  class="description-btns flex align-center"
+                >
                   <el-button @click.stop="updateTask">Save</el-button>
-                  <el-button @click.stop="isEditDescription = false">X</el-button>
+                  <el-button @click.stop="isEditDescription = false"
+                    >X</el-button
+                  >
                 </div>
               </div>
             </div>
-            <attachment-list v-if="task.attachments?.length" :attachments="task.attachments"
-              @updateCurrCover="updateCurrCover" @toggle="toggle" @removeAttachment="removeAttachment" />
-            <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
-              @saveChecklists="saveChecklists" />
-              <comment-preview />
+            <attachment-list
+              v-if="task.attachments?.length"
+              :attachments="task.attachments"
+              @updateCurrCover="updateCurrCover"
+              @toggle="toggle"
+              @removeAttachment="removeAttachment"
+            />
+            <checklist-list
+              v-if="task.checklists?.length"
+              :checklists="task.checklists"
+              @saveChecklists="saveChecklists"
+            />
+            <task-comment
+              :loggedInUser="loggedUser"
+              @saveComment="saveComment"
+              :comments="taskComments"
+            />
           </div>
-          <task-detail-sidebar :task="task" :currCover="currCover" @toggle="toggle" @addUserToTask="addUserToTask"
-            @removeTask="removeTask" />
+          <task-detail-sidebar
+            :task="task"
+            :currCover="currCover"
+            @toggle="toggle"
+            @addUserToTask="addUserToTask"
+            @removeTask="removeTask"
+          />
         </div>
       </div>
     </div>
   </section>
-  <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @toggle="toggle" :pos="getCords"
-    v-click-outside="closeAttach" @click.stop="''" />
-  <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="closeCover" :pos="getCords"
-    v-click-outside="closeCover" @click.stop="''" />
-  <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel"
-    @toggle="isLabels = !isLabels" :pos="getCords" @click.stop="''" v-click-outside="closeLabels" />
-  <date v-if="isDate" @updateDueDate="updateDueDate" :pos="getCords" :dueDate="dueDate" v-click-outside="closeDate"
-    @click.stop="''" />
-  <checklist-modal v-if="isChecklist" @addChecklist="addChecklist" :pos="getCords" v-click-outside="closeChecklist"
-    @toggle="toggle" @click.stop="''" />
-  <members-modal v-if=isMemberlist :style="getCords" v-click-outside="closeMembers" @toggle="toggle"
-    :memberIds="task.memberIds" @click.stop="''" @toggleMember=toggleMember />
+  <attachment-picker
+    v-if="isAttach"
+    @attachSelected="addAttachment"
+    @toggle="toggle"
+    :pos="getCords"
+    v-click-outside="closeAttach"
+    @click.stop="''"
+  />
+  <cover-picker
+    v-if="isCover"
+    :colors="coverColors"
+    @addCover="addCover"
+    @closeCover="closeCover"
+    :pos="getCords"
+    v-click-outside="closeCover"
+    @click.stop="''"
+  />
+  <label-picker
+    v-if="isLabels"
+    :labels="labels"
+    :taskLabels="taskLabels"
+    @addLabel="addLabel"
+    @toggle="isLabels = !isLabels"
+    :pos="getCords"
+    @click.stop="''"
+    v-click-outside="closeLabels"
+  />
+  <date
+    v-if="isDate"
+    @updateDueDate="updateDueDate"
+    :pos="getCords"
+    :dueDate="dueDate"
+    v-click-outside="closeDate"
+    @click.stop="''"
+  />
+  <checklist-modal
+    v-if="isChecklist"
+    @addChecklist="addChecklist"
+    :pos="getCords"
+    v-click-outside="closeChecklist"
+    @toggle="toggle"
+    @click.stop="''"
+  />
+  <members-modal
+    v-if="isMemberlist"
+    :style="getCords"
+    v-click-outside="closeMembers"
+    @toggle="toggle"
+    :memberIds="task.memberIds"
+    @click.stop="''"
+    @toggleMember="toggleMember"
+  />
 </template>
 <script>
 import membersModal from '../cmps/task-details-cmps/members-modal.vue'
@@ -88,7 +175,7 @@ import datePicker from '../cmps/task-details-cmps/date-picker.vue'
 import date from '../cmps/date.vue'
 import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
-import commentPreview from '../cmps/task-details-cmps/comment-preview.vue'
+import taskComment from '../cmps/task-details-cmps/task-comment.vue'
 import { ref } from 'vue'
 
 export default {
@@ -113,6 +200,7 @@ export default {
       dueDate: ref(new Date()),
       isChecklist: false,
       isMemberlist: false,
+      taskComments: [],
     }
   },
   async created() {
@@ -133,10 +221,17 @@ export default {
           })
         })
       }
+      if (this.task.comments.length) {
+        this.task.comments.map((comment) => {
+          this.taskComments.unshift(comment)
+        })
+      }
+          console.log(this.taskComments)
       this.coverColors = this.$store.getters.getCoverColors
 
-      if (!this.task.style) this.task.style = {}
-      if (this.task.style.background) {
+      if (!this.task?.style) this.task.style = {}
+      this.taskComments = this.task.comments
+      if (this.task.style?.background) {
         // if(this.task.style.background.length>10)
         //   this.currCover = { background: `url(${this.task.style.background}) no-repeat center center/contain` }
         this.currCover = { background: this.task.style.background }
@@ -144,9 +239,7 @@ export default {
 
       this.$refs.taskDescription.value = this.task.description
       if (!this.task.attachments) this.task.attachments = []
-    } catch (err) {
-
-    }
+    } catch (err) {}
   },
   computed: {
     groupTitle() {
@@ -169,6 +262,9 @@ export default {
         top: this.clickPos.y + 'px',
         left: this.clickPos.x - 100 + 'px',
       }
+    },
+    loggedUser() {
+      return this.$store.getters.user
     },
   },
   methods: {
@@ -275,7 +371,9 @@ export default {
       this.updateTask()
     },
     removeAttachment(attachId) {
-      const attachIdx = this.task.attachments.findIndex(attach => attach.id === attachId)
+      const attachIdx = this.task.attachments.findIndex(
+        (attach) => attach.id === attachId
+      )
       this.task.attachments.splice(attachIdx, 1)
       this.updateTask()
     },
@@ -309,11 +407,18 @@ export default {
       this.updateTask()
     },
     toggleMember(memberId) {
-      const idx = this.task.memberIds.findIndex(m => m === memberId)
+      const idx = this.task.memberIds.findIndex((m) => m === memberId)
       if (idx !== -1) this.task.memberIds.splice(idx, 1)
       else this.task.memberIds.push(memberId)
       this.updateTask()
-    }
+    },
+    saveComment(comment) {
+      comment.id = utilService.makeId()
+      comment.byMember = this.loggedUser.fullname
+      comment.createdAt = Date.now()
+      this.task.comments.unshift(comment)
+      this.updateTask()
+    },
   },
   components: {
     labelPicker,
@@ -330,7 +435,7 @@ export default {
     checklistModal,
     checklistList,
     membersModal,
-    commentPreview
+    taskComment,
   },
 }
 </script>
