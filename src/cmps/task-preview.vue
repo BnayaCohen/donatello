@@ -1,6 +1,11 @@
 <template>
-  <div class="task-preview" @mouseenter="toggleOnHover" @mouseleave="toggleOnHover"
-    @click.stop="openTask(task.groupId, task.id)">
+  <div
+    class="task-preview"
+    @mouseenter="toggleOnHover"
+    @mouseleave="toggleOnHover"
+    @click.stop="openTask(task.groupId, task.id)"
+    :style="{backgroundColor:onHover ? '#e8e8e882' : ''}"
+  >
     <div class="flex flex-column">
       <span v-if="onHover" @click.stop="openQuickEdit" class="hover-edit-btn"><i
           class="trellicons trellicons-edit"></i></span>

@@ -3,24 +3,26 @@
     <nav class="flex justify-between board-header">
 
       <section class="board-options flex align-center justify-center">
-        <input class="board-name-input clean-input btn-background" type="text" v-model="board.title"
-          placeholder="Board name..." @keyup.enter="updateBoardTitle" />
-        <button class="btn-background starred-btn" :class="isBoardStarred" @click="toggleStarBoard"><i
+        <input class="board-name-input clean-input btn-background" :class="{ 'dark-theme': isDark }" type="text"
+          v-model="board.title" @keyup.enter="updateBoardTitle" />
+        <button class="btn-background starred-btn" :class="isBoardStarred"
+          style="padding-bottom: 1.5px;padding-right: 9px;" @click="toggleStarBoard"><i
             class="fa-regular fa-star"></i></button>
 
         <div v-if="board.members.length" class="members-container flex align-center">
           <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
         </div>
 
-        <button @click="toggleInvite" class="btn-background" style="position:relative;">Invite
+        <button @click="toggleInvite" class="btn-background" style="position:relative;" :class="{ 'dark-theme': isDark }">Invite
           <users-modal v-if="isInviteOpen" @toggleUser="toggleUser" v-click-outside="toggleInvite"
             @toggleInvite="toggleInvite" />
         </button>
       </section>
 
       <section v-if="!isSideBarOpen" class="more-options flex align-center justify-center">
-        <button class="btn-background">Dashboard</button>
-        <button class="btn-background" @click="$emit('sideBarOpened')">Show menu</button>
+        <button class="btn-background" :class="{ 'dark-theme': isDark }">Dashboard</button>
+        <button class="btn-background" :class="{ 'dark-theme': isDark }" @click="$emit('sideBarOpened')">Show
+          menu</button>
       </section>
     </nav>
   </header>
@@ -33,7 +35,8 @@ export default {
   name: 'boardHeader',
   props: {
     board: Object,
-    isSideBarOpen: Boolean
+    isSideBarOpen: Boolean,
+    isDark: Boolean,
   },
   data() {
     return {
@@ -64,7 +67,10 @@ export default {
   },
   computed: {
     isBoardStarred() {
-      return { starred: this.isCurrBoardStarred }
+      return {
+        starred: this.isCurrBoardStarred,
+        'dark-theme': this.isDark,
+      }
     }
   },
   components: {
