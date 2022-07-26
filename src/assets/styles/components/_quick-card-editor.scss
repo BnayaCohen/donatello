@@ -91,8 +91,6 @@
         }
       }
       &-details {
-        display: flex;
-        flex-direction: column;
         overflow: hidden;
         padding: 6px 8px 2px;
         position: relative;
@@ -101,12 +99,44 @@
       &-members {
         float: right;
         margin: 0 -2px 0 0;
+        > * {
+          float: right;
+          margin: 0 0 4px 4px;
+        }
       }
     }
     .badges {
       float: left;
+      display: block;
       margin-left: -2px;
       max-width: 100%;
+      color: #6b778c;
+      .badge {
+        line-height: lh(20px);
+        display: inline-block;
+        margin: 0 4px 4px 0;
+        max-width: 100%;
+        min-height: 20px;
+        overflow: hidden;
+        padding: 2px;
+
+        span {
+          padding: 1.66px 2px;
+          font-size: 16px;
+          line-height: lh(20px);
+        }
+        p {
+          font-size: 12px;
+          padding: 0 4px 0 2px;
+          vertical-align: top;
+          white-space: nowrap;
+          position: relative;
+          top: 3px;
+        }
+        > * {
+          display: inline;
+        }
+      }
     }
   }
   .save-task-btn {
@@ -161,5 +191,17 @@
   textarea {
     border: none;
     outline: none;
+    width: 100%;
+  }
+  .task-due-date {
+    border-radius: 3px;
+    display: inline-flex;
+    > * {
+      margin: 0;
+    }
+    p {
+      display: flex;
+      align-items: center;
+    }
   }
 }

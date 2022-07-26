@@ -12,6 +12,8 @@ export default {
       props: { orientation: 'horizontal' },
       children: null,
     },
+    firstGroup: null,
+    secondGroup: null,
     lastGroup: null,
     lastTask: null,
     showLabelsOnTask: false,
@@ -72,8 +74,7 @@ export default {
       const idx = state.boards.findIndex((board) => board._id === boardId)
       state.boards.splice(idx, 1)
     },
-    changeGroupPos(state, { dropResult, reverse }) {
-      const { addedIndex, removedIndex } = dropResult
+    changeGroupPos(state, { dropResult: { addedIndex, removedIndex }, reverse }) {
       if (!reverse) {
         const group = state.currBoard.groups.splice(removedIndex, 1)[0]
         state.currBoard.groups.splice(addedIndex, 0, group)
@@ -83,12 +84,19 @@ export default {
       }
     },
     updateGroups(state, { newColumn, itemIndex }) {
-      const group = state.currBoard.groups.splice(itemIndex, 1, newColumn)
-      state.lastGroup = group
+      const group = state.currBoard.groups.splice(itemIndex, 1, newColumn)[0]
+      if (!state.firstGroup) state.firstGroup = group
+      else state.secondGroup = group
     },
-    undoChanges(state, { itemIndex }) {
-      state.currBoard.groups.splice(itemIndex, 1, state.lastGroup)
-      state.lastGroup = null
+    undoGroupChanges(state, { itemIndex }) {
+      if (state.firstGroup) {
+        state.currBoard.groups.splice(itemIndex, 1, state.firstGroup)
+        state.firstGroup = null
+      }
+      else {
+        state.currBoard.groups.splice(itemIndex, 1, state.secondGroup)
+        state.secondGroup = null
+      }
       state.scene = state.currBoard.groups
     },
     toggleTaskLabels(state) {
@@ -96,7 +104,6 @@ export default {
     },
     saveGroup(state, { group, reverse = false }) {
       if (!reverse) {
-        console.log(group);
         const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
         if (idx !== -1) state.currBoard.groups.splice(idx, 1, group)
         else state.currBoard.groups.push(group)
@@ -127,8 +134,7 @@ export default {
         const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
         if (idx !== -1) {
           !state.lastTask.id && group.tasks.splice(idx, 1)
-          state.lastTask.id && group.tasks.splice(idx, 1, state.latTask)
-
+          state.lastTask.id && group.tasks.splice(idx, 1, state.lastTask)
         }
         state.lastTask = null
       }
@@ -143,7 +149,8 @@ export default {
         task: task || '',
       }
       state.currBoard.activities.unshift(newActivity)
-    }
+    },
+
   },
   actions: {
     async loadBoards({ commit }) {
@@ -188,7 +195,7 @@ export default {
       commit({ type: 'saveGroup', group })
       socketService.emit(SOCKET_EMIT_UPDATE_GROUP, group)
       try {
-        boardService.saveGroup(state.currBoard._id, group)
+        await boardService.saveGroup(state.currBoard._id, group)
       } catch (err) {
         console.log("Couldn't save group", err)
         commit({ type: 'saveGroup', group, reverse: true })
@@ -198,14 +205,14 @@ export default {
       commit({ type: 'saveTask', groupId, task })
       socketService.emit(SOCKET_EMIT_UPDATE_TASK, task)
       try {
-        boardService.saveTask(
+        await boardService.saveTask(
           state.currBoard._id,
           groupId,
           task
         )
       } catch (err) {
         console.log("Couldn't save task", err)
-        commit({ type: 'saveTask', groupId, task, reverse: false })
+        commit({ type: 'saveTask', groupId, task, reverse: true })
       }
     },
     async removeTask({ commit, state }, { groupId, taskId }) {
@@ -244,7 +251,7 @@ export default {
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
       try {
-        boardService.changeGroupPos(
+        await boardService.changeGroupPos(
           state.currBoard._id,
           dropResult
         )
@@ -257,7 +264,7 @@ export default {
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
       commit({ type: 'updateGroups', itemIndex, newColumn })
       try {
-        boardService.updateGroups(state.currBoard)
+        await boardService.saveBoard(JSON.parse(JSON.stringify(state.currBoard)))
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       } catch (err) {
         console.log(err)
