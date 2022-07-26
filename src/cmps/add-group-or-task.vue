@@ -79,7 +79,8 @@ export default {
     addingGroup() {
       return {
         adding: this.isEditingTitle || this.edit,
-        task: this.groupOrTask === 'task'
+        task: this.groupOrTask === 'task',
+        group: this.groupOrTask === 'group',
       }
     },
     openInputPlaceholder() {

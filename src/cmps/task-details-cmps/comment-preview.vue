@@ -3,11 +3,11 @@
     class="new-comment-container flex align-center"
   >
     <div class="member-icon-container">
-      <img class="member-avatar-big" :src="loggedInUser.imgUrl" />
+      <img class="member-avatar-big" :src="comment.byMember.imgUrl" />
     </div>
     <form @submit.prevent="saveComment">
       <div class="about-comment">
-        <h3 class="bold">{{ comment.byMember }}</h3>
+        <h3 class="bold">{{ comment.byMember.fullname }}</h3>
         <span>{{ timeAgo }}</span>
       </div>
       <div class="comment-frame">
@@ -52,8 +52,8 @@ export default {
   methods: {
     deleteComment() {
       this.$emit('deleteComment', this.comment.id)
+    }
     },
-  },
   emits: ['deleteComment'],
 }
 </script>

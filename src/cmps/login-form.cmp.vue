@@ -108,13 +108,13 @@
               <span style="padding: 10px 10px 10px 0px; font-weight: 500"
                 >Continue with Google</span
               ></button
-            ><a v-if="isSignIn"
-              ><span class="link" @click="toggleIsSignIn">Sign up</span> for an
+            ><a v-if="isSignIn" 
+              ><span class="link" @click="$router.push('/signup'); toggleIsSignIn()" >Sign up</span> for an
               account</a
             >
             <a v-else
               >Already have an account?
-              <span class="link" @click="toggleIsSignIn">Log in</span></a
+              <span class="link" @click="$router.push('/login'); toggleIsSignIn()">Log in</span></a
             >
           </div>
         </div>
@@ -142,6 +142,8 @@ export default {
   },
   created() {
     this.loggedinUser = this.$store.getters.user
+    const {loginOrSignup} = this.$route.params
+    if (loginOrSignup === 'signup') this.isSignIn = false
   },
   methods: {
     login() {
@@ -191,7 +193,6 @@ export default {
     toggleIsSignIn() {
       this.isSignIn = !this.isSignIn
       this.clearFields()
-      console.log(isSignIn)
     },
   },
 }
