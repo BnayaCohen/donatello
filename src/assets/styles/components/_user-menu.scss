@@ -1,0 +1,40 @@
+.user-menu-popover {
+  padding: 0 em(12px);
+  right: 5px;
+  top: 50px;
+  .popover-header {
+    margin: 0;
+  }
+  .about-user {
+    .user-details {
+      // margin-inline-start: em(15px);
+      div {
+        margin-inline-start: em(5px);
+      }
+      .small-title {
+        margin: 0 2px;
+        font-weight: 400;
+        opacity: 0.6;
+        align-self: flex-start;
+      }
+      padding-block: em(12px);
+      border-bottom: 1px solid rgba(9, 30, 66, 0.12941176470588237);
+    }
+    .full-btn {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      color: #172b4d;
+      height: 100%;
+      padding: 6px 12px;
+      text-align: left;
+      text-decoration: none;
+      width: 100%;
+      transition: none;
+      margin: 0;
+      &:hover {
+        background: rgba(9, 30, 66, 0.04);
+      }
+    }
+  }
+}
