@@ -29,7 +29,6 @@ export default {
     try {
       const { boardId } = this.$route.params
       await this.$store.dispatch({ type: 'loadBoard', boardId })
-      this.board = this.$store.getters.board
       this.$emit('setBackground', this.board?.style?.background)
       socketService.on(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
     } catch (err) {
@@ -59,6 +58,6 @@ export default {
     boardHeader,
     boardSideBar,
   },
-  emits: ['setBackground'],
+  // emits: ['setBackground'],
 }
 </script>
