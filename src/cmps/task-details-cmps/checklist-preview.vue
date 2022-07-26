@@ -40,10 +40,9 @@
         </div>
         <!-- Edit mode -->
         <div v-else class="save-container">
-          <textarea class="edit-textarea" ref="todo" v-model="todo.title" style="width:100%;"
-            :style="todo.isDone ? { textDecoration: 'line-through' } : ''">
+          <textarea class="edit-textarea" ref="todo" v-model="todo.title">
             </textarea>
-          <div class="edit-controls">
+          <div class="edit-controls flex">
             <button class="save-btn" @click="saveTodo(todo)">Save</button>
             <span @click="editing = null" class="close-btn trellicons trellicons-close-btn"></span>
           </div>

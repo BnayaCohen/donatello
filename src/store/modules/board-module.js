@@ -125,8 +125,8 @@ export default {
       else {
         const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
         if (idx !== -1) {
-          !state.lastTask && group.tasks.splice(idx, 1)
-          state.lastTask && group.tasks.splice(idx, 1, state.latTask)
+          !state.lastTask.id && group.tasks.splice(idx, 1)
+          state.lastTask.id && group.tasks.splice(idx, 1, state.latTask)
 
         }
         state.lastTask = null
