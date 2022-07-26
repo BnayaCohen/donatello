@@ -30,7 +30,7 @@
         more features as your teamwork grows. Manage projects, organize tasks,
         and build team spirit—all in one place.
       </p>
-      <router-link to="/board"><span>Start doing</span></router-link>
+      <a class="start-doing" @click="loginAsGuest"><span>Start doing</span></a>
     </section>
     <img
       src="https://images.ctfassets.net/rz1oowkt5gyp/7pYWhpQ3vnntxoShaImNws/777fabbf069416489167ab92027ce086/board.png?w=1200&fm=webp"
@@ -54,6 +54,11 @@ export default {
     }
   },
   methods: {
+    loginAsGuest() {
+      const credentials = {username: 'guest', password: 'guest'}
+      this.$store.dispatch({type: 'login', credentials})
+      this.$router.push('/board')
+    }
   }
 }
 </script>

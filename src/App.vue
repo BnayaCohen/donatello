@@ -4,7 +4,7 @@
     <router-view @setBackground="initBackground" />
   </div>
   <user-menu
-    v-if="isUserMenuOpen"
+    v-if="isUserMenu"
     @toggleUserMenu="toggleUserMenu"
     v-click-outside="toggleUserMenu"
     @logout="logout"
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       background: '',
-      isUserMenuOpen: false,
+      isUserMenu: false,
       x: 0,
       y: 0,
     }
@@ -35,11 +35,11 @@ export default {
     toggleUserMenu(ev) {
       this.x = ev?.clientX
       this.y = ev?.clientY
-      this.isUserMenuOpen = !this.isUserMenuOpen
+      this.isUserMenu = !this.isUserMenu
     },
     logout() {
       this.$store.dispatch('logout')
-      this.isUserMenuOpen = false
+      this.isUserMenu = false
       this.$router.push('/')
     },
   },

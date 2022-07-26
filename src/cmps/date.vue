@@ -1,7 +1,7 @@
 <template>
   <div class="dynamic-popover pos-absolute due-date-picker" :style="pos">
     <div class="popover-header flex justify-center align-center">
-      <span>Date</span>
+      <span>Dates</span>
       <button class="pop-close-btn" @click.stop="$emit('toggleDate', $event)">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
