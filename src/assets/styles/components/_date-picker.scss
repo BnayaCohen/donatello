@@ -1,30 +1,47 @@
 .due-date-picker {
-    background-color: #fff;
-    border: none;
-    top: 0;
-    z-index: 50;
-    .remove-duedate-btn {
-      margin: em(10px) 0 0 0;
-      background-color: rgba(9, 30, 66, 0.04);
-      transition-property: background-color, border-color, box-shadow;
-      transition-duration: 85ms;
-      transition-timing-function: ease;
-      &:hover {
-        background-color: rgba(9, 30, 66, 0.08);
-      }
-    }
-    .save-duedate-btn {
-      background-color: #0079bf;
-      color: #fff;
-      margin-bottom: 0;
+  background-color: #fff;
+  border: none;
+  top: 0;
+  z-index: 50;
+  .remove-duedate-btn {
+    margin: em(10px) 0 0 0;
+    background-color: rgba(9, 30, 66, 0.04);
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+    &:hover {
+      background-color: rgba(9, 30, 66, 0.08);
     }
   }
-  .vuejs3-datepicker__calendar-topbar {
-    display: none;
+  .save-duedate-btn {
+    background-color: #0079bf;
+    color: #fff;
+    margin-bottom: 0;
+
+    &:hover {
+      background-color: #026aa7;
+    }
   }
+}
+.vuejs3-datepicker__calendar-topbar {
+  display: none;
+}
 .vuejs3-datepicker__calendar {
   box-shadow: none;
 }
 .vuejs3-datepicker__calendar {
   max-width: 280px;
+}
+
+.vuejs3-datepicker__calendar .cell.selected {
+  background: #407ab9;
+}
+
+.vuejs3-datepicker__calendar .cell {
+  border: none;
+}
+.vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover {
+  background: #407ab9;
+  border: none;
+  color: #fff;
 }

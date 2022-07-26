@@ -248,12 +248,14 @@
   width: em(32px);
   height: em(32px);
   border-radius: 50%;
+  pointer-events: all;
 }
 
 .member-avatar-small {
   width: em(28px);
   height: em(28px);
   border-radius: 50%;
+  pointer-events: all;
 }
 
 // Position
