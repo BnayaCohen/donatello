@@ -312,7 +312,7 @@ export default {
       this.updateTask()
     },
     toggleMember(memberId) {
-      const idx = this.task.memberIds.findIndex(member => member._id === memberId)
+      const idx = this.task.memberIds.findIndex(m => m === memberId)
       if (idx !== -1) this.task.memberIds.splice(idx, 1)
       else this.task.memberIds.push(memberId)
       this.updateTask()
