@@ -57,8 +57,8 @@ export default {
     },
     toggleUser(user) {
       const idx = this.board.members.findIndex(member => member._id === user._id)
-      if (idx !== -1) board.members.splice(idx, 1)
-      else board.members.push(user)
+      if (idx !== -1) this.board.members.splice(idx, 1)
+      else this.board.members.push(user)
       this.$store.dispatch({ type: 'saveBoard', board: this.board })
     }
   },
