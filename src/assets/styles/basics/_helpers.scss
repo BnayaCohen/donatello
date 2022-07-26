@@ -179,6 +179,13 @@
     margin-top: 5px;
     // text-transform: uppercase;
   }
+  
+  .modal-title {
+    color: #434e61;
+    line-height: 40px;
+    font-size: 1rem;
+    font-family: 'Segoe UI', 'Roboto-Regular';
+  }
 
   .popover-header {
     margin-bottom: 8px;
@@ -195,6 +202,7 @@
       background-color: transparent;
       border: none;
       cursor: pointer;
+      font-size: 8px;
     }
   }
 

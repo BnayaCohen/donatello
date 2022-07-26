@@ -27,8 +27,8 @@
         </div>
       </div>
       <div class="comment-actions">
-        <span class="quiet-a edit-comment">Edit</span>
-        <span class="dash">-</span>
+        <!-- <span class="quiet-a edit-comment">Edit</span> -->
+        <!-- <span class="dash">-</span> -->
         <span class="quiet-a delete-comment" @click.stop="deleteComment">Delete</span>
       </div>
     </form>
