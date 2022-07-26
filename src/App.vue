@@ -3,7 +3,7 @@
     <app-header @toggleUserMenu="toggleUserMenu" :bgColor="headerColor" :isDark="isDarkTheme" />
     <router-view @setBackground="initBackground" :isDark="isDarkTheme" />
   </div>
-  <user-menu v-if="isUserMenuOpen" @toggleUserMenu="toggleUserMenu" v-click-outside="toggleUserMenu" @logout="logout" />
+  <user-menu v-if="isUserMenu" @toggleUserMenu="toggleUserMenu" v-click-outside="toggleUserMenu" @logout="logout" />
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       background: '',
-      isUserMenuOpen: false,
+      isUserMenu: false,
       x: 0,
       y: 0,
       isDarkTheme:false,
@@ -40,11 +40,11 @@ export default {
     toggleUserMenu(ev) {
       this.x = ev?.clientX
       this.y = ev?.clientY
-      this.isUserMenuOpen = !this.isUserMenuOpen
+      this.isUserMenu = !this.isUserMenu
     },
     logout() {
       this.$store.dispatch('logout')
-      this.isUserMenuOpen = false
+      this.isUserMenu = false
       this.$router.push('/')
     },
   },

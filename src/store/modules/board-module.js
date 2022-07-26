@@ -150,7 +150,36 @@ export default {
       }
       state.currBoard.activities.unshift(newActivity)
     },
-
+    removeGroup(state, { groupId, reverse = false }) {
+      if (!reverse) {
+        const groups = state.currBoard.groups
+        const idx = groups.findIndex(group => group.id === groupId)
+        if (idx !== -1) {
+          groups.splice(idx, 1)
+          state.removedGroup = { idx, group: groups[idx] }
+        }
+      } else {
+        const { idx, group } = state.removedGroup
+        state.currBoard.groups.splice(idx, 0, group)
+        state.removedGroup = null
+      }
+    },
+    removeTask(state, { groupId, taskId, reverse = false }) {
+      if (!reverse) {
+        const group = state.currBoard.groups.find(group => group.id === groupId)
+        const idx = group.tasks.findIndex(task => task.id === taskId)
+        if (idx !== -1) {
+          group.tasks.splice(idx, 1)
+          state.removedTask = { idx, task: group.tasks[idx] }
+        }
+      }
+      else {
+        const { idx, task } = state.removedTask
+        const group = state.currBoard.groups.find(group => groupId === group.id)
+        group.splice(idx, 0, task)
+        state.removedTask = null
+      }
+    },
   },
   actions: {
     async loadBoards({ commit }) {
@@ -216,6 +245,7 @@ export default {
       }
     },
     async removeTask({ commit, state }, { groupId, taskId }) {
+      commit({ type: 'removeTask', groupId, taskId })
       try {
         const board = await boardService.removeTask(
           state.currBoard._id,
@@ -223,20 +253,21 @@ export default {
           taskId
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove task", err)
+        commit({ type: 'removeTask', groupId, taskId, reverse: true })
       }
     },
     async removeGroup({ commit, state }, { groupId }) {
+      commit({ type: 'removeGroup', groupId })
       try {
         const board = await boardService.removeGroup(
           state.currBoard._id,
           groupId
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({ type: 'setBoard', board })
       } catch (err) {
+        commit({ type: 'removeGroup', groupId, reverse: true })
         console.log("couldn't remove group", err)
       }
     },
