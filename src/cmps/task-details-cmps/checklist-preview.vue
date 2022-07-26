@@ -1,86 +1,67 @@
 <template>
   <section class="checklist-preview">
-    <div class="checklist-header flex align-center">
+    <!-- Checklist header -->
+    <div class="checklist-header flex ">
       <span class="trellicons trellicons-checklist"></span>
-      <div v-if="editing!==checklist.id" style="width:100%;" class="checklist-header-title flex justify-between">
-        <h3 @click="focusOnEl('checklist')"
-        >{{ checklist.title }}</h3>
-        <button
-          @click="$emit('removeChecklist', checklist.id)"
-          class="remove-checklist"
-        >
-        Delete
+      <!-- Regular mode -->
+      <div v-if="editing !== checklist.id" style="width:100%;"
+        class="checklist-header-title flex align-center justify-between" @click="focusOnEl('checklist')">
+        <h3>{{ checklist.title }}</h3>
+        <button @click="$emit('removeChecklist', checklist.id)" class="remove-checklist">
+          Delete
         </button>
       </div>
+      <!-- Editing mode -->
       <div v-else class="save-container">
-        <textarea class="edit-textarea" v-model="checklistToEdit.title" ref="checklist"></textarea>
-        <button class="save-btn" @click=";[editing=null,save()]">Save</button>
-          <span
-            @click="editing=null"
-            class="close-btn trellicons trellicons-close-btn"
-          ></span>
+        <textarea class="edit-textarea bold" v-model="checklistToEdit.title" ref="checklist"></textarea>
+        <div class="edit-controls">
+          <button class="save-btn" @click=";[editing = null, save()]">Save</button>
+          <span @click="editing = null" class="close-btn trellicons trellicons-close-btn"></span>
+        </div>
       </div>
     </div>
+    <!-- Progressbar -->
     <div class="checklist-progress flex">
       <span class="progressbar-percentage">{{ doneTodos }}</span>
-      <div class="checklist-progress-bar self-center" style="height: 8px;width:100%;background:#091e4214;">
+      <div class="checklist-progress-bar self-center">
         <div :style="progressBarStyle" class="checklist-progress-bar-current"></div>
       </div>
     </div>
+    <!-- Todos list container -->
     <div class="checklist-items-list">
-      <div
-        v-for="(todo,idx) in checklist.todos"
-        :key="todo.id"
-        class="checklist-item"
-      >
-        <el-checkbox
-          @change="toggleIsDone(todo)"
-          v-model="todo.isDone"
-          type="checkbox"
-        ></el-checkbox>
-        <div class="checklist-item-text">
-          <p v-if="!editing"
-          @click="focusOnEl('todo',idx)">{{todo.title}}</p>
-          <textarea v-else-if="editing===todo.id"
-          class="edit-textarea"
-          ref="todo"
-          v-model="todo.title"
-          style="width:100%;"
-          :style="todo.isDone ? { textDecoration: 'line-through' } : ''"
-          >
-          <!-- <div class="actions flex">
-            <span class="fa-solid fa-user-plus"></span>
-            <span
-              @click="removeTodo(todo.id)"
-              class="fa-regular fa-trash-can"
-            ></span>
-          </div> -->
-          </textarea>
-          <div v-if="editing===todo.id" class="save-container">
-          <button class="save-btn" @click="saveTodo(todo)">Save</button>
-          <span
-            @click="editing=null"
-            class="close-btn trellicons trellicons-close-btn"
-          ></span>
+      <!-- Todo preview -->
+      <div v-for="(todo, idx) in checklist.todos" :key="todo.id" class="checklist-item">
+        <el-checkbox @change="toggleIsDone(todo)" v-model="todo.isDone" type="checkbox"></el-checkbox>
+        <!-- Regular mode -->
+        <div v-if="editing !== todo.id" class="checklist-item-text">
+          <p @click="focusOnEl('todo', idx)" :style="todo.isDone ? { textDecoration: 'line-through' } : ''">{{
+              todo.title
+          }}</p>
         </div>
+        <!-- Edit mode -->
+        <div v-else class="save-container">
+          <textarea class="edit-textarea" ref="todo" v-model="todo.title" style="width:100%;"
+            :style="todo.isDone ? { textDecoration: 'line-through' } : ''">
+            </textarea>
+          <div class="edit-controls">
+            <button class="save-btn" @click="saveTodo(todo)">Save</button>
+            <span @click="editing = null" class="close-btn trellicons trellicons-close-btn"></span>
+          </div>
         </div>
       </div>
     </div>
-    
-    <button
-      class="add-todo-btn card-sidebar-btn"
-      v-if="!addingTodo"
-      @click="[addingTodo=!addingTodo,editing=null]"
-    >
+
+    <button class="add-todo-btn card-sidebar-btn" v-if="!addingTodo"
+      @click="[addingTodo = !addingTodo, editing = null]">
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
       <textarea v-model="newTodo.title"></textarea>
-      <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
-      <button
-        @click="emptyTodo"
-        class="close-new-todo-btn"
-      >Cancel</button>
+      <div class="edit-controls">
+
+        <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
+        <button @click="emptyTodo" class="close-new-todo-btn">Cancel</button>
+      </div>
     </div>
   </section>
 </template>
@@ -89,7 +70,7 @@
 import { utilService } from '../../services/util-service'
 export default {
   props: { checklist: Object },
-  mounted() {},
+  mounted() { },
   data() {
     return {
       checklistToEdit: this.checklist,
@@ -113,7 +94,7 @@ export default {
         todo.id = utilService.makeId()
         this.checklistToEdit.todos.push(todo)
         this.newTodo = { title: '', isDone: false }
-      this.addingTodo= false
+        this.addingTodo = false
       }
       this.editing = null
       this.save()
@@ -135,26 +116,27 @@ export default {
     save() {
       this.$emit('saveChecklist', this.checklistToEdit)
     },
-    focusOnEl(ref,idx=0){
-      if(ref!=='todo'){
-        this.editing=this.checklist.id
-        setTimeout(()=>{this.$refs[ref].focus()},300)
+    focusOnEl(ref, idx = 0) {
+      if (ref !== 'todo') {
+        this.editing = this.checklist.id
+        setTimeout(() => { this.$refs[ref].focus() }, 300)
       }
-      else{
-        this.editing=this.checklist.todos[idx].id
-        setTimeout(()=>{
+      else {
+        this.editing = this.checklist.todos[idx].id
+        setTimeout(() => {
           console.log(this.$refs)
-          this.$refs[ref][0].focus()},300)
+          this.$refs[ref][0].focus()
+        }, 300)
       }
 
-      this.addingTodo=false
-      
+      this.addingTodo = false
+
     }
   },
   computed: {
-    progressBarStyle(){
-      const background=this.doneTodos==='100%' ? '#61bd4f': '#5ba4cf'
-      return {width:this.doneTodos,background,height:'100%',borderRadius:`4px` }
+    progressBarStyle() {
+      const background = this.doneTodos === '100%' ? '#61bd4f' : '#5ba4cf'
+      return { width: this.doneTodos, background, height: '100%', borderRadius: `4px` }
     },
     doneTodos() {
       if (!this.checklistToEdit?.todos?.length) return `0%`
@@ -164,9 +146,16 @@ export default {
           0
         ) /
           this.checklist.todos.length) *
-          100
-      )+'%'
+        100
+      ) + '%'
     },
   },
 }
 </script>
+<!-- <div class="actions flex">
+            <span class="fa-solid fa-user-plus"></span>
+            <span
+              @click="removeTodo(todo.id)"
+              class="fa-regular fa-trash-can"
+            ></span>
+          </div> -->
