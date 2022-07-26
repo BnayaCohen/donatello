@@ -169,7 +169,7 @@ async function saveTask(boardId, groupId, task) {
 //   return boards
 // }
 
-function createActivity(txt = '', task) {
+function createActivity(txt = '', task = null) {
   return {
     id: utilService.makeId(),
     txt,
