@@ -27,10 +27,11 @@
               autocomplete="off"
               v-model="credentials.password"
             />
-            <div class="upload-for-signup flex flex-column align-center" v-if="!isSignIn">
+            <div class="upload-for-signup flex flex-column" v-if="!isSignIn">
               <h4>Add an avatar (optional)</h4>
+              <h3 class="small-title">Upload from computer</h3>
               <div class="upload-preview">
-                <label for="file-upload"><span>Computer</span></label
+                <label for="file-upload"><span>Upload</span></label
                 ><input
                   type="file"
                   accept="img/*"
@@ -41,8 +42,13 @@
               <div class="from-web">
                 <h3 class="small-title">Attach a link</h3>
                 <label for="web-url">
-                  <input type="text" v-model="userImgUrl" />
-                  <button class="btn" @click="addLinkAttachment">Attach</button>
+                  <input
+                    placeholder="Enter an image url here..."
+                    class="login-input"
+                    type="text"
+                    v-model="userImgUrl"
+                    :style="{ display: 'inline', width: '100%' }"
+                  />
                 </label>
               </div>
             </div>
@@ -61,7 +67,7 @@
               @click="signup"
             />
           </form>
-          <span :style="{ textAlign: 'center' }">Or</span>
+          <span :style="{ textAlign: 'center', padding: '0.6em' }">Or</span>
           <div
             class="login-options flex flex-column justify-center align-center"
           >
@@ -103,9 +109,13 @@
                 >Continue with Google</span
               ></button
             ><a v-if="isSignIn"
-              ><span class="link" @click="isSignIn = false">Sign up</span> for an account</a
+              ><span class="link" @click="toggleIsSignIn">Sign up</span> for an
+              account</a
             >
-            <a v-else >Already have an account? <span class="link" @click="isSignIn = true">Log in</span></a>
+            <a v-else
+              >Already have an account?
+              <span class="link" @click="toggleIsSignIn">Log in</span></a
+            >
           </div>
         </div>
       </div>
@@ -118,9 +128,7 @@ import { uploadImg } from '@/services/img-upload.service'
 
 export default {
   name: 'loginForm',
-  props: {
-    isSignIn: Boolean
-  },
+  props: {},
   data() {
     return {
       credentials: {
@@ -129,6 +137,7 @@ export default {
       },
       fullname: null,
       userImgUrl: null,
+      isSignIn: true,
     }
   },
   created() {
@@ -146,15 +155,19 @@ export default {
       this.$router.push('/')
     },
     signup() {
-      if (!this.fullname || !this.credentials.username || !this.credentials.password) return
+      if (
+        !this.fullname ||
+        !this.credentials.username ||
+        !this.credentials.password
+      )
+        return
       const signupInfo = JSON.parse(JSON.stringify(this.credentials))
       signupInfo.fullname = this.fullname
-      this.userImgUrl? signupInfo.userImgUrl = this.userImgUrl : signupInfo.userImgUrl = ''
+      this.userImgUrl
+        ? (signupInfo.imgUrl = this.userImgUrl)
+        : (signupInfo.imgUrl = '')
       this.$emit('signup', signupInfo)
-      this.credentials.fullname = ''
-      this.credentials.username = ''
-      this.credentials.password = ''
-      this.userImgUrl = ''
+      this.clearFields()
     },
     handleFile(ev) {
       console.log(ev)
@@ -168,6 +181,17 @@ export default {
       const res = await uploadImg(file)
       // this.isLoading = false
       this.userImgUrl = res.url
+    },
+    clearFields() {
+      this.fullname = ''
+      this.credentials.username = ''
+      this.credentials.password = ''
+      this.userImgUrl = ''
+    },
+    toggleIsSignIn() {
+      this.isSignIn = !this.isSignIn
+      this.clearFields()
+      console.log(isSignIn)
     },
   },
 }

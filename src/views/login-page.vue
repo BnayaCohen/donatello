@@ -23,13 +23,14 @@
         }"
       />
       <h1
-        :style="{ letterSpacing: '0.8px', fontSize: '54.5px', height: '26px' }"
+        :style="{ letterSpacing: '0.8px', fontSize: '54.5px', height: '26px', cursor: 'pointer'}"
+        @click="$router.push('/')"
       >
         Donatello
       </h1>
     </div>
     <div class="form-container">
-      <login-form @login="onLogin" @signup="onSignup" :isSignIn="isSignIn"/>
+      <login-form @login="onLogin" @signup="onSignup"/>
     </div>
     <div class="right-svg"></div>
     <div class="left-svg"></div>
@@ -42,7 +43,6 @@ export default {
   components: { loginForm },
   data() {
     return {
-        isSignIn: true
     }
   },
   created() {

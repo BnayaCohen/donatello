@@ -16,6 +16,7 @@ export default {
   mutations: {
     setUser(state, { user }) {
       state.user = user
+      console.log(state.user)
     },
     setUsers(state, { users }) {
       state.users = users
@@ -24,7 +25,7 @@ export default {
   actions: {
     async logout({ commit }) {
       await userService.logout()
-      commit({ type: 'saveUser', user: null })
+      commit({ type: 'setUser', user: null })
     },
     async login({ commit }, { credentials }) {
       try {
