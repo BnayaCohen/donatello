@@ -57,6 +57,7 @@
             </div>
           </section>
         </div>
+        <div class="flx" style="margin-left: auto;">
         <section v-if="task.memberIds?.length" class="task-members-container">
           <avatar-preview
             v-for="memberId in task.memberIds"
@@ -64,7 +65,7 @@
             :member="getMemberById(memberId)"
             :avatarSize="'small'"
           />
-        </section>
+        </section></div>
       </section>
     </div>
   </div>

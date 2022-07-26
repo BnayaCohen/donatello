@@ -1,5 +1,5 @@
 <template>
-  <div :style="bgStyle">
+  <div :style="bgStyle" style="background-position-y: top;">
     <app-header @toggleUserMenu="toggleUserMenu" />
     <router-view @setBackground="initBackground" />
   </div>

@@ -7,8 +7,13 @@
     .add-entity-placeholder {
         background-color: transparent;
         padding: 0px 0 0 10px;
-        gap: 4px;
+        gap: 3px;
         margin: 0;
+    }
+
+    i {
+        font-size: em(17px);
+        padding-bottom: 1px;
     }
 
     &.adding {
@@ -24,6 +29,12 @@
     &.task {
         padding: 6px 0;
         margin-right: 4px;
+    }
+
+    &.adding {
+        &.group {
+            margin: -1.5px 0;
+        }
     }
 }
 
