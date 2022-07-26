@@ -184,8 +184,8 @@ export default {
     async saveGroup({ commit, state }, { group }) {
       commit({ type: 'saveGroup', group })
       try {
-        boardService.saveGroup(state.currBoard._id, group)
         socketService.emit(SOCKET_EMIT_UPDATE_GROUP, group)
+        boardService.saveGroup(state.currBoard._id, group)
       } catch (err) {
         console.log("Couldn't save group", err)
         commit({ type: 'saveGroup', group, reverse: true })
@@ -194,12 +194,12 @@ export default {
     async saveTask({ commit, state }, { groupId, task }) {
       commit({ type: 'saveTask', groupId, task })
       try {
+        socketService.emit(SOCKET_EMIT_UPDATE_TASK, task)
         boardService.saveTask(
           state.currBoard._id,
           groupId,
           task
         )
-        socketService.emit(SOCKET_EMIT_UPDATE_TASK, task)
       } catch (err) {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: false })
