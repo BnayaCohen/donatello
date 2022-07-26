@@ -120,6 +120,10 @@
   @include type(boldCondensed);
 }
 
+.bold {
+  font-weight: 700
+}
+
 // Aspect ratios
 
 .ratio-16-9 {

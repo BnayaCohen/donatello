@@ -1,0 +1,85 @@
+.new-comment-container {
+  margin-block-start: em(12px);
+  .member-icon-container {
+    align-self: flex-start;
+  }
+  form {
+    flex-basis: 90%;
+    margin-inline-start: 10px;
+  }
+  .comment-frame {
+    border-radius: 3px;
+    box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+    margin: 0 4px 12px 0;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 85ms ease;
+    &:hover {
+      box-shadow: 0 1px 1px #091e4240, 0 0 0 1px #091e4214;
+      cursor: pointer;
+    }
+    .comment-box {
+      padding: 12px 12px;
+      background: #fff;
+      position: relative;
+      transition-duration: 85ms;
+      transition-property: padding-bottom;
+      transition-timing-function: ease;
+      &.focus {
+        padding-bottom: 56px;
+        .comment-box-input {
+          cursor: text;
+        }
+      }
+
+      .comment-box-input {
+        overflow: hidden;
+        overflow-wrap: break-word;
+        height: 30px;
+        border: 0;
+        box-shadow: none;
+        margin: -8px -12px;
+        background: #fff;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .comment-control {
+        bottom: 8px;
+        left: 12px;
+        opacity: 0;
+        position: absolute;
+        transform: translateY(48px);
+        transition-duration: 85ms;
+        transition-property: opacity, transform;
+        transition-timing-function: ease;
+
+        &.focus {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .submit-comment-btn {
+          background-color: #0079bf;
+          border: none;
+          box-shadow: none;
+          color: #fff;
+          padding: em(6px) em(12px);
+          text-align: center;
+          border-radius: 3px;
+          margin: em(8px) em(4px) 0 0;
+          font-size: 1rem;
+          font-family: inherit;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .about-comment {
+    margin: 0 0 em(6px) em(5px);
+    span {
+      margin-inline-start: em(5px);
+      font-size: 12px;
+    }
+  }
+}
