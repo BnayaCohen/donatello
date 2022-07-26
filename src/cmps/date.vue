@@ -16,7 +16,7 @@ import Datepicker from 'vuejs3-datepicker'
 export default {
   props: {
     pos: Object,
-    dueDate: String,
+    dueDate: Date,
   },
 
   methods: {

@@ -1,7 +1,7 @@
 <template>
   <div class="dynamic-popover pos-absolute attachment-popover-container" :style="pos">
     <div class="popover-header flex justify-center align-center">
-      <h4>Attach from..</h4>
+      <span>Attach from..</span>
       <button class="pop-close-btn" @click.stop="$emit('toggle', { ev: $event, type: 'Attach' })">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
