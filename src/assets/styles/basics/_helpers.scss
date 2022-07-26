@@ -120,8 +120,8 @@
   @include type(boldCondensed);
 }
 
-.bold {
-  font-weight: 700
+.dash {
+  margin-inline: em(4px);
 }
 
 // Aspect ratios
@@ -341,5 +341,12 @@
 .link {
   text-decoration: underline;
   color: #0e367a;
+  cursor: pointer;
+}
+
+.quiet-a {
+  color: #5e6c84;
+  text-decoration: underline;
+  font-size: 12px;
   cursor: pointer;
 }

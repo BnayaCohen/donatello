@@ -91,6 +91,7 @@
               :loggedInUser="loggedUser"
               @saveComment="saveComment"
               :comments="taskComments"
+              @deleteComment="deleteComment"
             />
           </div>
           <task-detail-sidebar
@@ -419,6 +420,11 @@ export default {
       this.task.comments.unshift(comment)
       this.updateTask()
     },
+    deleteComment(commentId) {
+      const idx = this.task.comments.findIndex(comment => comment.id === commentId)
+      if(idx !== -1) this.task.comments.splice(idx, 1)
+      this.updateTask()
+    }
   },
   components: {
     labelPicker,
