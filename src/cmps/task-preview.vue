@@ -191,6 +191,7 @@
 <script>
 import taskLabelList from './task-label-list.vue'
 import avatarPreview from './avatar-preview.vue'
+import { socketService,SOCKET_EMIT_UPDATE_TASK } from '@/services/socket-service'
 
 export default {
   name: 'taskPreview',
@@ -225,6 +226,7 @@ export default {
         task: JSON.parse(JSON.stringify(savedTask)),
         groupId: this.task.groupId,
       })
+      socketService.emit(SOCKET_EMIT_UPDATE_TASK, savedTask)
     },
     openQuickEdit(ev) {
       this.x = ev.clientX
