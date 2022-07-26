@@ -1,5 +1,7 @@
 import { boardService } from '../../services/board-service.js'
 import { utilService } from '../../services/util-service.js'
+import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_TASK, SOCKET_EMIT_UPDATE_GROUP } from '../../services/socket-service'
+import { userService } from '../../services/user-service.js'
 
 export default {
   state: {
@@ -129,6 +131,16 @@ export default {
         }
         state.lastTask = null
       }
+    },
+    addActivity(state, { memberId, task }) {
+      const newActivity = {
+        id: utilService.makeId(),
+        txt: task ? 'Modified a card' : 'Modified a list',
+        createdAt: Date.now(),
+        byMember: userService.getById(memberId),
+        task: task || '',
+      }
+      state.currBoard.activities.unshift(newActivity)
     }
   },
   actions: {
@@ -145,6 +157,7 @@ export default {
       try {
         const board = await boardService.getById(boardId)
         commit({ type: 'setBoard', board })
+        socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
         return board
       } catch (err) {
         console.log('cannot get board', err)
@@ -153,10 +166,9 @@ export default {
     async loadTask({ commit }, { boardId, groupId, taskId }) {
       try {
         const task = await boardService.getTaskById(boardId, groupId, taskId)
-        console.log(task)
         commit({ type: 'setTask', task })
       } catch (err) {
-
+        console.log('cannot load task: ' + err)
       }
     },
     async saveBoard({ commit }, { board }) {
@@ -173,6 +185,7 @@ export default {
       commit({ type: 'saveGroup', group })
       try {
         boardService.saveGroup(state.currBoard._id, group)
+        socketService.emit(SOCKET_EMIT_UPDATE_GROUP, group)
       } catch (err) {
         console.log("Couldn't save group", err)
         commit({ type: 'saveGroup', group, reverse: true })
@@ -186,6 +199,7 @@ export default {
           groupId,
           task
         )
+        socketService.emit(SOCKET_EMIT_UPDATE_TASK, task)
       } catch (err) {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: false })
@@ -222,7 +236,6 @@ export default {
         console.log('couldnt remove board', err)
       }
     },
-
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
       try {
