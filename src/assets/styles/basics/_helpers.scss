@@ -110,8 +110,8 @@
 
 //Dark mode
 .dark-theme {
-  color: #fff;
-  background-color: #ffffff30;
+  color: #fff!important;
+  background-color: #ffffff30!important;
 
   &:hover {
     background-color: #ffffff46!important;
