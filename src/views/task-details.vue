@@ -421,6 +421,7 @@ export default {
       this.updateTask()
     },
     deleteComment(commentId) {
+      console.log('hi')
       const idx = this.task.comments.findIndex(comment => comment.id === commentId)
       if(idx !== -1) this.task.comments.splice(idx, 1)
       this.updateTask()

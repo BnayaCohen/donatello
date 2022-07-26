@@ -1,7 +1,6 @@
 <template>
   <div
     class="new-comment-container flex align-center"
-    v-click-outside="closeComment"
   >
     <div class="member-icon-container">
       <img class="member-avatar-big" :src="loggedInUser.imgUrl" />
@@ -16,7 +15,6 @@
           <textarea
             class="comment-box-input"
             placeholder="Write a comment..."
-            @click="openComment"
             v-model="comment.txt"
             disabled
             :style="{ cursor: 'default' }"
@@ -31,7 +29,7 @@
       <div class="comment-actions">
         <span class="quiet-a edit-comment">Edit</span>
         <span class="dash">-</span>
-        <span class="quiet-a delete-comment">Delete</span>
+        <span class="quiet-a delete-comment" @click.stop="deleteComment">Delete</span>
       </div>
     </form>
   </div>
