@@ -96,7 +96,7 @@
       left: 0;
       text-align: center;
       top: -1;
-      width: 32px;
+      width: 24px;
     }
     > div {
       background: #091e4214;
@@ -168,6 +168,9 @@
     transition-property: background-color, border-color, box-shadow;
     transition-timing-function: ease;
     white-space: normal;
+    &:hover {
+      background-color: #091e4214;
+    }
   }
   .add-todo-container {
     textarea {

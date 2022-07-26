@@ -27,11 +27,11 @@
         </div>
       </form>
     </div>
-    <seciton class="all-comments-container" v-if="comments.length">
+    <section class="all-comments-container" v-if="comments.length">
       <div v-for="comment in comments" :key="comment.id">
-        <comment-preview :comment="comment" :loggedInUser="loggedInUser"/>
+        <comment-preview :comment="comment" :loggedInUser="loggedInUser" @deleteComment="deleteComment"/>
       </div>
-    </seciton>
+    </section>
   </div>
 </template>
 <script>
@@ -45,7 +45,8 @@ export default {
     return {
       comment: {
         byMember: null,
-        txt: null,
+        createdAt: null,
+        txt: '',
       },
     }
   },
@@ -67,12 +68,22 @@ export default {
     },
     saveComment() {
       if (!this.comment.txt) return
-      this.$emit('saveComment', this.comment)
+      this.$emit('saveComment', JSON.parse(JSON.stringify(this.comment)))
+      this.clearComment()
     },
+    deleteComment(commentId) {
+      this.$emit('deleteComment', commentId)
+    },
+    clearComment() {
+      this.comment.txt = ''
+      this.byMember = null
+      this.createdAt = null
+    }
   },
   components: {
     commentPreview
-  }
+  },
+  emits: ['saveComment', 'deleteComment']
 }
 </script>
 <style></style>

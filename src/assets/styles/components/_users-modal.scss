@@ -1,54 +1,40 @@
-.users-modal,.members-modal {
-    position: absolute;
+.members-popover-container {
+  .member-preview {
     background-color: #fff;
+    user-select: none;
+    padding-inline-start: em(4px);
+    cursor: pointer;
+    &:hover {
+      background-color: #091e420a;
+    }
+    .member-fullname {
+      margin-inline-start: em(5px);
+      margin: em(10px) 0 em(10px) em(10px);
+    }
+
+    .member-username {
+      margin-inline-start: em(3px);
+    }
+
+    .trellicons-check {
+      padding: 5px 11px 5px 5px;
+      // trellicons check icon is "\e916"
+    }
+  }
+  .modal-input {
+    background-color: #fafbfc;
+    border: none;
     border-radius: 3px;
-    box-shadow: 0 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
-    min-height: 50px;
-    width: 321px;
-    z-index: 35;
+    box-shadow: inset 0 0 0 2px #dfe1e6;
+    margin: 4px 0 12px;
+    outline: none;
+    padding: 8px 12px;
+    width: 100%;
 
-    .modal-header {
-        align-items: center;
-        border-bottom: 1px solid #091e4221;
-        color: #5e6c84;
-        display: flex;
-        justify-content: center;
-        line-height: 40px;
-        margin: 0 12px;
-        padding: 0 32px;
-        position: relative;
-        .close-btn{
-            font-size: 1.2rem;
-            position: absolute;
-            right:0;
-        }
+    &:focus {
+      background-color: #fff;
+      border: 0 #fff;
+      box-shadow: inset 0 0 0 2px #0079bf;
     }
-
-    .modal-input {
-        background-color: #fafbfc;
-        border: none;
-        border-radius: 3px;
-        box-shadow: inset 0 0 0 2px #dfe1e6;
-        margin: 4px 0 12px;
-        outline: none;
-        padding: 8px 12px;
-        width: 100%;
-
-        &:focus {
-            background-color: #fff;
-            border: 0 #fff;
-            box-shadow: inset 0 0 0 2px #0079bf;
-        }
-    }
-
-    .users-preview,.members-modal {
-        p {
-            flex: 1;
-        }
-
-        .trellicons-check {
-            padding: 5px 11px 5px 5px;
-            // trellicons check icon is "\e916"
-        }
-    }
+  }
 }
