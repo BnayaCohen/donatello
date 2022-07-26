@@ -1,0 +1,39 @@
+.new-comment-container {
+  form {
+    flex-basis: 90%;
+  }
+  .comment-frame {
+    border-radius: 3px;
+    box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+    margin: 4px 4px 12px 0;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 85ms ease;
+    &:hover {
+      box-shadow: 0 1px 1px #091e4240, 0 0 0 1px #091e4214;
+      cursor: pointer;
+    }
+    .comment-box {
+      padding: 14px 12px;
+      background: #fff;
+      position: relative;
+      transition-duration: 85ms;
+      transition-property: padding-bottom;
+      transition-timing-function: ease;
+      &.focus {
+        padding-bottom: 56px;
+      }
+      .comment-box-input {
+        overflow: hidden;
+        overflow-wrap: break-word;
+        height: 20px;
+        border: 0;
+        box-shadow: none;
+        margin: -8px -12px;
+        background: #fff;
+        font-size: inherit;
+        font-family: inherit;
+      }
+    }
+  }
+}
