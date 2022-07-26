@@ -11,7 +11,7 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-import { socketService, SOCKET_EVENT_TASK_UPDATED,SOCKET_EVENT_GROUP_UPDATED } from '@/services/socket-service'
+import { socketService, SOCKET_EVENT_TASK_UPDATED,SOCKET_EVENT_GROUP_UPDATED ,SOCKET_EVENT_BOARD_UPDATED} from '@/services/socket-service'
 
 export default {
   name: 'board-details',
@@ -32,6 +32,7 @@ export default {
       this.$emit('setBackground', this.board.style?.background)
       socketService.on(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
       socketService.on(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
+      socketService.on(SOCKET_EVENT_BOARD_UPDATED, this.updateGroupFromSocket)
     } catch (err) {
       console.log('Cannot load board to front', err)
     }
@@ -65,11 +66,23 @@ export default {
         group:data.group,
         memberId:data.userId
       })
+    },
+    updateBoardFromSocket(board) {
+      this.$store.commit({
+        type: 'updateBoard',
+        board,
+      })
+      // this.$store.commit({
+      //   type: 'addActivity',
+      //   group:data.group,
+      //   memberId:data.userId
+      // })
     }
   },
   unmounted() {
     socketService.off(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
     socketService.off(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
+    socketService.off(SOCKET_EVENT_BOARD_UPDATED, this.updateGroupFromSocket)
   },
   components: {
     groupList,

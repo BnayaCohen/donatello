@@ -8,6 +8,8 @@ export const SOCKET_EMIT_UPDATE_TASK = 'update-task'
 export const SOCKET_EVENT_TASK_UPDATED = 'task-updated'
 export const SOCKET_EMIT_UPDATE_GROUP = 'update-group'
 export const SOCKET_EVENT_GROUP_UPDATED = 'group-updated'
+export const SOCKET_EMIT_UPDATE_BOARD = 'update-board'
+export const SOCKET_EVENT_BOARD_UPDATED = 'board-updated'
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
