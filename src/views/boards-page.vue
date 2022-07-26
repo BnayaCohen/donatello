@@ -106,12 +106,7 @@ export default {
     async createBoard(data) {
       const board = boardService.getEmptyBoard(data.title)
       board.style = data.style
-      // board.createdBy:userService.getLoggedInUser()
-      board.createdBy = {
-        _id: 'u101',
-        fullname: 'Abi Abambi',
-        imgUrl: '',
-      }
+      board.createdBy = userService.getLoggedInUser()
       const { _id } = await this.$store.dispatch({ type: 'saveBoard', board })
       this.$router.push('/board/' + _id)
     },
