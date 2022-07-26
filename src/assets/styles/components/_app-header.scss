@@ -2,6 +2,8 @@
   background-color: hsla(0, 0%, 0%, 0.16);
   height: em(44px);
   padding: 6px 4px;
+  backdrop-filter: blur(6px);
+  transition: background-color 300ms;
 
   .logo {
     font-weight: 800;

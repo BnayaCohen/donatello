@@ -15,7 +15,8 @@ export default {
     lastGroup: null,
     lastTask: null,
     showLabelsOnTask: false,
-    currTask: null
+    currTask: null,
+    isDarkTheme:false,
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -46,6 +47,9 @@ export default {
     },
     task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
+    },
+    isDarkTheme({ isDarkTheme }) {
+      return isDarkTheme
     }
   },
   mutations: {
@@ -61,6 +65,9 @@ export default {
     },
     setTask(state, { task }) {
       state.currTask = task
+    },
+    setDarkTheme(state, { isDark }) {
+      state.isDarkTheme = isDark
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex(
