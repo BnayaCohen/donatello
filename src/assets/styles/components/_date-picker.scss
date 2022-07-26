@@ -1,8 +1,30 @@
 .due-date-picker {
-    position: absolute;
-    background-color: transparent;
+    background-color: #fff;
     border: none;
     top: 0;
     z-index: 50;
-    padding: 0.6rem 0;
+    .remove-duedate-btn {
+      margin: em(10px) 0 0 0;
+      background-color: rgba(9, 30, 66, 0.04);
+      transition-property: background-color, border-color, box-shadow;
+      transition-duration: 85ms;
+      transition-timing-function: ease;
+      &:hover {
+        background-color: rgba(9, 30, 66, 0.08);
+      }
+    }
+    .save-duedate-btn {
+      background-color: #0079bf;
+      color: #fff;
+      margin-bottom: 0;
+    }
   }
+  .vuejs3-datepicker__calendar-topbar {
+    display: none;
+  }
+.vuejs3-datepicker__calendar {
+  box-shadow: none;
+}
+.vuejs3-datepicker__calendar {
+  max-width: 280px;
+}

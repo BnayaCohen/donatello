@@ -22,7 +22,6 @@ export const boardService = {
   saveGroup,
   getTaskById,
   changeGroupPos,
-  updateGroups,
 }
 
 function getLabels() {
@@ -125,9 +124,9 @@ async function saveGroup(boardId, group) {
     else board.groups.push(group)
 
     board.activities.unshift(activity)
-    saveBoard(board)
+    await saveBoard(board)
   } catch (err) {
-    console.log('Cannot save group!', err)
+    throw err
   }
 }
 
@@ -147,9 +146,9 @@ async function saveTask(boardId, groupId, task) {
     }
 
     board.activities.unshift(activity)
-    saveBoard(board)
+    await saveBoard(board)
   } catch (err) {
-    console.log('ERROR WHILE SAVING TASK!!!', err)
+    throw err
   }
 }
 
@@ -221,25 +220,15 @@ async function getTaskById(boardId, groupId, taskId) {
   }
 }
 
-async function changeGroupPos(boardId, dropResult) {
+async function changeGroupPos(boardId, { removedIndex, addedIndex }) {
   // TODO: fix bug
   try {
-    const { removedIndex, addedIndex } = dropResult
     const board = await getById(boardId)
     const group = board.groups.splice(removedIndex, 1)[0]
     board.groups.splice(addedIndex, 0, group)
-    saveBoard(board)
+    await saveBoard(board)
   } catch (err) {
-    console.log('Cannot Change Group Pos', err)
-  }
-}
-
-async function updateGroups(board) {
-  try {
-    const newBoard = JSON.parse(JSON.stringify(board))
-    saveBoard(newBoard)
-  } catch (err) {
-    console.log('Cannot update groups', err)
+    throw err
   }
 }
 

@@ -139,6 +139,8 @@
     :dueDate="dueDate"
     v-click-outside="closeDate"
     @click.stop="''"
+    @toggleDate="toggleDate"
+    @removeDueDate="removeDueDate"
   />
   <checklist-modal
     v-if="isChecklist"
