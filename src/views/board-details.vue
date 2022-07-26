@@ -11,7 +11,7 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-import { socketService, SOCKET_EVENT_TASK_UPDATED,SOCKET_EVENT_GROUP_UPDATED ,SOCKET_EVENT_BOARD_UPDATED} from '@/services/socket-service'
+import { socketService, SOCKET_EVENT_TASK_UPDATED, SOCKET_EVENT_GROUP_UPDATED, SOCKET_EVENT_BOARD_UPDATED } from '@/services/socket-service'
 
 export default {
   name: 'board-details',
@@ -32,7 +32,7 @@ export default {
       this.$emit('setBackground', this.board.style?.background)
       socketService.on(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
       socketService.on(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
-      socketService.on(SOCKET_EVENT_BOARD_UPDATED, this.updateGroupFromSocket)
+      socketService.on(SOCKET_EVENT_BOARD_UPDATED, this.updateBoardFromSocket)
     } catch (err) {
       console.log('Cannot load board to front', err)
     }
@@ -50,26 +50,26 @@ export default {
         task: data.task,
         groupId: data.task.groupId,
       })
-       this.$store.commit({
+      this.$store.commit({
         type: 'addActivity',
-        task:data.task,
-        memberId:data.userId
+        task: data.task,
+        memberId: data.memberId
       })
     },
     updateGroupFromSocket(data) {
       this.$store.commit({
         type: 'saveGroup',
-        group:data.group,
+        group: data.group,
       })
       this.$store.commit({
         type: 'addActivity',
-        group:data.group,
-        memberId:data.userId
+        group: data.group,
+        memberId: data.memberId
       })
     },
     updateBoardFromSocket(board) {
       this.$store.commit({
-        type: 'updateBoard',
+        type: 'setBoard',
         board,
       })
       // this.$store.commit({
@@ -82,7 +82,7 @@ export default {
   unmounted() {
     socketService.off(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
     socketService.off(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
-    socketService.off(SOCKET_EVENT_BOARD_UPDATED, this.updateGroupFromSocket)
+    socketService.off(SOCKET_EVENT_BOARD_UPDATED, this.updateBoardFromSocket)
   },
   components: {
     groupList,

@@ -5,7 +5,7 @@
         </div>
         <div>
             <h3 class="member-fullname">{{ activity?.byMember?.fullname }}</h3>
-            <p class="activity-details">{{ activity.txt }}</p>
+            <p class="activity-details"> {{ ' ' + activity.txt }}</p>
             <p class="activity-time-ago">{{ timeAgo }}</p>
         </div>
     </li>
