@@ -1,17 +1,24 @@
 <template>
-  <div :style="pos" class="checklist-modal-component">
-    <header class="checklist-header">
-      <h3>Add checklist</h3>
-      <span
-        @click="$emit('toggle', { ev: $event, type: 'Checklist' })"
-        class="close-btn trellicons trellicons-close-btn"
-      ></span>
-    </header>
-    <section class="checklist-inputs">
-      <label>Title</label>
-      <input type="text" v-model="title" />
-      <button @click="addChecklist" class="add-checklist-btn">Add</button>
-    </section>
+  <div
+    class="dynamic-popover pos-absolute checklist-popover-container"
+    :style="pos"
+  >
+    <div class="popover-header flex justify-center align-center">
+      <h4 class="modal-title">Add checklist</h4>
+      <button class="pop-close-btn">
+        <span
+          @click="$emit('toggle', { ev: $event, type: 'Checklist' })"
+          class="close-btn trellicons trellicons-close-btn"
+        ></span>
+      </button>
+    </div>
+    <div class="popover-content">
+      <section class="checklist-inputs">
+        <h3 class="small-title">Title</h3>
+        <input type="text" v-model="title" />
+        <button @click="addChecklist" class="add-checklist-btn">Add</button>
+      </section>
+    </div>
   </div>
 </template>
 
