@@ -13,7 +13,8 @@
         </div>
 
         <button @click="toggleInvite" class="btn-background" style="position:relative;">Invite
-          <users-modal v-if="isInviteOpen" v-click-outside="toggleInvite" @toggleInvite="toggleInvite" />
+          <users-modal v-if="isInviteOpen" @toggleUser="toggleUser" v-click-outside="toggleInvite"
+            @toggleInvite="toggleInvite" />
         </button>
       </section>
 
@@ -54,6 +55,12 @@ export default {
       if (this.board.title === '') return
       this.$store.dispatch({ type: 'saveBoard', board: this.board })
     },
+    toggleUser(user) {
+      const idx = this.board.members.findIndex(member => member._id === user._id)
+      if (idx !== -1) this.board.members.splice(idx, 1)
+      else this.board.members.push(user)
+      this.$store.dispatch({ type: 'saveBoard', board: this.board })
+    }
   },
   computed: {
     isBoardStarred() {
@@ -67,5 +74,4 @@ export default {
   },
 }
 </script>
-<style>
-</style>
+

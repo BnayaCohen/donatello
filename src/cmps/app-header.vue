@@ -11,7 +11,7 @@ Donatello</button>
       <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
         <button class="btn btn-background"><i class="fa-solid fa-bell"></i></button>
-        <button class="btn btn-background">Avatar</button>
+        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="loggedInUser?.imgUrl" :style="{cursor: 'pointer'}"/>
       </section>
     </div>
   </header>
@@ -22,14 +22,17 @@ Donatello</button>
 export default {
   name: 'appHome',
   data() {
-    return {}
+    return {
+      loggedInUser: null
+    }
+  },
+  created() {
+    this.loggedInUser = this.$store.getters.user
+    console.log(this.loggedInUser)
   },
   methods: {
     login(credentials) {
       this.$emit('login', credentials)
-    },
-    logout() {
-      this.$emit('logout')
     },
     signup(signupInfo) {
       this.$emit('signup', signupInfo)
@@ -40,8 +43,6 @@ export default {
     goToBoards() {
       this.$router.push('/board')
     }
-  },
-  computed: {
   },
   components: {
     // loginLogout,
