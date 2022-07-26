@@ -1,18 +1,18 @@
 <template>
-  <header class="main-layout app-header">
-    <div class="flex justify-between align-center">
+  <header class="main-layout app-header" :style="{background:bgColor}" >
+    <div class="flex justify-between align-center" >
       <section class="nav-container">
         <div class="logo flex">
-          <button class="btn btn-background" @click="goToHome" style="font-weight: 600;"><i
+          <button class="btn btn-background" @click="goToHome" style="font-weight: 600;" :class="{'dark-theme':isDark}"><i
               class="fa-brands fa-trello"></i>
             Donatello</button>
-          <button class="btn btn-background" @click="goToBoards">Boards</button>
+          <button class="btn btn-background" :class="{'dark-theme':isDark}" @click="goToBoards">Boards</button>
         </div>
       </section>
       <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
-        <button class="btn btn-background"><i class="fa-solid fa-bell"></i></button>
-        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="user?.imgUrl"
+        <button class="btn btn-background" :class="{'dark-theme':isDark}"><i class="fa-solid fa-bell"></i></button>
+        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="loggedInUser?.imgUrl"
           :style="{ cursor: 'pointer' }" />
       </section>
     </div>
@@ -23,6 +23,10 @@
 // import loginLogout from '../components/login-logout.vue'
 export default {
   name: 'appHome',
+  props: {
+    bgColor: String,
+    isDark: Boolean
+  },
   data() {
     return {
     }
