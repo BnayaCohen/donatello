@@ -125,22 +125,91 @@
       cursor: pointer;
     }
     .el-checkbox {
-      background-color: #fafbfc;
       border-radius: 2px;
-      box-shadow: inset 0 0 0 2px #dfe1e6;
       cursor: pointer;
       flex-shrink: 0;
       height: 16px;
       left: 0;
       margin: 6px;
       overflow: hidden;
-      position: relative;
       position: absolute;
       text-align: center;
       top: 5px;
       transition: all 0.2s ease-in-out;
       white-space: nowrap;
       width: 16px;
+    }
+    &-text {
+      padding: 9.25px 0;
+      p {
+        flex: 1;
+        margin: 0;
+      }
+    }
+  }
+  .add-todo-btn {
+    margin: 8px 0;
+    align-items: center;
+    background-color: #091e420a;
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #172b4d;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 400;
+    justify-content: center;
+    line-height: 20px;
+    padding: 6px 12px;
+    text-decoration: none;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+    white-space: normal;
+  }
+  .add-todo-container {
+    textarea {
+      background-color: #fff;
+      box-shadow: inset 0 0 0 2px #0079bf;
+      color: #172b4d;
+      cursor: text;
+      float: none;
+      resize: vertical;
+      width: 100%;
+      margin: 4px 0 0;
+      min-height: 32px;
+      border-radius: 3px;
+      padding: 8px 12px;
+    }
+    .edit-controls {
+      margin-top: 8px;
+      .save-todo-btn {
+        cursor: pointer;
+        margin: 0 4px 0 0;
+        background-color: #0079bf;
+        border: none;
+        box-shadow: none;
+        color: #fff;
+        // display: inline-flex;
+        // align-items: center;
+        border-radius: 3px;
+        padding: 6px 12px;
+        line-height: lh(20px);
+      }
+      .close-new-todo-btn {
+        cursor: pointer;
+        background-color: initial;
+        border: none;
+        border-radius: 3px;
+        color: #172b4d;
+        padding: 6px 12px;
+        &:hover {
+          background-color: #091e4214;
+          line-height: lh(20px);
+        }
+      }
     }
   }
 }
