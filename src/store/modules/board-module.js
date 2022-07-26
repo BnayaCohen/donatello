@@ -1,5 +1,6 @@
 import { boardService } from '../../services/board-service.js'
 import { utilService } from '../../services/util-service.js'
+import { socketService,SOCKET_EMIT_SET_TOPIC } from '../../services/socket-service'
 
 export default {
   state: {
@@ -145,6 +146,7 @@ export default {
       try {
         const board = await boardService.getById(boardId)
         commit({ type: 'setBoard', board })
+        socketService.emit(SOCKET_EMIT_SET_TOPIC,boardId)
         return board
       } catch (err) {
         console.log('cannot get board', err)
@@ -179,6 +181,7 @@ export default {
       }
     },
     async saveTask({ commit, state }, { groupId, task }) {
+      console.log(task);
       commit({ type: 'saveTask', groupId, task })
       try {
         boardService.saveTask(
