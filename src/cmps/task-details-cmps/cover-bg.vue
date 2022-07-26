@@ -1,8 +1,8 @@
 <template>
-  <div v-if="currCover" class="flex justify-center task-detail-bg" :style="getBackground"><img
-      :src="currCover.background" alt=""></div>
-  <div class="btn-wrapper" v-if="currCover">
-    <button @click.stop="coverClicked" class="cover-btn flex align-center">
+  <div v-if="bgCover" class="flex justify-center task-detail-bg" :style="getBackground"><img :src="currCover.background"
+      alt=""></div>
+  <div class="btn-wrapper" v-if="bgCover">
+    <button @click.stop="coverClicked" :class="darkModeClass" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
       <span class="cover-txt">Cover</span>
     </button>
@@ -14,24 +14,51 @@
     </svg>
   </button>
 </template>
+
 <script>
+import { utilService } from '@/services/util-service.js'
+
 export default {
   props: {
     currCover: Object,
   },
-  created() { },
+  data() {
+    return {
+      bgCover: '',
+      isDarkMode: false,
+    }
+  },
   methods: {
     coverClicked(ev) {
       this.$emit('toggle', { ev, type: 'Cover' })
     },
+    async setCoverColor(bg) {
+      if (bg.background.length > 10)
+        return await utilService.getImgAvgColor(bg.background)
+      else {
+        return bg
+      }
+    },
+    async updateDarkMode() {
+      if (this.currCover.background.length > 10) {
+        this.isDarkMode = await utilService.isDarkImg(this.currCover.background)
+      }
+    }
   },
   computed: {
     getBackground() {
-      return this.currCover.background.length > 10 ? { background: '#00000040' } : this.currCover
+      return { background: this.bgCover }
+    },
+    darkModeClass() {
+      return { 'dark-theme': this.isDarkMode }
+    }
+  },
+  watch: {
+    async currCover() {
+      this.bgCover = await this.setCoverColor(this.currCover)
+      await this.updateDarkMode()
     }
   },
   emits: ['toggle', 'closeModal'],
 }
 </script>
-<style>
-</style>
