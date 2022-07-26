@@ -25,9 +25,6 @@ export default {
     groups: Array,
     isSideBarOpen: Boolean
   },
-  created() {
-    console.log(this.groups)
-  },
   data() {
     return {
       scene: this.$store.getters.scene,
@@ -45,7 +42,6 @@ export default {
       }
     },
     groupListWidth() {
-      console.log(this.isSideBarOpen);
       return {
         width: this.isSideBarOpen ? 'calc(100% - 305px)' : '100%'
       }
