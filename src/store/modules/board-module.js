@@ -96,6 +96,7 @@ export default {
     },
     saveGroup(state, { group, reverse = false }) {
       if (!reverse) {
+        console.log(group);
         const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
         if (idx !== -1) state.currBoard.groups.splice(idx, 1, group)
         else state.currBoard.groups.push(group)
@@ -133,11 +134,12 @@ export default {
       }
     },
     addActivity(state, { memberId, task }) {
+      const byMember = state.currBoard.members.find(member => member._id === memberId)
       const newActivity = {
         id: utilService.makeId(),
         txt: task ? 'Modified a card' : 'Modified a list',
         createdAt: Date.now(),
-        byMember: userService.getById(memberId),
+        byMember: byMember || userService.getDefaultGuest(),
         task: task || '',
       }
       state.currBoard.activities.unshift(newActivity)
@@ -184,8 +186,8 @@ export default {
     },
     async saveGroup({ commit, state }, { group }) {
       commit({ type: 'saveGroup', group })
+      socketService.emit(SOCKET_EMIT_UPDATE_GROUP, group)
       try {
-        socketService.emit(SOCKET_EMIT_UPDATE_GROUP, group)
         boardService.saveGroup(state.currBoard._id, group)
       } catch (err) {
         console.log("Couldn't save group", err)
@@ -194,8 +196,8 @@ export default {
     },
     async saveTask({ commit, state }, { groupId, task }) {
       commit({ type: 'saveTask', groupId, task })
+      socketService.emit(SOCKET_EMIT_UPDATE_TASK, task)
       try {
-        socketService.emit(SOCKET_EMIT_UPDATE_TASK, task)
         boardService.saveTask(
           state.currBoard._id,
           groupId,
