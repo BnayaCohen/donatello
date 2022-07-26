@@ -16,7 +16,6 @@ import appHeader from '@/cmps/app-header.vue'
 import userMenu from '@/cmps/user-menu.vue'
 
 export default {
-  emits: ['setBackground'],
   name: 'app',
   data() {
     return {
