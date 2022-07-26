@@ -10,9 +10,9 @@
           <div>
             <span class="trellicons trellicons-details"></span>
           </div>
-          <div>
+          <div class="task-title-container">
             <textarea rows="1" class="title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter=";[updateTask, $refs.taskTitle.blur()]"></textarea>
+              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
             <div class="subtitle-header">
               <p>
                 in list
