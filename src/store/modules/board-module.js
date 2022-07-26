@@ -177,6 +177,7 @@ export default {
         const { idx, task } = state.removedTask
         const group = state.currBoard.groups.find(group => groupId === group.id)
         group.splice(idx, 0, task)
+        state.removedTask = null
       }
     },
   },
