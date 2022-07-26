@@ -39,7 +39,7 @@ async function ajax(endpoint, method = 'GET', data = null) {
     console.dir(err)
     if (err.response && err.response.status === 401) {
       // Depends on routing startegy - hash or history
-      window.location.assign('/#/login')
+      // window.location.assign('/#/login')
       // window.location.assign('/login')
       // router.push('/login')
     }
