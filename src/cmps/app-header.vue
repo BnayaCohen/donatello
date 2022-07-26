@@ -12,7 +12,7 @@
       <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
         <button class="btn btn-background"><i class="fa-solid fa-bell"></i></button>
-        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="loggedInUser?.imgUrl"
+        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="user?.imgUrl"
           :style="{ cursor: 'pointer' }" />
       </section>
     </div>
@@ -25,12 +25,14 @@ export default {
   name: 'appHome',
   data() {
     return {
-      loggedInUser: null
     }
   },
   created() {
-    this.loggedInUser = this.$store.getters.user
-    console.log(this.loggedInUser)
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
+    }
   },
   methods: {
     login(credentials) {
