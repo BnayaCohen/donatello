@@ -1,6 +1,6 @@
 import { boardService } from '../../services/board-service.js'
 import { utilService } from '../../services/util-service.js'
-import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_TASK, SOCKET_EMIT_UPDATE_GROUP } from '../../services/socket-service'
+import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_TASK, SOCKET_EMIT_UPDATE_GROUP, SOCKET_EMIT_UPDATE_BOARD } from '../../services/socket-service'
 import { userService } from '../../services/user-service.js'
 
 export default {
@@ -175,6 +175,7 @@ export default {
       const actionType = board._id ? 'updateBoard' : 'addBoard'
       try {
         const savedBoard = await boardService.saveBoard(board)
+        if (actionType === 'updateBoard') socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
         commit({ type: actionType, board: savedBoard })
         return savedBoard
       } catch (err) {
@@ -212,6 +213,7 @@ export default {
           groupId,
           taskId
         )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove task", err)
@@ -223,6 +225,7 @@ export default {
           state.currBoard._id,
           groupId
         )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove group", err)
@@ -243,6 +246,7 @@ export default {
           state.currBoard._id,
           dropResult
         )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       } catch (err) {
         console.log(err)
         commit({ type: 'changeGroupPos', dropResult, reverse: true })
@@ -252,6 +256,7 @@ export default {
       commit({ type: 'updateGroups', itemIndex, newColumn })
       try {
         boardService.updateGroups(state.currBoard)
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
