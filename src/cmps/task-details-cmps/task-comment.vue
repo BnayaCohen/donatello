@@ -46,7 +46,7 @@ export default {
       comment: {
         byMember: null,
         createdAt: null,
-        txt: null,
+        txt: '',
       },
     }
   },
@@ -68,10 +68,16 @@ export default {
     },
     saveComment() {
       if (!this.comment.txt) return
-      this.$emit('saveComment', this.comment)
+      this.$emit('saveComment', JSON.parse(JSON.stringify(this.comment)))
+      this.clearComment()
     },
     deleteComment(commentId) {
       this.$emit('deleteComment', commentId)
+    },
+    clearComment() {
+      this.comment.txt = ''
+      this.byMember = null
+      this.createdAt = null
     }
   },
   components: {

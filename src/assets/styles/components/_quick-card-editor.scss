@@ -112,16 +112,27 @@
       max-width: 100%;
       color: #6b778c;
       .badge {
+        line-height: lh(20px);
         display: inline-block;
         margin: 0 4px 4px 0;
         max-width: 100%;
         min-height: 20px;
         overflow: hidden;
         padding: 2px;
-        position: relative;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        vertical-align: top;
+
+        span {
+          padding: 1.66px 2px;
+          font-size: 16px;
+          line-height: lh(20px);
+        }
+        p {
+          font-size: 12px;
+          padding: 0 4px 0 2px;
+          vertical-align: top;
+          white-space: nowrap;
+          position: relative;
+          top: 3px;
+        }
         > * {
           display: inline;
         }

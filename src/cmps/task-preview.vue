@@ -36,10 +36,12 @@
             </div>
           </section>
         </div>
-        <section v-if="task.memberIds?.length" class="task-members-container">
-          <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)"
-            :avatarSize="'small'" />
-        </section>
+        <div class="flx" style="margin-left: auto;">
+          <section v-if="task.memberIds?.length" class="task-members-container">
+            <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)"
+              :avatarSize="'small'" />
+          </section>
+        </div>
       </section>
     </div>
   </div>
