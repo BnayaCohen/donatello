@@ -49,12 +49,7 @@
               @updateCurrCover="updateCurrCover" @toggle="toggle" @removeAttachment="removeAttachment" />
             <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
               @saveChecklists="saveChecklists" />
-            <div class="comment-container flex justify-between align-center">
-              <div class="task-detail-title">
-                <span class="trellicons trellicons-comments"></span>
-                <h3>Activity</h3>
-              </div>
-            </div>
+              <comment-preview />
           </div>
           <task-detail-sidebar :task="task" :currCover="currCover" @toggle="toggle" @addUserToTask="addUserToTask"
             @removeTask="removeTask" />
@@ -93,6 +88,7 @@ import datePicker from '../cmps/task-details-cmps/date-picker.vue'
 import date from '../cmps/date.vue'
 import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
+import commentPreview from '../cmps/task-details-cmps/comment-preview.vue'
 import { ref } from 'vue'
 
 export default {
@@ -155,6 +151,7 @@ export default {
   computed: {
     groupTitle() {
       const { groupId } = this.$route.params
+      console.log(groupId)
       const board = this.$store.getters.board
       if (board?._id) {
         const groups = board.groups
@@ -332,7 +329,8 @@ export default {
     TaskDetailSidebar,
     checklistModal,
     checklistList,
-    membersModal
+    membersModal,
+    commentPreview
   },
 }
 </script>
