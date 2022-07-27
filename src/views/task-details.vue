@@ -47,32 +47,7 @@
                 @removeDueDate="removeDueDate"
               />
             </div>
-            <div class="description-container flex flex-column">
-              <div class="description-header flex align-center">
-                <span class="trellicons trellicons-description"></span>
-                <h3>Description</h3>
-              </div>
-              <div class="task-description-txt">
-                <textarea
-                  rows="3"
-                  placeholder="Add a more detailed description..."
-                  ref="taskDescription"
-                  v-model="task.description"
-                  @click.stop="isEditDescription = !isEditDescription"
-                  :class="descriptionStyle"
-                ></textarea>
-                <div
-                  v-if="isEditDescription"
-                  class="description-btns flex align-center"
-                >
-                  <el-button @click.stop="updateTask">Save</el-button>
-                  <el-button @click.stop="isEditDescription = false"
-                    >X</el-button
-                  >
-                </div>
-                <span class="add-member"></span>
-              </div>
-            </div>
+            <task-description :description="task.description" @saveDescription="saveDescription"/>
             <attachment-list
               v-if="task.attachments?.length"
               :attachments="task.attachments"
