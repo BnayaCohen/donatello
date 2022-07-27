@@ -1,7 +1,16 @@
 <template>
   <main v-if="board" class="main-layout board-container">
-    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar" :isDark="isDark" />
-    <board-side-bar :activities="board.activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar" />
+    <board-header
+      :board="board"
+      :isSideBarOpen="isSideBarOpen"
+      @sideBarOpened="openSideBar"
+      :isDark="isDark"
+    />
+    <board-side-bar
+      :activities="board.activities"
+      :isSideBarOpen="isSideBarOpen"
+      @sideBarClosed="closeSideBar"
+    />
     <group-list :groups="board.groups" :isSideBarOpen="isSideBarOpen" />
     <router-view />
   </main>
@@ -11,7 +20,12 @@
 import groupList from '../cmps/group-list.vue'
 import boardHeader from '../cmps/board-header.vue'
 import boardSideBar from '../cmps/board-side-bar.vue'
-import { socketService, SOCKET_EVENT_TASK_UPDATED, SOCKET_EVENT_GROUP_UPDATED, SOCKET_EVENT_BOARD_UPDATED } from '@/services/socket-service'
+import {
+  socketService,
+  SOCKET_EVENT_TASK_UPDATED,
+  SOCKET_EVENT_GROUP_UPDATED,
+  SOCKET_EVENT_BOARD_UPDATED,
+} from '@/services/socket-service'
 
 export default {
   name: 'board-details',
@@ -26,12 +40,13 @@ export default {
   computed: {
     board() {
       return this.$store.getters.board
-    }
+    },
   },
   async created() {
     try {
       const { boardId } = this.$route.params
       await this.$store.dispatch({ type: 'loadBoard', boardId })
+      await this.$store.dispatch({ type: 'getUsers'})
       this.$emit('setBackground', this.board.style?.background)
       socketService.on(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
       socketService.on(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
@@ -56,7 +71,7 @@ export default {
       this.$store.commit({
         type: 'addActivity',
         task: data.task,
-        memberId: data.memberId
+        memberId: data.memberId,
       })
     },
     updateGroupFromSocket(data) {
@@ -67,7 +82,7 @@ export default {
       this.$store.commit({
         type: 'addActivity',
         group: data.group,
-        memberId: data.memberId
+        memberId: data.memberId,
       })
     },
     updateBoardFromSocket(board) {
@@ -80,7 +95,7 @@ export default {
       //   group:data.group,
       //   memberId:data.userId
       // })
-    }
+    },
   },
   unmounted() {
     socketService.off(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)

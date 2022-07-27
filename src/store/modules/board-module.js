@@ -50,6 +50,49 @@ export default {
     task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
     },
+    labelToTaskMap({currBoard}) {
+      let labelsCount = {}
+      let currLabelName = ''
+      const boardLabels = currBoard.labels
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
+          task.labelIds.forEach(labelId => {
+            for (var i = 0; i < boardLabels.length; i++) {
+              if (boardLabels[i].id === labelId) {
+                currLabelName = boardLabels[i].title
+                break
+              }
+            }
+            const hasLabel = currLabelName in labelsCount
+            if (!hasLabel) labelsCount[currLabelName] = 1
+            else labelsCount[currLabelName]++
+          })
+        })
+      })
+      return labelsCount
+    },
+    memberToTaskMap({currBoard}) {
+      let membersCount = {}
+      let currMemberName = ''
+      const boardMembers = currBoard.members
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
+          task.memberIds.forEach(memberId => {
+            for (var i = 0; i < boardMembers.length; i++) {
+              if (boardMembers[i]._id === memberId) {
+                currMemberName = boardMembers[i].fullname
+                break
+              }
+            }
+            if (!currMemberName) currMemberName = 'Guest'
+            const hasLabel = currMemberName in membersCount
+            if (!hasLabel) membersCount[currMemberName] = 1
+            else membersCount[currMemberName]++
+          })
+        })
+      })
+      return membersCount
+    }
   },
   mutations: {
     setBoards(state, { boards }) {

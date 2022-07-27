@@ -1,0 +1,103 @@
+.screen-overlay.heavy-dark {
+  background-color: rgba(0, 0, 0, 0.84);
+}
+.screen-overlay {
+  display: flex;
+  height: 100%;
+  left: 0;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.dashboard-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding: em(120px) 0;
+  z-index: 20;
+  .dashboard-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: em(35px);
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    height: 60px;
+    width: 60px;
+    &:hover {
+      font-size: 40px;
+    }
+  }
+  .general-statistics .stats {
+    outline: 2px solid rgba(255, 255, 255, 0.904);
+    h3 {
+        color: #fff;
+        font-size: em(20px);
+        letter-spacing: 1px;
+        margin-inline-start: em(8px);
+    }
+    margin-inline-end: em(25px);
+    margin-block-end: em(20px);
+    border-radius: 3px;
+    background-color: #fff;
+    height: 110px;
+    min-width: 270px;
+    width: 270px;
+    margin-bottom: 20px;
+    &:first-child {
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(
+        90deg,
+        #4fa8f8,
+        #2fb4f5,
+        #23beee,
+        #37c7e5,
+        #55ceda
+        );
+        .chart-icon {
+          width: 225px;
+          -webkit-align-self: flex-end;
+          align-self: flex-end;
+          -webkit-transform: rotate(347deg);
+          transform: rotate(347deg);
+          position: absolute;
+          right: -15px;
+          height: 80px;
+        }
+    }
+
+    &:nth-child(2) {
+        background-image: linear-gradient(270deg,#66c34f,#76c44f,#41c04e,#56d340,#5bdb5b);
+        .chart-icon-graph {
+          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg) brightness(104%) contrast(100%);
+          opacity: 0.8;
+          padding: 0.5rem;
+          margin-top: em(10px);
+      }
+    }
+    &:nth-child(3) {
+        background-image: linear-gradient(90deg,#eccd72,#dcbe5e,#ebd360,#ecdc62,#ecda73);
+        .chart-member {
+            filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg) brightness(104%) contrast(100%);
+            padding: 0.5rem;
+            opacity: 0.8;
+
+        }
+    }
+  }
+
+h1 {
+    color: #fff;
+    align-self: center;
+}
+}

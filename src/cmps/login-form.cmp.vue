@@ -108,13 +108,22 @@
               <span style="padding: 10px 10px 10px 0px; font-weight: 500"
                 >Continue with Google</span
               ></button
-            ><a v-if="isSignIn" 
-              ><span class="link" @click="$router.push('/signup'); toggleIsSignIn()" >Sign up</span> for an
-              account</a
+            ><a v-if="isSignIn"
+              ><span class="link" @click="$router.push('/signup'); toggleIsSignIn()"
+                >Sign up</span
+              >
+              for an account</a
             >
             <a v-else
               >Already have an account?
-              <span class="link" @click="$router.push('/login'); toggleIsSignIn()">Log in</span></a
+              <span
+                class="link"
+                @click="
+                  $router.push('/login');
+                  toggleIsSignIn()
+                "
+                >Log in</span
+              ></a
             >
           </div>
         </div>
@@ -142,7 +151,7 @@ export default {
   },
   created() {
     this.loggedinUser = this.$store.getters.user
-    const {loginOrSignup} = this.$route.params
+    const { loginOrSignup } = this.$route.params
     if (loginOrSignup === 'signup') this.isSignIn = false
   },
   methods: {
@@ -151,25 +160,20 @@ export default {
       this.credentials.username = null
       this.credentials.password = null
     },
-    logout() {
-      this.$emit('logout')
-      this.loggedinUser = null
-      this.$router.push('/')
-    },
     signup() {
       if (
         !this.fullname ||
         !this.credentials.username ||
         !this.credentials.password
-      )
-        return
+      ) return
+        
+      
       const signupInfo = JSON.parse(JSON.stringify(this.credentials))
       signupInfo.fullname = this.fullname
       this.userImgUrl
         ? (signupInfo.imgUrl = this.userImgUrl)
         : (signupInfo.imgUrl = '')
       this.$emit('signup', signupInfo)
-      this.clearFields()
     },
     handleFile(ev) {
       console.log(ev)
