@@ -18,6 +18,7 @@ export default {
     lastTask: null,
     showLabelsOnTask: false,
     currTask: null,
+    isDarkTheme: false,
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -105,11 +106,15 @@ export default {
     saveGroup(state, { group, reverse = false }) {
       if (!reverse) {
         const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
-        if (idx !== -1) state.currBoard.groups.splice(idx, 1, group)
-        else state.currBoard.groups.push(group)
-
-        state.lastGroup = { ...group }
-        group.id = group.id || utilService.makeId()
+        if (idx !== -1) {
+          const oldGroup = state.currBoard.groups.splice(idx, 1, group)
+          state.lastGroup = oldGroup
+        }
+        else {
+          state.currBoard.groups.push(group)
+          state.lastGroup = { ...group }
+          group.id = utilService.makeId()
+        }
       }
       else {
         const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
@@ -123,15 +128,22 @@ export default {
     saveTask(state, { groupId, task, reverse = false }) {
       const group = state.currBoard.groups.find(group => group.id === groupId)
       if (!reverse) {
-        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
-        if (idx !== -1) group.tasks.splice(idx, 1, task)
-        else group.tasks.push(task)
 
-        state.lastTask = { ...task }
-        task.id = task.id || utilService.makeId()
+        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
+        if (idx !== -1) {
+          const oldTask = group.tasks.splice(idx, 1, task)[0]
+          state.lastTask = oldTask
+        }
+        else {
+          group.tasks.push(task)
+          state.lastTask = { ...task }
+          task.id = utilService.makeId()
+        }
+
       }
       else {
         const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
+        console.log(state.lastTask)
         if (idx !== -1) {
           !state.lastTask.id && group.tasks.splice(idx, 1)
           state.lastTask.id && group.tasks.splice(idx, 1, state.lastTask)
@@ -210,10 +222,13 @@ export default {
       }
     },
     async saveBoard({ commit }, { board }) {
-      const actionType = board._id ? 'updateBoard' : 'addBoard'
+      const actionType = board._id ? 'setBoard' : 'addBoard'
       try {
         const savedBoard = await boardService.saveBoard(board)
-        if (actionType === 'updateBoard') socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
+        if (actionType === 'setBoard') {
+          socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
+          commit({ type: 'updateBoard', board: savedBoard })
+        }
         commit({ type: actionType, board: savedBoard })
         return savedBoard
       } catch (err) {
@@ -243,6 +258,9 @@ export default {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: true })
       }
+      // finally {
+      //   commit({ type: 'removeTaskArray', taskId: task.id })
+      // }
     },
     async removeTask({ commit, state }, { groupId, taskId }) {
       commit({ type: 'removeTask', groupId, taskId })
