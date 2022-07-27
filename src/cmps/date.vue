@@ -1,8 +1,8 @@
 <template>
-  <div class="dynamic-popover pos-absolute due-date-picker" :style="pos">
+  <div class="dynamic-popover due-date-picker">
     <div class="popover-header flex justify-center align-center">
       <span>Dates</span>
-      <button class="pop-close-btn" @click.stop="$emit('toggleDate', $event)">
+      <button class="pop-close-btn" @click.stop="$emit('modalClosed')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -18,7 +18,7 @@
     <div class="pop-content">
       <button
         class="full-btn flex align-center justify-center save-duedate-btn"
-        @click.stop="$emit('toggleDate', $event)"
+        @click.stop="$emit('modalClosed')"
       >
         <span>Save</span>
       </button>
@@ -36,7 +36,6 @@ import Datepicker from 'vuejs3-datepicker'
 
 export default {
   props: {
-    pos: Object,
     dueDate: Date,
   },
 
@@ -46,11 +45,11 @@ export default {
     },
     removeDueDate() {
       this.$emit('removeDueDate')
-      this.$emit('toggleDate')
+      this.$emit('modalClosed')
     }
   },
   components: { Datepicker },
-  emits: ['updateDueDate', 'removeDueDate', 'toggleDate']
+  emits: ['updateDueDate', 'removeDueDate', 'modalClosed']
 }
 </script>
 <style></style>

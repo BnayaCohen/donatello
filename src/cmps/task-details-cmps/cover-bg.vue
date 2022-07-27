@@ -28,9 +28,13 @@ export default {
       isDarkMode: false,
     }
   },
+  created(){
+    console.log(this.currCover);
+    this.bgCover=this.currCover.background
+  },
   methods: {
     coverClicked(ev) {
-      this.$emit('toggle', { ev, type: 'Cover' })
+      this.$emit('toggle', { el: ev.target.closest('button'), type:'cover' })
     },
     async setCoverColor(bg) {
       if (bg.background.length > 10)
