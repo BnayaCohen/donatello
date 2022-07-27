@@ -60,8 +60,6 @@ export default {
                     break
                 case 'checklist': this.addChecklist(data)
                     break
-                // case 'dates': this.updateDueDate(data)
-                //     break
                 case 'attachments': this.addAttachment(data)
                     break
                 case 'cover': this.addCover(data)

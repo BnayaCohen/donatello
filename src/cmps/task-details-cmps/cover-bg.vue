@@ -1,7 +1,7 @@
 <template>
-  <div v-if="bgCover" class="flex justify-center task-detail-bg" :style="getBackground"><img :src="currCover.background"
+  <div v-if="bgCover.background" class="flex justify-center task-detail-bg" :style="getBackground"><img :src="currCover.background"
       alt=""></div>
-  <div class="btn-wrapper" v-if="bgCover">
+  <div class="btn-wrapper" v-if="bgCover.background">
     <button @click.stop="coverClicked" :class="darkModeClass" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
       <span>Cover</span>
@@ -29,8 +29,7 @@ export default {
     }
   },
   created(){
-    console.log(this.currCover);
-    this.bgCover=this.currCover.background
+    this.bgCover=this.currCover
   },
   methods: {
     coverClicked(ev) {
@@ -38,7 +37,7 @@ export default {
     },
     async setCoverColor(bg) {
       if (bg.background.length > 10)
-        return await utilService.getImgAvgColor(bg.background)
+        return {background: await utilService.getImgAvgColor(bg.background)}
       else {
         return bg
       }
@@ -51,7 +50,7 @@ export default {
   },
   computed: {
     getBackground() {
-      return { background: this.bgCover }
+      return this.bgCover 
     },
     darkModeClass() {
       return { 'dark-theme': this.isDarkMode }
