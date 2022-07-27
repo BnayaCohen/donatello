@@ -84,7 +84,7 @@ export default {
                 break
               }
             }
-            if (!currMemberName) currMemberName = 'Guest'
+            if (!currMemberName) return
             const hasLabel = currMemberName in membersCount
             if (!hasLabel) membersCount[currMemberName] = 1
             else membersCount[currMemberName]++
