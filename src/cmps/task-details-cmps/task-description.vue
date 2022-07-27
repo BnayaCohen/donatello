@@ -3,37 +3,43 @@
     <div class="description-header flex align-center">
       <span class="trellicons trellicons-description"></span>
       <h3>Description</h3>
+      <button v-if="description && !isEditDescription" @click="openDescription" class="edit-description-btn flex">
+        Edit
+      </button>
     </div>
     <div class="task-description-txt">
+      <p class="description-dummy" v-if="description && !isEditDescription" @click="openDescription">
+        {{ description }}
+      </p>
       <textarea
+        v-else
         rows="3"
         placeholder="Add a more detailed description..."
         ref="taskDescription"
         v-model="description"
-        @click.stop="isEditDescription = !isEditDescription"
         :class="descriptionStyle"
+        @click="openDescription"
       ></textarea>
       <div v-if="isEditDescription" class="description-btns flex align-center">
-        <el-button @click.stop="saveDescription">Save</el-button>
-        <el-button @click.stop="isEditDescription = false">X</el-button>
+        <button class="description-save-btn" @click.stop="saveDescription">Save</button>
+        <button class="description-cancel-btn" @click.stop="closeDescription">Close</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-    props: {
-        description: String
-    },
+  props: {
+    description: String,
+  },
   data() {
     return {
       isEditDescription: false,
     }
   },
-  created() {
-      },
+  created() {},
   mounted() {
-      this.$refs.taskDescription.value = this.description
+    this.$refs.taskDescription.value = this.description
   },
   computed: {
     descriptionStyle() {
@@ -44,11 +50,17 @@ export default {
   },
   methods: {
     saveDescription() {
-        this.$emit('saveDescription', this.description)
-        this.isEditDescription = false
-    }
+      this.$emit('saveDescription', this.description)
+      this.isEditDescription = false
+    },
+    openDescription() {
+      this.isEditDescription = true
+    },
+    closeDescription() {
+      this.isEditDescription = false
+    },
   },
-  emits: ['saveDescription']
+  emits: ['saveDescription'],
 }
 </script>
 <style></style>
