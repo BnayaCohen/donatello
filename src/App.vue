@@ -19,8 +19,8 @@ export default {
       isUserMenu: false,
       x: 0,
       y: 0,
-      isDarkTheme:false,
-      headerColor:'',
+      isDarkTheme: false,
+      headerColor: '',
     }
   },
   created() {
@@ -54,6 +54,9 @@ export default {
         background: this.background
       }
     },
+    board() {
+      return this.$store.getters.currBoard
+    }
   },
   components: {
     appHeader,

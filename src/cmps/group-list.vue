@@ -1,13 +1,13 @@
 <template>
-  <section class="group-list-container flex" :style="groupListWidth" >
+  <section class="group-list-container flex" :style="groupListWidth">
     <Container class="h-full flex overflow-x-auto gap-8 p-8" group-name="cols" drag-class="card-ghost"
-      drop-class="card-ghost-drop" :drop-placeholder="dropPlaceHolderOptions" tag="div"
-      orientation="horizontal" @drop="onGroupDrop($event)">
+      drop-class="card-ghost-drop" :drop-placeholder="dropPlaceHolderOptions" tag="div" orientation="horizontal"
+      @drop="onGroupDrop($event)">
       <Draggable v-for="group in groups" :key="group.id">
-        <group-preview :group="group" @x="x"/>
+        <group-preview :group="group" @x="x" />
       </Draggable>
       <article class="new-group">
-        <group-preview :group="newGroup" @x="x"/>
+        <group-preview :group="newGroup" @x="x" />
       </article>
     </Container>
   </section>
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     x(board) {
-      this.$emit('x',board)
+      this.$emit('x', board)
     },
     onGroupDrop(dropResult) {
       if (dropResult.removedIndex === dropResult.addedIndex) return
