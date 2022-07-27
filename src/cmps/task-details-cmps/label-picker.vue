@@ -1,8 +1,8 @@
 <template>
-  <div class="dynamic-popover pos-absolute" :style="pos">
+  <div class="dynamic-popover">
     <div class="popover-header flex justify-center align-center">
       <h4>Labels</h4>
-      <button class="pop-close-btn" @click.stop="$emit('toggle')">
+      <button class="pop-close-btn" @click.stop="$emit('modalClosed')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -15,7 +15,7 @@
         <li
           v-for="label in labels"
           :key="label.id"
-          @click.stop="addLabel(label.id)"
+          @click.stop="toggleLabel(label.id)"
           class="label flex align-center"
         >
           <div
@@ -49,15 +49,18 @@
 <script>
 export default {
   props: {
-    labels: Array,
-    taskLabels: Array,
-    pos: Object,
+    labelIds: Array,
   },
   data() {
-    return {}
+    return {
+      labels: this.$store.getters.getLabels,
+      taskLabels: [],
+    }
   },
   created() {
-    console.log(this.pos)
+    if (this.labelIds) {
+       this.taskLabels = this.labels.filter(label => this.labelIds.includes(label.id))
+      }
   },
   computed: {
     selectedLabel() {
@@ -77,11 +80,11 @@ export default {
       })
       return inUse
     },
-    addLabel(labelId) {
-      this.$emit('addLabel', labelId)
+    toggleLabel(labelId) {
+      this.$emit('taskUpdated', labelId)
     },
   },
-  emits: ['addLabel', 'toggle'],
+  emits: ['taskUpdated', 'modalClosed'],
 }
 </script>
 <style></style>

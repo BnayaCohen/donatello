@@ -87,6 +87,11 @@ export default {
     socketService.off(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
     socketService.off(SOCKET_EVENT_BOARD_UPDATED, this.updateBoardFromSocket)
   },
+  watch: {
+    board() {
+      this.$emit('setBackground', this.board.style?.background)
+    }
+  },
   components: {
     groupList,
     boardHeader,
