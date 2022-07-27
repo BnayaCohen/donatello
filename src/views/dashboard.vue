@@ -231,9 +231,11 @@ export default {
   },
   computed: {
     taskCount() {
-      return this.board.groups.reduce((acc = 0, group) => {
-        return acc?.tasks?.length + group?.tasks?.length
+        let counter = 0
+        this.board.groups.map((group) => {
+            counter += group.tasks.length
       })
+      return counter
     },
     listCount() {
       return this.board?.groups?.length
