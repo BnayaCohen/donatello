@@ -1,11 +1,6 @@
 <template>
-  <div
-    class="task-preview"
-    @mouseenter="toggleOnHover"
-    @mouseleave="toggleOnHover"
-    @click.stop="openTask(task.groupId, task.id)"
-    :style="{backgroundColor:onHover ? '#e8e8e882' : ''}"
-  >
+  <div class="task-preview" @mouseenter="toggleOnHover" @mouseleave="toggleOnHover"
+    @click.stop="openTask(task.groupId, task.id)" :style="{ backgroundColor: onHover ? '#e8e8e882' : '' }">
     <div class="flex flex-column">
       <span v-if="onHover" @click.stop="openQuickEdit" class="hover-edit-btn"><i
           class="trellicons trellicons-edit"></i></span>
@@ -50,7 +45,7 @@
       </section>
     </div>
   </div>
-  <quick-edit @closeQuickEdit="closeQuickEdit" :getCords="getCords" v-show="isOpen" :task="task" />
+  <quick-edit v-if="isOpen" @closeQuickEdit="closeQuickEdit" @saveTask="saveTask" :getCords="getCords" :task="task" />
 </template>
 <script>
 import taskLabelList from './task-label-list.vue'
@@ -84,11 +79,7 @@ export default {
         this.task.status === 'in-progress' ? 'done' : 'in-progress'
       const savedTask = this.task
       savedTask.status = newStatus
-      this.$store.dispatch({
-        type: 'saveTask',
-        task: JSON.parse(JSON.stringify(savedTask)),
-        groupId: this.task.groupId,
-      })
+      this.saveTask(savedTask)
     },
     openQuickEdit(ev) {
       this.x = ev.clientX
@@ -108,6 +99,13 @@ export default {
     getMemberById(memberId) {
       const members = this.$store.getters.getMembers
       return members.find((member) => member._id === memberId)
+    },
+    saveTask(task) {
+      this.$store.dispatch({
+        type: 'saveTask',
+        task: JSON.parse(JSON.stringify(task)),
+        groupId: this.task.groupId,
+      })
     },
   },
   computed: {

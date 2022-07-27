@@ -1,19 +1,13 @@
 <template style="font-family: trellicons">
   <header class="header-home-page" ref="headRef">
     <div class="header-home-page-container flex">
-      <router-link to="/" class="home-page-logo"
-        ><img style="width: 136px" src="../assets/img/logo.png" alt=""
-      /></router-link>
-      <!-- (add?) v-if="!loggedInUser._id" -->
+      <router-link to="/" class="home-page-logo"><img style="width: 136px" src="../assets/img/logo.png" alt="" />
+      </router-link>
       <div class="login-container">
         <router-link class="login" to="/login">Log in</router-link>
-        <router-link class="signup" to="/signup"
-          >Get Donatello for free</router-link
-        >
+        <router-link class="signup" to="/signup">Get Donatello for free</router-link>
       </div>
-      <!-- <div v-else class="logout-container">
-        <a @click="logout">Log out</a>
-      </div> -->
+
     </div>
   </header>
 </template>

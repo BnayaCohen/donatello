@@ -14,6 +14,7 @@
     <group-list :groups="board.groups" :isSideBarOpen="isSideBarOpen" />
     <router-view />
   </main>
+  <img v-else style="height:calc(100vh - 49px);object-fit: cover;" src="../assets/img/loading.gif">
 </template>
 
 <script>
@@ -45,6 +46,7 @@ export default {
   async created() {
     try {
       const { boardId } = this.$route.params
+      console.log(boardId)
       await this.$store.dispatch({ type: 'loadBoard', boardId })
       await this.$store.dispatch({ type: 'getUsers'})
       this.$emit('setBackground', this.board.style?.background)
@@ -98,6 +100,7 @@ export default {
     },
   },
   unmounted() {
+    this.$store.commit({ type: 'setBoard', board: '' })
     socketService.off(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
     socketService.off(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
     socketService.off(SOCKET_EVENT_BOARD_UPDATED, this.updateBoardFromSocket)

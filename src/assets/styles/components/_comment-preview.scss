@@ -2,10 +2,11 @@
   margin-block-start: em(12px);
   .member-icon-container {
     align-self: flex-start;
+    position: relative;
+    right: 5px;
   }
   form {
-    flex-basis: 90%;
-    margin-inline-start: 10px;
+    flex-basis: 1000%;
   }
   .comment-frame {
     border-radius: 3px;
@@ -19,7 +20,7 @@
       cursor: pointer;
     }
     .comment-box {
-      padding: 12px 12px;
+      padding: 11px 12px;
       background: #fff;
       position: relative;
       transition-duration: 85ms;
