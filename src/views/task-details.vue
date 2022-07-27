@@ -50,31 +50,7 @@
                 @removeDueDate="removeDueDate"
               />
             </div>
-            <div class="description-container flex flex-column">
-              <div class="description-header flex align-center">
-                <span class="trellicons trellicons-description"></span>
-                <h3>Description</h3>
-              </div>
-              <div class="task-description-txt">
-                <textarea
-                  rows="3"
-                  placeholder="Add a more detailed description..."
-                  ref="taskDescription"
-                  v-model="task.description"
-                  @click.stop="isEditDescription = !isEditDescription"
-                  :class="descriptionStyle"
-                ></textarea>
-                <div
-                  v-if="isEditDescription"
-                  class="description-btns flex align-center"
-                >
-                  <el-button @click.stop="updateTask">Save</el-button>
-                  <el-button @click.stop="isEditDescription = false"
-                    >X</el-button
-                  >
-                </div>
-              </div>
-            </div>
+            <task-description :description="task?.description" @saveDescription="saveDescription"/>
             <attachment-list
               v-if="task.attachments?.length"
               :attachments="task.attachments"
@@ -179,6 +155,7 @@ import date from '../cmps/date.vue'
 import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import taskComment from '../cmps/task-details-cmps/task-comment.vue'
+import taskDescription from '../cmps/task-details-cmps/task-description.vue'
 import { ref } from 'vue'
 
 export default {
@@ -186,7 +163,6 @@ export default {
   data() {
     return {
       task: boardService.getEmptyTask(),
-      isEditDescription: false,
       isDate: false,
       taskLabels: [],
       labels: null,
@@ -229,7 +205,6 @@ export default {
           this.taskComments.unshift(comment)
         })
       }
-      console.log(this.taskComments)
       this.coverColors = this.$store.getters.getCoverColors
 
       if (!this.task?.style) this.task.style = {}
@@ -238,25 +213,18 @@ export default {
         this.currCover = { background: this.task.style.background }
       }
 
-      this.$refs.taskDescription.value = this.task.description
       if (!this.task.attachments) this.task.attachments = []
     } catch (err) {}
   },
   computed: {
     groupTitle() {
       const { groupId } = this.$route.params
-      console.log(groupId)
       const board = this.$store.getters.board
       if (board?._id) {
         const groups = board.groups
         const group = groups.find((group) => group.id === groupId)
         return group.title
       }
-    },
-    descriptionStyle() {
-      return this.isEditDescription
-        ? 'description-textarea'
-        : 'description-fake-textarea'
     },
     getCords() {
       return {
@@ -305,7 +273,6 @@ export default {
         task: JSON.parse(JSON.stringify(this.task)),
         groupId,
       })
-      this.isEditDescription = false
     },
     toggleDate(ev) {
       this.clickPos.x = ev?.clientX
@@ -432,6 +399,11 @@ export default {
       if (idx !== -1) this.task.comments.splice(idx, 1)
       this.updateTask()
     },
+    saveDescription(newDescription) {
+      console.log(newDescription)
+      this.task.description = newDescription
+      this.updateTask()
+    }
   },
   components: {
     labelPicker,
@@ -449,6 +421,7 @@ export default {
     checklistList,
     membersModal,
     taskComment,
+    taskDescription
   },
 }
 </script>
