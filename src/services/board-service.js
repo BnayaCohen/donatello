@@ -53,7 +53,6 @@ async function getById(boardId) {
     console.log('Cannot get the board', err)
   }
 }
-
 async function remove(boardId) {
   // await storageService.remove(STORAGE_KEY, boardId)
   await httpService.delete(`board/${boardId}`)
