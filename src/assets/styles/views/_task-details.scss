@@ -102,7 +102,6 @@
   }
 
   .detail-modal-container {
-
     .task-detail-header,
     .task-detail-main {
       .trellicons {
@@ -164,11 +163,10 @@
       padding: 0px;
       background-position: center center;
       background-repeat: no-repeat;
-      
-      img{
-        max-height: 160px;
-      object-fit: contain;
 
+      img {
+        max-height: 160px;
+        object-fit: contain;
       }
     }
 
@@ -281,7 +279,7 @@
 
       .members-labels-container {
         display: flex;
-        margin: 9px 0 24px 29px;
+        margin: 8px 0 0 40px;
         gap: rem(8px);
         position: relative;
         flex-wrap: wrap;
@@ -358,7 +356,8 @@
             border: none;
 
             svg {
-              filter: invert(43%) sepia(31%) saturate(358%) hue-rotate(179deg) brightness(87%) contrast(85%);
+              filter: invert(43%) sepia(31%) saturate(358%) hue-rotate(179deg)
+                brightness(87%) contrast(85%);
             }
 
             cursor: pointer;
@@ -387,47 +386,47 @@
         }
       }
     }
-    .attachment-header{
+    .attachment-header {
       margin-bottom: 8px;
-      h3{
+      h3 {
         margin-left: 4px;
         font-size: em(16px);
       }
     }
-    
+
     .attachment-preview {
       height: em(80px);
       margin-left: 36px;
       margin-bottom: 12px;
       padding: 1px 0;
-      
+
       // &:hover{
-        //   background-color: #00000014;
-        // }
-        
-        img {
-          border-radius: 3px;
+      //   background-color: #00000014;
+      // }
+
+      img {
+        border-radius: 3px;
+      }
+
+      p {
+        margin: 2px 0;
+        color: #5e6c84;
+      }
+
+      .attach-btn {
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {
+          color: #172b4d;
         }
-        
-        p {
-          margin: 2px 0;
-          color: #5e6c84;
-        }
-        
-        .attach-btn {
-          text-decoration: underline;
-          cursor: pointer;
-          
-          &:hover {
-            color: #172b4d;
-          }
-        }
-        
-        h3 {
-          font-size: em(14px);
-          font-weight: 700;
-        }
-        
+      }
+
+      h3 {
+        font-size: em(14px);
+        font-weight: 700;
+      }
+
       .attachment-details {
         padding: 7px 16px;
         gap: 1px;
@@ -443,14 +442,14 @@
       }
     }
 
-    .add-attach-btn{
+    .add-attach-btn {
       margin-top: 8px;
       margin-left: 36px;
       font-size: em(14px);
       background-color: #091e420a;
-      padding:0 12px;
+      padding: 0 12px;
       white-space: normal;
-      &:hover{
+      &:hover {
         background-color: #091e4214;
       }
     }
