@@ -16,10 +16,12 @@ export default {
   mutations: {
     setUser(state, { user }) {
       state.user = user
-      console.log(state.user)
     },
     setUsers(state, { users }) {
       state.users = users
+    },
+    setUserAsGuest(state) {
+      state.user = userService.getDefaultGuest()
     }
   },
   actions: {

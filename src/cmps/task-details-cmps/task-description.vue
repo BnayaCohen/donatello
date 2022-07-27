@@ -37,10 +37,6 @@ export default {
       isEditDescription: false,
     }
   },
-  created() {},
-  mounted() {
-    this.$refs.taskDescription.value = this.description
-  },
   computed: {
     descriptionStyle() {
       return this.isEditDescription
