@@ -49,33 +49,43 @@
             </div>
             <button class="save-task-btn text-center">Save</button>
             <div class="quick-card-editor-buttons fade-in">
+                <!-- Open card -->
                 <span class="quick-card-editor-buttons-item" @click="openTask(task.groupId, task.id)">
-                    <span class="icon-sm icon-card"><i class="fa-solid fa-inbox"></i></span><span
+                    <span class="icon-sm icon-card"><i class="trellicons trellicons-details"></i></span><span
                         class="quick-card-editor-buttons-item-text">Open card</span>
                 </span>
+                <!-- Edit labels -->
                 <span class="quick-card-editor-buttons-item"><span class="icon-sm icon-label"><i
-                            class="fa-solid fa-tag"></i></span><span class="quick-card-editor-buttons-item-text">Edit
+                            class="trellicons trellicons-labels"></i></span><span
+                        class="quick-card-editor-buttons-item-text">Edit
                         Labels</span></span>
                 <span class="quick-card-editor-buttons-item">
-                    <span class="icon-sm icon-member"><i class="fa-regular fa-user"></i></span>
-                    <span class="quick-card-editor-buttons-item-text">Change members</span></span>
+                    <!-- Change members -->
+                    <span class="icon-sm icon-member"><i class="trellicons trellicons-member"></i></span>
+                    <span class="quick-card-editor-buttons-item-text">Change members</span>
+                </span>
+                <!-- Change cover -->
                 <span class="quick-card-editor-buttons-item"><span class="icon-sm icon-card-cover"><i
-                            class="fa-solid fa-inbox"></i></span>
+                            class="trellicons trellicons-cover"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Change cover</span></span>
+                <!-- Move -->
                 <!-- <span class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-move"><i class="fa-solid fa-arrow-right"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Move</span>
-                </span>
-                <span class="quick-card-editor-buttons-item">
+                </span> -->
+                <!-- Copy -->
+                <!-- <span class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-card"><i class="fa-solid fa-inbox"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Copy</span>
-                </span> -->
+                </span>  -->
+                <!-- Edit due date -->
                 <span class="quick-card-editor-buttons-item">
-                    <span class="icon-sm icon-clock"><i class="fa-regular fa-clock"></i></span>
+                    <span class="icon-sm icon-clock"><i class="trellicons trellicons-clock"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Edit dates</span>
                 </span>
+                <!-- Archive/Delete -->
                 <span class="quick-card-editor-buttons-item">
-                    <span class="icon-sm icon-archive"><i class="fa-solid fa-box-archive"></i></span>
+                    <span class="icon-sm icon-archive"><i class="trellicons trellicons-archive"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Archive</span>
                 </span>
             </div>
