@@ -1,16 +1,6 @@
 <template>
-<<<<<<< HEAD
-  <div
-    class="task-preview"
-    @mouseenter="toggleOnHover"
-    @mouseleave="toggleOnHover"
-    @click.stop="openTask(task.groupId, task.id)"
-    :style="{backgroundColor:onHover ? '#e9e9e988' : ''}"
-  >
-=======
   <div class="task-preview" @mouseenter="toggleOnHover" @mouseleave="toggleOnHover"
     @click.stop="openTask(task.groupId, task.id)" :style="{ backgroundColor: onHover ? '#e8e8e882' : '' }">
->>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
     <div class="flex flex-column">
       <span v-if="onHover" @click.stop="openQuickEdit" class="hover-edit-btn"><i
           class="trellicons trellicons-edit"></i></span>

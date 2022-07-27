@@ -1,18 +1,10 @@
 <template>
-<<<<<<< HEAD
   <div class="dynamic-popover members-popover-container">
-=======
-  <div class="dynamic-popover pos-absolute members-popover-container" :style="pos">
->>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
     <div class="popover-header flex justify-center align-center">
       <span class="modal-title">Members</span>
       <button class="pop-close-btn">
         <span class="close-btn trellicons trellicons-close-btn"
-<<<<<<< HEAD
           @click="$emit('modalClosed')"></span>
-=======
-          @click="$emit('toggle', { ev: $event, type: 'Memberlist' })"></span>
->>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
       </button>
     </div>
     <div class="popover-content">
@@ -39,12 +31,7 @@
 import avatarPreview from '../avatar-preview.vue'
 export default {
   components: { avatarPreview },
-<<<<<<< HEAD
   props: { memberIds: Array },
-=======
-  props: { memberIds: Array, pos: Object },
-
->>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
   data() {
     return {
       loading: false,
