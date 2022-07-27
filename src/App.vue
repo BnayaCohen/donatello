@@ -55,6 +55,9 @@ export default {
         background: this.background
       }
     },
+    board() {
+      return this.$store.getters.currBoard
+    }
   },
   components: {
     appHeader,

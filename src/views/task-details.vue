@@ -1,12 +1,9 @@
 <template>
   <section class="container task-detail">
-    <div
-      class="back-screen"
-      :style="{
-        backgroundColor: '#000000a3',
-        cursor: 'pointer',
-      }"
-    >
+    <div class="back-screen" :style="{
+      backgroundColor: '#000000a3',
+      cursor: 'pointer',
+    }">
       <div class="detail-modal-container" v-click-outside="backToBoard">
         <cover-bg
           :currCover="getCurrCover"
@@ -18,21 +15,13 @@
             <span class="trellicons trellicons-details"></span>
           </div>
           <div class="task-title-container">
-            <textarea
-              rows="1"
-              class="title-input"
-              type="text"
-              ref="taskTitle"
-              v-model="task.title"
-              placeholder="Enter title here..."
-              @keydown.enter="$refs.taskTitle.blur()"
-              @blur="updateTask"
-            ></textarea>
+            <textarea rows="1" class="title-input" type="text" ref="taskTitle" v-model="task.title"
+              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
             <div class="subtitle-header">
               <p>
                 in list
                 <span :style="{ textDecoration: 'underline' }">{{
-                  groupTitle
+                    groupTitle
                 }}</span>
               </p>
             </div>
@@ -72,8 +61,17 @@
                   <el-button @click.stop="isEditDescription = false"
                     >X</el-button
                   >
+              <div v-if="task.memberIds.length" class="members-container">
+                <h3 style="margin:0 8px 4px 0;" class="small-title">Members</h3>
+                <div style="display:inline-block;margin: 0 4px 4px 0;" v-for="memberId in task.memberIds"
+                  :key="memberId" class="img-container">
+                  <avatar-preview :member="getMemberById(memberId)" :avatarSize="'big'" />
                 </div>
+                <span class="add-member"></span>
               </div>
+              <label-prev :taskLabels="taskLabels" @toggle="toggle" />
+              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
+                @removeDueDate="removeDueDate" />
             </div>
             <attachment-list
               v-if="task.attachments?.length"
@@ -102,8 +100,8 @@
             @removeTask="removeTask"
           />
         </div>
-      </div>
-    </div>
+      </div></div>
+    </div></div>
   </section>
   
   <task-options 
@@ -133,6 +131,7 @@ import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue
 import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import taskComment from '../cmps/task-details-cmps/task-comment.vue'
 import taskOptions from '../cmps/task-options-cmp.vue'
+import taskDescription from '../cmps/task-details-cmps/task-description.vue'
 import { ref } from 'vue'
 
 export default {
@@ -200,6 +199,10 @@ export default {
     }
   },
   methods: {
+    getMemberById(memberId) {
+      const members = this.$store.getters.getMembers
+      return members.find((member) => member._id === memberId)
+    },
     saveChecklists(checklists) {
       this.task.checklists = checklists
       this.updateTask()
@@ -218,7 +221,6 @@ export default {
         task: JSON.parse(JSON.stringify(this.task)),
         groupId,
       })
-      this.isEditDescription = false
     },
     toggleDate(ev) {
       this.modalPos.x = ev?.clientX
@@ -284,7 +286,6 @@ export default {
         fullname: this.loggedUser.fullname,
         imgUrl: this.loggedUser.imgUrl,
       }
-      console.log(comment.byMember.imgUrl)
       comment.createdAt = Date.now()
       this.task.comments.unshift(comment)
       this.updateTask()
@@ -297,6 +298,11 @@ export default {
       if (idx !== -1) this.task.comments.splice(idx, 1)
       this.updateTask()
     },
+    saveDescription(newDescription) {
+      console.log(newDescription)
+      this.task.description = newDescription
+      this.updateTask()
+    }
   },
   components: {
     attachmentList,
@@ -309,7 +315,8 @@ export default {
     TaskDetailSidebar,
     checklistList,
     taskComment,
-    taskOptions
+    taskOptions,
+    taskDescription
   },
 }
 </script>

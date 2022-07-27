@@ -49,6 +49,7 @@ export default {
       try {
         const users = await userService.query(filterBy)
         commit({ type: 'setUsers', users })
+        return users
       }
       catch (err) {
         console.log('Cannot get users')

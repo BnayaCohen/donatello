@@ -1,4 +1,3 @@
-
 // COLOR PALETTE
 $clr1: #44baff;
 $clr2: #000;
@@ -9,7 +8,7 @@ $clr5: #2d2d2d;
 // LAYOUT
 $layoutPadding: 5px;
 
-$box-shadow:inset 0 0 0 2px #dfe1e6;
+$box-shadow: inset 0 0 0 2px #dfe1e6;
 
 // LAYOUT BREAKPOINTS
 $break-narrow: 520px;
@@ -19,3 +18,31 @@ $break-wide: 960px;
 // $padded-break-narrow: $break-narrow + $layoutPadding * 2;
 // $padded-break-normal: $break-normal + $layoutPadding * 2;
 // $padded-break-wide: $break-wide + $layoutPadding * 2;
+
+// Skeleton loading
+$card: linear-gradient(to bottom, #9999 100%, transparent 0%);
+$card-height: 880px;
+
+$avatar: radial-gradient(circle 40px at center, #888888 100%, transparent 0%);
+$avatar-size: 80px;
+$avatar-position: 24px 24px;
+
+$title: linear-gradient(to right, #888888 100%, transparent 0%);
+$title-height: 28px;
+$title-width: 160px;
+$title-position: 24px 120px;
+
+$subtitle: linear-gradient(to right, #888888 100%, transparent 0%);
+$subtitle-height: 16px;
+$subtitle-width: 200px;
+$subtitle-position: 24px 160px;
+
+$button: linear-gradient(to bottom, #888888 100%, transparent 0%);
+$button-height: 40px;
+$button-1-width: 90px;
+$button-1-position: 24px 260px;
+$button-2-width: 90px;
+$button-2-position: 124px 260px;
+
+$blur-width: 200px;
+$blur-size: ($blur-width) ($card-height);

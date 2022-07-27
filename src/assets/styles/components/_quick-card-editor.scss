@@ -1,5 +1,5 @@
 .quick-card-editor {
-  background: rgba(0, 0, 0, 0.6);
+  background: #0009;
   bottom: 0;
   color: #fff;
   left: 0;
@@ -161,13 +161,18 @@
     transition: opacity 85ms ease-in, transform 85ms ease-in;
     width: 240px;
     z-index: 0;
+    i {
+      font-size: 1.15rem;
+    }
     &.fade-in {
       opacity: 1;
       transform: translateX(0);
     }
     &-item {
+      font-weight: 400;
+      line-height: lh(20px);
       max-width: max-content;
-      background: rgba(0, 0, 0, 0.6);
+      background: #0009;
       border-radius: 3px;
       clear: both;
       color: #e6e6e6;
@@ -179,7 +184,7 @@
       transition: transform 85ms ease-in;
       cursor: pointer;
       &:hover {
-        background: rgba(0, 0, 0, 0.9);
+        background: #000c;
         transform: translateX(10px);
       }
       > :first-child {
@@ -192,6 +197,7 @@
     border: none;
     outline: none;
     width: 100%;
+    font-family: inherit;
   }
   .task-due-date {
     border-radius: 3px;

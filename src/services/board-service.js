@@ -53,7 +53,6 @@ async function getById(boardId) {
     console.log('Cannot get the board', err)
   }
 }
-
 async function remove(boardId) {
   // await storageService.remove(STORAGE_KEY, boardId)
   await httpService.delete(`board/${boardId}`)
@@ -230,24 +229,4 @@ async function changeGroupPos(boardId, { removedIndex, addedIndex }) {
   }
 }
 
-// function updateTask(cmpType, data) {
-//   switch (cmpType) {
-//     case 'status-picker':
-//       task.status = data
-//       break
-//     case 'member-picker':
-//       task.members = task.members ? [...task.members, data] : [data]
-//       break
-//     case 'date-picker':
-//       task.date = data
-//       break
-//     case 'label-picker':
-//       task.labels = task.labels ? [...task.labels, data] : [data]
-//       break
-//     case 'attachment-picker':
-//       task.attachments = data
-//       break
-//   }
 
-//   // dispatch to store
-// }

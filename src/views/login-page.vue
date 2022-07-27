@@ -23,14 +23,19 @@
         }"
       />
       <h1
-        :style="{ letterSpacing: '0.8px', fontSize: '54.5px', height: '26px', cursor: 'pointer'}"
+        :style="{
+          letterSpacing: '0.8px',
+          fontSize: '54.5px',
+          height: '26px',
+          cursor: 'pointer',
+        }"
         @click="$router.push('/')"
       >
         Donatello
       </h1>
     </div>
     <div class="form-container">
-      <login-form @login="onLogin" @signup="onSignup"/>
+      <login-form @login="onLogin" @signup="onSignup" />
     </div>
     <div class="right-svg"></div>
     <div class="left-svg"></div>
@@ -42,25 +47,24 @@ export default {
   name: 'loginPage',
   components: { loginForm },
   data() {
-    return {
-    }
+    return {}
   },
   created() {
-    const {path} = this.$route
+    const { path } = this.$route
     if (path === '/signup') this.isSignIn = false
     this.$emit('setBackground', '#fff')
   },
   methods: {
-    onLogin(credentials) {
-        this.$store.dispatch({ type: 'login', credentials })
-        this.$router.push('/board')
+    async onLogin(credentials) {
+      const user = await this.$store.dispatch({ type: 'login', credentials })
+      if (user._id) this.$router.push('/board')
     },
     // onLogout() {
     //   this.$store.dispatch({ type: 'logout' })
     // },
     async onSignup(signupInfo) {
-      await this.$store.dispatch({ type: 'signup', signupInfo })
-      this.$router.push('/board')
+      const user = await this.$store.dispatch({ type: 'signup', signupInfo })
+      if (user._id) this.$router.push('/board')
     },
   },
 }
