@@ -55,8 +55,6 @@ export default {
   },
   methods: {
     loginAsGuest() {
-      const credentials = {username: 'guest', password: 'guest'}
-      this.$store.dispatch({type: 'login', credentials})
       this.$router.push('/board')
     }
   }

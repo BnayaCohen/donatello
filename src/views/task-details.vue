@@ -319,7 +319,6 @@ export default {
         fullname: this.loggedUser.fullname,
         imgUrl: this.loggedUser.imgUrl,
       }
-      console.log(comment.byMember.imgUrl)
       comment.createdAt = Date.now()
       this.task.comments.unshift(comment)
       this.updateTask()
