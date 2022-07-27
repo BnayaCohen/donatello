@@ -33,6 +33,7 @@ export default {
         this.isDarkTheme = await utilService.isDarkImg(background)
         this.background = `url('${background}') no-repeat center center/cover`
       } else {
+        this.headerColor = ''
         this.isDarkTheme = utilService.isDarkColor(background)
         this.background = background
       }

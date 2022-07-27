@@ -1,13 +1,12 @@
 <template>
   <div
-    class="dynamic-popover pos-absolute checklist-popover-container"
-    :style="pos"
+    class="dynamic-popover checklist-popover-container"
   >
     <div class="popover-header flex justify-center align-center">
       <h4 class="modal-title">Add checklist</h4>
       <button class="pop-close-btn">
         <span
-          @click="$emit('toggle', { ev: $event, type: 'Checklist' })"
+          @click="$emit('modalClosed')"
           class="close-btn trellicons trellicons-close-btn"
         ></span>
       </button>
@@ -40,12 +39,11 @@ export default {
         todos: [],
         title: this.title,
       }
-      this.$emit('addChecklist', checklist)
+      this.$emit('taskUpdated', checklist)
       this.title = ''
-      this.$emit('toggle', { ev: '', type: 'Checklist' })
+      this.$emit('modalClosed')
     },
   },
-  props: { pos: Object },
-  emits: ['toggle', 'addChecklist'],
+  emits: ['modalClosed', 'taskUpdated'],
 }
 </script>

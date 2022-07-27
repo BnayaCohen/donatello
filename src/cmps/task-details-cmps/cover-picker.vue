@@ -1,11 +1,10 @@
 <template>
   <div
-    class="dynamic-popover pos-absolute cover-popover-container"
-    :style="pos"
+    class="dynamic-popover cover-popover-container"
   >
     <div class="popover-header flex justify-center align-center">
       <h4>Cover</h4>
-      <button class="pop-close-btn" @click.stop="$emit('closeCover')">
+      <button class="pop-close-btn" @click.stop="$emit('modalClosed')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -17,7 +16,7 @@
             <div
               class="header-section"
               :style="{
-                backgroundColor: selectedCover,
+                background: selectedCover||'#5e6c84',
                 height: '2rem',
                 borderRadius: '3px',
               }"
@@ -25,9 +24,10 @@
           </div>
           <div
             class="full-cover-preview"
-            :style="{ backgroundColor: selectedCover }"
+            :style="{ background: selectedCover||'#5e6c84' }"
           ></div>
         </div>
+        <button v-if="selectedCover" @click.stop="selectedCover='';$emit('taskUpdated', '')" class="btn-background" style="width:100%">Remove cover</button>
         <h3 class="small-title">Color</h3>
         <div class="color-palette">
           <div v-for="color in colors" :key="color.id">
@@ -35,7 +35,7 @@
               class="flex align-center justify-center"
               name="cover-color"
               :for="'color-' + color.colorStr"
-              :style="{ backgroundColor: color.colorStr }"
+              :style="{ background: color.colorStr }"
               @click.stop="selectCover(color.colorStr)"
               ><input
                 type="radio"
@@ -53,26 +53,22 @@
 <script>
 export default {
   props: {
-    colors: Array,
-    pos: Object,
+    taskCoverClr:String,
   },
   data() {
     return {
-      selectedCover: '#5e6c84',
+      colors: this.$store.getters.getCoverColors,
+      selectedCover: this.taskCoverClr,
     }
   },
   created() {},
   methods: {
     selectCover(color) {
       this.selectedCover = color
-      this.$emit('addCover', color)
-    },
-    toggleCover() {
-      const elCover = this.$refs.coverOpts
-      elCover.classList.toggle('show')
+      this.$emit('taskUpdated', color)
     },
   },
-  emits: ['addCover', 'closeCover'],
+  emits: ['taskUpdated', 'modalClosed'],
 }
 </script>
 <style></style>

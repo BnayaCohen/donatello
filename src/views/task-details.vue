@@ -5,7 +5,11 @@
       cursor: 'pointer',
     }">
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg :currCover="currCover" @toggle="toggle" @closeModal="backToBoard" />
+        <cover-bg
+          :currCover="getCurrCover"
+          @toggle="openPicker"
+          @closeModal="backToBoard"
+        />
         <div class="task-detail-header">
           <div>
             <span class="trellicons trellicons-details"></span>
@@ -26,6 +30,37 @@
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
+              <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
+              <date-picker
+                v-if="task.dueDate"
+                :task="task"
+                @toggleDate="toggleDate"
+                @toggleIsDone="toggleIsDone"
+                @removeDueDate="removeDueDate"
+              />
+            </div>
+            <div class="description-container flex flex-column">
+              <div class="description-header flex align-center">
+                <span class="trellicons trellicons-description"></span>
+                <h3>Description</h3>
+              </div>
+              <div class="task-description-txt">
+                <textarea
+                  rows="3"
+                  placeholder="Add a more detailed description..."
+                  ref="taskDescription"
+                  v-model="task.description"
+                  @click.stop="isEditDescription = !isEditDescription"
+                  :class="descriptionStyle"
+                ></textarea>
+                <div
+                  v-if="isEditDescription"
+                  class="description-btns flex align-center"
+                >
+                  <el-button @click.stop="updateTask">Save</el-button>
+                  <el-button @click.stop="isEditDescription = false"
+                    >X</el-button
+                  >
               <div v-if="task.memberIds.length" class="members-container">
                 <h3 style="margin:0 8px 4px 0;" class="small-title">Members</h3>
                 <div style="display:inline-block;margin: 0 4px 4px 0;" v-for="memberId in task.memberIds"
@@ -38,42 +73,53 @@
               <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
             </div>
-            <task-description :description="task?.description" @saveDescription="saveDescription" />
-            <attachment-list v-if="task.attachments?.length" :attachments="task.attachments"
-              @updateCurrCover="updateCurrCover" @toggle="toggle" @removeAttachment="removeAttachment" />
-            <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
-              @saveChecklists="saveChecklists" />
-            <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="taskComments"
-              @deleteComment="deleteComment" />
+            <attachment-list
+              v-if="task.attachments?.length"
+              :attachments="task.attachments"
+              @updateCurrCover="updateCurrCover"
+              @toggle="openPicker"
+              @removeAttachment="removeAttachment"
+            />
+            <checklist-list
+              v-if="task.checklists?.length"
+              :checklists="task.checklists"
+              @saveChecklists="saveChecklists"
+            />
+            <task-comment
+              :loggedInUser="loggedUser"
+              @saveComment="saveComment"
+              :comments="task.comments"
+              @deleteComment="deleteComment"
+            />
           </div>
-          <task-detail-sidebar :task="task" :currCover="currCover" @toggle="toggle" @addUserToTask="addUserToTask"
-            @removeTask="removeTask" />
+          <task-detail-sidebar
+            :task="task"
+            :currCover="getCurrCover"
+            @pickerOpened="openPicker"
+            @addUserToTask="addUserToTask"
+            @removeTask="removeTask"
+          />
         </div>
-      </div>
-    </div>
+      </div></div>
+    </div></div>
   </section>
-  <attachment-picker v-if="isAttach" @attachSelected="addAttachment" @toggle="toggle" :pos="getCords"
-    v-click-outside="closeAttach" @click.stop="''" />
-  <cover-picker v-if="isCover" :colors="coverColors" @addCover="addCover" @closeCover="closeCover" :pos="getCords"
-    v-click-outside="closeCover" @click.stop="''" />
-  <label-picker v-if="isLabels" :labels="labels" :taskLabels="taskLabels" @addLabel="addLabel"
-    @toggle="isLabels = !isLabels" :pos="getCords" @click.stop="''" v-click-outside="closeLabels" />
-  <date v-if="isDate" @updateDueDate="updateDueDate" :pos="getCords" :dueDate="dueDate" v-click-outside="closeDate"
-    @click.stop="''" @toggleDate="toggleDate" @removeDueDate="removeDueDate" />
-  <checklist-modal v-if="isChecklist" @addChecklist="addChecklist" :pos="getCords" v-click-outside="closeChecklist"
-    @toggle="toggle" @click.stop="''" />
-  <members-modal v-if="isMemberlist" :style="getCords" v-click-outside="closeMembers" @toggle="toggle"
-    :memberIds="task.memberIds" @click.stop="''" @toggleMember="toggleMember" />
+  
+  <task-options 
+    v-if="isPickerCmpOpen"
+    :cmpType="modalCmpType"
+    :task="task"
+    :pos="modalPos"
+    :dueDate="dueDate"
+    @removeDueDate="removeDueDate"
+    @updateDueDate="updateDueDate" 
+    @updateCurrCover="updateCurrCover"
+    @pickerClosed="isPickerCmpOpen=false"
+    />
+
 </template>
 <script>
-import membersModal from '../cmps/task-details-cmps/members-modal.vue'
 import checklistList from '../cmps/task-details-cmps/checklist-list.vue'
-import checklistModal from '../cmps/task-details-cmps/checklist-modal.vue'
-import { boardService } from '../services/board-service.js'
 import { utilService } from '../services/util-service.js'
-import labelPicker from '../cmps/task-details-cmps/label-picker.vue'
-import coverPicker from '../cmps/task-details-cmps/cover-picker.vue'
-import attachmentPicker from '../cmps/task-details-cmps/attachment-picker.vue'
 import attachmentList from '../cmps/task-details-cmps/attachment-list.vue'
 import avatarPreview from '../cmps/avatar-preview.vue'
 import { userService } from '../services/user-service.js'
@@ -84,6 +130,7 @@ import date from '../cmps/date.vue'
 import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import taskComment from '../cmps/task-details-cmps/task-comment.vue'
+import taskOptions from '../cmps/task-options-cmp.vue'
 import taskDescription from '../cmps/task-details-cmps/task-description.vue'
 import { ref } from 'vue'
 
@@ -91,79 +138,65 @@ export default {
   name: 'taskDetails',
   data() {
     return {
-      task: boardService.getEmptyTask(),
+      task: null,
+      isEditDescription: false,
       isDate: false,
-      taskLabels: [],
-      labels: null,
-      isLabels: false,
-      isCover: false,
       isTopCover: false,
-      isAttach: false,
-      coverColors: null,
-      clickPos: {
-        x: null,
-        y: null,
-      },
+      modalPos: null,
       currCover: null,
       dueDate: ref(new Date()),
-      isChecklist: false,
-      isMemberlist: false,
-      taskComments: [],
+      isPickerCmpOpen:false,
+      modalCmpType:'',
     }
   },
   async created() {
     try {
       const { boardId, taskId, groupId } = this.$route.params
-      const currBoard = this.$store.getters.board
+      let currBoard = this.$store.getters.board
+
       if (!currBoard) {
         await this.$store.dispatch({ type: 'loadBoard', boardId })
+        currBoard = this.$store.getters.board
       }
-      this.labels = this.$store.getters.getLabels
-      await this.$store.dispatch({ type: 'loadTask', boardId, groupId, taskId })
-      this.task = this.$store.getters.task
-      // TODO: add labels to each board in service
-      if (this.task.labelIds) {
-        this.task.labelIds.map((labelId) => {
-          this.labels.forEach((label) => {
-            if (label.id === labelId) this.taskLabels.push(label)
-          })
-        })
-      }
-      if (this.task.comments.length) {
-        this.task.comments.map((comment) => {
-          this.taskComments.unshift(comment)
-        })
-      }
-      this.coverColors = this.$store.getters.getCoverColors
 
-      if (!this.task?.style) this.task.style = {}
-      this.taskComments = this.task.comments
-      if (this.task.style?.background) {
-        this.currCover = { background: this.task.style.background }
-      }
+      const group = currBoard.groups.find(group => group.id === groupId)
+      this.task = group.tasks.find(task => task.id === taskId)
+
+      if (!this.task.style) this.task.style = {}
+
+      this.currCover = { background: this.task.style.background }
 
       if (!this.task.attachments) this.task.attachments = []
-    } catch (err) { }
+
+      // this.$refs.taskDescription.value = this.task.description
+    } catch (err) {
+      console.log('cannot load task: ' + err);
+    }
   },
   computed: {
     groupTitle() {
       const { groupId } = this.$route.params
       const board = this.$store.getters.board
-      if (board?._id) {
-        const groups = board.groups
-        const group = groups.find((group) => group.id === groupId)
+      if (board._id) {
+        const group = board.groups.find((group) => group.id === groupId)
         return group.title
       }
     },
-    getCords() {
-      return {
-        top: this.clickPos.y + 'px',
-        left: this.clickPos.x - 100 + 'px',
-      }
+    descriptionStyle() {
+      return this.isEditDescription
+        ? 'description-textarea'
+        : 'description-fake-textarea'
     },
     loggedUser() {
       return this.$store.getters.user
     },
+    taskLabels(){
+      const labels =this.$store.getters.getLabels
+      return labels.filter(label => this.task.labelIds.includes(label.id))
+    },
+    getCurrCover(){
+      return this.currCover
+    }
   },
   methods: {
     getMemberById(memberId) {
@@ -181,24 +214,6 @@ export default {
       console.log(this.task.memberIds)
       this.updateTask()
     },
-    closeLabels() {
-      this.isLabels = !this.isLabels
-    },
-    closeAttach() {
-      this.isAttach = !this.isAttach
-    },
-    closeCover() {
-      this.isCover = !this.isCover
-    },
-    closeChecklist() {
-      this.isChecklist = !this.isChecklist
-    },
-    closeDate() {
-      this.isDate = false
-    },
-    closeMembers() {
-      this.isMemberlist = false
-    },
     updateTask() {
       const { groupId } = this.$route.params
       this.$store.dispatch({
@@ -208,50 +223,25 @@ export default {
       })
     },
     toggleDate(ev) {
-      this.clickPos.x = ev?.clientX
-      this.clickPos.y = ev?.clientY
+      this.modalPos.x = ev?.clientX
+      this.modalPos.y = ev?.clientY
       this.isDate = !this.isDate
     },
-    toggle(customEv) {
-      console.log(customEv)
-      this.clickPos.x = customEv?.ev?.clientX
-      this.clickPos.y = customEv?.ev?.clientY
-      this['is' + customEv.type] = !this['is' + customEv.type]
-      console.log(this['is' + customEv.type])
+    openPicker(elData) {
+    const {top,left,height,width}=elData.el.getBoundingClientRect()
+
+    this.modalPos= {
+        top: (top+height+5)+'px',
+        left: left+'px',
+      }
+      this.modalCmpType=elData.type
+      this.isPickerCmpOpen = true
     },
     updateDueDate(dueDate) {
       this.dueDate = dueDate
       const timestamp = dueDate.getTime()
       this.task.dueDate = ref(timestamp)
       this.updateTask()
-    },
-    // updateTaskLabels() {
-    //   this.task.labelIds.map((labelId) => {
-    //     this.labels.forEach((label) => {
-    //       if (label.id === labelId && !this.taskLabels.includes(labelId)) this.taskLabels.push(label);
-    //     });
-    //   });
-    // },
-    addLabel(labelId) {
-      if (!this.task.labelIds || !this.task.labelIds.length) {
-        this.task.labelIds = []
-      }
-
-      for (var i = 0; i < this.task.labelIds.length; i++) {
-        if (this.task.labelIds[i] === labelId) {
-          this.task.labelIds.splice(i, 1)
-          this.updateTask()
-          const idx = this.taskLabels.findIndex(
-            (taskLabel) => taskLabel.id === labelId
-          )
-          this.taskLabels.splice(idx, 1)
-          return
-        }
-      }
-      this.task.labelIds.push(labelId)
-      this.updateTask()
-      const label = this.labels.find((taskLabel) => taskLabel.id === labelId)
-      this.taskLabels.push(label)
     },
     toggleIsDone() {
       switch (this.task.status) {
@@ -262,13 +252,6 @@ export default {
           this.task.status = 'done'
           break
       }
-      this.updateTask()
-    },
-    addAttachment(attachProps) {
-      const newAttachment = attachProps
-      newAttachment.id = utilService.makeId()
-      this.task.attachments.unshift(newAttachment)
-      this.isAttach = false
       this.updateTask()
     },
     removeAttachment(attachId) {
@@ -283,11 +266,6 @@ export default {
       this.$store.dispatch({ type: 'removeTask', taskId, groupId })
       this.$router.push('/board/' + boardId)
     },
-    addCover(color) {
-      this.task.style.background = color
-      this.currCover = { background: this.task.style.background }
-      this.updateTask()
-    },
     removeDueDate() {
       this.task.dueDate = ''
       this.task.status = 'in-progress'
@@ -301,18 +279,7 @@ export default {
       this.currCover = { background: cover }
       this.updateTask()
     },
-    addChecklist(checklist) {
-      this.task.checklists = this.task.checklists?.length
-        ? [...this.task.checklists, checklist]
-        : [checklist]
-      this.updateTask()
-    },
-    toggleMember(memberId) {
-      const idx = this.task.memberIds.findIndex((m) => m === memberId)
-      if (idx !== -1) this.task.memberIds.splice(idx, 1)
-      else this.task.memberIds.push(memberId)
-      this.updateTask()
-    },
+
     saveComment(comment) {
       comment.id = utilService.makeId()
       comment.byMember = {
@@ -338,9 +305,6 @@ export default {
     }
   },
   components: {
-    labelPicker,
-    coverPicker,
-    attachmentPicker,
     attachmentList,
     avatarPreview,
     coverBg,
@@ -349,10 +313,9 @@ export default {
     date,
     taskDetailSidebar,
     TaskDetailSidebar,
-    checklistModal,
     checklistList,
-    membersModal,
     taskComment,
+    taskOptions,
     taskDescription
   },
 }

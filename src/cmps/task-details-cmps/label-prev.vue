@@ -6,7 +6,7 @@
         class="label-prev"
         v-for="label in taskLabels"
         :key="label.id"
-        @click.stop="toggleLabels($event, 'Labels')"
+        @click.stop="toggleLabels($event, 'labels')"
       >
         <div
           class="label-bg flex align-center justify-center"
@@ -34,10 +34,9 @@ export default {
   },
   methods: {
     toggleLabels(ev, type) {
-      this.$emit('toggle', { ev, type })
+      this.$emit('toggle', { el:ev.target.closest('div'), type })
     },
   },
-  emits: ['labelClicked', 'closeLabels'],
 }
 </script>
 <style></style>
