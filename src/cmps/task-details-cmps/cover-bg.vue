@@ -1,7 +1,7 @@
 <template>
-  <div v-if="bgCover" class="flex justify-center task-detail-bg" :style="getBackground"><img :src="currCover.background"
-      alt=""></div>
-  <div class="btn-wrapper" v-if="bgCover">
+  <div v-if="currCover.background" class="flex justify-center task-detail-bg" :style="getBackground"><img
+      :src="currCover.background" alt=""></div>
+  <div class="btn-wrapper" v-if="currCover.background">
     <button @click.stop="coverClicked" :class="darkModeClass" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
       <span>Cover</span>
@@ -24,24 +24,19 @@ export default {
   },
   data() {
     return {
-      bgCover: '',
       isDarkMode: false,
     }
   },
-  created(){
-    console.log(this.currCover);
-    this.bgCover=this.currCover.background
-  },
   methods: {
     coverClicked(ev) {
-      this.$emit('toggle', { el: ev.target.closest('button'), type:'cover' })
+      this.$emit('toggle', { el: ev.target.closest('button'), type: 'cover' })
     },
     async setCoverColor(bg) {
-      if (bg.background.length > 10)
-        return await utilService.getImgAvgColor(bg.background)
-      else {
-        return bg
-      }
+      this.currCover = bg.background.length > 10 ?
+        await utilService.getImgAvgColor(bg.background)
+        :
+        bg.background
+
     },
     async updateDarkMode() {
       if (this.currCover.background.length > 10) {
@@ -51,18 +46,20 @@ export default {
   },
   computed: {
     getBackground() {
-      return { background: this.bgCover }
+      if (this.currCover.background.length > 10)
+        return { background: '#f4f5f7' }
+      return { background: this.currCover.background }
     },
     darkModeClass() {
       return { 'dark-theme': this.isDarkMode }
     }
   },
-  watch: {
-    async currCover() {
-      this.bgCover = await this.setCoverColor(this.currCover)
-      await this.updateDarkMode()
-    }
-  },
+  // watch: {
+  //   async currCover() {
+  //     this.bgCover = await this.setCoverColor(this.currCover)
+  //     await this.updateDarkMode()
+  //   }
+  // },
   emits: ['toggle', 'closeModal'],
 }
 </script>

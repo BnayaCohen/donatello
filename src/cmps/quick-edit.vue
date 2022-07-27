@@ -1,5 +1,5 @@
 <template>
-    <div v-if="task" class="quick-card-editor">
+    <div v-if="task" class="quick-card-editor" @click="$emit('closeQuickEdit')">
         <span @click="$emit('closeQuickEdit')"
             class="icon-lg icon-close quick-card-editor-close-icon trellicons trellicons-close-btn">
         </span>

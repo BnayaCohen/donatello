@@ -50,7 +50,7 @@ export default {
     task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
     },
-    labelToTaskMap({currBoard}) {
+    labelToTaskMap({ currBoard }) {
       let labelsCount = {}
       let currLabelName = ''
       const boardLabels = currBoard.labels
@@ -71,7 +71,7 @@ export default {
       })
       return labelsCount
     },
-    memberToTaskMap({currBoard}) {
+    memberToTaskMap({ currBoard }) {
       let membersCount = {}
       let currMemberName = ''
       const boardMembers = currBoard.members
