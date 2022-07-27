@@ -5,11 +5,7 @@
       cursor: 'pointer',
     }">
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg
-          :currCover="getCurrCover"
-          @toggle="openPicker"
-          @closeModal="backToBoard"
-        />
+        <cover-bg :currCover="currCover" @toggle="openPicker" @closeModal="backToBoard" />
         <div class="task-detail-header">
           <div>
             <span class="trellicons trellicons-details"></span>
@@ -39,13 +35,8 @@
                 <span class="add-member"></span>
               </div>
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
-              <date-picker
-                v-if="task.dueDate"
-                :task="task"
-                @toggleDate="toggleDate"
-                @toggleIsDone="toggleIsDone"
-                @removeDueDate="removeDueDate"
-              />
+              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
+                @removeDueDate="removeDueDate" />
             </div>
             <div class="description-container flex flex-column">
               <div class="description-header flex align-center">
@@ -53,68 +44,33 @@
                 <h3>Description</h3>
               </div>
               <div class="task-description-txt">
-                <textarea
-                  rows="3"
-                  placeholder="Add a more detailed description..."
-                  ref="taskDescription"
-                  v-model="task.description"
-                  @click.stop="isEditDescription = !isEditDescription"
-                  :class="descriptionStyle"
-                ></textarea>
-                <div
-                  v-if="isEditDescription"
-                  class="description-btns flex align-center"
-                >
+                <textarea rows="3" placeholder="Add a more detailed description..." ref="taskDescription"
+                  v-model="task.description" @click.stop="isEditDescription = !isEditDescription"
+                  :class="descriptionStyle"></textarea>
+                <div v-if="isEditDescription" class="description-btns flex align-center">
                   <el-button @click.stop="updateTask">Save</el-button>
-                  <el-button @click.stop="isEditDescription = false"
-                    >X</el-button
-                  >
+                  <el-button @click.stop="isEditDescription = false">X</el-button>
                 </div>
                 <span class="add-member"></span>
               </div>
             </div>
-            <attachment-list
-              v-if="task.attachments?.length"
-              :attachments="task.attachments"
-              @updateCurrCover="updateCurrCover"
-              @toggle="openPicker"
-              @removeAttachment="removeAttachment"
-            />
-            <checklist-list
-              v-if="task.checklists?.length"
-              :checklists="task.checklists"
-              @saveChecklists="saveChecklists"
-            />
-            <task-comment
-              :loggedInUser="loggedUser"
-              @saveComment="saveComment"
-              :comments="task.comments"
-              @deleteComment="deleteComment"
-            />
+            <attachment-list v-if="task.attachments?.length" :attachments="task.attachments"
+              @updateCurrCover="updateCurrCover" @toggle="openPicker" @removeAttachment="removeAttachment" />
+            <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
+              @saveChecklists="saveChecklists" />
+            <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="task.comments"
+              @deleteComment="deleteComment" />
           </div>
-          <task-detail-sidebar
-            :task="task"
-            :currCover="getCurrCover"
-            @pickerOpened="openPicker"
-            @addUserToTask="addUserToTask"
-            @removeTask="removeTask"
-          />
+          <task-detail-sidebar :task="task" :currCover="currCover" @pickerOpened="openPicker"
+            @addUserToTask="addUserToTask" @removeTask="removeTask" />
         </div>
       </div>
     </div>
   </section>
-  
-  <task-options 
-    v-if="isPickerCmpOpen"
-    :cmpType="modalCmpType"
-    :task="task"
-    :pos="modalPos"
-    :dueDate="dueDate"
-    @removeDueDate="removeDueDate"
-    @updateDueDate="updateDueDate" 
-    @updateCurrCover="updateCurrCover"
-    @pickerClosed="isPickerCmpOpen=false"
-    />
+
+  <task-options v-if="isPickerCmpOpen" :cmpType="modalCmpType" :task="task" :pos="modalPos" :dueDate="dueDate"
+    @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @updateCurrCover="updateCurrCover"
+    @pickerClosed="isPickerCmpOpen = false" />
 
 </template>
 <script>
@@ -145,8 +101,8 @@ export default {
       modalPos: null,
       currCover: null,
       dueDate: ref(new Date()),
-      isPickerCmpOpen:false,
-      modalCmpType:'',
+      isPickerCmpOpen: false,
+      modalCmpType: '',
     }
   },
   async created() {
@@ -190,13 +146,10 @@ export default {
     loggedUser() {
       return this.$store.getters.user
     },
-    taskLabels(){
-      const labels =this.$store.getters.getLabels
+    taskLabels() {
+      const labels = this.$store.getters.getLabels
       return labels.filter(label => this.task.labelIds.includes(label.id))
     },
-    getCurrCover(){
-      return this.currCover
-    }
   },
   methods: {
     getMemberById(memberId) {
@@ -228,13 +181,13 @@ export default {
       this.isDate = !this.isDate
     },
     openPicker(elData) {
-    const {top,left,height,width}=elData.el.getBoundingClientRect()
+      const { top, left, height, width } = elData.el.getBoundingClientRect()
 
-    this.modalPos= {
-        top: (top+height+5)+'px',
-        left: left+'px',
+      this.modalPos = {
+        top: (top + height + 5) + 'px',
+        left: left + 'px',
       }
-      this.modalCmpType=elData.type
+      this.modalCmpType = elData.type
       this.isPickerCmpOpen = true
     },
     updateDueDate(dueDate) {
