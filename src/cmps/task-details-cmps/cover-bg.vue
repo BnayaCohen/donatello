@@ -4,7 +4,7 @@
   <div class="btn-wrapper" v-if="bgCover">
     <button @click.stop="coverClicked" :class="darkModeClass" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
-      <span class="cover-txt">Cover</span>
+      <span>Cover</span>
     </button>
   </div>
   <button class="close-modal-btn" @click.stop="$emit('closeModal')">
