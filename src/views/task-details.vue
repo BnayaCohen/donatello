@@ -30,6 +30,14 @@
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
+              <div v-if="task.memberIds.length" class="members-container">
+                <h3 style="margin:0 8px 4px 0;" class="small-title">Members</h3>
+                <div style="display:inline-block;margin: 0 4px 4px 0;" v-for="memberId in task.memberIds"
+                  :key="memberId" class="img-container">
+                  <avatar-preview :member="getMemberById(memberId)" :avatarSize="'big'" />
+                </div>
+                <span class="add-member"></span>
+              </div>
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
               <date-picker
                 v-if="task.dueDate"
@@ -61,17 +69,9 @@
                   <el-button @click.stop="isEditDescription = false"
                     >X</el-button
                   >
-              <div v-if="task.memberIds.length" class="members-container">
-                <h3 style="margin:0 8px 4px 0;" class="small-title">Members</h3>
-                <div style="display:inline-block;margin: 0 4px 4px 0;" v-for="memberId in task.memberIds"
-                  :key="memberId" class="img-container">
-                  <avatar-preview :member="getMemberById(memberId)" :avatarSize="'big'" />
                 </div>
                 <span class="add-member"></span>
               </div>
-              <label-prev :taskLabels="taskLabels" @toggle="toggle" />
-              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
-                @removeDueDate="removeDueDate" />
             </div>
             <attachment-list
               v-if="task.attachments?.length"
@@ -100,8 +100,8 @@
             @removeTask="removeTask"
           />
         </div>
-      </div></div>
-    </div></div>
+      </div>
+    </div>
   </section>
   
   <task-options 
