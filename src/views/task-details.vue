@@ -228,11 +228,11 @@ export default {
       this.isDate = !this.isDate
     },
     openPicker(elData) {
-    const {top,left,height,width}=elData.el.getBoundingClientRect()
-
+    const {top,right,height,width}=elData.el.getBoundingClientRect()
+console.log(elData.el.getBoundingClientRect());
     this.modalPos= {
         top: (top+height+5)+'px',
-        left: left+'px',
+        left: (right-width)+'px',
       }
       this.modalCmpType=elData.type
       this.isPickerCmpOpen = true
