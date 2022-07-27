@@ -91,6 +91,7 @@ export default {
         setBoardBg(selectedBg) {
             const currBoard = this.$store.getters.board
             currBoard.style.background = selectedBg
+            this.$store.commit({ type: 'setBoard', board: currBoard })
             this.$store.dispatch({ type: 'saveBoard', board: currBoard })
         },
         async unsplashPhotos() {

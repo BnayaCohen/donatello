@@ -1,8 +1,8 @@
 <template>
-  <div class="dynamic-popover pos-absolute attachment-popover-container" :style="pos">
+  <div class="dynamic-popover attachment-popover-container">
     <div class="popover-header flex justify-center align-center">
       <span>Attach from..</span>
-      <button class="pop-close-btn" @click.stop="$emit('toggle', { ev: $event, type: 'Attach' })">
+      <button class="pop-close-btn" @click.stop="$emit('modalClosed')">
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
@@ -29,7 +29,6 @@ import { uploadImg } from '@/services/img-upload.service';
 
 export default {
   props: {
-    pos: Object,
   },
   data() {
     return {
@@ -51,16 +50,18 @@ export default {
       this.attachProps.url = res.url
       this.attachProps.title = file.name
       this.attachProps.createdAt = Date.now()
-      this.$emit('attachSelected', this.attachProps)
+      this.$emit('taskUpdated', this.attachProps)
+      this.$emit('modalClosed')
     },
     addLinkAttachment() {
       if (!this.attachProps.url) return
       this.attachProps.title = 'Web image'
       this.attachProps.createdAt = Date.now()
-      this.$emit('attachSelected', this.attachProps)
+      this.$emit('taskUpdated', this.attachProps)
+      this.$emit('modalClosed')
     },
   },
-  emits: ['attachSelected', 'toggle'],
+  emits: ['taskUpdated', 'modalClosed'],
 }
 </script>
 <style>

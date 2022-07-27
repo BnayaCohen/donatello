@@ -4,7 +4,7 @@
     @mouseenter="toggleOnHover"
     @mouseleave="toggleOnHover"
     @click.stop="openTask(task.groupId, task.id)"
-    :style="{backgroundColor:onHover ? '#e8e8e882' : ''}"
+    :style="{backgroundColor:onHover ? '#e9e9e988' : ''}"
   >
     <div class="flex flex-column">
       <span v-if="onHover" @click.stop="openQuickEdit" class="hover-edit-btn"><i
@@ -41,7 +41,7 @@
             </div>
           </section>
         </div>
-        <div class="flx" style="margin-left: auto;">
+        <div style="margin-left: auto;">
           <section v-if="task.memberIds?.length" class="task-members-container">
             <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :member="getMemberById(memberId)"
               :avatarSize="'small'" />

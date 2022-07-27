@@ -79,10 +79,10 @@
 
 .click-active {
   &:active {
-    background-color: #e4f0f6;
+    background-color: #e4f0f6!important;
     border: none;
     box-shadow: none;
-    color: #0079bf;
+    color: #0079bf!important;
     outline: 0;
   }
 }
@@ -222,7 +222,6 @@
   }
 
   .popover-content {
-    overflow-y: auto;
 
     .small-title {
       margin-block-end: rem(4px);
