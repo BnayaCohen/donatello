@@ -20,7 +20,7 @@
       </section>
 
       <section v-if="!isSideBarOpen" class="more-options flex align-center justify-center">
-        <button class="btn-background" :class="{ 'dark-theme': isDark }">Dashboard</button>
+        <button class="btn-background" :class="{ 'dark-theme': isDark }" @click.stop="openDashboard">Dashboard</button>
         <button class="btn-background" :class="{ 'dark-theme': isDark }" @click="$emit('sideBarOpened')">Show
           menu</button>
       </section>
@@ -63,6 +63,10 @@ export default {
       if (idx !== -1) this.board.members.splice(idx, 1)
       else this.board.members.push(user)
       this.$store.dispatch({ type: 'saveBoard', board: this.board })
+    },
+    openDashboard() {
+      const currentRoute = this.$route.fullPath
+      this.$router.push(currentRoute + '/dashboard')
     }
   },
   computed: {

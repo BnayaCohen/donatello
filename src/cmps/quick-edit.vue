@@ -25,19 +25,19 @@
                                 <div class="due-date-icon ">
                                     <span class="trellicons" :class="'trellicons-' + getDueDateIconName"></span>
                                 </div>
-                                <p> {{ ' ' + getFixedDueDate }}</p>
+                                <p> {{ getFixedDueDate }}</p>
                             </div>
                             <div v-if="task.comments?.length" class="task-indicator badge">
                                 <span class="trellicons trellicons-comment"></span>
-                                <p> {{ ' ' + task.comments.length }}</p>
+                                <p> {{ task.comments.length }}</p>
                             </div>
                             <div v-if="task.attachments?.length" class="task-indicator badge">
                                 <span class="trellicons trellicons-attachment"></span>
-                                <p> {{ ' ' + task.attachments.length }}</p>
+                                <p> {{ task.attachments.length }}</p>
                             </div>
                             <div v-if="task.checklists?.length" class="task-indicator badge">
                                 <span class="trellicons trellicons-checkedbox"></span>
-                                <p>{{ ' ' + getChecklistProgress }}</p>
+                                <p>{{ getChecklistProgress }}</p>
                             </div>
                         </span>
                     </div>
@@ -47,35 +47,45 @@
                     </div>
                 </div>
             </div>
-            <button class="save-task-btn text-center">Save</button>
+            <button @click="updateTask" class="save-task-btn text-center">Save</button>
             <div class="quick-card-editor-buttons fade-in">
+                <!-- Open card -->
                 <span class="quick-card-editor-buttons-item" @click="openTask(task.groupId, task.id)">
-                    <span class="icon-sm icon-card"><i class="fa-solid fa-inbox"></i></span><span
+                    <span class="icon-sm icon-card"><i class="trellicons trellicons-details"></i></span><span
                         class="quick-card-editor-buttons-item-text">Open card</span>
                 </span>
+                <!-- Edit labels -->
                 <span class="quick-card-editor-buttons-item"><span class="icon-sm icon-label"><i
-                            class="fa-solid fa-tag"></i></span><span class="quick-card-editor-buttons-item-text">Edit
+                            class="trellicons trellicons-labels"></i></span><span
+                        class="quick-card-editor-buttons-item-text">Edit
                         Labels</span></span>
                 <span class="quick-card-editor-buttons-item">
-                    <span class="icon-sm icon-member"><i class="fa-regular fa-user"></i></span>
-                    <span class="quick-card-editor-buttons-item-text">Change members</span></span>
+                    <!-- Change members -->
+                    <span class="icon-sm icon-member"><i class="trellicons trellicons-member"></i></span>
+                    <span class="quick-card-editor-buttons-item-text">Change members</span>
+                </span>
+                <!-- Change cover -->
                 <span class="quick-card-editor-buttons-item"><span class="icon-sm icon-card-cover"><i
-                            class="fa-solid fa-inbox"></i></span>
+                            class="trellicons trellicons-cover"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Change cover</span></span>
+                <!-- Move -->
                 <!-- <span class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-move"><i class="fa-solid fa-arrow-right"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Move</span>
-                </span>
-                <span class="quick-card-editor-buttons-item">
+                </span> -->
+                <!-- Copy -->
+                <!-- <span class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-card"><i class="fa-solid fa-inbox"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Copy</span>
-                </span> -->
+                </span>  -->
+                <!-- Edit due date -->
                 <span class="quick-card-editor-buttons-item">
-                    <span class="icon-sm icon-clock"><i class="fa-regular fa-clock"></i></span>
+                    <span class="icon-sm icon-clock"><i class="trellicons trellicons-clock"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Edit dates</span>
                 </span>
+                <!-- Archive/Delete -->
                 <span class="quick-card-editor-buttons-item">
-                    <span class="icon-sm icon-archive"><i class="fa-solid fa-box-archive"></i></span>
+                    <span class="icon-sm icon-archive"><i class="trellicons trellicons-archive"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Archive</span>
                 </span>
             </div>
@@ -93,15 +103,15 @@ export default {
     data() {
         return {
             onDueDateHover: false,
-            taskToEdit: this.task
+            taskToEdit: JSON.parse(JSON.stringify(this.task))
         }
     },
     methods: {
         openTask(groupId, taskId) {
-            this.closeQuickEdit()
             this.$router.push(
                 this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
             )
+            this.$emit('closeQuickEdit')
         },
         getMemberById(memberId) {
             const members = this.$store.getters.getMembers
@@ -111,7 +121,12 @@ export default {
             this.onDueDateHover = !this.onDueDateHover
         },
         toggleDueDateCheck() {
-            this.task.status = this.task.status === 'in-progress' ? 'done' : 'in-progress'
+            this.taskToEdit.status = this.taskToEdit.status === 'in-progress' ? 'done' : 'in-progress'
+        },
+        updateTask() {
+            if (!this.taskToEdit.title) return
+            this.$emit('saveTask', this.taskToEdit)
+            this.$emit('closeQuickEdit')
         },
     },
     computed: {
@@ -131,13 +146,13 @@ export default {
         },
 
         getFixedDueDate() {
-            return (new Date(this.task.dueDate) + '').slice(4, 10)
+            return (new Date(this.taskToEdit.dueDate) + '').slice(4, 10)
         },
         dueDateStyle() {
             return {
                 backgroundColor:
-                    this.task.status === 'in-progress'
-                        ? Date.now() - this.task.dueDate > 0
+                    this.taskToEdit.status === 'in-progress'
+                        ? Date.now() - this.taskToEdit.dueDate > 0
                             ? this.onDueDateHover
                                 ? '#eb5a46'
                                 : '#ec9488'
@@ -148,8 +163,8 @@ export default {
                             ? '#519839'
                             : '#61bd4f',
                 color:
-                    Date.now() - this.task.dueDate > 0 ||
-                        this.task.status !== 'in-progress'
+                    Date.now() - this.taskToEdit.dueDate > 0 ||
+                        this.taskToEdit.status !== 'in-progress'
                         ? '#fff'
                         : '#5e6c84',
             }

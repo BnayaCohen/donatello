@@ -1,26 +1,33 @@
 <template>
+<<<<<<< HEAD
   <div class="dynamic-popover members-popover-container">
+=======
+  <div class="dynamic-popover pos-absolute members-popover-container" :style="pos">
+>>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
     <div class="popover-header flex justify-center align-center">
       <span class="modal-title">Members</span>
       <button class="pop-close-btn">
         <span class="close-btn trellicons trellicons-close-btn"
+<<<<<<< HEAD
           @click="$emit('modalClosed')"></span>
+=======
+          @click="$emit('toggle', { ev: $event, type: 'Memberlist' })"></span>
+>>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
       </button>
     </div>
     <div class="popover-content">
       <input @input="filterMembers" type="text" placeholder="Search members" class="modal-input" />
       <h4 class="small-title">Board members</h4>
       <div v-if="loading" class="loading skeleton"></div>
-      <div v-if="!board.members.length" class="no-results">
+      <div v-if="!members.length" class="no-results">
         <p style="padding: 24px 6px">No results</p>
       </div>
       <section class="member-list">
-        <div v-for="member in board.members" :key="member.id" class="member-preview flex member-preview align-center"
+        <div v-for="member in members" :key="member.id" class="member-preview flex member-preview align-center"
           @click="$emit('taskUpdated', member._id)">
           <avatar-preview :member="member" :avatarSize="'small'" />
           <p class="member-fullname">{{ member.fullname }}</p>
-          <span class="member-username">({{ member.username }})</span>
-          <span v-if="false" class="trellicons trellicons-v-check"
+          <span v-if="memberIds.find(m => m === member._id)" class="trellicons trellicons-v-check"
             :style="{ position: 'absolute', right: '23px' }"></span>
         </div>
       </section>
@@ -32,15 +39,20 @@
 import avatarPreview from '../avatar-preview.vue'
 export default {
   components: { avatarPreview },
+<<<<<<< HEAD
   props: { memberIds: Array },
+=======
+  props: { memberIds: Array, pos: Object },
+
+>>>>>>> a8302f2227da76da1b516acbb841dd2f27920eaf
   data() {
     return {
       loading: false,
     }
   },
   computed: {
-    board() {
-      return this.$store.getters.board
+    members() {
+      return this.$store.getters.getMembers
     },
   },
   methods: {
