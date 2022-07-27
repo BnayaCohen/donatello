@@ -25,19 +25,19 @@
                                 <div class="due-date-icon ">
                                     <span class="trellicons" :class="'trellicons-' + getDueDateIconName"></span>
                                 </div>
-                                <p> {{ ' ' + getFixedDueDate }}</p>
+                                <p> {{ getFixedDueDate }}</p>
                             </div>
                             <div v-if="task.comments?.length" class="task-indicator badge">
                                 <span class="trellicons trellicons-comment"></span>
-                                <p> {{ ' ' + task.comments.length }}</p>
+                                <p> {{ task.comments.length }}</p>
                             </div>
                             <div v-if="task.attachments?.length" class="task-indicator badge">
                                 <span class="trellicons trellicons-attachment"></span>
-                                <p> {{ ' ' + task.attachments.length }}</p>
+                                <p> {{ task.attachments.length }}</p>
                             </div>
                             <div v-if="task.checklists?.length" class="task-indicator badge">
                                 <span class="trellicons trellicons-checkedbox"></span>
-                                <p>{{ ' ' + getChecklistProgress }}</p>
+                                <p>{{ getChecklistProgress }}</p>
                             </div>
                         </span>
                     </div>

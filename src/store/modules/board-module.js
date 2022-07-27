@@ -18,7 +18,7 @@ export default {
     lastTask: null,
     showLabelsOnTask: false,
     currTask: null,
-    isDarkTheme:false,
+    isDarkTheme: false,
   },
   getters: {
     boardsForDisplay({ boards }) {
