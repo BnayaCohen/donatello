@@ -1,40 +1,26 @@
 <template>
-  <div
-    class="dynamic-popover pos-absolute members-popover-container"
-    :style="pos"
-  >
+  <div class="dynamic-popover pos-absolute members-popover-container" :style="pos">
     <div class="popover-header flex justify-center align-center">
       <span class="modal-title">Members</span>
       <button class="pop-close-btn">
-          <span class="close-btn trellicons trellicons-close-btn" @click="$emit('toggle', { ev: $event, type: 'Memberlist' })"></span>
+        <span class="close-btn trellicons trellicons-close-btn"
+          @click="$emit('toggle', { ev: $event, type: 'Memberlist' })"></span>
       </button>
     </div>
     <div class="popover-content">
-      <input
-        @input="filterMembers"
-        type="text"
-        placeholder="Search members"
-        class="modal-input"
-      />
+      <input @input="filterMembers" type="text" placeholder="Search members" class="modal-input" />
       <h4 class="small-title">Board members</h4>
       <div v-if="loading" class="loading skeleton"></div>
-      <div v-if="!board.members.length" class="no-results">
+      <div v-if="!members.length" class="no-results">
         <p style="padding: 24px 6px">No results</p>
       </div>
       <section class="member-list">
-        <div
-          v-for="member in board.members"
-          :key="member.id"
-          class="member-preview flex member-preview align-center"
-          @click="$emit('toggleMember', member._id)"
-        >
+        <div v-for="member in members" :key="member.id" class="member-preview flex member-preview align-center"
+          @click="$emit('toggleMember', member._id)">
           <avatar-preview :member="member" :avatarSize="'small'" />
           <p class="member-fullname">{{ member.fullname }}</p>
-          <span class="member-username">({{member.username}})</span>
-          <span
-          v-if="false"
-            class="trellicons trellicons-v-check" :style="{position: 'absolute', right: '23px'}"
-          ></span>
+          <span v-if="memberIds.find(m => m === member._id)" class="trellicons trellicons-v-check"
+            :style="{ position: 'absolute', right: '23px' }"></span>
         </div>
       </section>
     </div>
@@ -45,7 +31,7 @@
 import avatarPreview from '../avatar-preview.vue'
 export default {
   components: { avatarPreview },
-  props: { memberIds: Array },
+  props: { memberIds: Array, pos: Object },
 
   data() {
     return {
@@ -53,12 +39,12 @@ export default {
     }
   },
   computed: {
-    board() {
-      return this.$store.getters.board
+    members() {
+      return this.$store.getters.getMembers
     },
   },
   methods: {
-    filterMembers() {},
+    filterMembers() { },
   },
   emits: ['toggle', 'toggleMember'],
 }
