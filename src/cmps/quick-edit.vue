@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <button class="save-task-btn text-center">Save</button>
+            <button @click="updateTask" class="save-task-btn text-center">Save</button>
             <div class="quick-card-editor-buttons fade-in">
                 <!-- Open card -->
                 <span class="quick-card-editor-buttons-item" @click="openTask(task.groupId, task.id)">
@@ -103,15 +103,15 @@ export default {
     data() {
         return {
             onDueDateHover: false,
-            taskToEdit: this.task
+            taskToEdit: JSON.parse(JSON.stringify(this.task))
         }
     },
     methods: {
         openTask(groupId, taskId) {
-            this.closeQuickEdit()
             this.$router.push(
                 this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
             )
+            this.$emit('closeQuickEdit')
         },
         getMemberById(memberId) {
             const members = this.$store.getters.getMembers
@@ -121,7 +121,12 @@ export default {
             this.onDueDateHover = !this.onDueDateHover
         },
         toggleDueDateCheck() {
-            this.task.status = this.task.status === 'in-progress' ? 'done' : 'in-progress'
+            this.taskToEdit.status = this.taskToEdit.status === 'in-progress' ? 'done' : 'in-progress'
+        },
+        updateTask() {
+            if (!this.taskToEdit.title) return
+            this.$emit('saveTask', this.taskToEdit)
+            this.$emit('closeQuickEdit')
         },
     },
     computed: {
@@ -141,13 +146,13 @@ export default {
         },
 
         getFixedDueDate() {
-            return (new Date(this.task.dueDate) + '').slice(4, 10)
+            return (new Date(this.taskToEdit.dueDate) + '').slice(4, 10)
         },
         dueDateStyle() {
             return {
                 backgroundColor:
-                    this.task.status === 'in-progress'
-                        ? Date.now() - this.task.dueDate > 0
+                    this.taskToEdit.status === 'in-progress'
+                        ? Date.now() - this.taskToEdit.dueDate > 0
                             ? this.onDueDateHover
                                 ? '#eb5a46'
                                 : '#ec9488'
@@ -158,8 +163,8 @@ export default {
                             ? '#519839'
                             : '#61bd4f',
                 color:
-                    Date.now() - this.task.dueDate > 0 ||
-                        this.task.status !== 'in-progress'
+                    Date.now() - this.taskToEdit.dueDate > 0 ||
+                        this.taskToEdit.status !== 'in-progress'
                         ? '#fff'
                         : '#5e6c84',
             }
