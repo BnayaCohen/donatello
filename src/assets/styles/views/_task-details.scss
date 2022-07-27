@@ -37,23 +37,17 @@
   .cover-btn {
     background-color: #00000014;
     border-radius: 3px;
-    color: #172b4d;
-    padding: 6px 12px 6px 6px;
+    color: inherit;
+    padding: 6px 12px 6px 4px;
     text-decoration: none;
     border: none;
-    font-size: 1rem;
-    gap: 3px;
+    gap: 6px;
     line-height: 20px;
     font-family: inherit;
     cursor: pointer;
 
     .cover-icon {
       font-size: 16px;
-    }
-
-    .cover-txt {
-      font-size: 1rem;
-      color: black;
     }
 
     &:hover {
