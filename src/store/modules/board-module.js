@@ -375,5 +375,14 @@ export default {
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
+    async searchBoards({ commit }, { filterBy }) {
+      try {
+        var boards = await boardService.query(filterBy)
+        return boards
+      } catch (err) {
+        console.log('couldnt get boards for search', err)
+      }
+    },
+
   },
 }
