@@ -6,7 +6,7 @@
     </header>
     <section class="checklist-inputs">
       <label>Title</label>
-      <input type="text" v-model="title" />
+      <input class="basic-input" type="text" v-model="title" />
       <button class="add-checklist-btn">Add</button>
     </section>
   </div>

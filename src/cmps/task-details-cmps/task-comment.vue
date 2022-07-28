@@ -11,7 +11,7 @@
       <form @submit.prevent="saveComment">
         <div class="comment-frame">
           <div ref="commentBox" class="comment-box">
-            <textarea class="comment-box-input" placeholder="Write a comment..." @click="openComment"
+            <textarea class="basic-input comment-box-input" placeholder="Write a comment..." @click="openComment"
               v-model="comment.txt"></textarea>
             <div ref="commentControl" class="comment-control">
               <button class="submit-comment-btn flex align-center justify-center">Save</button>
