@@ -8,7 +8,7 @@
       <textarea class="new-title-input" :class="addingGroup" type="text" :placeholder="inputPlaceholder"
         v-model="titleInput" v-focus></textarea>
       <div class="flex align-center">
-        <button @click="addEntity" class="add-entity-btn">
+        <button @click="addEntity" class="add-entity-btn" v-focus>
           {{ btnPlaceholder }}
         </button>
         <button @click="closeAddEntity" class="close-btn trellicons trellicons-close-btn">
