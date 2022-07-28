@@ -271,8 +271,9 @@ export default {
         if (actionType === 'setBoard') {
           socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
           commit({ type: 'updateBoard', board: savedBoard })
-        }
-        commit({ type: actionType, board: savedBoard })
+        } else
+          commit({ type: actionType, board: savedBoard })
+        commit({ type: 'setBoard', board: savedBoard })
         return savedBoard
       } catch (err) {
         console.log('couldnt save/update board', err)
