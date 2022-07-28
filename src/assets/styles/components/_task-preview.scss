@@ -27,7 +27,8 @@
     height: 28px;
     border-radius: 2px;
     color: inherit;
-    &:hover{
+
+    &:hover {
       background-color: #00000020;
     }
   }
@@ -147,7 +148,7 @@
     margin-right: -2.5px;
     display: flex;
     height: em(32px);
-    
+
     .member-avatar-small {
       margin-left: 4px;
     }
