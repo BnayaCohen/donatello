@@ -7,16 +7,18 @@
       </header>
       <div class="modal-details">
         <div class="board-preview-wrapper">
-          <div :style="style" class="board-preview-container">
+          <div :style="setBackground" class="board-preview-container">
             <img src="	https://skello.herokuapp.com/static/media/board-preview.25c287ae7ad9fc2da090aeeddd284374.svg" />
           </div>
         </div>
         <div class="background-container">
-          <p>Background</p>
+          <span>Background</span>
           <div class="background-picker">
             <ul class="background-list clean-list flex">
               <li v-for="img in imgsStyle" class="img-container">
-                <button @click="setStyle(img)" :style="img" class="background-select"></button>
+                <button @click="setStyle(img)"
+                  :style="{ background: `url(${img.background}) no-repeat center top/cover` }"
+                  class="background-select"></button>
               </li>
             </ul>
             <ul class="background-list clean-list flex">
@@ -25,8 +27,8 @@
               </li>
             </ul>
           </div>
-          <p>Board title</p>
-          <input type="text" v-model="title" class="add-board-title" />
+          <span>Board title</span>
+          <input v-focus type="text" v-model="title" class="add-board-title" />
           <button @click="addBoard" :class="[className, 'create-board-btn']">
             Create
           </button>
@@ -48,6 +50,7 @@ export default {
         { background: 'rgb(81, 232, 152)' },
         { background: 'rgb(237, 90, 70)' },
         { background: 'rgb(195, 119, 224)' },
+        { background: 'rgb(188, 188, 188)' },
       ],
       imgsStyle: [
         {
@@ -74,11 +77,15 @@ export default {
     setStyle(style) {
       this.style = style
     },
+
   },
   computed: {
     className() {
       return this.title && this.style ? 'filled' : ''
     },
+    setBackground() {
+      return this.style?.background?.length > 10 ? { background: `url(${this.style.background}) no-repeat center center/cover` } : this.style
+    }
   },
 }
 </script>
