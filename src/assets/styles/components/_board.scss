@@ -24,11 +24,88 @@
   }
 
   &::-webkit-scrollbar-button {
-    width: 24px
+    width: 24px;
   }
 }
 
-.dynamic-task-option-container{
+.dynamic-task-option-container {
   position: fixed;
   z-index: 30;
+}
+// Loading animation
+.logo-holder {
+  width: 180px;
+  height: 220px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  padding-top: 12px;
+  padding-bottom: 24px;
+}
+
+.bar {
+  position: relative;
+  border-radius: 2px;
+  height: 8px;
+  background: #6a6a6a;
+  width: 0%;
+  top: 0px;
+  left: 18px;
+  margin-top: 8px;
+  box-shadow: 0 0 3px rgba(192, 192, 192, 0.9);
+  animation: fill 2s infinite alternate;
+}
+
+.bar.fill1 {
+  animation: fill-1 2s infinite alternate;
+}
+
+.bar.fill2 {
+  animation: fill-2 2s infinite alternate;
+}
+
+@keyframes fill {
+  0% {
+    width: 20px;
+  }
+  33% {
+    width: 30px;
+  }
+  66% {
+    width: 10px;
+  }
+  100% {
+    width: 30px;
+  }
+}
+
+@keyframes fill-1 {
+  0% {
+    width: 30px;
+  }
+  33% {
+    width: 50px;
+  }
+  66% {
+    width: 20px;
+  }
+  100% {
+    width: 50px;
+  }
+}
+
+@keyframes fill-2 {
+  0% {
+    width: 40px;
+  }
+  33% {
+    width: 70px;
+  }
+  66% {
+    width: 30px;
+  }
+  100% {
+    width: 70px;
+  }
 }
