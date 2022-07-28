@@ -38,6 +38,7 @@
               <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
             </div>
+<<<<<<< HEAD
             <div class="description-container flex flex-column">
               <div class="description-header flex align-center">
                 <span class="trellicons trellicons-description"></span>
@@ -60,6 +61,27 @@
               @saveChecklists="saveChecklists" />
             <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="task.comments"
               @deleteComment="deleteComment" />
+=======
+            <task-description :description="task.description" @saveDescription="saveDescription"/>
+            <attachment-list
+              v-if="task.attachments?.length"
+              :attachments="task.attachments"
+              @updateCurrCover="updateCurrCover"
+              @toggle="openPicker"
+              @removeAttachment="removeAttachment"
+            />
+            <checklist-list
+              v-if="task.checklists?.length"
+              :checklists="task.checklists"
+              @saveChecklists="saveChecklists"
+            />
+            <task-comment
+              :loggedInUser="loggedUser"
+              @saveComment="saveComment"
+              :comments="task.comments"
+              @deleteComment="deleteComment"
+            />
+>>>>>>> 0471d8e0cb992385ffd41095dc9075c27e52462f
           </div>
           <task-detail-sidebar :task="task" :currCover="currCover" @pickerOpened="openPicker"
             @addUserToTask="addUserToTask" @removeTask="removeTask" />
