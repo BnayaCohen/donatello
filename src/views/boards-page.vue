@@ -56,6 +56,7 @@ export default {
     }
   },
   created() {
+    this.$emit('setBackground', '')
     console.log(this.$store.getters.user)
     document.body.classList.add('app-header-background-color-blue')
   },
