@@ -162,9 +162,28 @@ export const TypeWriter = class TypeWriter {
 
 async function getImgAvgColor(imgUrl) {
   try {
-    const fac = new FastAverageColor();
-    const color = await fac.getColorAsync(imgUrl)
-    return color.hexa
+
+
+
+    // const image = new Image();
+    // image.src = imgUrl
+    // console.log(image);
+    // image.onload(async () => {
+    //   const canvas = document.createElement('canvas');
+    //   const context = canvas.getContext('2d');
+    //   const width = image.width;
+    //   const height = image.height;
+    //   context.drawImage(image, 0, 0, width, height);
+    //   const dataURL = canvas.toDataURL();
+
+
+    //   console.log(dataURL);
+
+
+      const fac = new FastAverageColor();
+      const color = await fac.getColorAsync(imgUrl)
+      return color.hexa
+    // })
   }
   catch (e) {
     console.log(e)

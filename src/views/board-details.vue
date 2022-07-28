@@ -48,7 +48,8 @@ export default {
       const { boardId } = this.$route.params
       await this.$store.dispatch({ type: 'loadBoard', boardId })
       await this.$store.dispatch({ type: 'getUsers'})
-      this.$emit('setBackground', this.board.style?.background)
+      if(this.board.style.background)
+      this.$emit('setBackground', this.board.style.background)
       socketService.on(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
       socketService.on(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
       socketService.on(SOCKET_EVENT_BOARD_UPDATED, this.updateBoardFromSocket)
