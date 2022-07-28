@@ -1,20 +1,15 @@
 <template>
   <main v-if="board" class="main-layout board-container">
-    <board-header
-      :board="board"
-      :isSideBarOpen="isSideBarOpen"
-      @sideBarOpened="openSideBar"
-      :isDark="isDark"
-    />
-    <board-side-bar
-      :activities="board.activities"
-      :isSideBarOpen="isSideBarOpen"
-      @sideBarClosed="closeSideBar"
-    />
+    <board-header :board="board" :isSideBarOpen="isSideBarOpen" @sideBarOpened="openSideBar" :isDark="isDark" />
+    <board-side-bar :activities="board.activities" :isSideBarOpen="isSideBarOpen" @sideBarClosed="closeSideBar" />
     <group-list :groups="board.groups" :isSideBarOpen="isSideBarOpen" />
     <router-view />
   </main>
-  <img v-else style="height:calc(100vh - 49px);object-fit: cover;" src="../assets/img/loading.gif">
+  <div v-else class="logo-holder">
+    <div class="bar"></div>
+    <div class="bar fill1"></div>
+    <div class="bar fill2"></div>
+  </div>
 </template>
 
 <script>
@@ -47,9 +42,9 @@ export default {
     try {
       const { boardId } = this.$route.params
       await this.$store.dispatch({ type: 'loadBoard', boardId })
-      await this.$store.dispatch({ type: 'getUsers'})
-      if(this.board.style.background)
-      this.$emit('setBackground', this.board.style.background)
+      await this.$store.dispatch({ type: 'getUsers' })
+      if (this.board.style.background)
+        this.$emit('setBackground', this.board.style.background)
       socketService.on(SOCKET_EVENT_TASK_UPDATED, this.updateTaskFromSocket)
       socketService.on(SOCKET_EVENT_GROUP_UPDATED, this.updateGroupFromSocket)
       socketService.on(SOCKET_EVENT_BOARD_UPDATED, this.updateBoardFromSocket)
