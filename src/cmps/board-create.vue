@@ -2,18 +2,13 @@
   <section class="dynamic-action-modal">
     <section class="create-board-modal">
       <header class="modal-header">
-        <span
-          @click="$emit('toggleModal', $event)"
-          class="close-btn trellicons trellicons-close-btn"
-        ></span
-        ><span>Create Board</span>
+        <span @click="$emit('toggleModal', $event)"
+          class="close-btn trellicons trellicons-close-btn"></span><span>Create Board</span>
       </header>
       <div class="modal-details">
         <div class="board-preview-wrapper">
           <div :style="style" class="board-preview-container">
-            <img
-              src="	https://skello.herokuapp.com/static/media/board-preview.25c287ae7ad9fc2da090aeeddd284374.svg"
-            />
+            <img src="	https://skello.herokuapp.com/static/media/board-preview.25c287ae7ad9fc2da090aeeddd284374.svg" />
           </div>
         </div>
         <div class="background-container">
@@ -21,20 +16,12 @@
           <div class="background-picker">
             <ul class="background-list clean-list flex">
               <li v-for="img in imgsStyle" class="img-container">
-                <button
-                  @click="setStyle(img)"
-                  :style="img"
-                  class="background-select"
-                ></button>
+                <button @click="setStyle(img)" :style="img" class="background-select"></button>
               </li>
             </ul>
             <ul class="background-list clean-list flex">
               <li v-for="color in colorsStyle">
-                <button
-                  @click="setStyle(color)"
-                  :style="color"
-                  class="background-select"
-                ></button>
+                <button @click="setStyle(color)" :style="color" class="background-select"></button>
               </li>
             </ul>
           </div>
@@ -64,17 +51,17 @@ export default {
       ],
       imgsStyle: [
         {
-          background: `url('https://images.unsplash.com/photo-1658279165324-454de0ee3da6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDF8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400') no-repeat center center/cover
-`,
+          background: 'https://images.unsplash.com/photo-1658279165324-454de0ee3da6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDF8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400'
+          ,
         },
         {
-          background: `url('https://images.unsplash.com/photo-1658302290771-e18350e6f2c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDJ8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400') no-repeat center center/cover`,
+          background: 'https://images.unsplash.com/photo-1658302290771-e18350e6f2c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDJ8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400',
         },
         {
-          background: `url("https://images.unsplash.com/photo-1658242094232-0cacdec9fe55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDN8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400") no-repeat center center/cover`,
+          background: "https://images.unsplash.com/photo-1658242094232-0cacdec9fe55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDN8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400",
         },
         {
-          background: `url("https://images.unsplash.com/photo-1658250845157-403299ba4564?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDR8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400") no-repeat center center/cover`,
+          background: "https://images.unsplash.com/photo-1658250845157-403299ba4564?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDR8MzE3MDk5fHx8fHwyfHwxNjU4NTIyMTk3&ixlib=rb-1.2.1&q=80&w=400",
         },
       ],
     }
@@ -96,4 +83,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
