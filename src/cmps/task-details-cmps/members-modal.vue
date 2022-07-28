@@ -8,7 +8,7 @@
       </button>
     </div>
     <div class="popover-content">
-      <input @input="filterMembers" type="text" placeholder="Search members" class="modal-input" />
+      <input @input="filterMembers" type="text" placeholder="Search members" class="basic-input modal-input" />
       <h4 class="small-title">Board members</h4>
       <div v-if="loading" class="loading skeleton"></div>
       <div v-if="!members.length" class="no-results">

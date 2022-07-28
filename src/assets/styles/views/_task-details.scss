@@ -55,25 +55,6 @@
     }
   }
 
-  textarea,
-  input[type='text'] {
-    -webkit-appearance: none;
-    background-color: #fafbfc;
-    border: none;
-    border-radius: 3px;
-    box-sizing: border-box;
-    display: block;
-    line-height: rem(20px);
-    outline: none;
-    padding: rem(8px) rem(12px);
-    width: 100%;
-    transition-duration: 85ms;
-    transition-property: background-color, border-color, box-shadow;
-    transition-timing-function: ease;
-    resize: none;
-    font-family: inherit;
-  }
-
   .small-title {
     color: #5e6c84;
     font-size: 0.8571428571rem;

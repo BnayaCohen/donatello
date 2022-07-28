@@ -13,7 +13,7 @@
       <div class="comment-frame">
         <div ref="commentBox" class="comment-box">
           <textarea
-            class="comment-box-input"
+            class="basic-input comment-box-input"
             placeholder="Write a comment..."
             v-model="comment.txt"
             disabled

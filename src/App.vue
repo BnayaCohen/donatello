@@ -49,12 +49,9 @@ export default {
       this.isUserMenu = false
       this.$router.push('/')
     },
-        onSetFilter(filterBy) {
-      filterBy.sort.direction ? filterBy.sort.direction = 1 : filterBy.sort.direction = -1
-      this.$store.dispatch({ type: 'setFilterBy', filterBy })
-    },
-    onSetFilter(filterBy) {
-      this.$store.dispatch({ type: 'setFilterBy', filterBy })
+    async onSetFilter(filterBy) {
+      const boards = await this.$store.dispatch({ type: 'searchBoards', filterBy })
+      console.log(boards)
     },
 
     

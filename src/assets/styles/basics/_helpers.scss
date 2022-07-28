@@ -163,7 +163,6 @@
   background: #fff;
   box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
   z-index: 70;
-
   // &.show {
   //   display: block;
   // }
@@ -266,6 +265,10 @@
 
 .pos-relative {
   position: relative;
+}
+
+.pos-fixed {
+  position: fixed;
 }
 
 // Icons
@@ -378,4 +381,23 @@
   text-decoration: underline;
   font-size: 12px;
   cursor: pointer;
+}
+
+//  Inputs
+
+.basic-input {
+  background-color: #fafbfc;
+  border: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  line-height: rem(20px);
+  outline: none;
+  padding: rem(8px) rem(12px);
+  width: 100%;
+  transition-duration: 85ms;
+  transition-property: background-color, border-color, box-shadow;
+  transition-timing-function: ease;
+  resize: none;
+  font-family: inherit;
 }
