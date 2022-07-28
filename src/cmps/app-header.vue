@@ -12,7 +12,7 @@
       <section class="user-actions flex">
         <!-- REPLACE WITH RELEVANT CMPS (login-logout, notification) -->
         <button class="btn btn-background" :class="{'dark-theme':isDark}"><i class="fa-solid fa-bell"></i></button>
-        <img @click="$emit('toggleUserMenu', $event)" class="member-avatar-big" :src="user?.imgUrl"
+        <avatar-preview @click="$emit('toggleUserMenu', $event)" :member="user" :avatarSize="'big'"
           :style="{ cursor: 'pointer' }" />
       </section>
     </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-// import loginLogout from '../components/login-logout.vue'
+import avatarPreview from './avatar-preview.vue'
 export default {
   name: 'appHome',
   props: {
@@ -31,20 +31,12 @@ export default {
     return {
     }
   },
-  created() {
-  },
   computed: {
     user() {
       return this.$store.getters.user
     }
   },
   methods: {
-    login(credentials) {
-      this.$emit('login', credentials)
-    },
-    signup(signupInfo) {
-      this.$emit('signup', signupInfo)
-    },
     goToHome() {
       this.$router.push('/')
     },
@@ -54,6 +46,7 @@ export default {
   },
   components: {
     // loginLogout,
+    avatarPreview
   },
 }
 </script>

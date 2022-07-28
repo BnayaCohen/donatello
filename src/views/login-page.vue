@@ -55,16 +55,16 @@ export default {
     this.$emit('setBackground', '#fff')
   },
   methods: {
-    async onLogin(credentials) {
-      const user = await this.$store.dispatch({ type: 'login', credentials })
-      if (user._id) this.$router.push('/board')
+    onLogin(credentials) {
+      this.$store.dispatch({ type: 'login', credentials })
+      this.$router.push('/board')
     },
     // onLogout() {
     //   this.$store.dispatch({ type: 'logout' })
     // },
-    async onSignup(signupInfo) {
-      const user = await this.$store.dispatch({ type: 'signup', signupInfo })
-      if (user._id) this.$router.push('/board')
+    onSignup(signupInfo) {
+      this.$store.dispatch({ type: 'signup', signupInfo })
+      this.$router.push('/board')
     },
   },
 }

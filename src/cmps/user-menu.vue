@@ -12,10 +12,10 @@
       <div class="cover-pop-over-content">
         <div class="about-user flex flex-column">
             <div class="user-details flex align-center">
-                <img class="member-avatar-big" :src="loggedInUser.imgUrl"/>
+                <img class="member-avatar-big" :src="user.imgUrl"/>
                 <div class="flex flex-column align-center">
-                    <span>{{loggedInUser.fullname}}</span>
-                    <h3 class="small-title">{{loggedInUser.username}}</h3>
+                    <span>{{user.fullname}}</span>
+                    <h3 class="small-title">{{user.username}}</h3>
                 </div>
             </div>
             <div :style="{padding: '6px 0'}">
@@ -32,16 +32,13 @@ export default {
     props: {
         pos: Object
     },
-    data() {
-        return {
-            loggedInUser: null
-        }
-    },
-    methods: {
-    },
     created() {
-        this.loggedInUser = this.$store.getters.user
-    }
+    },
+    computed: {
+      user() {
+        return this.$store.getters.user
+      }
+    },
 }
 </script>
 <style>

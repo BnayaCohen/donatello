@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     loginAsGuest() {
+      this.$store.commit('setUserAsGuest')
       this.$router.push('/board')
     }
   }
