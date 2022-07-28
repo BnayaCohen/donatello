@@ -43,7 +43,17 @@
 .home-page-logo {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  text-decoration: none;
+  margin-inline-start: em(12px);
+    h1 {
+      color: #172b4d;
+      letter-spacing: 0.1px;
+      padding-block-end: em(1px);
+      margin-inline-start: 0.5rem;
+      text-shadow: -0.1px -0.1px 0 #172b4dad, 0.1px -0.2px 0 #172b4dad, -0.1px 0.2px 0 #172b4dad, 0.1px 0.1px 0 #172b4dad;
+      font-family: 'NotoSans-Bold';
+    }
+
 }
 .page-header-box-shadow {
   background-color: rgb(255, 255, 255);

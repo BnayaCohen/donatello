@@ -5,6 +5,12 @@
   i {
     font-size: 1.6rem;
   }
+  .board-title-icon {
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+    font-size: 1.7rem;
+  }
 }
 .boards-container {
   max-width: max-content;
@@ -12,7 +18,7 @@
 }
 .board-list {
   display: grid;
-  grid-template-columns: 196px 196px 196px 196px;
+  grid-template-columns: repeat(4, 166px);
   grid-gap: rem(16px);
   .board-page-display,
   span {
@@ -64,24 +70,50 @@
   }
   span {
     position: relative;
+    .star-board-btn.starred::before {
+      content: '\e967';
+    }
   }
   span:hover .star-board-btn {
     margin-right: 9px;
+
     &.starred {
       margin-right: 0;
     }
     opacity: 1;
     &:hover {
       transform: scale(1.2);
+      &::before {
+        content: '\e966';
+      }
     }
   }
 }
 .boards-title {
   margin-inline-start: 8px;
+  padding: 0 0 11px;
+  h3 {
+    margin-top: 6px;
+  }
 }
 .board-list .create-board-item {
   h3 {
     margin: 0;
     font-weight: 400;
+  }
+}
+@media screen and (max-width: 800px) {
+  .board-list {
+    grid-template-columns: repeat(3, 166px);
+  }
+}
+@media screen and (max-width: 640px) {
+  .board-list {
+    grid-template-columns: repeat(2, 166px);
+  }
+}
+@media screen and (max-width: 420px) {
+  .board-list {
+    grid-template-columns: repeat(1, 166px);
   }
 }
