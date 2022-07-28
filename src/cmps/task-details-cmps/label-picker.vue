@@ -58,6 +58,7 @@ export default {
     }
   },
   created() {
+    console.log(this.labels)
     if (this.labelIds) {
        this.taskLabels = this.labels.filter(label => this.labelIds.includes(label.id))
       }

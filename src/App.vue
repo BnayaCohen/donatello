@@ -1,9 +1,9 @@
 <template>
   <div :style="bgStyle" style="background-position-y: top;">
-    <app-header @toggleUserMenu="toggleUserMenu" :bgColor="headerColor" :isDark="isDarkTheme" />
+    <app-header @toggleUserMenu="toggleUserMenu" :bgColor="headerColor" :isDark="isDarkTheme" @filtered="onSetFilter" />
     <router-view @setBackground="initBackground" :isDark="isDarkTheme" />
   </div>
-  <user-menu v-if="isUserMenu" @toggleUserMenu="isUserMenu=false" v-click-outside="toggleUserMenu" @logout="logout" />
+  <user-menu v-if="isUserMenu" @toggleUserMenu="isUserMenu=false" v-click-outside="toggleUserMenu" @logout="onLogout" />
 </template>
 
 <script>
@@ -44,11 +44,20 @@ export default {
       this.y = ev?.clientY
       this.isUserMenu = !this.isUserMenu
     },
-    logout() {
+    onLogout() {
       this.$store.dispatch('logout')
       this.isUserMenu = false
       this.$router.push('/')
     },
+        onSetFilter(filterBy) {
+      filterBy.sort.direction ? filterBy.sort.direction = 1 : filterBy.sort.direction = -1
+      this.$store.dispatch({ type: 'setFilterBy', filterBy })
+    },
+    onSetFilter(filterBy) {
+      this.$store.dispatch({ type: 'setFilterBy', filterBy })
+    },
+
+    
   },
   computed: {
     bgStyle() {
