@@ -248,6 +248,7 @@
   height: em(32px);
   border-radius: 50%;
   pointer-events: all;
+  object-fit: cover;
 }
 
 .member-avatar-small {
@@ -255,6 +256,7 @@
   height: em(28px);
   border-radius: 50%;
   pointer-events: all;
+  object-fit: cover;
 }
 
 // Position
