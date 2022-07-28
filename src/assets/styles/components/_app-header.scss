@@ -6,7 +6,6 @@
   transition: background-color 300ms;
 
   .logo-side {
-    font-weight: 600;
     gap: 4px;
 
     
@@ -14,6 +13,9 @@
       background-color: transparent !important;
       font-family: "kanit";
       font-size: em(22px);
+      i{
+        font-size: em(13px);
+      }
     }
   }
 
