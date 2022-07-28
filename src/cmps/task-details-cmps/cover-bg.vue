@@ -1,6 +1,6 @@
 <template>
-  <div v-if="bgCover.background" class="flex justify-center task-detail-bg" :style="getBackground"><img :src="currCover.background"
-      alt=""></div>
+  <div v-if="bgCover.background" class="flex justify-center task-detail-bg" :style="getBackground"><img
+      :src="currCover.background" alt=""></div>
   <div class="btn-wrapper" v-if="bgCover.background">
     <button @click.stop="coverClicked" :class="darkModeClass" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
@@ -24,20 +24,19 @@ export default {
   },
   data() {
     return {
-      bgCover: '',
       isDarkMode: false,
     }
   },
-  created(){
-    this.bgCover=this.currCover
+  created() {
+    this.bgCover = this.currCover
   },
   methods: {
     coverClicked(ev) {
-      this.$emit('toggle', { el: ev.target.closest('button'), type:'cover' })
+      this.$emit('toggle', { el: ev.target.closest('button'), type: 'cover' })
     },
     async setCoverColor(bg) {
       if (bg.background.length > 10)
-        return {background: await utilService.getImgAvgColor(bg.background)}
+        return { background: await utilService.getImgAvgColor(bg.background) }
       else {
         return bg
       }
@@ -50,18 +49,18 @@ export default {
   },
   computed: {
     getBackground() {
-      return this.bgCover 
+      return this.bgCover
     },
     darkModeClass() {
       return { 'dark-theme': this.isDarkMode }
     }
   },
-  watch: {
-    async currCover() {
-      this.bgCover = await this.setCoverColor(this.currCover)
-      await this.updateDarkMode()
-    }
-  },
+  // watch: {
+  //   async currCover() {
+  //     this.bgCover = await this.setCoverColor(this.currCover)
+  //     await this.updateDarkMode()
+  //   }
+  // },
   emits: ['toggle', 'closeModal'],
 }
 </script>

@@ -46,7 +46,6 @@ export default {
   async created() {
     try {
       const { boardId } = this.$route.params
-      console.log(boardId)
       await this.$store.dispatch({ type: 'loadBoard', boardId })
       await this.$store.dispatch({ type: 'getUsers'})
       if(this.board.style.background)
