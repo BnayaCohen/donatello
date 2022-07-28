@@ -8,23 +8,22 @@
         </svg>
         <h1 :style="{alignSelf:'flex-start'}">Donatello</h1>
       </router-link>
-      <div class="login-container">
+      <div v-if="!user" class="login-container">
         <router-link class="login" to="/login">Log in</router-link>
         <router-link class="signup" to="/signup">Get Donatello for free</router-link>
       </div>
-
+      <div class="already-signed flex" v-else>
+        <a class="flex" @click="this.$router.push('/board')"><span >Go to your boards</span></a>
+      </div>
     </div>
   </header>
 </template>
 <script>
 export default {
-  data() {
-    return {
-      loggedInUser: null
+  computed: {
+    user() {
+      return this.$store.getters.user
     }
-  },
-  created() {
-    this.loggedInUser = this.$store.getters.user
   },
   methods: {
     vueOnScroll() {
