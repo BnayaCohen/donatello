@@ -4,16 +4,29 @@
   padding: 6px 4px;
   backdrop-filter: blur(6px);
   transition: background-color 300ms;
-
+  .btn.btn-background {
+    margin-inline-start: 12px;
+  }
+  .create-board-btn {
+    position: relative;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.0784313725);
+    border-radius: 3px;
+    font-weight: 400;
+    height: 32px;
+    padding: 0 12px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
   .logo-side {
     gap: 4px;
 
-    
     .logo {
       background-color: transparent !important;
-      font-family: "kanit";
+      font-family: 'kanit';
       font-size: em(22px);
-      i{
+      i {
         font-size: em(13px);
       }
     }
