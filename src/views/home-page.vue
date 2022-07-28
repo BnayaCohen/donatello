@@ -55,6 +55,9 @@ export default {
       this.$store.commit('setUserAsGuest')
       this.$router.push('/board')
     }
+  },
+  created(){
+    this.$emit('setBackground', '')
   }
 }
 </script>

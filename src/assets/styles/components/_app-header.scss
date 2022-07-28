@@ -5,9 +5,16 @@
   backdrop-filter: blur(6px);
   transition: background-color 300ms;
 
-  .logo {
-    font-weight: 800;
+  .logo-side {
+    font-weight: 600;
     gap: 4px;
+
+    
+    .logo {
+      background-color: transparent !important;
+      font-family: "kanit";
+      font-size: em(22px);
+    }
   }
 
   .user-actions {

@@ -58,7 +58,7 @@ export default {
     }
   },
   created() {
-    console.log(this.boards[0])
+    this.$emit('setBackground', '')
     document.body.classList.add('app-header-background-color-blue')
   },
   methods: {

@@ -30,18 +30,18 @@
         <button v-if="selectedCover" @click.stop="selectedCover='';$emit('taskUpdated', '')" class="btn-background" style="width:100%">Remove cover</button>
         <h3 class="small-title">Color</h3>
         <div class="color-palette">
-          <div v-for="color in colors" :key="color.id">
+          <div v-for="(color,i) in colors" :key="i">
             <label
               class="flex align-center justify-center"
               name="cover-color"
-              :for="'color-' + color.colorStr"
-              :style="{ background: color.colorStr }"
-              @click.stop="selectCover(color.colorStr)"
+              :for="'color-' + color"
+              :style="{ background: color }"
+              @click.stop="selectCover(color)"
               ><input
                 type="radio"
                 name="color"
-                :id="'color-' + color.colorStr"
-                :value="color.colorStr"
+                :id="'color-' + color"
+                :value="color"
               />
             </label>
           </div>
@@ -57,11 +57,13 @@ export default {
   },
   data() {
     return {
-      colors: this.$store.getters.getCoverColors,
-      selectedCover: this.taskCoverClr,
+      colors: this.$store.getters.getTaskCoverColors,
+      selectedCover: null,
     }
   },
-  created() {},
+  created() {
+    this.selectedCover= this.taskCoverClr
+  },
   methods: {
     selectCover(color) {
       this.selectedCover = color

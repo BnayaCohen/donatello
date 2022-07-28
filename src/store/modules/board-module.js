@@ -35,28 +35,19 @@ export default {
     getMembers({ currBoard }) {
       return JSON.parse(JSON.stringify(currBoard.members))
     },
-    getCoverColors({ currBoard }) {
+    getTaskCoverColors() {
       return [
-        {
-          "id": "c101",
-          "colorStr": "#7BC86C"
-        },
-        {
-          "id": "c102",
-          "colorStr": "#F5DD29"
-        },
-        {
-          "id": "c103",
-          "colorStr": "#FFAF3F"
-        },
-        {
-          "id": "c104",
-          "colorStr": "#EF7564"
-        },
-        {
-          "id": "c105",
-          "colorStr": "#CD8DE5"
-        }]
+        '#7BC86C',
+        '#F5DD29',
+        '#FFAF3F',
+        '#EF7564',
+        '#CD8DE5',
+        '#5BA4CF',
+        '#29CCE5',
+        '#6DECA9',
+        '#FF8ED4',
+        '#172B4D',
+      ]
     },
     showLabelsOnTask({ showLabelsOnTask }) {
       return showLabelsOnTask
