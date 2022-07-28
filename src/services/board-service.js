@@ -1,10 +1,6 @@
 import { httpService } from './http-service'
-// import { storageService } from './async-storage'
 import { userService } from './user-service'
 import { utilService } from './util-service'
-// const STORAGE_KEY = 'boardDB'
-
-// _createBoards()
 
 export const boardService = {
   getLabels,
@@ -36,9 +32,8 @@ function getLabels() {
   ]
 }
 
-async function query(filterBy = null) {
+async function query(filterBy = {}) {
   try {
-    // return await storageService.query(STORAGE_KEY)
     return await httpService.get('board', { params: filterBy })
   } catch (err) {
     console.log('Cannot get boards', err)
@@ -47,22 +42,17 @@ async function query(filterBy = null) {
 
 async function getById(boardId) {
   try {
-    // return await storageService.get(STORAGE_KEY, boardId)
     return await httpService.get(`board/${boardId}`)
   } catch (err) {
     console.log('Cannot get the board', err)
   }
 }
 async function remove(boardId) {
-  // await storageService.remove(STORAGE_KEY, boardId)
   await httpService.delete(`board/${boardId}`)
 }
 
 async function saveBoard(board) {
   try {
-    // return board._id
-    //   ? await storageService.put(STORAGE_KEY, board)
-    //   : await storageService.post(STORAGE_KEY, board)
     return board._id ?
       await httpService.put(`board/${board._id}`, board)
       : await httpService.post('board', board)
@@ -143,22 +133,6 @@ async function saveTask(boardId, groupId, task) {
     throw err
   }
 }
-
-// function _createBoard(title) {
-//   const board = getEmptyBoard(title)
-//   return board
-// }
-// function _createBoards() {
-//   let boards = utilService.loadFromStorage(STORAGE_KEY) || []
-//   if (!boards || !boards.length) {
-//     boards.push(gBoard)
-//     boards.push(_createBoard('Work'))
-//     boards.push(_createBoard('Study'))
-//     boards.push(_createBoard('Vacation'))
-//     utilService.saveToStorage(STORAGE_KEY, boards)
-//   }
-//   return boards
-// }
 
 function createActivity(txt = '', task = null) {
   return {

@@ -40,7 +40,7 @@
         </div>
         <!-- Edit mode -->
         <div v-else class="save-container">
-          <textarea class="edit-textarea" ref="todo" v-model="todo.title">
+          <textarea class="basic-input edit-textarea" ref="todo" v-model="todo.title">
             </textarea>
           <div class="edit-controls flex">
             <button class="save-btn" @click="saveTodo(todo)">Save</button>
@@ -55,7 +55,7 @@
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
-      <textarea v-model="newTodo.title"></textarea>
+      <textarea class="basic-input" v-model="newTodo.title"></textarea>
       <div class="edit-controls">
 
         <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>

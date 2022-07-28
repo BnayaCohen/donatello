@@ -379,3 +379,22 @@
   font-size: 12px;
   cursor: pointer;
 }
+
+//  Inputs
+
+.basic-input {
+  background-color: #fafbfc;
+  border: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  line-height: rem(20px);
+  outline: none;
+  padding: rem(8px) rem(12px);
+  width: 100%;
+  transition-duration: 85ms;
+  transition-property: background-color, border-color, box-shadow;
+  transition-timing-function: ease;
+  resize: none;
+  font-family: inherit;
+}

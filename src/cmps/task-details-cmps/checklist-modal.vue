@@ -14,7 +14,7 @@
     <div class="popover-content">
       <section class="checklist-inputs">
         <h3 class="small-title">Title</h3>
-        <input type="text" v-model="title" />
+        <input class="basic-input" type="text" v-model="title" />
         <button @click="addChecklist" class="add-checklist-btn">Add</button>
       </section>
     </div>

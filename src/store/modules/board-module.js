@@ -375,7 +375,7 @@ export default {
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({ commit }, { filterBy }) {
+    async searchBoards({}, { filterBy }) {
       try {
         var boards = await boardService.query(filterBy)
         return boards
