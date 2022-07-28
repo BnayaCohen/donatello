@@ -8,7 +8,27 @@
                 @click="$emit('sideBarClosed')"></button>
         </header>
         <hr class="side-header-hr">
-        <main v-if="!isOnBackgroundSelect">
+        <main v-if="!isChangeBgClicked" style="width: 92%;">
+            <section class="side-bar-options">
+                <ul class="clean-list">
+                    <li class="flex" @click="isChangeBgClicked = true;currHeader = 'Change background'">
+                        <div class="bg-placeholder" :style="boardStyle"></div>
+                        Change background
+                    </li>
+                </ul>
+            </section>
+            <hr class="side-header-hr pos-absolute">
+            <section class="side-bar-activities main-side-bar-content">
+                <div class="activities-title flex">
+                    <span class="trellicons trellicons-activities"></span>
+                    <p>Activity</p>
+                </div>
+                <ul class="clean-list">
+                    <activity-preview v-for="activity in activities" :key="activity?.id" :activity="activity" />
+                </ul>
+            </section>
+        </main>
+        <main v-else-if="!isOnBackgroundSelect">
             <section class="side-bar-options">
                 <section class="background-change-select flex">
                     <div @click="goToBackgrounds('Photos')">
@@ -20,26 +40,6 @@
                         <p>Colors</p>
                     </div>
                 </section>
-            </section>
-            <hr class="side-header-hr">
-            <section class="side-bar-options">
-                <ul class="clean-list">
-                    <li>
-                        <span class="trellicons trellicons-archive"></span>
-                        Archive
-                    </li>
-                </ul>
-            </section>
-            <hr class="side-header-hr">
-
-            <section class="side-bar-activities main-side-bar-content">
-                <div class="activities-title flex">
-                    <span class="trellicons trellicons-activities"></span>
-                    <p>Activity</p>
-                </div>
-                <ul class="clean-list">
-                    <activity-preview v-for="activity in activities" :key="activity?.id" :activity="activity" />
-                </ul>
             </section>
         </main>
         <main v-else-if="currHeader === 'Colors'" class="bg-items-select">
@@ -74,6 +74,7 @@ export default {
     data() {
         return {
             isOnBackgroundSelect: false,
+            isChangeBgClicked: false,
             currHeader: 'Menu',
             searchPhoto: '',
             currPhotos: [],
@@ -85,8 +86,13 @@ export default {
             this.currHeader = header
         },
         goBack() {
-            this.isOnBackgroundSelect = false
-            this.currHeader = 'Menu'
+            if (this.currHeader === 'Colors' || this.currHeader === 'Photos') {
+                this.isOnBackgroundSelect = false
+                this.currHeader = 'Change background'
+            }else{
+                this.isChangeBgClicked = false
+                this.currHeader = 'Menu'
+            }
         },
         setBoardBg(selectedBg) {
             const currBoard = this.$store.getters.board
@@ -111,10 +117,14 @@ export default {
                 , '#4bbf6b', '#00aecc', '#838c91']
         },
         backBtnPos() {
-            if(this.isOnBackgroundSelect)
-            return {transform:'translateX(48px)',opacity:1}
+            if (this.isChangeBgClicked)
+                return { transform: 'translateX(48px)', opacity: 1 }
             // return { left:this.isOnBackgroundSelect? '12px':'-24px' }
         },
+        boardStyle() {
+            const boardBg = this.$store.getters.board.style?.background
+            return { background: boardBg?.length < 10 ? boardBg : `url(${boardBg}) no-repeat center center/cover` }
+        }
     },
     created() {
     },
