@@ -8,7 +8,7 @@
         <span class="trellicons trellicons-close-btn"></span>
       </button>
     </div>
-    <div class="popover-content">
+    <div class="popover-content"> 
       <div class="cover-pop-over-content">
         <div class="about-user flex flex-column">
             <div class="user-details flex align-center">
