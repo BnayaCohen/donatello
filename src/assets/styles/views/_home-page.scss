@@ -1,39 +1,96 @@
+.gradient-background {
+  height: 900px;
+  width: 100%;
+  z-index: -1;
+  background-image: linear-gradient(rgb(238, 235, 253), rgb(255, 255, 255));
+  position: absolute;
+  /* top: 0; */
+}
+.home-page-layout {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 1190px;
+  width: 100%;
+  @media (max-width: 940px) {
+    padding: 2.5rem;
+  }
+}
+
+
 .home-page {
   color: rgb(9, 30, 66);
+  width: 100%;
   background-attachment: scroll;
   background-blend-mode: normal;
   background-clip: border-box;
-  background-image: linear-gradient(rgb(234, 230, 255), rgb(255, 255, 255));
   background-origin: padding-box;
   background-position: 0% 0%;
   background-repeat: repeat;
   background-size: auto;
-  font-family: Charlie, sans-serif;
+  font-family: 'NotoSans-Regular';
+  background-image: linear-gradient(rgb(245, 243, 255), rgb(255, 255, 255));
+
 }
 .hero {
-  padding-top: 6rem;
+  padding-top: 7.2rem;
   display: flex;
   align-items: center;
+  gap: 1rem;
+  .hero-img {
+    min-width: 400px;
+    img {
+      max-width: 400px;
+    }
+  }
   .text-container {
-    flex-basis: 60%;
-    margin-inline-end: 8rem;
+    flex-basis: 70%;
     h1 {
       margin: 0;
-      font-size: em(48px);
+      font-size: 3rem;
       line-height: 60px;
       padding-top: 3rem;
     }
     p {
-      font-size: em(20px);
+      font-size: 1.2rem;
       line-height: 30px;
       letter-spacing: 1px;
     }
   }
   justify-content: flex-start;
-  margin: 0 -1rem;
   &-description {
     align-self: start;
   }
+  @media (max-width: 940px) {
+    gap: 0;
+    padding-top: 1rem;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    line-height: 15px;
+
+    .hero-img {
+      padding: 1rem;
+    }
+    .text-container{
+      display: flex;
+      flex-direction: column;
+      h1 {
+        font-size: 2rem;
+        padding-top: 1rem;
+        line-height: 40px;
+      }
+    } 
+    }
+    @media (max-width: 460px) {
+      .hero-img {
+        img {
+          max-width: 300px;
+          margin-inline-start: 1rem;
+        }
+      }
+    }
 }
 .get-started {
   text-align: center;
@@ -50,8 +107,20 @@
   :last-child {
     margin-bottom: 5rem;
   }
+  @media (max-width: 940px) {
+    h2 {
+      font-size: 2rem;
+      line-height: 40px;
+
+    }
+    p {
+      font-size: 1.2rem;
+      line-height: 30px;
+    }
+  }
 }
 .start-doing {
+  margin-block-start: 3rem;
   user-select: none;
   -webkit-box-align: center;
   align-items: center;

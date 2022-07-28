@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     async initBackground(background) {
+      console.log(this.$route)
       if (background.length > 10) {
         this.headerColor = await utilService.getImgAvgColor(background)
         this.isDarkTheme = await utilService.isDarkImg(background)
