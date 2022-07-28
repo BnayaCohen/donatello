@@ -118,7 +118,8 @@
     padding-bottom: 32px;
     margin-bottom: 48px;
     height: fit-content;
-    width: 768px;
+    max-width: 768px;
+    width: 100%;
     display: block;
     color: #172b4d;
     font-family: inherit;
@@ -229,6 +230,12 @@
         .members-container {
           h3 {
             display: block;
+          }
+        }
+        .labels-container {
+          h3 {
+            position: relative;
+            top: -2px;
           }
         }
         .add-label-btn,
@@ -499,5 +506,13 @@
     top: 0;
     z-index: 10;
     padding: 0.6rem 0;
+  }
+}
+@media screen and (max-width: 520px) {
+  .task-detail-container {
+    flex-direction: column;
+    .detail-sidebar {
+      flex-direction: row;
+    }
   }
 }
