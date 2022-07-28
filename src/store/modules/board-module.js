@@ -36,7 +36,27 @@ export default {
       return JSON.parse(JSON.stringify(currBoard.members))
     },
     getCoverColors({ currBoard }) {
-      return JSON.parse(JSON.stringify(currBoard.coverColors))
+      return  [
+        {
+            "id" : "c101",
+            "colorStr" : "#7BC86C"
+        },
+        {
+            "id" : "c102",
+            "colorStr" : "#F5DD29"
+        },
+        {
+            "id" : "c103",
+            "colorStr" : "#FFAF3F"
+        },
+        {
+            "id" : "c104",
+            "colorStr" : "#EF7564"
+        },
+        {
+            "id" : "c105",
+            "colorStr" : "#CD8DE5"
+        }]
     },
     showLabelsOnTask({ showLabelsOnTask }) {
       return showLabelsOnTask
