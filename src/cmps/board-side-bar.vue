@@ -8,7 +8,7 @@
                 @click="$emit('sideBarClosed')"></button>
         </header>
         <hr class="side-header-hr">
-        <main v-if="!isOnBackgroundSelect" class="main-side-bar-content">
+        <main v-if="!isOnBackgroundSelect">
             <section class="side-bar-options">
                 <section class="background-change-select flex">
                     <div @click="goToBackgrounds('Photos')">
@@ -32,7 +32,7 @@
             </section>
             <hr class="side-header-hr">
 
-            <section class="side-bar-activities">
+            <section class="side-bar-activities main-side-bar-content">
                 <div class="activities-title flex">
                     <span class="trellicons trellicons-activities"></span>
                     <p>Activity</p>

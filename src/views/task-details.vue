@@ -12,7 +12,7 @@
           </div>
           <div class="task-title-container">
             <textarea rows="1" class="title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
+              placeholder="Enter title here..." @keyup.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
             <div class="subtitle-header">
               <p>
                 in list
@@ -35,7 +35,7 @@
                 <span class="add-member"></span>
               </div>
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
-              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
+              <date-picker v-if="task.dueDate" :task="task" @toggle="openPicker" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
             </div>
             <task-description :description="task.description" @saveDescription="saveDescription" />
