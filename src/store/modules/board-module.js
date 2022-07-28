@@ -36,7 +36,27 @@ export default {
       return JSON.parse(JSON.stringify(currBoard.members))
     },
     getCoverColors({ currBoard }) {
-      return JSON.parse(JSON.stringify(currBoard.coverColors))
+      return  [
+        {
+            "id" : "c101",
+            "colorStr" : "#7BC86C"
+        },
+        {
+            "id" : "c102",
+            "colorStr" : "#F5DD29"
+        },
+        {
+            "id" : "c103",
+            "colorStr" : "#FFAF3F"
+        },
+        {
+            "id" : "c104",
+            "colorStr" : "#EF7564"
+        },
+        {
+            "id" : "c105",
+            "colorStr" : "#CD8DE5"
+        }]
     },
     showLabelsOnTask({ showLabelsOnTask }) {
       return showLabelsOnTask
@@ -271,8 +291,9 @@ export default {
         if (actionType === 'setBoard') {
           socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
           commit({ type: 'updateBoard', board: savedBoard })
-        }
-        commit({ type: actionType, board: savedBoard })
+        } else
+          commit({ type: actionType, board: savedBoard })
+        commit({ type: 'setBoard', board: savedBoard })
         return savedBoard
       } catch (err) {
         console.log('couldnt save/update board', err)

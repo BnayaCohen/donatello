@@ -4,22 +4,15 @@
       <span class="trellicons trellicons-comments"></span>
       <h3>Activity</h3>
     </div>
-    <div
-      class="new-comment-container flex align-center"
-      v-click-outside="closeComment"
-    >
+    <div class="new-comment-container flex align-center" v-click-outside="closeComment">
       <div class="member-icon-container">
         <img class="member-avatar-big" :src="loggedInUser.imgUrl" />
       </div>
       <form @submit.prevent="saveComment">
         <div class="comment-frame">
           <div ref="commentBox" class="comment-box">
-            <textarea
-              class="comment-box-input"
-              placeholder="Write a comment..."
-              @click="openComment"
-              v-model="comment.txt"
-            ></textarea>
+            <textarea class="comment-box-input" placeholder="Write a comment..." @click="openComment"
+              v-model="comment.txt"></textarea>
             <div ref="commentControl" class="comment-control">
               <button class="submit-comment-btn flex align-center justify-center">Save</button>
             </div>
@@ -29,7 +22,7 @@
     </div>
     <section class="all-comments-container" v-if="comments?.length">
       <div v-for="comment in comments" :key="comment.id">
-        <comment-preview :comment="comment" :loggedInUser="loggedInUser" @deleteComment="deleteComment"/>
+        <comment-preview :comment="comment" :loggedInUser="loggedInUser" @deleteComment="deleteComment" />
       </div>
     </section>
   </div>
@@ -86,4 +79,5 @@ export default {
   emits: ['saveComment', 'deleteComment']
 }
 </script>
-<style></style>
+<style>
+</style>
