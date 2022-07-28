@@ -156,9 +156,7 @@ export default {
   },
   methods: {
     login() {
-      this.$emit('login', this.credentials)
-      this.credentials.username = null
-      this.credentials.password = null
+      this.$emit('login', JSON.parse(JSON.stringify(this.credentials)))
     },
     signup() {
       if (
@@ -187,12 +185,6 @@ export default {
       const res = await uploadImg(file)
       // this.isLoading = false
       this.userImgUrl = res.url
-    },
-    clearFields() {
-      this.fullname = ''
-      this.credentials.username = ''
-      this.credentials.password = ''
-      this.userImgUrl = ''
     },
     toggleIsSignIn() {
       this.isSignIn = !this.isSignIn
