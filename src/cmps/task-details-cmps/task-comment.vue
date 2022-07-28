@@ -27,7 +27,7 @@
         </div>
       </form>
     </div>
-    <section class="all-comments-container" v-if="comments.length">
+    <section class="all-comments-container" v-if="comments?.length">
       <div v-for="comment in comments" :key="comment.id">
         <comment-preview :comment="comment" :loggedInUser="loggedInUser" @deleteComment="deleteComment"/>
       </div>
