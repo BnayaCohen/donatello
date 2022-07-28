@@ -71,7 +71,7 @@
   .main-side-bar-content {
     overflow-y: auto;
     scroll-snap-type: x mandatory;
-    margin-right: 8px;
+    // margin-right: 8px;
 
     &::-webkit-scrollbar {
       width: em(8px);
@@ -182,6 +182,7 @@
   .side-bar-activities {
     padding: 12px 6px 8px 12px;
     width: 100%;
+    height: calc(100vh - 300px);
 
     p {
       font-size: rem(16px);
