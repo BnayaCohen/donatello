@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         getTaskClr() {
-            return this.task.style?.background < 10 ? this.task.style.background : ''
+            return this.task.style.background?.length < 10 ? this.task.style.background : ''
         }
     },
     methods: {

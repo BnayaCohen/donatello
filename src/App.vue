@@ -3,7 +3,7 @@
     <app-header @toggleUserMenu="toggleUserMenu" :bgColor="headerColor" :isDark="isDarkTheme" />
     <router-view @setBackground="initBackground" :isDark="isDarkTheme" />
   </div>
-  <user-menu v-if="isUserMenu" @toggleUserMenu="toggleUserMenu" v-click-outside="toggleUserMenu" @logout="logout" />
+  <user-menu v-if="isUserMenu" @toggleUserMenu="isUserMenu=false" v-click-outside="toggleUserMenu" @logout="logout" />
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     async initBackground(background) {
-      console.log(this.$route)
+      if (!background) return
       if (background.length > 10) {
         this.headerColor = await utilService.getImgAvgColor(background)
         this.isDarkTheme = await utilService.isDarkImg(background)

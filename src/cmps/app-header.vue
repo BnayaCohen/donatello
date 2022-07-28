@@ -2,9 +2,9 @@
   <header class="main-layout app-header" :style="{background:bgColor}" >
     <div class="flex justify-between align-center" >
       <section class="nav-container">
-        <div class="logo flex">
-          <button class="btn btn-background" @click="goToHome" style="font-weight: 600;" :class="{'dark-theme':isDark}"><i
-              class="fa-brands fa-trello"></i>
+        <div class="logo-side flex">
+          <button class="logo btn btn-background" @click="goToHome" :class="{'dark-theme':isDark}">
+          <i class="fa-brands fa-trello"></i>
             Donatello</button>
           <button class="btn btn-background" :class="{'dark-theme':isDark}" @click="goToBoards">Boards</button>
         </div>

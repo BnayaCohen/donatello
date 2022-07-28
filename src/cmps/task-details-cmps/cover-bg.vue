@@ -24,6 +24,7 @@ export default {
   },
   data() {
     return {
+      bgCover:null,
       isDarkMode: false,
     }
   },
@@ -55,12 +56,12 @@ export default {
       return { 'dark-theme': this.isDarkMode }
     }
   },
-  // watch: {
-  //   async currCover() {
-  //     this.bgCover = await this.setCoverColor(this.currCover)
-  //     await this.updateDarkMode()
-  //   }
-  // },
+  watch: {
+    async currCover() {
+      this.bgCover = await this.setCoverColor(this.currCover)
+      await this.updateDarkMode()
+    }
+  },
   emits: ['toggle', 'closeModal'],
 }
 </script>
