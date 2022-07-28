@@ -73,7 +73,7 @@
 <script>
 import boardCreate from '../cmps/board-create.vue'
 import { boardService } from '../services/board-service'
-// import { userService } from '../services/user-service'
+import { userService } from '../services/user-service'
 export default {
   components: { boardCreate },
   name: 'boards-container',
