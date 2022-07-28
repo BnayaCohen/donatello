@@ -15,7 +15,7 @@
         <div class="from-web">
           <h3 class="small-title">Attach a link</h3>
           <label for="web-url">
-            <input type="text" v-model="attachProps.url" />
+            <input class="basic-input" type="text" v-model="attachProps.url" />
             <button class="btn" @click="addLinkAttachment">Attach</button>
           </label>
         </div>

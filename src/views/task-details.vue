@@ -1,23 +1,38 @@
 <template>
   <section class="container task-detail">
-    <div class="back-screen" :style="{
-      backgroundColor: '#000000a3',
-      cursor: 'pointer',
-    }">
+    <div
+      class="back-screen"
+      :style="{
+        backgroundColor: '#000000a3',
+        cursor: 'pointer',
+      }"
+    >
       <div class="detail-modal-container" v-click-outside="backToBoard">
-        <cover-bg :currCover="currCover" @toggle="openPicker" @closeModal="backToBoard" />
+        <cover-bg
+          :currCover="currCover"
+          @toggle="openPicker"
+          @closeModal="backToBoard"
+        />
         <div class="task-detail-header">
           <div>
             <span class="trellicons trellicons-details"></span>
           </div>
           <div class="task-title-container">
-            <textarea rows="1" class="title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
+            <textarea
+              rows="1"
+              class="basic-input title-input"
+              type="text"
+              ref="taskTitle"
+              v-model="task.title"
+              placeholder="Enter title here..."
+              @keydown.enter="$refs.taskTitle.blur()"
+              @blur="updateTask"
+            ></textarea>
             <div class="subtitle-header">
               <p>
                 in list
                 <span :style="{ textDecoration: 'underline' }">{{
-                    groupTitle
+                  groupTitle
                 }}</span>
               </p>
             </div>
@@ -27,36 +42,84 @@
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
               <div v-if="task.memberIds.length" class="members-container">
-                <h3 style="margin:0 8px 4px 0;" class="small-title">Members</h3>
-                <div style="display:inline-block;margin: 0 4px 4px 0;" v-for="memberId in task.memberIds"
-                  :key="memberId" class="img-container">
-                  <avatar-preview :member="getMemberById(memberId)" :avatarSize="'big'" />
+                <h3 style="margin: 0 8px 4px 0" class="small-title">Members</h3>
+                <div
+                  style="display: inline-block; margin: 0 4px 4px 0"
+                  v-for="memberId in task.memberIds"
+                  :key="memberId"
+                  class="img-container"
+                >
+                  <avatar-preview
+                    :member="getMemberById(memberId)"
+                    :avatarSize="'big'"
+                  />
                 </div>
                 <span class="add-member"></span>
               </div>
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
-              <date-picker v-if="task.dueDate" :task="task" @toggle="openPicker" @toggleIsDone="toggleIsDone"
-                @removeDueDate="removeDueDate" />
+              <date-picker
+                v-if="task.dueDate"
+                :task="task"
+                @toggle="toggleDate"
+                @toggleIsDone="toggleIsDone"
+                @removeDueDate="removeDueDate"
+              />
             </div>
-            <task-description :description="task.description" @saveDescription="saveDescription" />
-            <attachment-list v-if="task.attachments?.length" :attachments="task.attachments"
-              @updateCurrCover="updateCurrCover" @toggle="openPicker" @removeAttachment="removeAttachment" />
-            <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
-              @saveChecklists="saveChecklists" />
-            <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="task.comments"
-              @deleteComment="deleteComment" />
+            <task-description
+              :description="task.description"
+              @saveDescription="saveDescription"
+            />
+            <attachment-list
+              v-if="task.attachments?.length"
+              :attachments="task.attachments"
+              @updateCurrCover="updateCurrCover"
+              @toggle="openPicker"
+              @removeAttachment="removeAttachment"
+            />
+            <checklist-list
+              v-if="task.checklists?.length"
+              :checklists="task.checklists"
+              @saveChecklists="saveChecklists"
+            />
+            <task-comment
+              :loggedInUser="loggedUser"
+              @saveComment="saveComment"
+              :comments="task.comments"
+              @deleteComment="deleteComment"
+            />
           </div>
-          <task-detail-sidebar :task="task" :currCover="currCover" @pickerOpened="openPicker"
-            @addUserToTask="addUserToTask" @removeTask="removeTask" />
+          <task-detail-sidebar
+            :task="task"
+            :currCover="currCover"
+            @toggleDate="toggleDate"
+            @pickerOpened="openPicker"
+            @addUserToTask="addUserToTask"
+            @removeTask="removeTask"
+          />
         </div>
       </div>
     </div>
   </section>
+  <date
+    v-if="isDate"
+    @updateDueDate="updateDueDate"
+    @removeDueDate="removeDueDate"
+    v-click-outside="toggleDate"
+    :pos="modalPos"
+    @toggleDate="toggleDate"
+  />
 
-  <task-options v-if="isPickerCmpOpen" :cmpType="modalCmpType" :task="task" :pos="modalPos" :dueDate="dueDate"
-    @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @updateCurrCover="updateCurrCover"
-    @pickerClosed="isPickerCmpOpen = false" />
-
+  <task-options
+    v-if="isPickerCmpOpen"
+    :cmpType="modalCmpType"
+    :task="task"
+    :pos="modalPos"
+    :dueDate="dueDate"
+    @removeDueDate="removeDueDate"
+    @updateDueDate="updateDueDate"
+    @updateCurrCover="updateCurrCover"
+    @pickerClosed="isPickerCmpOpen = false"
+  />
 </template>
 <script>
 import checklistList from '../cmps/task-details-cmps/checklist-list.vue'
@@ -83,7 +146,10 @@ export default {
       isEditDescription: false,
       isDate: false,
       isTopCover: false,
-      modalPos: null,
+      modalPos: {
+        top: '',
+        left: '',
+      },
       currCover: null,
       dueDate: ref(new Date()),
       isPickerCmpOpen: false,
@@ -100,8 +166,8 @@ export default {
         currBoard = this.$store.getters.board
       }
 
-      const group = currBoard.groups.find(group => group.id === groupId)
-      this.task = group.tasks.find(task => task.id === taskId)
+      const group = currBoard.groups.find((group) => group.id === groupId)
+      this.task = group.tasks.find((task) => task.id === taskId)
 
       if (!this.task.style) this.task.style = {}
 
@@ -111,7 +177,7 @@ export default {
 
       // this.$refs.taskDescription.value = this.task.description
     } catch (err) {
-      console.log('cannot load task: ' + err);
+      console.log('cannot load task: ' + err)
     }
   },
   computed: {
@@ -133,7 +199,7 @@ export default {
     },
     taskLabels() {
       const labels = this.$store.getters.getLabels
-      return labels.filter(label => this.task.labelIds.includes(label.id))
+      return labels.filter((label) => this.task.labelIds.includes(label.id))
     },
   },
   methods: {
@@ -161,17 +227,21 @@ export default {
       })
     },
     toggleDate(ev) {
-      this.modalPos.x = ev?.clientX
-      this.modalPos.y = ev?.clientY
+      if (!ev) {
+        this.isDate = !this.isDate
+        return
+      }
+      this.modalPos.left = ev?.clientX - 200 + 'px'
+      this.modalPos.top = ev?.clientY - 250 + 'px'
       this.isDate = !this.isDate
     },
     openPicker(elData) {
-      // TODO: calculate from client and adjust modal 
+      // TODO: calculate from client and adjust modal
       const { top, right, height, width } = elData.el.getBoundingClientRect()
-      console.log(elData.el.getBoundingClientRect());
+      console.log(elData.el.getBoundingClientRect())
       this.modalPos = {
-        top: (top + height + 5) + 'px',
-        left: (right - width) + 'px',
+        top: top + height + 5 + 'px',
+        left: right - width + 'px',
       }
       this.modalCmpType = elData.type
       this.isPickerCmpOpen = true
@@ -180,6 +250,7 @@ export default {
       this.dueDate = dueDate
       const timestamp = dueDate.getTime()
       this.task.dueDate = ref(timestamp)
+      this.isDate = false
       this.updateTask()
     },
     toggleIsDone() {
@@ -208,6 +279,7 @@ export default {
     removeDueDate() {
       this.task.dueDate = ''
       this.task.status = 'in-progress'
+      this.isDate = false
       this.updateTask()
     },
     backToBoard() {
@@ -241,7 +313,7 @@ export default {
       console.log(newDescription)
       this.task.description = newDescription
       this.updateTask()
-    }
+    },
   },
   components: {
     attachmentList,
@@ -255,7 +327,7 @@ export default {
     checklistList,
     taskComment,
     taskOptions,
-    taskDescription
+    taskDescription,
   },
 }
 </script>

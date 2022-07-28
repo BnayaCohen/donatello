@@ -8,7 +8,7 @@
     </div>
     <div class="popover-content label-list-container">
       <div class="search-labels">
-        <input type="text" placeholder="Search labels..." />
+        <input class="basic-input" type="text" placeholder="Search labels..." />
       </div>
       <h3 class="small-title">Labels</h3>
       <ul class="clean-list">

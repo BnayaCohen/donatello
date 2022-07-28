@@ -18,6 +18,7 @@
         ref="taskDescription"
         v-model="description"
         :class="descriptionStyle"
+        class="basic-input"
         @click="openDescription"
       ></textarea>
       <div v-if="isEditDescription" class="description-btns flex align-center">
