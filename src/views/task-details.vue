@@ -12,7 +12,7 @@
           </div>
           <div class="task-title-container">
             <textarea rows="1" class="title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
+              placeholder="Enter title here..." @keyup.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
             <div class="subtitle-header">
               <p>
                 in list
@@ -35,33 +35,9 @@
                 <span class="add-member"></span>
               </div>
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
-              <date-picker v-if="task.dueDate" :task="task" @toggleDate="toggleDate" @toggleIsDone="toggleIsDone"
+              <date-picker v-if="task.dueDate" :task="task" @toggle="openPicker" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
             </div>
-<<<<<<< HEAD
-            <div class="description-container flex flex-column">
-              <div class="description-header flex align-center">
-                <span class="trellicons trellicons-description"></span>
-                <h3>Description</h3>
-              </div>
-              <div class="task-description-txt">
-                <textarea rows="3" placeholder="Add a more detailed description..." ref="taskDescription"
-                  v-model="task.description" @click.stop="isEditDescription = !isEditDescription"
-                  :class="descriptionStyle"></textarea>
-                <div v-if="isEditDescription" class="description-btns flex align-center">
-                  <el-button @click.stop="updateTask">Save</el-button>
-                  <el-button @click.stop="isEditDescription = false">X</el-button>
-                </div>
-                <span class="add-member"></span>
-              </div>
-            </div>
-            <attachment-list v-if="task.attachments?.length" :attachments="task.attachments"
-              @updateCurrCover="updateCurrCover" @toggle="openPicker" @removeAttachment="removeAttachment" />
-            <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
-              @saveChecklists="saveChecklists" />
-            <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="task.comments"
-              @deleteComment="deleteComment" />
-=======
             <task-description :description="task.description" @saveDescription="saveDescription"/>
             <attachment-list
               v-if="task.attachments?.length"
@@ -81,7 +57,6 @@
               :comments="task.comments"
               @deleteComment="deleteComment"
             />
->>>>>>> 0471d8e0cb992385ffd41095dc9075c27e52462f
           </div>
           <task-detail-sidebar :task="task" :currCover="currCover" @pickerOpened="openPicker"
             @addUserToTask="addUserToTask" @removeTask="removeTask" />
