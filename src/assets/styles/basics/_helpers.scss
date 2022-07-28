@@ -79,10 +79,10 @@
 
 .click-active {
   &:active {
-    background-color: #e4f0f6!important;
+    background-color: #e4f0f6 !important;
     border: none;
     box-shadow: none;
-    color: #0079bf!important;
+    color: #0079bf !important;
     outline: 0;
   }
 }
@@ -111,10 +111,10 @@
 //Dark mode
 .dark-theme {
   color: #fff;
-  background-color: #ffffff30!important;
+  background-color: #ffffff30 !important;
 
   &:hover {
-    background-color: #ffffff46!important;
+    background-color: #ffffff46 !important;
   }
 }
 
@@ -222,7 +222,6 @@
   }
 
   .popover-content {
-
     .small-title {
       margin-block-end: rem(4px);
     }
@@ -334,8 +333,11 @@
 .trellicons-edit::before {
   content: '\e928';
 }
-
 .trellicons-star::before {
+  content: '\e966';
+}
+
+.trellicons-full-star::before {
   content: '\e967';
 }
 
