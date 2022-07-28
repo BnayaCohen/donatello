@@ -6,8 +6,9 @@
           <h3><i class="fa-regular fa-star"></i> Starred boards</h3>
         </div>
         <ul class="board-list clean-list">
-          <span v-for="board in starredBoards" style="height: 96px; width: 196px" :style="board.style"
-            class="board-page-display" :key="board._id" @click="openTask(board._id)">
+          <span v-for="board in starredBoards" style="height: 96px; width: 196px;"
+            :style="{ background: getBackground(board.style.background) }" class="board-page-display" :key="board._id"
+            @click="openTask(board._id)">
             <h3>{{ board.title }}</h3>
             <span :style="board.isStarred ? getStyle : ''" class="star-board-btn trellicons trellicons-star"
               :class="board.isStarred ? 'starred' : ''" @click.stop="toggleStarred(board)">
@@ -26,8 +27,8 @@
           <span class="create-board-item" @click="toggleModal" style="height: 96px; width: 196px">
             <h3>Create new board</h3>
           </span>
-          <span v-for="board in boards" :style="board.style" style="height: 96px; width: 196px"
-            class="board-page-display" :key="board._id" @click="openTask(board._id)">
+          <span v-for="board in boards" :style="{ background: getBackground(board.style.background) }"
+            style="height: 96px; width: 196px" class="board-page-display" :key="board._id" @click="openTask(board._id)">
             <h3>{{ board.title }}</h3>
             <span :class="board.isStarred ? 'starred' : ''" :style="board.isStarred ? getStyle : ''"
               class="star-board-btn trellicons trellicons-star" @click.stop="toggleStarred(board)">
@@ -56,7 +57,7 @@ export default {
     }
   },
   created() {
-    console.log(this.$store.getters.user)
+    console.log(this.boards[0])
     document.body.classList.add('app-header-background-color-blue')
   },
   methods: {
@@ -82,13 +83,13 @@ export default {
       const newBoard = await this.$store.dispatch({ type: 'saveBoard', board })
       this.$router.push('/board/' + newBoard._id)
     },
+    getBackground(bg) {
+      return bg.length > 10 ? `url(${bg}) no-repeat center center/cover` : bg
+    },
   },
   computed: {
     starredBoards() {
       return this.$store.getters.starredBoards
-    },
-    board() {
-      return this.$store.getters.board
     },
     boards() {
       return this.$store.getters.boardsForDisplay
