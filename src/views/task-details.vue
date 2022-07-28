@@ -38,25 +38,13 @@
               <date-picker v-if="task.dueDate" :task="task" @toggle="openPicker" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
             </div>
-            <task-description :description="task.description" @saveDescription="saveDescription"/>
-            <attachment-list
-              v-if="task.attachments?.length"
-              :attachments="task.attachments"
-              @updateCurrCover="updateCurrCover"
-              @toggle="openPicker"
-              @removeAttachment="removeAttachment"
-            />
-            <checklist-list
-              v-if="task.checklists?.length"
-              :checklists="task.checklists"
-              @saveChecklists="saveChecklists"
-            />
-            <task-comment
-              :loggedInUser="loggedUser"
-              @saveComment="saveComment"
-              :comments="task.comments"
-              @deleteComment="deleteComment"
-            />
+            <task-description :description="task.description" @saveDescription="saveDescription" />
+            <attachment-list v-if="task.attachments?.length" :attachments="task.attachments"
+              @updateCurrCover="updateCurrCover" @toggle="openPicker" @removeAttachment="removeAttachment" />
+            <checklist-list v-if="task.checklists?.length" :checklists="task.checklists"
+              @saveChecklists="saveChecklists" />
+            <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="task.comments"
+              @deleteComment="deleteComment" />
           </div>
           <task-detail-sidebar :task="task" :currCover="currCover" @pickerOpened="openPicker"
             @addUserToTask="addUserToTask" @removeTask="removeTask" />

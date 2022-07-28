@@ -3,7 +3,7 @@
         <span @click="$emit('closeQuickEdit')"
             class="icon-lg icon-close quick-card-editor-close-icon trellicons trellicons-close-btn">
         </span>
-        <div :style="getCords" class="quick-card-editor-card">
+        <div :style="getCords" @click.stop="''" class="quick-card-editor-card">
             <div :style="task.styles" class="list-card list-card-quick-edit is-covered">
                 <!-- Add cover image/background to display in quick edit -->
                 <div class="list-card-details">

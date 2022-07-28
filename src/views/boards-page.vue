@@ -6,21 +6,11 @@
           <h3><i class="fa-regular fa-star"></i> Starred boards</h3>
         </div>
         <ul class="board-list clean-list">
-          <span
-            v-for="board in starredBoards"
-            style="height: 96px; width: 196px"
-            :style="board.style"
-            class="board-page-display"
-            :key="board._id"
-            @click="openTask(board._id)"
-          >
+          <span v-for="board in starredBoards" style="height: 96px; width: 196px" :style="board.style"
+            class="board-page-display" :key="board._id" @click="openTask(board._id)">
             <h3>{{ board.title }}</h3>
-            <span
-              :style="board.isStarred ? getStyle : ''"
-              class="star-board-btn trellicons trellicons-star"
-              :class="board.isStarred ? 'starred' : ''"
-              @click.stop="toggleStarred(board)"
-            >
+            <span :style="board.isStarred ? getStyle : ''" class="star-board-btn trellicons trellicons-star"
+              :class="board.isStarred ? 'starred' : ''" @click.stop="toggleStarred(board)">
             </span>
           </span>
         </ul>
@@ -33,41 +23,22 @@
           </h3>
         </div>
         <ul class="board-list clean-list">
-          <span
-            class="create-board-item"
-            @click="toggleModal"
-            style="height: 96px; width: 196px"
-          >
+          <span class="create-board-item" @click="toggleModal" style="height: 96px; width: 196px">
             <h3>Create new board</h3>
           </span>
-          <span
-            v-for="board in boards"
-            :style="board.style"
-            style="height: 96px; width: 196px"
-            class="board-page-display"
-            :key="board._id"
-            @click="openTask(board._id)"
-          >
+          <span v-for="board in boards" :style="board.style" style="height: 96px; width: 196px"
+            class="board-page-display" :key="board._id" @click="openTask(board._id)">
             <h3>{{ board.title }}</h3>
-            <span
-              :class="board.isStarred ? 'starred' : ''"
-              :style="board.isStarred ? getStyle : ''"
-              class="star-board-btn trellicons trellicons-star"
-              @click.stop="toggleStarred(board)"
-            >
+            <span :class="board.isStarred ? 'starred' : ''" :style="board.isStarred ? getStyle : ''"
+              class="star-board-btn trellicons trellicons-star" @click.stop="toggleStarred(board)">
             </span>
           </span>
         </ul>
       </section>
     </div>
   </main>
-  <board-create
-    v-if="isModalOpen"
-    v-click-outside="toggleModal"
-    @toggleModal="toggleModal"
-    @addBoard="createBoard"
-    :style="getCords"
-  />
+  <board-create v-if="isModalOpen" v-click-outside="toggleModal" @toggleModal="toggleModal" @addBoard="createBoard"
+    :style="getCords" />
 </template>
 
 <script>
@@ -108,13 +79,16 @@ export default {
       const board = boardService.getEmptyBoard(data.title)
       board.style = data.style
       board.createdBy = userService.getLoggedInUser()
-      const { _id } = await this.$store.dispatch({ type: 'saveBoard', board })
-      this.$router.push('/board/' + _id)
+      const newBoard = await this.$store.dispatch({ type: 'saveBoard', board })
+      this.$router.push('/board/' + newBoard._id)
     },
   },
   computed: {
     starredBoards() {
       return this.$store.getters.starredBoards
+    },
+    board() {
+      return this.$store.getters.board
     },
     boards() {
       return this.$store.getters.boardsForDisplay
