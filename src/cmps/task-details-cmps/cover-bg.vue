@@ -1,7 +1,7 @@
 <template>
-  <div v-if="currCover.background" class="flex justify-center task-detail-bg" :style="getBackground"><img
+  <div v-if="bgCover.background" class="flex justify-center task-detail-bg" :style="getBackground"><img
       :src="currCover.background" alt=""></div>
-  <div class="btn-wrapper" v-if="currCover.background">
+  <div class="btn-wrapper" v-if="bgCover.background">
     <button @click.stop="coverClicked" :class="darkModeClass" class="cover-btn flex align-center">
       <span class="trellicons trellicons-cover cover-icon"></span>
       <span>Cover</span>
@@ -27,16 +27,19 @@ export default {
       isDarkMode: false,
     }
   },
+  created() {
+    this.bgCover = this.currCover
+  },
   methods: {
     coverClicked(ev) {
       this.$emit('toggle', { el: ev.target.closest('button'), type: 'cover' })
     },
     async setCoverColor(bg) {
-      this.currCover = bg.background.length > 10 ?
-        await utilService.getImgAvgColor(bg.background)
-        :
-        bg.background
-
+      if (bg.background.length > 10)
+        return { background: await utilService.getImgAvgColor(bg.background) }
+      else {
+        return bg
+      }
     },
     async updateDarkMode() {
       if (this.currCover.background.length > 10) {
@@ -46,9 +49,7 @@ export default {
   },
   computed: {
     getBackground() {
-      if (this.currCover.background.length > 10)
-        return { background: '#f4f5f7' }
-      return { background: this.currCover.background }
+      return this.bgCover
     },
     darkModeClass() {
       return { 'dark-theme': this.isDarkMode }
