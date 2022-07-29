@@ -18,7 +18,7 @@
   <search-modal
     @boardClicked="goToBoard"
     :filteredBoards="filteredBoards"
-    v-if="filteredBoards.length"
+    v-if="isSearch"
   />
 </template>
 
@@ -39,6 +39,7 @@ export default {
       isDarkTheme: false,
       headerColor: '',
       filteredBoards: [],
+      isSearch: false
     }
   },
   created() {
@@ -58,13 +59,14 @@ export default {
       }
     },
     async onSearchBoards(filterBy) {
+      this.isSearch = true
       this.filteredBoards = await this.$store.dispatch({
         type: 'searchBoards',
         filterBy,
       })
     },
     cleanSearch() {
-      this.filteredBoards = []
+      this.isSearch = false
     },
     toggleUserMenu(ev) {
       this.x = ev?.clientX
