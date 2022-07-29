@@ -65,7 +65,7 @@ export default {
     },
     updateTitle() {
       if (this.group.title === '') return
-      this.$store.dispatch({ type: 'saveGroup', group: this.group })
+      this.$store.dispatch({ type: 'saveGroup', group: this.group,activityTxt:'Updated the title of list ' + this.group.title })
     },
     setAddTaskTrue() {
       this.addTask = true

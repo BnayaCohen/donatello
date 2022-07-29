@@ -79,7 +79,8 @@ export default {
         this.task.status === 'in-progress' ? 'done' : 'in-progress'
       const savedTask = this.task
       savedTask.status = newStatus
-      this.saveTask(savedTask)
+      this.saveTask(savedTask,
+        newStatus === 'in-progress' ? 'Un marked due date in card ' : 'Marked due date in card ')
     },
     openQuickEdit(ev) {
       this.x = ev.clientX
@@ -100,11 +101,12 @@ export default {
       const members = this.$store.getters.getMembers
       return members.find((member) => member._id === memberId)
     },
-    saveTask(task) {
+    saveTask(task, activityTxt) {
       this.$store.dispatch({
         type: 'saveTask',
         task: JSON.parse(JSON.stringify(task)),
         groupId: this.task.groupId,
+        activityTxt: activityTxt + this.task.title,
       })
     },
   },

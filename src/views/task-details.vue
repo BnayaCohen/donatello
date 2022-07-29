@@ -70,7 +70,6 @@ import labelPrev from '../cmps/task-details-cmps/label-prev.vue'
 import datePicker from '../cmps/task-details-cmps/date-picker.vue'
 import date from '../cmps/date.vue'
 import taskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
-import TaskDetailSidebar from '../cmps/task-details-cmps/task-detail-sidebar.vue'
 import taskComment from '../cmps/task-details-cmps/task-comment.vue'
 import taskOptions from '../cmps/task-options-cmp.vue'
 import taskDescription from '../cmps/task-details-cmps/task-description.vue'
@@ -146,21 +145,20 @@ export default {
     },
     saveChecklists(checklists) {
       this.task.checklists = checklists
-      this.updateTask()
+      this.updateTask('Updated checklist in card ')
     },
     addUserToTask() {
       if (!this.task.memberIds)
         this.task.memberIds = [userService.getLoggedInUser()._id]
       else this.task.memberIds.push(userService.getLoggedInUser()._id)
-      console.log(this.task.memberIds)
-      this.updateTask()
+      this.updateTask('Joined to card ')
     },
-    updateTask() {
-      const { groupId } = this.$route.params
+    updateTask(activityTxt) {
       this.$store.dispatch({
         type: 'saveTask',
         task: JSON.parse(JSON.stringify(this.task)),
-        groupId,
+        groupId:this.task.groupId,
+        activityTxt: activityTxt + this.task.title,
       })
     },
     toggleDate(ev) {
@@ -175,7 +173,6 @@ export default {
     openPicker(elData) {
       // TODO: calculate from client and adjust modal
       const { top, right, height, width } = elData.el.getBoundingClientRect()
-      console.log(elData.el.getBoundingClientRect())
       this.modalPos = {
         top: top + height + 5 + 'px',
         left: right - width + 'px',
@@ -188,7 +185,7 @@ export default {
       const timestamp = dueDate.getTime()
       this.task.dueDate = ref(timestamp)
       this.isDate = false
-      this.updateTask()
+      this.updateTask('Updated the due date of card ')
     },
     toggleIsDone() {
       switch (this.task.status) {
@@ -199,14 +196,15 @@ export default {
           this.task.status = 'done'
           break
       }
-      this.updateTask()
+      const activityTxt=this.task.status === 'in-progress'? 'Un marked':'Marked as done'
+      this.updateTask(activityTxt + ' card ')
     },
     removeAttachment(attachId) {
       const attachIdx = this.task.attachments.findIndex(
         (attach) => attach.id === attachId
       )
       this.task.attachments.splice(attachIdx, 1)
-      this.updateTask()
+      this.updateTask('Deleted an attachment from card ')
     },
     removeTask() {
       const { boardId, taskId, groupId } = this.$route.params
@@ -217,7 +215,7 @@ export default {
       this.task.dueDate = ''
       this.task.status = 'in-progress'
       this.isDate = false
-      this.updateTask()
+      this.updateTask('Deleted a due date from card ')
     },
     backToBoard() {
       this.$router.push('/board/' + this.$route.params.boardId)
@@ -225,7 +223,7 @@ export default {
     updateCurrCover(cover) {
       this.task.style.background = cover
       this.currCover = { background: cover }
-      this.updateTask()
+      this.updateTask('Updated the cover of card ')
     },
 
     saveComment(comment) {
@@ -237,7 +235,7 @@ export default {
       }
       comment.createdAt = Date.now()
       this.task.comments.unshift(comment)
-      this.updateTask()
+      this.updateTask('Added a comment to card ')
     },
     deleteComment(commentId) {
       console.log('hi')
@@ -245,12 +243,11 @@ export default {
         (comment) => comment.id === commentId
       )
       if (idx !== -1) this.task.comments.splice(idx, 1)
-      this.updateTask()
+      this.updateTask('Deleted a comment from card ')
     },
     saveDescription(newDescription) {
-      console.log(newDescription)
       this.task.description = newDescription
-      this.updateTask()
+      this.updateTask('Updated the description of card ')
     },
   },
   components: {
@@ -261,7 +258,6 @@ export default {
     datePicker,
     date,
     taskDetailSidebar,
-    TaskDetailSidebar,
     checklistList,
     taskComment,
     taskOptions,
