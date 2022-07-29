@@ -1,5 +1,5 @@
 <template>
-  <section class="dynamic-action-modal">
+  <section class="dynamic-action-modal" @click.stop>
     <section class="create-board-modal">
       <header class="modal-header">
         <span @click="$emit('toggleModal', $event)"
@@ -84,7 +84,7 @@ export default {
       return this.title && this.style ? 'filled' : ''
     },
     setBackground() {
-      return this.style?.background?.length > 10 ? { background: `url(${this.style.background}) no-repeat center center/cover` } : this.style
+      return this.style?.background?.length > 20 ? { background: `url(${this.style.background}) no-repeat center center/cover` } : this.style
     }
   },
 }
