@@ -8,22 +8,18 @@
         </svg>
         <h1 :style="{alignSelf:'flex-start'}">Donatello</h1>
       </router-link>
-      <div v-if="!user" class="login-container">
+      <div class="login-container">
         <router-link class="login" to="/login">Log in</router-link>
         <router-link class="signup" to="/signup">Get Donatello for free</router-link>
       </div>
-      <div class="already-signed flex" v-else>
-        <a class="flex" @click="this.$router.push('/board')"><span >Go to your boards</span></a>
       </div>
-    </div>
   </header>
 </template>
 <script>
 export default {
-  computed: {
-    user() {
-      return this.$store.getters.user
-    }
+  mounted() {
+    // run the function when the component's mount
+    this.vueOnScroll()
   },
   methods: {
     vueOnScroll() {
@@ -33,13 +29,6 @@ export default {
         else refs.classList.remove('page-header-box-shadow')
       })
     },
-    logout() {
-      this.$store.dispatch('logout')
-    }
-  },
-  mounted() {
-    // run the function when the component's mount
-    this.vueOnScroll()
   },
 }
 </script>

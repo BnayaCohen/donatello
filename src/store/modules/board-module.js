@@ -377,8 +377,13 @@ export default {
     },
     async searchBoards({}, { filterBy }) {
       try {
-        var boards = await boardService.query(filterBy)
-        return boards
+        var filteredBoards = await boardService.query(filterBy)
+        var miniBoards = []
+        filteredBoards.forEach(board => {
+          const {_id, title, style} = board
+          miniBoards.push({_id, title, style})
+        })
+        return miniBoards
       } catch (err) {
         console.log('couldnt get boards for search', err)
       }
