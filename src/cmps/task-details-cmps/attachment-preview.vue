@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     timeAgo() {
-      return 'Added ' + utilService.timeAgo(this.attachment.createdAt)
+        return  'Added ' + (utilService.timeAgo(this.attachment.createdAt) || 'just now')
     },
   },
   methods: {
