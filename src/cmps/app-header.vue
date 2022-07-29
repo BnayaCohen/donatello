@@ -18,7 +18,7 @@
         </div>
       </section>
       <section class=" user-actions flex">
-        <board-filter @filtered="setFilter" />
+        <board-filter @searchBoards="searchBoards" @cleanSearch="$emit('cleanSearch')"/>
         <button class="btn btn-background" :class="{ 'dark-theme': isDark }">
           <i class="fa-solid fa-bell"></i>
         </button>
@@ -56,8 +56,8 @@ export default {
     goToBoards() {
       this.$router.push('/board')
     },
-    setFilter(filterBy) {
-      this.$emit('filtered', filterBy)
+    searchBoards(filterBy) {
+      this.$emit('searchBoards', filterBy)
     },
     toggleModal() {
       this.isModalOpen = !this.isModalOpen
