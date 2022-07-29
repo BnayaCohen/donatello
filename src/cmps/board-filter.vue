@@ -1,21 +1,21 @@
 <template>
   <div class="main-search-container">
-    <div class="input-wrapper">
+    <div class="input-wrapper flex flex-column">
       <input
         class="search-input"
         id="search-input"
         type="text"
         placeholder="Search"
         v-model="filterBy.txt"
-        @focusin="toggleGlassIcon"
-        @focusout="toggleGlassIcon"
-        @input="setFilter"
+        @focusin="toggleSearchModal"
+        @focusout="toggleSearchModal"
+        @input="searchBoards"
       />
       <span class="search-icon-wrapper"
         ><label for="search-input"
           ><span>
             <svg
-            ref="searchGlass"
+              ref="searchGlass"
               class="search-icon"
               width="24"
               height="24"
@@ -48,16 +48,22 @@ export default {
     }
   },
   created() {
-    this.setFilter = utilService.debounce(this.setFilter, 1000)
+    this.searchBoards = utilService.debounce(this.searchBoards, 500)
   },
   methods: {
-    setFilter() {
-      this.$emit('filtered', JSON.parse(JSON.stringify(this.filterBy)))
+    searchBoards() {
+      if (!this.filterBy.txt) {
+        this.$emit('cleanSearch')
+        return
+      }
+      this.$emit('searchBoards', JSON.parse(JSON.stringify(this.filterBy)))
     },
-    toggleGlassIcon() {
-        this.$refs.searchGlass.classList.toggle('input-focus')
-    }
+    toggleSearchModal() {
+      this.isSearch = !this.isSearch
+      this.$refs.searchGlass.classList.toggle('input-focus')
+    },
   },
+  components: {},
 }
 </script>
 <style></style>

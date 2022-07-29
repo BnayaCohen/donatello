@@ -1,15 +1,32 @@
 <template>
-  <div :style="bgStyle" style="background-position-y: top;">
-    <app-header @toggleUserMenu="toggleUserMenu" :bgColor="headerColor" :isDark="isDarkTheme" @filtered="onSetFilter" />
+  <div :style="bgStyle" style="background-position-y: top">
+    <app-header
+      @searchBoards="onSearchBoards"
+      @toggleUserMenu="toggleUserMenu"
+      :bgColor="headerColor"
+      :isDark="isDarkTheme"
+      @cleanSearch="cleanSearch"
+    />
     <router-view @setBackground="initBackground" :isDark="isDarkTheme" />
   </div>
-  <user-menu v-if="isUserMenu" @toggleUserMenu="isUserMenu=false" v-click-outside="toggleUserMenu" @logout="onLogout" />
+  <user-menu
+    v-if="isUserMenu"
+    @toggleUserMenu="isUserMenu = false"
+    v-click-outside="toggleUserMenu"
+    @logout="onLogout"
+  />
+  <search-modal
+    @boardClicked="goToBoard"
+    :filteredBoards="filteredBoards"
+    v-if="isSearch"
+  />
 </template>
 
 <script>
 import appHeader from '@/cmps/app-header.vue'
 import userMenu from '@/cmps/user-menu.vue'
-import { utilService } from '@/services/util-service';
+import searchModal from '@/cmps/search-modal.vue'
+import { utilService } from '@/services/util-service'
 
 export default {
   name: 'app',
@@ -21,6 +38,8 @@ export default {
       y: 0,
       isDarkTheme: false,
       headerColor: '',
+      filteredBoards: [],
+      isSearch: false
     }
   },
   created() {
@@ -39,6 +58,16 @@ export default {
         this.background = background
       }
     },
+    async onSearchBoards(filterBy) {
+      this.isSearch = true
+      this.filteredBoards = await this.$store.dispatch({
+        type: 'searchBoards',
+        filterBy,
+      })
+    },
+    cleanSearch() {
+      this.isSearch = false
+    },
     toggleUserMenu(ev) {
       this.x = ev?.clientX
       this.y = ev?.clientY
@@ -49,26 +78,21 @@ export default {
       this.isUserMenu = false
       this.$router.push('/')
     },
-    async onSetFilter(filterBy) {
-      const boards = await this.$store.dispatch({ type: 'searchBoards', filterBy })
-      console.log(boards)
-    },
-
-    
   },
   computed: {
     bgStyle() {
       return {
-        background: this.background
+        background: this.background,
       }
     },
     board() {
       return this.$store.getters.currBoard
-    }
+    },
   },
   components: {
     appHeader,
     userMenu,
+    searchModal,
   },
 }
 </script>

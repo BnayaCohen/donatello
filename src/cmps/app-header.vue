@@ -1,5 +1,6 @@
 <template>
-  <header class="main-layout app-header" :style="{ background: bgColor }">
+  <header class="main-layout app-header"
+    :style="{ background: bgColor, position: 'relative', zIndex: isModalOpen ? 100 : 5 }">
     <div class="flex justify-between align-center">
       <section class="nav-container">
         <div class="logo-side flex">
@@ -18,7 +19,7 @@
         </div>
       </section>
       <section class=" user-actions flex">
-        <board-filter @filtered="setFilter" />
+        <board-filter @searchBoards="searchBoards" @cleanSearch="$emit('cleanSearch')"/>
         <button class="btn btn-background" :class="{ 'dark-theme': isDark }">
           <i class="fa-solid fa-bell"></i>
         </button>
@@ -56,8 +57,8 @@ export default {
     goToBoards() {
       this.$router.push('/board')
     },
-    setFilter(filterBy) {
-      this.$emit('filtered', filterBy)
+    searchBoards(filterBy) {
+      this.$emit('searchBoards', filterBy)
     },
     toggleModal() {
       this.isModalOpen = !this.isModalOpen

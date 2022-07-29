@@ -3,14 +3,14 @@
         <span @click="$emit('closeQuickEdit')"
             class="icon-lg icon-close quick-card-editor-close-icon trellicons trellicons-close-btn">
         </span>
-        <div :style="getCords" @click.stop="''" class="quick-card-editor-card">
+        <div :style="getCords" @click.stop class="quick-card-editor-card">
             <div :style="task.styles" class="list-card list-card-quick-edit is-covered">
                 <!-- Add cover image/background to display in quick edit -->
                 <div class="list-card-details">
                     <div v-if="task.labelIds.length" class="list-card-labels">
                         <task-label-list :labelIds="task.labelIds" />
                     </div>
-                    <textarea v-model="taskToEdit.title" data-autosize="true" dir="auto" style="
+                    <textarea v-model="title" data-autosize="true" dir="auto" style="
               overflow: hidden;
               overflow-wrap: break-word;
               resize: none;
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <button @click="updateTask" class="save-task-btn text-center">Save</button>
+            <button @click="save" class="save-task-btn text-center">Save</button>
             <div class="quick-card-editor-buttons fade-in">
                 <!-- Open card -->
                 <span class="quick-card-editor-buttons-item" @click="openTask(task.groupId, task.id)">
@@ -55,18 +55,18 @@
                         class="quick-card-editor-buttons-item-text">Open card</span>
                 </span>
                 <!-- Edit labels -->
-                <span class="quick-card-editor-buttons-item"><span class="icon-sm icon-label"><i
-                            class="trellicons trellicons-labels"></i></span><span
+                <span @click="openPicker($event, 'labels')" class="quick-card-editor-buttons-item"><span
+                        class="icon-sm icon-label"><i class="trellicons trellicons-labels"></i></span><span
                         class="quick-card-editor-buttons-item-text">Edit
                         Labels</span></span>
-                <span class="quick-card-editor-buttons-item">
+                <span class="quick-card-editor-buttons-item" @click="openPicker($event, 'members')">
                     <!-- Change members -->
                     <span class="icon-sm icon-member"><i class="trellicons trellicons-member"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Change members</span>
                 </span>
                 <!-- Change cover -->
-                <span class="quick-card-editor-buttons-item"><span class="icon-sm icon-card-cover"><i
-                            class="trellicons trellicons-cover"></i></span>
+                <span @click="openPicker($event, 'cover')" class="quick-card-editor-buttons-item"><span
+                        class="icon-sm icon-card-cover"><i class="trellicons trellicons-cover"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Change cover</span></span>
                 <!-- Move -->
                 <!-- <span class="quick-card-editor-buttons-item">
@@ -78,32 +78,45 @@
                     <span class="icon-sm icon-card"><i class="fa-solid fa-inbox"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Copy</span>
                 </span>  -->
+
                 <!-- Edit due date -->
-                <span class="quick-card-editor-buttons-item">
+                <!-- <span class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-clock"><i class="trellicons trellicons-clock"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Edit dates</span>
-                </span>
+                </span> -->
+
                 <!-- Archive/Delete -->
                 <span class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-archive"><i class="trellicons trellicons-archive"></i></span>
-                    <span class="quick-card-editor-buttons-item-text">Archive</span>
+                    <span class="quick-card-editor-buttons-item-text"
+                        @click="removeTask(task.id, task.groupId)">Archive</span>
                 </span>
             </div>
         </div>
     </div>
+    <!-- @removeDueDate="removeDueDate" @updateDueDate="updateDueDate"  -->
+    <task-options v-if="isPickerOpen" :cmpType="modalCmpType" :task="task" :style="modalPos" :dueDate="dueDate"
+        @pickerClosed="isPickerOpen = false" />
 </template>
 
 <script>
+import { ref } from 'vue'
 import taskLabelList from './task-label-list.vue'
 import avatarPreview from './avatar-preview.vue'
+import taskOptions from './task-options-cmp.vue'
 export default {
     props: { task: Object, getCords: Object },
     name: 'quickEdit',
-    components: { avatarPreview, taskLabelList },
+    components: { avatarPreview, taskLabelList, taskOptions },
     data() {
         return {
+            modaPos: {},
+            isPickerOpen: false,
             onDueDateHover: false,
-            taskToEdit: JSON.parse(JSON.stringify(this.task))
+            taskToEdit: this.task,
+            title: this.task.title,
+            modalCmpType: '',
+            dueDate: ref(new Date())
         }
     },
     methods: {
@@ -128,6 +141,36 @@ export default {
             this.$emit('saveTask', this.taskToEdit)
             this.$emit('closeQuickEdit')
         },
+        save() {
+            if (!this.title) return
+            this.taskToEdit.title = this.title
+            this.$emit('saveTask', this.taskToEdit)
+            this.$emit('closeQuickEdit')
+
+        },
+        removeTask(taskId, groupId) {
+            this.$store.dispatch({ type: 'removeTask', taskId, groupId })
+            this.$emit('closeQuickEdit')
+        },
+        removeDueDate() {
+            this.task.dueDate = ''
+            this.task.status = 'in-progress'
+            this.updateTask()
+        },
+        updateDueDate(dueDate) {
+            const timestamp = dueDate.getTime()
+            this.task.dueDate = ref(timestamp)
+            this.updateTask()
+        },
+        openPicker(ev, type) {
+            const { top, right, height, width } = ev.target.closest('.quick-card-editor-buttons-item').getBoundingClientRect()
+            this.modalPos = {
+                top: top + height + 'px',
+                left: right - width + 'px'
+            }
+            this.modalCmpType = type
+            this.isPickerOpen = true
+        }
     },
     computed: {
         getChecklistProgress() {
@@ -174,6 +217,8 @@ export default {
                 this.task.status === 'in-progress' ? 'un-checkedbox' : 'checkedbox'
             return this.onDueDateHover ? currCheckbox : 'clock'
         },
-    }
+    },
+    emits: ['closeQuickEdit', 'saveTask']
+
 }
 </script>
