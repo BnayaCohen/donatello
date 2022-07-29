@@ -7,7 +7,7 @@
         <attachment-preview v-for="attachment in attachments" :key="attachment.id" :attachment="attachment"
             @updateCurrCover="$emit('updateCurrCover', $event)" @removeAttachment="$emit('removeAttachment',$event)"/>
         <div>
-            <button class="add-attach-btn btn-background" @click="$emit('toggle', { ev: $event, type: 'Attach' })">
+            <button class="add-attach-btn btn-background" @click="$emit('toggle', { el: $event.target.closest('button'), type: 'attachments' })">
             Add an attachment</button>
         </div>
     </section>
@@ -20,7 +20,7 @@ export default {
     props: {
         attachments: Object,
     },
-    emits: ['updateCurrCover'],
+    emits: ['updateCurrCover', 'toggle'],
     components: {
         attachmentPreview,
         attachmentPicker
