@@ -31,12 +31,11 @@
 
     <task-list :groupId="group.id" :tasks="group.tasks" :addTask="addTask" @toggleAddEntity="toggleAddTask" />
     <section v-if="!addTask" class="add-task-container">
-      <add-group-or-task @toggleAddEntity="toggleAddTask" :edit="addTask" :groupOrTask="'task'"
-        :groupId="group.id" />
+      <add-group-or-task @toggleAddEntity="toggleAddTask" :edit="addTask" :groupOrTask="'task'" :groupId="group.id" />
     </section>
   </article>
   <section v-else class="new-group-container">
-    <section class="add-group-container">
+    <section class="add-group-container" :class="darkModeClass">
       <add-group-or-task :groupOrTask="'group'" @toggleAddEntity="toggleAddTask" :edit="addTask" />
     </section>
   </section>
@@ -45,6 +44,7 @@
 <script>
 import taskList from '../cmps/task-list.vue'
 import addGroupOrTask from '../cmps/add-group-or-task.vue'
+import { utilService } from '@/services/util-service.js'
 
 export default {
   name: 'group-preview',
@@ -56,10 +56,11 @@ export default {
       showPopup: false,
       addTask: false,
       status: '',
+      isDarkMode: false,
     }
   },
   methods: {
-    x(board){
+    x(board) {
       this.$emit('x', board)
     },
     updateTitle() {
@@ -78,10 +79,31 @@ export default {
     removeGroup() {
       this.$store.dispatch({ type: 'removeGroup', groupId: this.group.id })
     },
+    async updateDarkMode() {
+      if (this.boardStyle.background?.length > 10) {
+        this.isDarkMode = await utilService.isDarkImg(this.boardStyle.background)
+      }
+    }
+  },
+  async created() {
+    await this.updateDarkMode()
+  },
+  computed: {
+    darkModeClass() {
+      return { 'dark-theme': this.isDarkMode }
+    },
+    boardStyle() {
+      return this.$store.getters.board.style
+    }
   },
   components: {
     taskList,
     addGroupOrTask,
+  },
+  watch: {
+    async boardStyle() {
+      await this.updateDarkMode()
+    }
   },
 }
 </script>
