@@ -2,6 +2,7 @@ import { boardService } from '../../services/board-service.js'
 import { utilService } from '../../services/util-service.js'
 import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_TASK, SOCKET_EMIT_UPDATE_GROUP, SOCKET_EMIT_UPDATE_BOARD } from '../../services/socket-service'
 import { userService } from '../../services/user-service.js'
+// import { styleType } from 'element-plus/es/components/table-v2/src/common.js'
 
 export default {
   state: {
@@ -15,7 +16,7 @@ export default {
     firstGroup: null,
     secondGroup: null,
     lastGroup: null,
-    lastTask: null,
+    lastTasks: [],
     showLabelsOnTask: false,
     currTask: null,
     isDarkTheme: false,
@@ -186,24 +187,28 @@ export default {
         const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
         if (idx !== -1) {
           const oldTask = group.tasks.splice(idx, 1, task)[0]
-          state.lastTask = oldTask
+          state.lastTasks.push(oldTask)
         }
         else {
           group.tasks.push(task)
-          state.lastTask = { ...task }
-          task.id = utilService.makeId()
+          const taskToUndo = { ...task }
+          taskToUndo.remove = true
+          state.lastTasks.push(taskToUndo)
         }
 
       }
       else {
         const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
-        console.log(state.lastTask)
+        const taskUndoIdx = state.lastTasks.findIndex(taskToUndo => taskToUndo.id === task.id)
         if (idx !== -1) {
-          !state.lastTask.id && group.tasks.splice(idx, 1)
-          state.lastTask.id && group.tasks.splice(idx, 1, state.lastTask)
+          state.lastTasks[taskUndoIdx].remove && group.tasks.splice(idx, 1)
+          !state.lastTasks[taskUndoIdx].remove && group.tasks.splice(idx, 1, state.lastTasks[taskUndoIdx])
         }
-        state.lastTask = null
       }
+    },
+    removeFromTasksArray(state, { taskId }) {
+      const idx = state.lastTasks.findIndex(task => task.id === taskId)
+      state.lastTasks.splice(idx, 1)
     },
     addActivity(state, { memberId, task }) {
       const byMember = state.currBoard.members.find(member => member._id === memberId)
@@ -313,9 +318,9 @@ export default {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: true })
       }
-      // finally {
-      //   commit({ type: 'removeTaskArray', taskId: task.id })
-      // }
+      finally {
+        commit({ type: 'removeFromTasksArray', taskId: task.id })
+      }
     },
     async removeTask({ commit, state }, { groupId, taskId }) {
       commit({ type: 'removeTask', groupId, taskId })
@@ -375,7 +380,7 @@ export default {
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({}, { filterBy }) {
+    async searchBoards({ }, { filterBy }) {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []
