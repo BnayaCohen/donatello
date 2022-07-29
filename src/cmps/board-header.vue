@@ -1,5 +1,5 @@
 <template>
-  <header class="main-layout" style="position:relative;z-index:100">
+  <header class="main-layout">
     <nav class="flex justify-between board-header">
 
       <section class="board-options flex align-center justify-center">
