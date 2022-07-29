@@ -29,7 +29,7 @@
       <div class="comment-actions">
         <!-- <span class="quiet-a edit-comment">Edit</span> -->
         <!-- <span class="dash">-</span> -->
-        <span class="quiet-a delete-comment" @click.stop="deleteComment">Delete</span>
+        <span class="quiet-a delete-comment" @click.stop="deleteComment" v-if="comment.byMember.fullname === loggedInUser.fullname">Delete</span>
       </div>
     </form>
   </div>

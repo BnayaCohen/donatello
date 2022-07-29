@@ -294,6 +294,7 @@ export default {
     saveComment(comment) {
       comment.id = utilService.makeId()
       comment.byMember = {
+        id: this.loggedUser.id,
         fullname: this.loggedUser.fullname,
         imgUrl: this.loggedUser.imgUrl,
       }
