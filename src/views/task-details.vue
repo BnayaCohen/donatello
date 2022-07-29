@@ -145,7 +145,6 @@ export default {
       task: null,
       isEditDescription: false,
       isDate: false,
-      isTopCover: false,
       modalPos: {
         top: '',
         left: '',
