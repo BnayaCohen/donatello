@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     timeAgo() {
-      return utilService.timeAgo(this.comment.createdAt)
+      return utilService.timeAgo(this.comment.createdAt) || 'Just now'
     },
   },
   methods: {
