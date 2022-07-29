@@ -19,7 +19,7 @@
         <button
           v-show="this.taskLabels.length"
           class="add-label-btn"
-          @click.stop="toggleLabels($event, 'Labels')"
+          @click.stop="toggleLabels($event, 'labels')"
         >
           <span class="trellicons trellicons-plus-sign"></span>
         </button>
