@@ -210,6 +210,7 @@ export default {
       state.lastTasks.splice(idx, 1)
     },
     addActivity(state, { task, txt }) {
+      if (txt === state.currBoard.activities[0].txt) return
       const newActivity = {
         id: utilService.makeId(),
         txt,
@@ -217,8 +218,7 @@ export default {
         byMember: userService.getLoggedInUser(),
         task: task || {},
       }
-      if (txt !== state.currBoard.activities[0].txt)
-        state.currBoard.activities.unshift(newActivity)
+      state.currBoard.activities.unshift(newActivity)
     },
     removeGroup(state, { groupId, reverse = false }) {
       if (!reverse) {

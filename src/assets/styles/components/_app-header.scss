@@ -4,8 +4,8 @@
   padding: 6px 4px;
   backdrop-filter: blur(6px);
   transition: background-color 300ms;
-  .btn.btn-background {
-    margin-inline-start: 12px;
+  .flex.justify-between.align-center {
+    width: 100%;
   }
   .create-board-btn {
     position: relative;
@@ -26,6 +26,8 @@
       background-color: transparent !important;
       font-family: 'kanit';
       font-size: em(22px);
+      padding: 0;
+      margin-inline-end: 6px;
       i {
         font-size: em(13px);
       }
@@ -54,5 +56,27 @@
   .app-header {
     background-color: #026aa7 !important;
     color: #fff;
+  }
+}
+@media screen and (max-width: 860px) {
+  .main-search-container .input-wrapper input.search-input {
+    width: 32px;
+  }
+}
+@media screen and (max-width: 460px) {
+  .logo {
+    .logo-text {
+      display: none;
+    }
+  }
+  .create-board-btn {
+    font-family: 'trellicons';
+    font-style: normal;
+    span {
+      display: none;
+    }
+    &::before {
+      content: '\e901';
+    }
   }
 }
