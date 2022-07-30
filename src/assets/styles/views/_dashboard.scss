@@ -22,6 +22,13 @@
   overflow-y: scroll;
   padding: em(120px) 0;
   z-index: 30;
+
+  header {
+    h1 {
+      font-size: em(34px);
+      line-height: 40px;
+    }
+  }
   .dashboard-close {
     position: absolute;
     top: 20px;
@@ -40,32 +47,43 @@
   }
 
   .general-statistics {
+    flex-wrap: wrap;
     margin-block-end: 1rem;
     .tasks-stats-wrapper {
       gap: em(10px);
     }
     gap: em(20px);
     padding: 1rem;
+    margin-block-start: 1rem;
     .stats {
       outline: 2px solid rgba(255, 255, 255, 0.904);
+      margin-block-end: em(20px);
+      border-radius: 3px;
+      background-color: #fff;
+      max-height: 140px;
+      width: 270px;
+      margin-bottom: 20px;
+
       &.circle-bar {
         color: #fff;
         svg {
           height: 100px;
           transform: rotate(-90deg);
-          width: 100px;
+          max-width: 100px;
         }
 
-        .in-progress-bar__background, .done-progress-bar__background{
+        .in-progress-bar__background,
+        .done-progress-bar__background {
           fill: none;
           stroke: #e2eff0;
           stroke-width: 1.8;
         }
 
-        .in-progress-bar__progress, .done-progress-bar__progress {
+        .in-progress-bar__progress,
+        .done-progress-bar__progress {
           fill: none;
           stroke: #e2eff0;
-          stroke: #78bec7;
+          stroke: #78c796;
           stroke-dasharray: 100 100;
           stroke-dashoffset: 100;
           stroke-linecap: round;
@@ -75,21 +93,15 @@
       }
       h3 {
         color: #fff;
-        font-size: em(20px);
+        font-size: em(24px);
         letter-spacing: 1px;
         margin-inline-start: em(8px);
       }
-      margin-block-end: em(20px);
-      border-radius: 3px;
-      background-color: #fff;
-      max-height: 140px;
-      width: 270px;
-      margin-bottom: 20px;
       &.small {
         width: 128px;
         align-items: center;
         margin-block: 0;
-        max-height: 140px;        
+        max-height: 140px;
         background-image: linear-gradient(
           90deg,
           #99b7bf,
@@ -133,11 +145,11 @@
       &.lists {
         background-image: linear-gradient(
           270deg,
-          #66c34f,
-          #76c44f,
-          #41c04e,
-          #56d340,
-          #5bdb5b
+          #4f93c3,
+          #4f8cc4,
+          #419cc0,
+          #40acd3,
+          #5ba6db
         );
         .chart-icon-graph {
           filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
@@ -162,6 +174,21 @@
           padding: 0.5rem;
           opacity: 0.8;
         }
+
+      }
+      &.overdue {
+        background-image: linear-gradient(
+          90deg,
+          #ec7299,
+          #ef768e,
+          #f07b84,
+          #ef817b,
+          #ec8773
+        );
+        svg {
+          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg);
+          margin-block-start: 0.5rem;
+        }
       }
     }
   }
@@ -171,11 +198,21 @@
     align-self: center;
   }
   .chart-container {
+    gap: em(30px);
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.265);
-    width: 90%;
+    // width: 90%;
     border-radius: 3px;
-    outline: 2px solid rgba(245, 245, 245, 0.176);
     align-items: center;
+    justify-content: center;
+    @media (max-width: 780px) {
+      flex-direction: column;
+    }
+  }
+  .dash-modal-wrapper {
+    background-color: rgba(255, 255, 255, 0.265);
+    outline: 4.5px solid rgba(245, 245, 245, 0.393);
+    border-radius: 3px;
+    padding: 1rem;
+
   }
 }
