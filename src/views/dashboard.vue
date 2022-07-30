@@ -301,7 +301,7 @@ export default {
       optionsBar: {
         scales: {
           y: {
-            max: 10
+            max: 8
           },
           yAxes: {
             ticks: {
@@ -339,7 +339,7 @@ export default {
     }
   },
   created() {
-    this.optionsBar.scales.y.max = this.taskCount
+    // this.optionsBar.scales.y.max = this.taskCount
     const labelsDataSet = this.$store.getters.labelToTaskMap
     const membersDataSets = this.$store.getters.memberToTaskMap
     const doneTasksDataSets = this.$store.getters.doneTasksPerGroup
