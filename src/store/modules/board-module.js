@@ -112,7 +112,7 @@ export default {
         const dataSet = {
           label: group,
           data: [groupMap[group]],
-          backgroundColor: 'rgba(0, 89, 148, 0.6)',
+          backgroundColor: 'rgba(0, 89, 148, 0.35)',
         }
         doneDataSets.push(dataSet)
       }
@@ -144,7 +144,7 @@ export default {
         const dataSet = {
           label: member,
           data: [membersCount[member]],
-          backgroundColor: 'rgba(179, 205, 224, 0.6)',
+          backgroundColor: 'rgba(179, 205, 224, 0.35)',
         }
         membersDataSets.push(dataSet)
       }
