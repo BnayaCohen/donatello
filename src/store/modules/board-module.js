@@ -360,11 +360,11 @@ export default {
     },
     async saveGroup({ commit, state }, { group, activityTxt }) {
       commit({ type: 'saveGroup', group })
-      commit({ type: 'addActivity', txt: activityTxt })
-
-      socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
+      
       try {
-        await boardService.saveGroup(state.currBoard._id, group, activityTxt)
+        const board = await boardService.saveGroup(state.currBoard._id, group, activityTxt)
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+        commit({type:'setBoard',board})
       } catch (err) {
         console.log("Couldn't save group", err)
         commit({ type: 'saveGroup', group, reverse: true })
@@ -372,17 +372,16 @@ export default {
     },
     async saveTask({ commit, state }, { groupId, task, activityTxt }) {
       commit({ type: 'saveTask', groupId, task })
-      console.time('str')
-      commit({ type: 'addActivity', task, txt: activityTxt })
-      console.timeEnd('str')
-      socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
+
       try {
-        await boardService.saveTask(
+        const board =await boardService.saveTask(
           state.currBoard._id,
           groupId,
           task,
           activityTxt
-        )
+          )
+          socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+          commit({type:'setBoard',board})
       } catch (err) {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: true })
@@ -392,10 +391,15 @@ export default {
     },
     async removeTask({ commit, state }, { groupId, taskId }) {
       commit({ type: 'removeTask', groupId, taskId })
-      commit({ type: 'addActivity', txt: 'Deleted a card' })
-      socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
+
       try {
-        await boardService.removeTask(state.currBoard._id, groupId, taskId)
+       const board = await boardService.removeTask(
+          state.currBoard._id,
+          groupId,
+          taskId,
+        )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+        commit({type:'setBoard',board})
       } catch (err) {
         console.log("couldn't remove task", err)
         commit({ type: 'removeTask', groupId, taskId, reverse: true })
@@ -403,10 +407,14 @@ export default {
     },
     async removeGroup({ commit, state }, { groupId }) {
       commit({ type: 'removeGroup', groupId })
-      commit({ type: 'addActivity', txt: 'Deleted a list' })
-      socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
+
       try {
-        await boardService.removeGroup(state.currBoard._id, groupId)
+       const board = await boardService.removeGroup(
+          state.currBoard._id,
+          groupId
+        )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+        commit({type:'setBoard',board})
       } catch (err) {
         commit({ type: 'removeGroup', groupId, reverse: true })
         console.log("couldn't remove group", err)
@@ -422,10 +430,14 @@ export default {
     },
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
-      commit({ type: 'addActivity', txt: 'Changed a position of list' })
-      socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
+
       try {
-        await boardService.changeGroupPos(state.currBoard._id, dropResult)
+       const board = await boardService.changeGroupPos(
+          state.currBoard._id,
+          dropResult
+        )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+        commit({type:'setBoard',board})
       } catch (err) {
         console.log(err)
         commit({ type: 'changeGroupPos', dropResult, reverse: true })

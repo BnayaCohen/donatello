@@ -107,7 +107,7 @@ async function saveGroup(boardId, group, txt) {
     else board.groups.push(group)
 
     board.activities.unshift(activity)
-    await saveBoard(board)
+    return await saveBoard(board)
   } catch (err) {
     throw err
   }
@@ -124,24 +124,23 @@ async function saveTask(boardId, groupId, task, activityTxt) {
       activity = createActivity(activityTxt)
     }
     else {
-      activity = createActivity(activityTxt, task)
+      activity = createActivity(activityTxt)
       group.tasks.push(task)
     }
 
     board.activities.unshift(activity)
-    await saveBoard(board)
+   return await saveBoard(board)
   } catch (err) {
     throw err
   }
 }
 
-function createActivity(txt = '', task = {}) {
+function createActivity(txt = '') {
   return {
     id: utilService.makeId(),
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    task: task,
   }
 }
 
@@ -191,11 +190,12 @@ async function changeGroupPos(boardId, { removedIndex, addedIndex }) {
   // TODO: fix bug
   try {
     const board = await getById(boardId)
+    const toGroup = board.groups[addedIndex]
     const group = board.groups.splice(removedIndex, 1)[0]
     board.groups.splice(addedIndex, 0, group)
-    const activity = createActivity(`Changed the position of list ${group.title}`)
+    const activity = createActivity(`List ${group.title} swaped with list ${toGroup.title}`)
     board.activities.unshift(activity)
-    await saveBoard(board)
+    return await saveBoard(board)
   } catch (err) {
     throw err
   }

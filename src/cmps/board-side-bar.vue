@@ -8,7 +8,7 @@
                 @click="$emit('sideBarClosed')"></button>
         </header>
         <hr class="side-header-hr">
-        <main v-if="!isChangeBgClicked" style="width: 92%;">
+        <main v-if="!isChangeBgClicked" style="margin-left: 12px;">
             <section class="side-bar-options">
                 <ul class="clean-list">
                     <li class="flex" @click="isChangeBgClicked = true;currHeader = 'Change background'">
@@ -118,8 +118,7 @@ export default {
         },
         backBtnPos() {
             if (this.isChangeBgClicked)
-                return { transform: 'translateX(48px)', opacity: 1 }
-            // return { left:this.isOnBackgroundSelect? '12px':'-24px' }
+                return { transform: 'translateX(48px)', opacity: 1, pointerEvents: 'all' }
         },
         boardStyle() {
             const boardBg = this.$store.getters.board.style?.background
