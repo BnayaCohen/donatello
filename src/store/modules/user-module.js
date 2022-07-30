@@ -16,6 +16,7 @@ export default {
   mutations: {
     setUser(state, { user }) {
       state.user = user
+      userService.getLoggedInUser()
     },
     setUsers(state, { users }) {
       state.users = users

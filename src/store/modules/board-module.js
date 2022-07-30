@@ -1,6 +1,10 @@
 import { boardService } from '../../services/board-service.js'
 import { utilService } from '../../services/util-service.js'
-import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_BOARD } from '../../services/socket-service'
+import {
+  socketService,
+  SOCKET_EMIT_SET_TOPIC,
+  SOCKET_EMIT_UPDATE_BOARD,
+} from '../../services/socket-service'
 import { userService } from '../../services/user-service.js'
 // import { styleType } from 'element-plus/es/components/table-v2/src/common.js'
 
@@ -68,7 +72,7 @@ export default {
       const boardLabels = currBoard.labels
       currBoard.groups.forEach((group) => {
         group.tasks.forEach((task) => {
-          task.labelIds.forEach(labelId => {
+          task.labelIds.forEach((labelId) => {
             for (var i = 0; i < boardLabels.length; i++) {
               if (boardLabels[i].id === labelId) {
                 currLabelName = boardLabels[i].title
@@ -83,13 +87,48 @@ export default {
       })
       return labelsCount
     },
-    memberToTaskMap({ currBoard }) {
-      let membersCount = {}
-      let currMemberName = ''
-      const boardMembers = currBoard.members
+    taskStatusMap({ currBoard }) {
+      let statusMap = {}
       currBoard.groups.forEach((group) => {
         group.tasks.forEach((task) => {
-          task.memberIds.forEach(memberId => {
+          const {status} = task
+          if (!statusMap[status]) statusMap[status] = 0
+          statusMap[status]++
+        })
+      })
+      return statusMap
+    },
+    doneTasksPerGroup({currBoard}) {
+      let groupMap = {}
+      let doneDataSets = []
+      currBoard.groups.forEach(group => {
+        const {title} = group
+        if (!groupMap[title]) groupMap[title] = 0
+        group.tasks.forEach(task => {
+          if (task.status === 'done') groupMap[title]++
+        })
+      })
+      for (const group in groupMap) {
+        const dataSet = {
+          label: group,
+          data: [groupMap[group]],
+          backgroundColor: 'rgba(0, 89, 148, 0.35)',
+        }
+        doneDataSets.push(dataSet)
+      }
+      return doneDataSets
+    },
+    memberToTaskMap({ currBoard }) {
+      let membersCount = {}
+      let membersDataSets = []
+      let currMemberName = ''
+      const boardMembers = currBoard.members
+      boardMembers.forEach((member) => {
+        membersCount[member.fullname] = 0
+      })
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
+          task.memberIds.forEach((memberId) => {
             for (var i = 0; i < boardMembers.length; i++) {
               if (boardMembers[i]._id === memberId) {
                 currMemberName = boardMembers[i].fullname
@@ -97,14 +136,32 @@ export default {
               }
             }
             if (!currMemberName) return
-            const hasLabel = currMemberName in membersCount
-            if (!hasLabel) membersCount[currMemberName] = 1
-            else membersCount[currMemberName]++
+            membersCount[currMemberName] += 1
           })
         })
       })
-      return membersCount
-    }
+      for (const member in membersCount) {
+        const dataSet = {
+          label: member,
+          data: [membersCount[member]],
+          backgroundColor: 'rgba(179, 205, 224, 0.35)',
+        }
+        membersDataSets.push(dataSet)
+      }
+      return membersDataSets
+    },
+    taskOverdueCount({ currBoard }) {
+      let overdueCount = 0
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
+          const { dueDate } = task
+          if (dueDate) {
+            if (dueDate < Date.now() && task.status !== 'done') overdueCount++
+          }
+        })
+      })
+      return overdueCount
+    },
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -130,7 +187,10 @@ export default {
       const idx = state.boards.findIndex((board) => board._id === boardId)
       state.boards.splice(idx, 1)
     },
-    changeGroupPos(state, { dropResult: { addedIndex, removedIndex }, reverse }) {
+    changeGroupPos(
+      state,
+      { dropResult: { addedIndex, removedIndex }, reverse }
+    ) {
       if (!reverse) {
         const group = state.currBoard.groups.splice(removedIndex, 1)[0]
         state.currBoard.groups.splice(addedIndex, 0, group)
@@ -148,8 +208,7 @@ export default {
       if (state.firstGroup) {
         state.currBoard.groups.splice(itemIndex, 1, state.firstGroup)
         state.firstGroup = null
-      }
-      else {
+      } else {
         state.currBoard.groups.splice(itemIndex, 1, state.secondGroup)
         state.secondGroup = null
       }
@@ -160,53 +219,56 @@ export default {
     },
     saveGroup(state, { group, reverse = false }) {
       if (!reverse) {
-        const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
+        const idx = state.currBoard.groups.findIndex(
+          (curGroup) => group.id === curGroup.id
+        )
         if (idx !== -1) {
           const oldGroup = state.currBoard.groups.splice(idx, 1, group)
           state.lastGroup = oldGroup
-        }
-        else {
+        } else {
           state.currBoard.groups.push(group)
           state.lastGroup = { ...group }
           group.id = utilService.makeId()
         }
-      }
-      else {
-        const idx = state.currBoard.groups.findIndex(curGroup => group.id === curGroup.id)
+      } else {
+        const idx = state.currBoard.groups.findIndex(
+          (curGroup) => group.id === curGroup.id
+        )
         if (idx !== -1) {
           !state.lastGroup.id && state.currBoard.groups.splice(idx, 1)
-          state.lastGroup.id && state.currBoard.groups.splice(idx, 1, state.lastGroup)
+          state.lastGroup.id &&
+            state.currBoard.groups.splice(idx, 1, state.lastGroup)
         }
         state.lastGroup = null
       }
     },
     saveTask(state, { groupId, task, reverse = false }) {
-      const group = state.currBoard.groups.find(group => group.id === groupId)
+      const group = state.currBoard.groups.find((group) => group.id === groupId)
       if (!reverse) {
-
-        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
+        const idx = group.tasks.findIndex((curTask) => curTask.id === task.id)
         if (idx !== -1) {
           const oldTask = group.tasks.splice(idx, 1, task)[0]
           state.lastTasks.push(oldTask)
-        }
-        else {
+        } else {
           group.tasks.push(task)
           const taskToUndo = { ...task }
           taskToUndo.remove = true
           state.lastTasks.push(taskToUndo)
         }
-      }
-      else {
-        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
-        const taskUndoIdx = state.lastTasks.findIndex(taskToUndo => taskToUndo.id === task.id)
+      } else {
+        const idx = group.tasks.findIndex((curTask) => curTask.id === task.id)
+        const taskUndoIdx = state.lastTasks.findIndex(
+          (taskToUndo) => taskToUndo.id === task.id
+        )
         if (idx !== -1) {
           state.lastTasks[taskUndoIdx].remove && group.tasks.splice(idx, 1)
-          !state.lastTasks[taskUndoIdx].remove && group.tasks.splice(idx, 1, state.lastTasks[taskUndoIdx])
+          !state.lastTasks[taskUndoIdx].remove &&
+            group.tasks.splice(idx, 1, state.lastTasks[taskUndoIdx])
         }
       }
     },
     removeFromTasksArray(state, { taskId }) {
-      const idx = state.lastTasks.findIndex(task => task.id === taskId)
+      const idx = state.lastTasks.findIndex((task) => task.id === taskId)
       state.lastTasks.splice(idx, 1)
     },
     addActivity(state, { task, txt }) {
@@ -223,7 +285,7 @@ export default {
     removeGroup(state, { groupId, reverse = false }) {
       if (!reverse) {
         const groups = state.currBoard.groups
-        const idx = groups.findIndex(group => group.id === groupId)
+        const idx = groups.findIndex((group) => group.id === groupId)
         if (idx !== -1) {
           groups.splice(idx, 1)
           state.removedGroup = { idx, group: groups[idx] }
@@ -236,16 +298,19 @@ export default {
     },
     removeTask(state, { groupId, taskId, reverse = false }) {
       if (!reverse) {
-        const group = state.currBoard.groups.find(group => group.id === groupId)
-        const idx = group.tasks.findIndex(task => task.id === taskId)
+        const group = state.currBoard.groups.find(
+          (group) => group.id === groupId
+        )
+        const idx = group.tasks.findIndex((task) => task.id === taskId)
         if (idx !== -1) {
           group.tasks.splice(idx, 1)
           state.removedTask = { idx, task: group.tasks[idx] }
         }
-      }
-      else {
+      } else {
         const { idx, task } = state.removedTask
-        const group = state.currBoard.groups.find(group => groupId === group.id)
+        const group = state.currBoard.groups.find(
+          (group) => groupId === group.id
+        )
         group.splice(idx, 0, task)
         state.removedTask = null
       }
@@ -286,8 +351,7 @@ export default {
         if (actionType === 'setBoard') {
           socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
           commit({ type: 'updateBoard', board: savedBoard })
-        } else
-          commit({ type: actionType, board: savedBoard })
+        } else commit({ type: actionType, board: savedBoard })
         commit({ type: 'setBoard', board: savedBoard })
         return savedBoard
       } catch (err) {
@@ -321,8 +385,7 @@ export default {
       } catch (err) {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: true })
-      }
-      finally {
+      } finally {
         commit({ type: 'removeFromTasksArray', taskId: task.id })
       }
     },
@@ -385,17 +448,19 @@ export default {
       commit({ type: 'addActivity', txt: 'Changed a card position' })
       socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       try {
-        await boardService.saveBoard(JSON.parse(JSON.stringify(state.currBoard)))
+        await boardService.saveBoard(
+          JSON.parse(JSON.stringify(state.currBoard))
+        )
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({ }, { filterBy }) {
+    async searchBoards({}, { filterBy }) {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []
-        filteredBoards.forEach(board => {
+        filteredBoards.forEach((board) => {
           const { _id, title, style } = board
           miniBoards.push({ _id, title, style })
         })
@@ -404,6 +469,5 @@ export default {
         console.log('couldnt get boards for search', err)
       }
     },
-
   },
 }
