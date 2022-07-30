@@ -99,24 +99,27 @@ export default {
       return statusMap
     },
     doneTasksPerGroup({currBoard}) {
-      let groupMap = {}
-      let doneDataSets = []
+      let dueDateMap = {'over-due': 0, 'due-soon': 0, 'No date assigned': 0}
+      let dueDateDataSets = []
+      const diff = 172800000
       currBoard.groups.forEach(group => {
-        const {title} = group
-        if (!groupMap[title]) groupMap[title] = 0
         group.tasks.forEach(task => {
-          if (task.status === 'done') groupMap[title]++
+          const {dueDate} = task
+          if (dueDate) {
+            if (Date.now() > dueDate) dueDateMap['over-due']++
+            else if (dueDate - Date.now() <= diff) dueDateMap['due-soon']++
+          }else dueDateMap['No date assigned']++
         })
       })
-      for (const group in groupMap) {
+      for (const dateStatus in dueDateMap) {
         const dataSet = {
-          label: group,
-          data: [groupMap[group]],
-          backgroundColor: 'rgba(0, 89, 148, 0.35)',
+          label: dateStatus,
+          data: [dueDateMap[dateStatus]],
+          backgroundColor: dateStatus === 'over-due'? 'rgba(128, 0, 0, 0.35)' : dateStatus === 'due-soon'? 'rgba(255, 195, 0, 0.35)' : 'rgba(56, 149, 211, 0.35)'
         }
-        doneDataSets.push(dataSet)
+        dueDateDataSets.push(dataSet)
       }
-      return doneDataSets
+      return dueDateDataSets
     },
     memberToTaskMap({ currBoard }) {
       let membersCount = {}
