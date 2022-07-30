@@ -23,11 +23,10 @@
                 d="M17 14C17 13.4477 17.4477 13 18 13C18.5523 13 19 13.4477 19 14V16H21C21.5523 16 22 16.4477 22 17C22 17.5523 21.5523 18 21 18H19V20C19 20.5523 18.5523 21 18 21C17.4477 21 17 20.5523 17 20V18H15C14.4477 18 14 17.5523 14 17C14 16.4477 14.4477 16 15 16H17V14Z"
                 fill="currentColor"></path>
             </svg></span> <span class="text">Share</span>
-          <users-modal v-if="isInviteOpen" @toggleUser="toggleUser" v-click-outside="toggleInvite"
-            @toggleInvite="toggleInvite" />
         </button>
       </section>
-
+      <users-modal :style="modalPos" v-if="isInviteOpen" @toggleUser="toggleUser" v-click-outside="toggleInvite"
+        @toggleInvite="toggleInvite" />
       <section v-if="!isSideBarOpen" class="more-options flex align-center justify-center">
         <button class="btn-background" :class="{ 'dark-theme': isDark }" @click.stop="openDashboard"><i
             class="fa-solid fa-chart-simple"></i><span class="text">Dashboard</span></button>
@@ -53,10 +52,18 @@ export default {
     return {
       isCurrBoardStarred: this.board.isStarred,
       isInviteOpen: false,
+      modalPos: {}
     }
   },
   methods: {
-    toggleInvite() {
+    toggleInvite(ev) {
+      if (ev.target) {
+        const { top, right, width, height } = ev.target?.closest('button').getBoundingClientRect()
+        this.modalPos = {
+          top: top + height + 6 + 'px',
+          left: right - width + 'px',
+        }
+      }
       this.isInviteOpen = !this.isInviteOpen
     },
     toggleStarBoard() {

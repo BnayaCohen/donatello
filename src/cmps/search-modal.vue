@@ -5,7 +5,7 @@
             <li v-for="board in filteredBoards" :key="board._id" @click="boardClicked(board._id)">
                 <div class="board-img flex">
                     <img v-if="board.style?.background" :src="board.style.background" alt="">
-                    <h3>{{board.title}}</h3>
+                    <h3>{{ board.title }}</h3>
                 </div>
             </li>
         </ul>
