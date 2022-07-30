@@ -13,7 +13,7 @@
           </div>
           <div class="task-title-container">
             <textarea rows="1" class="basic-input title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask"></textarea>
+              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask('Updated the title of card ')"></textarea>
             <div class="subtitle-header">
               <p>
                 in list
