@@ -27,7 +27,7 @@ export default {
     },
     computed: {
         timeAgo() {
-            return utilService.timeAgo(this.activity.createdAt)
+            return (utilService.timeAgo(this.activity.createdAt) || 'just now')
         }
     },
     components: {

@@ -11,7 +11,7 @@
       <div class="stats flex justify-between">
         <div class="content flex flex-column justify-between">
           <h3 class="flex flex-column">
-            All tasks
+            Tasks
             <h4>{{ taskCount }}</h4>
           </h3>
         </div>
@@ -46,7 +46,7 @@
       <div class="stats flex justify-between">
         <div class="content">
           <h3 class="flex flex-column">
-            All lists
+            Lists
             <h4>{{ listCount }}</h4>
           </h3>
         </div>
@@ -154,24 +154,24 @@
     <section class="chart-container flex">
       <div class="task-per-label flex flex-column">
         <h1>Task per Label</h1>
-        <PieChart :chartData="labelsData" />
+        <DoughnutChart :options="optionsDoughnut" :chartData="labelsData" />
       </div>
       <div class="task-per-member flex flex-column">
         <h1>Task per Member</h1>
-        <BarChart :chartData="membersData" />
+        <BarChart :options="optionsBar" :chartData="membersData" />
       </div>
     </section>
   </div>
 </template>
 <script>
-import { PieChart, BarChart } from 'vue-chart-3'
+import { DoughnutChart, BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { utilService } from '../services/util-service.js'
 Chart.register(...registerables)
 
 export default {
   name: 'dashboard',
-  components: { PieChart, BarChart },
+  components: { DoughnutChart, BarChart },
   props: {
     width: {
       type: Number,
@@ -204,9 +204,42 @@ export default {
         ],
       },
       membersData: {
-        labels: ['Task per Member'],
-        datasets: [
-        ],
+        labels: [''],
+        datasets: [],
+      },
+      optionsBar: {
+        scales: {
+          yAxes: {
+            ticks: {
+              min: 0,
+              beginAtZero: true,
+              stepSize: 1,
+              color: '#fff',
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff',
+              font: {
+                size: 16,
+              },
+            },
+          },
+        },
+      },
+      optionsDoughnut: {
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff',
+              font: {
+                size: 16,
+              },
+            },
+          },
+        },
       },
     }
   },

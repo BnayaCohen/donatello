@@ -97,11 +97,11 @@ function getEmptyTask() {
     style: {},
   }
 }
-async function saveGroup(boardId, group) {
+async function saveGroup(boardId, group, txt) {
   try {
     const board = await getById(boardId)
 
-    var activity = createActivity('created a list')
+    var activity = createActivity(txt)
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
     if (idx !== -1) board.groups.splice(idx, 1, group)
     else board.groups.push(group)
@@ -113,7 +113,7 @@ async function saveGroup(boardId, group) {
   }
 }
 
-async function saveTask(boardId, groupId, task) {
+async function saveTask(boardId, groupId, task, activityTxt) {
   try {
     const board = await getById(boardId)
     const group = board.groups.find((group) => group.id === groupId)
@@ -121,10 +121,10 @@ async function saveTask(boardId, groupId, task) {
     let activity
     if (idx !== -1) {
       group.tasks.splice(idx, 1, task)
-      activity = createActivity('Updated a card')
+      activity = createActivity(activityTxt)
     }
     else {
-      activity = createActivity('Created a card', task)
+      activity = createActivity(activityTxt, task)
       group.tasks.push(task)
     }
 
@@ -135,13 +135,13 @@ async function saveTask(boardId, groupId, task) {
   }
 }
 
-function createActivity(txt = '', task = null) {
+function createActivity(txt = '', task = {}) {
   return {
     id: utilService.makeId(),
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    task: task || '',
+    task: task,
   }
 }
 
@@ -151,7 +151,7 @@ async function removeGroup(boardId, groupId) {
 
     const idx = board.groups.findIndex((group) => group.id === groupId)
     if (idx !== -1) {
-      const activity = createActivity('removed a list')
+      const activity = createActivity('Deleted list ' + board.groups[idx].title)
       board.groups.splice(idx, 1)
       board.activities.unshift(activity)
     }
@@ -167,7 +167,7 @@ async function removeTask(boardId, groupId, taskId) {
     const group = board.groups.find((group) => group.id === groupId)
     const idx = group.tasks.findIndex((task) => task.id === taskId)
     if (idx !== -1) {
-      const activity = createActivity('removed a card')
+      const activity = createActivity(`Deleted card ${group.tasks[idx].title}`)
       group.tasks.splice(idx, 1)
       board.activities.unshift(activity)
     }
@@ -193,6 +193,8 @@ async function changeGroupPos(boardId, { removedIndex, addedIndex }) {
     const board = await getById(boardId)
     const group = board.groups.splice(removedIndex, 1)[0]
     board.groups.splice(addedIndex, 0, group)
+    const activity = createActivity(`Changed the position of list ${group.title}`)
+    board.activities.unshift(activity)
     await saveBoard(board)
   } catch (err) {
     throw err

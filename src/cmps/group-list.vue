@@ -88,7 +88,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.14);
   padding: 0 0 -55px -5px;
   height: 100%;
-  margin-inline-end: 3px;
+  margin-inline-end: 5px;
 }
 
 .smooth-dnd-container.horizontal {
