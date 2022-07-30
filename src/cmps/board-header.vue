@@ -10,7 +10,13 @@
             class="trellicons trellicons-star"></span></button>
         <span class="header-buffer" :style="{ borderLeft: isDark ? '1px solid #ffffff3d' : '1px solid #0003' }"></span>
         <div v-if="board.members.length" class="members-container flex align-center">
-          <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
+          <avatar-preview v-for="(_, i) in new Array(board.members.length > 4 ? 4 : board.members.length)" :key="i"
+            :member="board.members[i]" :avatarSize="'small'" />
+          <button v-if="board.members.length > 4" @click="toggleInvite" style="display:inline-block; border: none;"
+            :class="{ 'dark-theme': isDark }" class="users-on-board"><span :class="{ 'dark-theme': isDark }">{{
+                board.members.length - 4
+            }}</span>
+          </button>
         </div>
         <button @click="toggleInvite" class="btn-background" style="position:relative;"
           :style="{ marginInlineStart: board.members.length ? `4px` : 0 }" :class="{ 'dark-theme': isDark }"><span><svg
@@ -57,7 +63,7 @@ export default {
   },
   methods: {
     toggleInvite(ev) {
-      if (ev.target) {
+      if (ev?.target) {
         const { top, right, width, height } = ev.target?.closest('button').getBoundingClientRect()
         this.modalPos = {
           top: top + height + 6 + 'px',
