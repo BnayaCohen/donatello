@@ -492,8 +492,21 @@
 @media screen and (max-width: 520px) {
   .task-detail-container {
     flex-direction: column;
-    .detail-sidebar {
-      flex-direction: row;
+  }
+  .task-detail .detail-modal-container .detail-sidebar {
+    width: 100%;
+    padding: 0;
+    margin: 8px;
+    flex-direction: row;
+    .pos-relative {
+      padding: 0 12px;
+      width: 100%;
+    }
+    .sidebar-btn {
+      width: calc(50% - 8px);
+    }
+    .actions {
+      padding: 0;
     }
   }
 }
