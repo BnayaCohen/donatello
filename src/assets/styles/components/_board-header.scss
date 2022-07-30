@@ -86,6 +86,19 @@
     .member-avatar-small {
       margin-left: -4px;
     }
+    .users-on-board {
+      color: inherit;
+      margin-left: -4px;
+      width: em(32px);
+      height: em(32px);
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      background-color: #091e420a;
+      &:hover {
+        background-color: #091e4214;
+      }
+    }
   }
   .fa-solid.fa-chart-simple {
     margin-inline-end: 6px;
