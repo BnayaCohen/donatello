@@ -87,6 +87,7 @@
       margin-left: -4px;
     }
     .users-on-board {
+      color: inherit;
       margin-left: -4px;
       width: em(32px);
       height: em(32px);
@@ -96,18 +97,6 @@
       background-color: #091e420a;
       &:hover {
         background-color: #091e4214;
-      }
-      &::before {
-        font-size: 1.14rem;
-        height: 16px;
-        color: #42526e;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        &:hover {
-          color: #091e42;
-        }
       }
     }
   }
