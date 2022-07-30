@@ -49,7 +49,7 @@ export default {
       if (this.titleInput === '') return
       const newGroup = boardService.getEmptyGroup()
       newGroup.title = this.titleInput
-      this.$store.dispatch({ type: 'saveGroup', group: newGroup })
+      this.$store.dispatch({ type: 'saveGroup', group: newGroup, activityTxt: 'Created list ' + newGroup.title })
       this.titleInput = ''
     },
     async addTask() {
@@ -59,14 +59,16 @@ export default {
         newTask.title = this.titleInput
         newTask.groupId = this.groupId
         newTask.byMember = this.$store.getters.user
+        const group = this.$store.getters.board.groups.find(g => g.id === this.groupId)
         const board = await this.$store.dispatch({
           type: 'saveTask',
           groupId: this.groupId,
           task: newTask,
+          activityTxt: `Added card ${newTask.title} to list ${group.title}`
         })
         this.titleInput = ''
         this.$emit('x', board)
-      } catch(err) {
+      } catch (err) {
 
       }
     },

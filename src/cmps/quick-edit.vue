@@ -116,7 +116,8 @@ export default {
             taskToEdit: this.task,
             title: this.task.title,
             modalCmpType: '',
-            dueDate: ref(new Date())
+            dueDate: ref(new Date()),
+            activityTxt: 'Updated card ',
         }
     },
     methods: {
@@ -134,17 +135,23 @@ export default {
             this.onDueDateHover = !this.onDueDateHover
         },
         toggleDueDateCheck() {
-            this.taskToEdit.status = this.taskToEdit.status === 'in-progress' ? 'done' : 'in-progress'
+            if (this.taskToEdit.status === 'in-progress') {
+                this.activityTxt = 'Marked due date in card '
+                this.taskToEdit.status = 'done'
+            } else {
+                this.activityTxt = 'Un marked due date in card '
+                this.taskToEdit.status = 'in-progress'
+            }
         },
-        updateTask() {
+        updateTask(txt =this.activityTxt) {
             if (!this.taskToEdit.title) return
-            this.$emit('saveTask', this.taskToEdit)
+            this.$emit('saveTask', this.taskToEdit, txt)
             this.$emit('closeQuickEdit')
         },
         save() {
             if (!this.title) return
             this.taskToEdit.title = this.title
-            this.$emit('saveTask', this.taskToEdit)
+            this.$emit('saveTask', this.taskToEdit, this.activityTxt)
             this.$emit('closeQuickEdit')
 
         },
@@ -155,12 +162,12 @@ export default {
         removeDueDate() {
             this.task.dueDate = ''
             this.task.status = 'in-progress'
-            this.updateTask()
+            this.updateTask('Deleted the due date in card ')
         },
         updateDueDate(dueDate) {
             const timestamp = dueDate.getTime()
             this.task.dueDate = ref(timestamp)
-            this.updateTask()
+            this.updateTask('Updated the due date in card ')
         },
         openPicker(ev, type) {
             const { top, right, height, width } = ev.target.closest('.quick-card-editor-buttons-item').getBoundingClientRect()
@@ -187,7 +194,6 @@ export default {
             )
             return checklistCounter.doneTodos + '/' + checklistCounter.overallTodos
         },
-
         getFixedDueDate() {
             return (new Date(this.taskToEdit.dueDate) + '').slice(4, 10)
         },

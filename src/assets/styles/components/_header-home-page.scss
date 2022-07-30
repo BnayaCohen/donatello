@@ -2,6 +2,7 @@
   z-index: 6;
   position: fixed;
   top: 0;
+  z-index: 100;
   width: 100%;
   transition: 0.3s all ease;
   background-color: rgba($color: #fff, $alpha: 1);
@@ -41,48 +42,48 @@
     }
 
     @media (max-width: 600px) {
-      .login, .signup {
+      // .login, .signup {
+      // }
+    }
+  }
+
+  .already-signed {
+    align-items: stretch;
+    display: flex;
+    margin-left: auto;
+    a {
+      font-family: 'NotoSans-Regular';
+      align-items: center;
+      align-self: stretch;
+      color: rgb(23, 43, 77);
+      display: flex;
+      font-size: 1.2rem;
+      height: 100%;
+      padding: 0.5rem 1.5rem;
+      text-decoration: none;
+      background-color: rgb(23, 43, 77);
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(80, 95, 121);
       }
     }
   }
-  
-    .already-signed {
-      align-items: stretch;
-      display: flex;
-      margin-left: auto;
-      a{
-        font-family: 'NotoSans-Regular';
-        align-items: center;
-        align-self: stretch;
-        color: rgb(23, 43, 77);
-        display: flex;
-        font-size: 1.2rem;
-        height: 100%;
-        padding: 0.5rem 1.5rem;
-        text-decoration: none;
-        background-color: rgb(23, 43, 77);
-        color: rgb(255, 255, 255);        
-        cursor: pointer;
-        &:hover {
-          background-color: rgb(80, 95, 121);
-        }
-      }
-
-    }
 }
 .home-page-logo {
   display: flex;
   align-items: center;
   text-decoration: none;
   margin-inline-start: em(12px);
-    h1 {
-      color: #172b4d;
-      letter-spacing: 0.1px;
-      padding-block-end: em(1px);
-      margin-inline-start: 0.5rem;
-      text-shadow: -0.1px -0.1px 0 #172b4dad, 0.1px -0.2px 0 #172b4dad, -0.1px 0.2px 0 #172b4dad, 0.1px 0.1px 0 #172b4dad;
-      font-family: 'NotoSans-Bold';
-    }
+  h1 {
+    color: #172b4d;
+    letter-spacing: 0.1px;
+    padding-block-end: em(1px);
+    margin-inline-start: 0.5rem;
+    text-shadow: -0.1px -0.1px 0 #172b4dad, 0.1px -0.2px 0 #172b4dad,
+      -0.1px 0.2px 0 #172b4dad, 0.1px 0.1px 0 #172b4dad;
+    font-family: 'NotoSans-Bold';
+  }
 }
 .page-header-box-shadow {
   background-color: rgb(255, 255, 255);

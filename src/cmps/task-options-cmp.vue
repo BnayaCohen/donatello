@@ -36,15 +36,12 @@ export default {
         task: Object,
         cmpType: String,
         dueDate: Object,
-        pos:Object,
+        pos: Object,
     },
     data() {
         return {
             taskToEdit: this.task,
         }
-    },
-    mounted() {
-    console.log(this.pos);
     },
     computed: {
         getTaskClr() {
@@ -70,58 +67,68 @@ export default {
             const newAttachment = attachProps
             newAttachment.id = utilService.makeId()
             this.taskToEdit.attachments.unshift(newAttachment)
-            this.updateTask()
+            this.updateTask('Added an attachment to card ')
         },
         toggleLabel(labelId) {
-            let currTaskLabels = this.taskToEdit.labelIds
-            if (!currTaskLabels) currTaskLabels = []
+            let activityTxt
+            let currTaskLabels = this.taskToEdit.labelIds || []
 
-            if (currTaskLabels.includes(labelId))
+            if (currTaskLabels.includes(labelId)) {
                 currTaskLabels = currTaskLabels.filter(idx => idx !== labelId)
-            else currTaskLabels.unshift(labelId)
+                activityTxt = 'Removed a label from card '
+            }
+            else {
+                currTaskLabels.unshift(labelId)
+                activityTxt = 'Added a label to card '
+            }
 
             this.taskToEdit.labelIds = currTaskLabels
             this.updateTask()
         },
         addCover(color) {
             console.log(color);
-            this.taskToEdit.style.background = color
-            this.$emit('updateCurrCover',color)
-            this.updateTask()
+            this.$emit('updateCurrCover', color)
+            this.updateTask('Added changed the cover of card ')
         },
         addChecklist(checklist) {
             this.taskToEdit.checklists = this.taskToEdit.checklists?.length
                 ? [...this.task.checklists, checklist]
                 : [checklist]
-            this.updateTask()
+            this.updateTask(`Added ${checklist.title} checklist to card `)
         },
         toggleMember(memberId) {
-
+            let activityTxt
             let currMemberIds = this.taskToEdit.memberIds
             if (!currMemberIds) currMemberIds = []
 
-            if (currMemberIds.includes(memberId))
+            if (currMemberIds.includes(memberId)) {
                 currMemberIds = currMemberIds.filter(idx => idx !== memberId)
-            else currMemberIds.unshift(memberId)
+                activityTxt = 'Removed a member from card '
+            }
+            else {
+                currMemberIds.unshift(memberId)
+                activityTxt = 'Added a member to card '
+            }
 
             this.taskToEdit.memberIds = currMemberIds
-            this.updateTask()
+            this.updateTask(activityTxt)
         },
-        updateTask() {
+        updateTask(activityTxt) {
             this.$store.dispatch({
                 type: 'saveTask',
                 task: JSON.parse(JSON.stringify(this.taskToEdit)),
                 groupId: this.taskToEdit.groupId,
+                activityTxt: activityTxt + this.taskToEdit.title,
             })
         },
     },
-     components: {
-    members,
-    labels,
-    checklist,
-    dates,
-    attachments,
-    cover,
-  },
+    components: {
+        members,
+        labels,
+        checklist,
+        dates,
+        attachments,
+        cover,
+    },
 }
 </script>
