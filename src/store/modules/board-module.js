@@ -1,6 +1,10 @@
 import { boardService } from '../../services/board-service.js'
 import { utilService } from '../../services/util-service.js'
-import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_BOARD } from '../../services/socket-service'
+import {
+  socketService,
+  SOCKET_EMIT_SET_TOPIC,
+  SOCKET_EMIT_UPDATE_BOARD,
+} from '../../services/socket-service'
 import { userService } from '../../services/user-service.js'
 // import { styleType } from 'element-plus/es/components/table-v2/src/common.js'
 
@@ -87,18 +91,39 @@ export default {
       let statusMap = {}
       currBoard.groups.forEach((group) => {
         group.tasks.forEach((task) => {
-          if (!statusMap[task.status]) statusMap[task.status] = 0
-          statusMap[task.status]++
+          const {status} = task
+          if (!statusMap[status]) statusMap[status] = 0
+          statusMap[status]++
         })
       })
       return statusMap
+    },
+    doneTasksPerGroup({currBoard}) {
+      let groupMap = {}
+      let doneDataSets = []
+      currBoard.groups.forEach(group => {
+        const {title} = group
+        if (!groupMap[title]) groupMap[title] = 0
+        group.tasks.forEach(task => {
+          if (task.status === 'done') groupMap[title]++
+        })
+      })
+      for (const group in groupMap) {
+        const dataSet = {
+          label: group,
+          data: [groupMap[group]],
+          backgroundColor: 'rgba(0, 89, 148, 0.6)',
+        }
+        doneDataSets.push(dataSet)
+      }
+      return doneDataSets
     },
     memberToTaskMap({ currBoard }) {
       let membersCount = {}
       let membersDataSets = []
       let currMemberName = ''
       const boardMembers = currBoard.members
-      boardMembers.forEach(member => {
+      boardMembers.forEach((member) => {
         membersCount[member.fullname] = 0
       })
       currBoard.groups.forEach((group) => {
@@ -119,12 +144,23 @@ export default {
         const dataSet = {
           label: member,
           data: [membersCount[member]],
-          backgroundColor: '#c6d0de',
+          backgroundColor: 'rgba(179, 205, 224, 0.6)',
         }
         membersDataSets.push(dataSet)
       }
-      console.log(membersDataSets)
       return membersDataSets
+    },
+    taskOverdueCount({ currBoard }) {
+      let overdueCount = 0
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
+          const { dueDate } = task
+          if (dueDate) {
+            if (dueDate < Date.now() && task.status !== 'done') overdueCount++
+          }
+        })
+      })
+      return overdueCount
     },
   },
   mutations: {
@@ -219,10 +255,11 @@ export default {
           taskToUndo.remove = true
           state.lastTasks.push(taskToUndo)
         }
-      }
-      else {
-        const idx = group.tasks.findIndex(curTask => curTask.id === task.id)
-        const taskUndoIdx = state.lastTasks.findIndex(taskToUndo => taskToUndo.id === task.id)
+      } else {
+        const idx = group.tasks.findIndex((curTask) => curTask.id === task.id)
+        const taskUndoIdx = state.lastTasks.findIndex(
+          (taskToUndo) => taskToUndo.id === task.id
+        )
         if (idx !== -1) {
           state.lastTasks[taskUndoIdx].remove && group.tasks.splice(idx, 1)
           !state.lastTasks[taskUndoIdx].remove &&
@@ -358,11 +395,7 @@ export default {
       commit({ type: 'addActivity', txt: 'Deleted a card' })
       socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       try {
-        await boardService.removeTask(
-          state.currBoard._id,
-          groupId,
-          taskId
-        )
+        await boardService.removeTask(state.currBoard._id, groupId, taskId)
       } catch (err) {
         console.log("couldn't remove task", err)
         commit({ type: 'removeTask', groupId, taskId, reverse: true })
@@ -373,10 +406,7 @@ export default {
       commit({ type: 'addActivity', txt: 'Deleted a list' })
       socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       try {
-        await boardService.removeGroup(
-          state.currBoard._id,
-          groupId
-        )
+        await boardService.removeGroup(state.currBoard._id, groupId)
       } catch (err) {
         commit({ type: 'removeGroup', groupId, reverse: true })
         console.log("couldn't remove group", err)
@@ -395,10 +425,7 @@ export default {
       commit({ type: 'addActivity', txt: 'Changed a position of list' })
       socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       try {
-        await boardService.changeGroupPos(
-          state.currBoard._id,
-          dropResult
-        )
+        await boardService.changeGroupPos(state.currBoard._id, dropResult)
       } catch (err) {
         console.log(err)
         commit({ type: 'changeGroupPos', dropResult, reverse: true })
@@ -409,7 +436,9 @@ export default {
       commit({ type: 'addActivity', txt: 'Changed a card position' })
       socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       try {
-        await boardService.saveBoard(JSON.parse(JSON.stringify(state.currBoard)))
+        await boardService.saveBoard(
+          JSON.parse(JSON.stringify(state.currBoard))
+        )
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
@@ -419,7 +448,7 @@ export default {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []
-        filteredBoards.forEach(board => {
+        filteredBoards.forEach((board) => {
           const { _id, title, style } = board
           miniBoards.push({ _id, title, style })
         })
