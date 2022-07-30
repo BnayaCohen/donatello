@@ -1,5 +1,5 @@
 <template>
-  <section class="container task-detail">
+  <section v-if="task" class="container task-detail">
     <div class="back-screen" :style="{
       backgroundColor: '#000000a3',
       cursor: 'pointer',
@@ -45,8 +45,8 @@
       </div>
     </div>
   </section>
-  <date v-if="isDate" @updateDueDate="updateDueDate" @removeDueDate="removeDueDate" v-click-outside="toggleDate"
-    :pos="modalPos" @toggleDate="toggleDate" />
+  <!-- <date v-if="isDate" @updateDueDate="updateDueDate" @removeDueDate="removeDueDate" v-click-outside="toggleDate"
+    :pos="modalPos" @toggleDate="toggleDate" /> -->
 
   <task-options v-if="isPickerCmpOpen" :cmpType="modalCmpType" :task="task" :pos="modalPos" :dueDate="dueDate"
     @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @updateCurrCover="updateCurrCover"
