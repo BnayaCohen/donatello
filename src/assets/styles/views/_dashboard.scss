@@ -51,6 +51,7 @@
     margin-block-end: 1rem;
     .tasks-stats-wrapper {
       gap: em(10px);
+      flex-wrap: wrap;
     }
     gap: em(20px);
     padding: 1rem;
@@ -90,6 +91,10 @@
           stroke-width: 1/8;
           transition: stroke-dashoffset 1s ease-in-out;
         }
+        
+        @media (max-width: 490px) {
+          width: 150px;
+        }
       }
       h3 {
         color: #fff;
@@ -101,7 +106,7 @@
         width: 128px;
         align-items: center;
         margin-block: 0;
-        max-height: 140px;
+        min-height: 140px;
         background-image: linear-gradient(
           90deg,
           #99b7bf,
