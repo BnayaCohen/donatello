@@ -22,6 +22,7 @@
     font-size: em(20px);
     color: #4d6183;
     position: absolute;
+    pointer-events: none;
     left: -36px;
     overflow-x: hidden;
     top: 9px;
@@ -158,7 +159,6 @@
 
   .side-bar-options {
     padding: 6px 6px 8px 12px;
-    // width: 100%;
 
     li {
       padding: 6px;
@@ -186,9 +186,6 @@
   }
 
   .side-bar-activities {
-    // padding: 12px 6px 8px 12px;
-    margin-left: -2px;
-    width: 100%;
     height: calc(100vh - 140px);
 
     p {
