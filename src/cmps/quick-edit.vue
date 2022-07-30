@@ -80,10 +80,10 @@
                 </span>  -->
 
                 <!-- Edit due date -->
-                <!-- <span class="quick-card-editor-buttons-item">
+                <span @click="openPicker($event, 'dates')" class="quick-card-editor-buttons-item">
                     <span class="icon-sm icon-clock"><i class="trellicons trellicons-clock"></i></span>
                     <span class="quick-card-editor-buttons-item-text">Edit dates</span>
-                </span> -->
+                </span>
 
                 <!-- Archive/Delete -->
                 <span class="quick-card-editor-buttons-item">
@@ -94,9 +94,8 @@
             </div>
         </div>
     </div>
-    <!-- @removeDueDate="removeDueDate" @updateDueDate="updateDueDate"  -->
     <task-options v-if="isPickerOpen" :cmpType="modalCmpType" :task="task" :style="modalPos" :dueDate="dueDate"
-        @pickerClosed="isPickerOpen = false" />
+        @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @pickerClosed="isPickerOpen = false" />
 </template>
 
 <script>
@@ -143,10 +142,10 @@ export default {
                 this.taskToEdit.status = 'in-progress'
             }
         },
-        updateTask(txt =this.activityTxt) {
+        updateTask(txt = this.activityTxt, close = true) {
             if (!this.taskToEdit.title) return
             this.$emit('saveTask', this.taskToEdit, txt)
-            this.$emit('closeQuickEdit')
+            close && this.$emit('closeQuickEdit')
         },
         save() {
             if (!this.title) return
@@ -160,14 +159,14 @@ export default {
             this.$emit('closeQuickEdit')
         },
         removeDueDate() {
-            this.task.dueDate = ''
-            this.task.status = 'in-progress'
-            this.updateTask('Deleted the due date in card ')
+            this.taskToEdit.dueDate = ''
+            this.taskToEdit.status = 'in-progress'
+            this.updateTask('Deleted the due date in card ', false)
         },
         updateDueDate(dueDate) {
             const timestamp = dueDate.getTime()
-            this.task.dueDate = ref(timestamp)
-            this.updateTask('Updated the due date in card ')
+            this.taskToEdit.dueDate = ref(timestamp)
+            this.updateTask('Updated the due date in card ', false)
         },
         openPicker(ev, type) {
             const { top, right, height, width } = ev.target.closest('.quick-card-editor-buttons-item').getBoundingClientRect()
