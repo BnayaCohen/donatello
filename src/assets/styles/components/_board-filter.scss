@@ -9,8 +9,6 @@
       float: left;
       font-size: 14px;
       height: 32px;
-      margin-left: 4px;
-      margin-right: 4px;
       outline: none;
       padding-left: 30px;
       padding-right: 8px;
@@ -63,7 +61,8 @@
       vertical-align: bottom;
     }
   }
-    .input-focus.search-icon {
-        filter: invert(11%) sepia(59%) saturate(1914%) hue-rotate(187deg) brightness(10%) contrast(104%);
-    }
+  .input-focus.search-icon {
+    filter: invert(11%) sepia(59%) saturate(1914%) hue-rotate(187deg)
+      brightness(10%) contrast(104%);
+  }
 }

@@ -1,8 +1,9 @@
 <template>
-  <section class="container task-detail">
+  <section v-if="task" class="container task-detail">
     <div class="back-screen" :style="{
       backgroundColor: '#000000a3',
       cursor: 'pointer',
+      overflowX: 'hidden'
     }">
       <div class="detail-modal-container" v-click-outside="backToBoard">
         <cover-bg :currCover="currCover" @toggle="openPicker" @closeModal="backToBoard" />
@@ -26,14 +27,7 @@
         <div class="task-detail-container flex">
           <div class="task-detail-main flex flex-column">
             <div class="members-labels-container flex align-center">
-              <div v-if="task.memberIds.length" class="members-container">
-                <h3 style="margin: 0 8px 4px 0" class="small-title">Members</h3>
-                <div style="display: inline-block; margin: 0 4px 4px 0" v-for="memberId in task.memberIds"
-                  :key="memberId" class="img-container">
-                  <avatar-preview :member="getMemberById(memberId)" :avatarSize="'big'" />
-                </div>
-                <span class="add-member"></span>
-              </div>
+              <member-prev :memberIds="task.memberIds" @pickerOpened="openPicker" />
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
               <date-picker v-if="task.dueDate" :task="task" @toggle="toggleDate" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
@@ -52,14 +46,15 @@
       </div>
     </div>
   </section>
-  <date v-if="isDate" @updateDueDate="updateDueDate" @removeDueDate="removeDueDate" v-click-outside="toggleDate"
-    :pos="modalPos" @toggleDate="toggleDate" />
+  <!-- <date v-if="isDate" @updateDueDate="updateDueDate" @removeDueDate="removeDueDate" v-click-outside="toggleDate"
+    :pos="modalPos" @toggleDate="toggleDate" /> -->
 
   <task-options v-if="isPickerCmpOpen" :cmpType="modalCmpType" :task="task" :pos="modalPos" :dueDate="dueDate"
     @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @updateCurrCover="updateCurrCover"
     @pickerClosed="isPickerCmpOpen = false" />
 </template>
 <script>
+import memberPrev from '../cmps/task-details-cmps/memberPrev.vue'
 import checklistList from '../cmps/task-details-cmps/checklist-list.vue'
 import { utilService } from '../services/util-service.js'
 import attachmentList from '../cmps/task-details-cmps/attachment-list.vue'
@@ -157,7 +152,7 @@ export default {
       this.$store.dispatch({
         type: 'saveTask',
         task: JSON.parse(JSON.stringify(this.task)),
-        groupId:this.task.groupId,
+        groupId: this.task.groupId,
         activityTxt: activityTxt + this.task.title,
       })
     },
@@ -196,7 +191,7 @@ export default {
           this.task.status = 'done'
           break
       }
-      const activityTxt=this.task.status === 'in-progress'? 'Un marked':'Marked as done'
+      const activityTxt = this.task.status === 'in-progress' ? 'Un marked' : 'Marked as done'
       this.updateTask(activityTxt + ' card ')
     },
     removeAttachment(attachId) {
@@ -262,6 +257,7 @@ export default {
     taskComment,
     taskOptions,
     taskDescription,
+    memberPrev
   },
 }
 </script>

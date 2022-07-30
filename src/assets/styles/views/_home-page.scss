@@ -87,7 +87,6 @@
         padding-top: 1rem;
         line-height: 40px;
       }
-
     }
   }
 
@@ -128,10 +127,10 @@
 }
 .start-doing {
   margin-block-start: 3rem;
-  user-select: none;
-  -webkit-box-align: center;
   align-items: center;
-  border-radius: 0.3rem;
+  border-radius: 3px;
+  width: 120.7px;
+  height: 47px;
   cursor: pointer;
   display: inline-flex;
   transition: all 250ms ease-out 0s;
@@ -147,5 +146,21 @@
   }
   span {
     font-size: rem(20px);
+  }
+}
+@media screen and (max-width: 520px) {
+  .header-home-page {
+    .home-page-logo {
+      h1 {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  .login-container {
+    a.login,
+    a.signup {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
   }
 }

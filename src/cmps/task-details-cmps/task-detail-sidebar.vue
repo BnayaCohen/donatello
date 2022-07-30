@@ -42,7 +42,7 @@
           </button>
         </div>
         <div class="sidebar-btn-container">
-          <label for="date-picker-side" @click="toggleDate($event)">
+          <label for="date-picker-side" @click="openPicker($event,'dates')">
             <button class="sidebar-btn flex align-center click-active">
               <div :style="{ width: '16px', height: '16px' }">
                 <svg
