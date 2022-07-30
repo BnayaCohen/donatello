@@ -3,6 +3,7 @@
     <div class="back-screen" :style="{
       backgroundColor: '#000000a3',
       cursor: 'pointer',
+      overflowX: 'hidden'
     }">
       <div class="detail-modal-container" v-click-outside="backToBoard">
         <cover-bg :currCover="currCover" @toggle="openPicker" @closeModal="backToBoard" />
