@@ -3,9 +3,9 @@
     position: relative;
 
     .search-input {
-      background-color: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: rgba(255, 255, 255, 0.5);
+      background-color: #00000014;
+      border: none;
+      color: #172b4d;
       float: left;
       font-size: 14px;
       height: 32px;
@@ -15,15 +15,13 @@
       transition: width 150ms;
       width: 250px;
       &::placeholder {
-        color: #fff;
+        color: inherit;
         letter-spacing: 0.5px;
         font-family: 'NotoSans-Regular';
         font-size: 0.9rem;
       }
       &:hover {
-        background-color: rgba(255, 255, 255, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.2);
       }
 
       &:focus {
@@ -42,7 +40,7 @@
     label {
       margin: 0;
       padding: 0;
-      color: #ffffff;
+      color: inherit;
       display: flex;
       width: 32px;
       height: 32px;

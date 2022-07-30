@@ -1,25 +1,12 @@
 <template>
   <div :style="bgStyle" style="background-position-y: top">
-    <app-header
-      @searchBoards="onSearchBoards"
-      @toggleUserMenu="toggleUserMenu"
-      :bgColor="headerColor"
-      :isDark="isDarkTheme"
-      @cleanSearch="cleanSearch"
-    />
+    <app-header @searchBoards="onSearchBoards" @toggleUserMenu="toggleUserMenu" :bgColor="headerColor"
+      :isDark="isDarkTheme" @cleanSearch="cleanSearch" @closeSearchModal="cleanSearch" />
     <router-view @setBackground="initBackground" :isDark="isDarkTheme" />
   </div>
-  <user-menu
-    v-if="isUserMenu"
-    @toggleUserMenu="isUserMenu = false"
-    v-click-outside="toggleUserMenu"
-    @logout="onLogout"
-  />
-  <search-modal
-    @boardClicked="goToBoard"
-    :filteredBoards="filteredBoards"
-    v-if="isSearch"
-  />
+  <user-menu v-if="isUserMenu" @toggleUserMenu="isUserMenu = false" v-click-outside="toggleUserMenu"
+    @logout="onLogout" />
+  <search-modal :filteredBoards="filteredBoards" v-if="isSearch" />
 </template>
 
 <script>
@@ -67,6 +54,7 @@ export default {
     },
     cleanSearch() {
       this.isSearch = false
+      console.log(this.isSearch)
     },
     toggleUserMenu(ev) {
       this.x = ev?.clientX
@@ -78,6 +66,7 @@ export default {
       this.isUserMenu = false
       this.$router.push('/')
     },
+    goToBoard() { }
   },
   computed: {
     bgStyle() {
