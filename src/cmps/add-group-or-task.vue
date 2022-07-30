@@ -58,6 +58,7 @@ export default {
         const newTask = boardService.getEmptyTask()
         newTask.title = this.titleInput
         newTask.groupId = this.groupId
+        newTask.byMember = this.$store.getters.user
         const board = await this.$store.dispatch({
           type: 'saveTask',
           groupId: this.groupId,
