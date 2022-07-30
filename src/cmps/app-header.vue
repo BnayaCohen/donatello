@@ -6,20 +6,20 @@
         <div class="logo-side flex">
           <button class="logo btn btn-background" @click="goToHome" :class="{ 'dark-theme': isDark }">
             <i class="fa-brands fa-trello"></i>
-            Donatello
+            <span class="logo-text"> Donatello</span>
           </button>
           <button class="btn btn-background" :class="{ 'dark-theme': isDark }" @click="goToBoards">
             Boards
           </button>
           <button @click="toggleModal" class="btn btn-background create-board-btn" :class="{ 'dark-theme': isDark }">
-            Create
+            <span>Create</span>
             <board-create v-if="isModalOpen" v-click-outside="toggleModal" @toggleModal="toggleModal"
               @addBoard="createBoard" :style="getCords" />
           </button>
         </div>
       </section>
       <section class=" user-actions flex">
-        <board-filter @searchBoards="searchBoards" @cleanSearch="$emit('cleanSearch')"/>
+        <board-filter @searchBoards="searchBoards" @cleanSearch="$emit('cleanSearch')" />
         <button class="btn btn-background" :class="{ 'dark-theme': isDark }">
           <i class="fa-solid fa-bell"></i>
         </button>
