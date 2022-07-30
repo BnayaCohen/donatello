@@ -115,7 +115,7 @@ export default {
         const dataSet = {
           label: dateStatus,
           data: [dueDateMap[dateStatus]],
-          backgroundColor: dateStatus === 'over-due'? 'rgba(128, 0, 0, 0.35)' : dateStatus === 'due-soon'? 'rgba(255, 195, 0, 0.35)' : 'rgba(56, 149, 211, 0.35)'
+          backgroundColor: dateStatus === 'over-due'? 'rgba(128, 0, 0, 0.55)' : dateStatus === 'due-soon'? 'rgba(255, 195, 0, 0.55)' : 'rgba(56, 149, 211, 0.55)'
         }
         dueDateDataSets.push(dataSet)
       }
@@ -147,7 +147,7 @@ export default {
         const dataSet = {
           label: member,
           data: [membersCount[member]],
-          backgroundColor: 'rgba(179, 205, 224, 0.35)',
+          backgroundColor: 'rgba(44, 130, 201, 0.75)',
         }
         membersDataSets.push(dataSet)
       }
