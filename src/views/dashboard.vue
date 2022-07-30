@@ -365,7 +365,7 @@ export default {
       return this.board?.groups?.length
     },
     memberCount() {
-      return this.$store.getters.users?.length || 0
+      return this.board.members?.length || 0
     },
     todayFixed() {
       return new Date(Date.now()).toLocaleDateString()
