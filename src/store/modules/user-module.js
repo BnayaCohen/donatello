@@ -32,6 +32,7 @@ export default {
     async login({ commit }, { credentials }) {
       try {
         const user = await userService.login(credentials)
+        console.log(user);
         commit({ type: 'setUser', user })
         return user
       } catch (err) {
