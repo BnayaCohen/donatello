@@ -19,7 +19,8 @@
         </div>
       </section>
       <section class=" user-actions flex">
-        <board-filter @searchBoards="searchBoards" @cleanSearch="$emit('cleanSearch')" />
+        <board-filter :class="{ 'dark-theme': isDark }" @searchBoards="searchBoards"
+          @closeSearchModal="$emit('closeSearchModal')" />
         <button class="btn btn-background" :class="{ 'dark-theme': isDark }">
           <i class="fa-solid fa-bell"></i>
         </button>
