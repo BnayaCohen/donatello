@@ -13,7 +13,9 @@
           <avatar-preview v-for="(_, i) in new Array(board.members.length > 4 ? 4 : board.members.length)" :key="i"
             :member="board.members[i]" :avatarSize="'small'" />
           <button v-if="board.members.length > 4" @click="toggleInvite" style="display:inline-block; border: none;"
-            class="users-on-board"><span>{{ board.members.length - 4 }}</span>
+            :class="{ 'dark-theme': isDark }" class="users-on-board"><span :class="{ 'dark-theme': isDark }">{{
+                board.members.length - 4
+            }}</span>
           </button>
         </div>
         <button @click="toggleInvite" class="btn-background" style="position:relative;"
