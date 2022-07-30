@@ -497,3 +497,31 @@
     }
   }
 }
+.img-container.add-member-btn {
+  width: em(32px);
+  height: em(32px);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  background-color: #091e420a;
+  &:hover {
+    background-color: #091e4214;
+  }
+  &::before {
+    content: '\e901';
+    font-size: 1.14rem;
+    height: 16px;
+    color: #42526e;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &:hover {
+      color: #091e42;
+    }
+  }
+}
+.task-labels {
+  position: relative;
+  top: -2px;
+}
