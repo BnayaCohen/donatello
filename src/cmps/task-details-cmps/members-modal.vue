@@ -39,6 +39,7 @@ export default {
   },
   computed: {
     members() {
+      console.log(this.$store.getters.getMembers);
       return this.$store.getters.getMembers
     },
   },

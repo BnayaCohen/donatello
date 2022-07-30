@@ -58,7 +58,6 @@ export default {
   methods: {
     toggleInvite() {
       this.isInviteOpen = !this.isInviteOpen
-      console.log('madeIt')
     },
     toggleStarBoard() {
       this.isCurrBoardStarred = !this.isCurrBoardStarred
