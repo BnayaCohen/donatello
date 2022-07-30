@@ -158,20 +158,20 @@
       </div>
       <div class="task-per-member flex flex-column">
         <h1>Task per Member</h1>
-        <PolarAreaChart :chartData="membersData" />
+        <BarChart :chartData="membersData" />
       </div>
     </section>
   </div>
 </template>
 <script>
-import { PieChart, PolarAreaChart } from 'vue-chart-3'
+import { PieChart, BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import {utilService} from '../services/util-service.js'
+import { utilService } from '../services/util-service.js'
 Chart.register(...registerables)
 
 export default {
   name: 'dashboard',
-  components: { PieChart, PolarAreaChart },
+  components: { PieChart, BarChart },
   props: {
     width: {
       type: Number,
@@ -204,36 +204,26 @@ export default {
         ],
       },
       membersData: {
-        labels: [],
+        labels: ['Task per Member'],
         datasets: [
-          {
-            data: [],
-            backgroundColor: [
-            ],
-          },
         ],
       },
     }
   },
   created() {
     const labelsDataSet = this.$store.getters.labelToTaskMap
-    const membersDataSet = this.$store.getters.memberToTaskMap
+    const membersDataSets = this.$store.getters.memberToTaskMap
     Object.keys(labelsDataSet).map((label) => {
       this.labelsData.labels.push(label)
       this.labelsData.datasets[0].data.push(labelsDataSet[label])
     })
-        Object.keys(membersDataSet).map((memberName) => {
-      this.membersData.labels.push(memberName)
-      this.membersData.datasets[0].data.push(membersDataSet[memberName])
-      this.membersData.datasets[0].backgroundColor.push(utilService.getRandomColor())
-    })
-
+    this.membersData.datasets = membersDataSets
   },
   computed: {
     taskCount() {
-        let counter = 0
-        this.board.groups.map((group) => {
-            counter += group.tasks.length
+      let counter = 0
+      this.board.groups.map((group) => {
+        counter += group.tasks.length
       })
       return counter
     },
