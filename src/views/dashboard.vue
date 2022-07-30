@@ -49,7 +49,7 @@
             </svg>
           </div>
           <div class="stats small circle-bar flex flex-column">
-            <h4>Done tasks</h4>
+            <h4>Completed tasks</h4>
             <div class="percent-container flex align-center justify-center">
               <h2>{{ donePercentDisplay }}</h2>
               <svg
@@ -240,7 +240,7 @@
           <BarChart :options="optionsBar" :chartData="membersData" />
         </div>
                 <div class=" flex flex-column">
-          <h1>Done tasks per List</h1>
+          <h1>Task due-date statistics</h1>
           <BarChart :options="optionsBar" :chartData="doneTasksData" />
         </div>
 
@@ -301,7 +301,7 @@ export default {
       optionsBar: {
         scales: {
           y: {
-            max: 10
+            max: 8
           },
           yAxes: {
             ticks: {
@@ -339,7 +339,7 @@ export default {
     }
   },
   created() {
-    this.optionsBar.scales.y.max = this.taskCount
+    // this.optionsBar.scales.y.max = this.taskCount
     const labelsDataSet = this.$store.getters.labelToTaskMap
     const membersDataSets = this.$store.getters.memberToTaskMap
     const doneTasksDataSets = this.$store.getters.doneTasksPerGroup
@@ -365,7 +365,7 @@ export default {
       return this.board?.groups?.length
     },
     memberCount() {
-      return this.$store.getters.users?.length || 0
+      return this.board.members?.length || 0
     },
     todayFixed() {
       return new Date(Date.now()).toLocaleDateString()

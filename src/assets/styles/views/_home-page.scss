@@ -92,6 +92,8 @@
 
   @media (max-width: 460px) {
     .hero-img {
+      margin-inline-end: 1.5rem;
+      min-width: 250px;
       img {
         max-width: 300px;
         margin-inline-start: 1rem;
