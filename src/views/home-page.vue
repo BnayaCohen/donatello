@@ -1,7 +1,6 @@
 <template>
   <header-home-page />
   <div class="home-page">
-    <div class="gradient-background"></div>
     <section class="home-page-layout">
       <div class="hero">
         <div class="hero-description">

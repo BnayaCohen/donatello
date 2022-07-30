@@ -1,6 +1,6 @@
 <template>
   <header class="main-layout app-header"
-    :style="{ background: bgColor, position: 'relative', zIndex: isModalOpen ? 100 : 5 }">
+    :style="{ background: bgColor, position: 'relative', zIndex: isModalOpen ? 100 : 5  }">
     <div class="flex justify-between align-center">
       <section class="nav-container">
         <div class="logo-side flex">
