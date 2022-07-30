@@ -308,8 +308,9 @@ export default {
     },
     async saveTask({ commit, state }, { groupId, task, activityTxt }) {
       commit({ type: 'saveTask', groupId, task })
+      console.time('str')
       commit({ type: 'addActivity', task, txt: activityTxt })
-
+      console.timeEnd('str')
       socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
       try {
         await boardService.saveTask(
