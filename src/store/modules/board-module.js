@@ -83,6 +83,16 @@ export default {
       })
       return labelsCount
     },
+    taskStatusMap({ currBoard }) {
+      let statusMap = {}
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
+          if (!statusMap[task.status]) statusMap[task.status] = 0
+          statusMap[task.status]++
+        })
+      })
+      return statusMap
+    },
     memberToTaskMap({ currBoard }) {
       let membersCount = {}
       let membersDataSets = []

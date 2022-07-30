@@ -13,6 +13,7 @@
 }
 
 .dashboard-modal {
+  font-family: 'NotoSans-Regular';
   position: fixed;
   top: 0;
   right: 0;
@@ -37,32 +38,85 @@
       font-size: 40px;
     }
   }
-  .general-statistics .stats {
-    outline: 2px solid rgba(255, 255, 255, 0.904);
-    h3 {
+
+  .general-statistics {
+    margin-block-end: 1rem;
+    .tasks-stats-wrapper {
+      gap: em(10px);
+    }
+    gap: em(20px);
+    padding: 1rem;
+    .stats {
+      outline: 2px solid rgba(255, 255, 255, 0.904);
+      &.circle-bar {
+        color: #fff;
+        svg {
+          height: 100px;
+          transform: rotate(-90deg);
+          width: 100px;
+        }
+
+        .in-progress-bar__background, .done-progress-bar__background{
+          fill: none;
+          stroke: #e2eff0;
+          stroke-width: 1.8;
+        }
+
+        .in-progress-bar__progress, .done-progress-bar__progress {
+          fill: none;
+          stroke: #e2eff0;
+          stroke: #78bec7;
+          stroke-dasharray: 100 100;
+          stroke-dashoffset: 100;
+          stroke-linecap: round;
+          stroke-width: 1/8;
+          transition: stroke-dashoffset 1s ease-in-out;
+        }
+      }
+      h3 {
         color: #fff;
         font-size: em(20px);
         letter-spacing: 1px;
         margin-inline-start: em(8px);
-    }
-    margin-inline-end: em(25px);
-    margin-block-end: em(20px);
-    border-radius: 3px;
-    background-color: #fff;
-    height: 110px;
-    min-width: 270px;
-    width: 270px;
-    margin-bottom: 20px;
-    &:first-child {
-      position: relative;
-      overflow: hidden;
-      background-image: linear-gradient(
-        90deg,
-        #4fa8f8,
-        #2fb4f5,
-        #23beee,
-        #37c7e5,
-        #55ceda
+      }
+      margin-block-end: em(20px);
+      border-radius: 3px;
+      background-color: #fff;
+      max-height: 140px;
+      width: 270px;
+      margin-bottom: 20px;
+      &.small {
+        width: 128px;
+        align-items: center;
+        margin-block: 0;
+        max-height: 140px;        
+        background-image: linear-gradient(
+          90deg,
+          #99b7bf,
+          #7e9ea9,
+          #6b9aa7,
+          #7095a0,
+          #789da9
+        );
+
+        h4 {
+          margin: 0;
+        }
+        .percent-container {
+          height: 100%;
+        }
+      }
+
+      &.tasks {
+        position: relative;
+        overflow: hidden;
+        background-image: linear-gradient(
+          90deg,
+          #4fa8f8,
+          #2fb4f5,
+          #23beee,
+          #37c7e5,
+          #55ceda
         );
         .chart-icon {
           width: 225px;
@@ -74,30 +128,54 @@
           right: -15px;
           height: 80px;
         }
-    }
+      }
 
-    &:nth-child(2) {
-        background-image: linear-gradient(270deg,#66c34f,#76c44f,#41c04e,#56d340,#5bdb5b);
+      &.lists {
+        background-image: linear-gradient(
+          270deg,
+          #66c34f,
+          #76c44f,
+          #41c04e,
+          #56d340,
+          #5bdb5b
+        );
         .chart-icon-graph {
-          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg) brightness(104%) contrast(100%);
+          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
+            brightness(104%) contrast(100%);
           opacity: 0.8;
           padding: 0.5rem;
           margin-top: em(10px);
-      }
-    }
-    &:nth-child(3) {
-        background-image: linear-gradient(90deg,#eccd72,#dcbe5e,#ebd360,#ecdc62,#ecda73);
-        .chart-member {
-            filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg) brightness(104%) contrast(100%);
-            padding: 0.5rem;
-            opacity: 0.8;
-
         }
+      }
+      &.members {
+        background-image: linear-gradient(
+          90deg,
+          #eccd72,
+          #dcbe5e,
+          #ebd360,
+          #ecdc62,
+          #ecda73
+        );
+        .chart-member {
+          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
+            brightness(104%) contrast(100%);
+          padding: 0.5rem;
+          opacity: 0.8;
+        }
+      }
     }
   }
 
-h1 {
+  h1 {
     color: #fff;
     align-self: center;
-}
+  }
+  .chart-container {
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.265);
+    width: 90%;
+    border-radius: 3px;
+    outline: 2px solid rgba(245, 245, 245, 0.176);
+    align-items: center;
+  }
 }
