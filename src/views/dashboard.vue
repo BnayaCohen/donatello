@@ -371,7 +371,7 @@ export default {
       return new Date(Date.now()).toLocaleDateString()
     },
     donePercentDisplay() {
-      if (!this.statusMap) return
+      if (!this.statusMap || !this.statusMap['done']) return '0%'
       return (
         ((this.statusMap['done'] / this.taskCount) * 100).toFixed(0) +
         '%'

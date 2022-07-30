@@ -42,8 +42,13 @@
     }
 
     @media (max-width: 600px) {
-      // .login, .signup {
-      // }
+      .login, .signup {
+        padding: 0;
+        font-size: 1rem;
+      }
+      .login {
+        margin-inline-end: em(10px);
+      }
     }
   }
 
