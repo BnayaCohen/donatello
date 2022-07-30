@@ -12,7 +12,6 @@
         <div v-if="board.members.length" class="members-container flex align-center">
           <avatar-preview v-for="member in board.members" :key="member._id" :member="member" :avatarSize="'small'" />
         </div>
-
         <button @click="toggleInvite" class="btn-background" style="position:relative;"
           :style="{ marginInlineStart: board.members.length ? `4px` : 0 }" :class="{ 'dark-theme': isDark }"><span><svg
               style="position:relative;top:3px;" width="16" height="16" role="presentation" focusable="false"
@@ -23,14 +22,15 @@
               <path
                 d="M17 14C17 13.4477 17.4477 13 18 13C18.5523 13 19 13.4477 19 14V16H21C21.5523 16 22 16.4477 22 17C22 17.5523 21.5523 18 21 18H19V20C19 20.5523 18.5523 21 18 21C17.4477 21 17 20.5523 17 20V18H15C14.4477 18 14 17.5523 14 17C14 16.4477 14.4477 16 15 16H17V14Z"
                 fill="currentColor"></path>
-            </svg></span> Share
+            </svg></span> <span class="text">Share</span>
           <users-modal v-if="isInviteOpen" @toggleUser="toggleUser" v-click-outside="toggleInvite"
             @toggleInvite="toggleInvite" />
         </button>
       </section>
 
       <section v-if="!isSideBarOpen" class="more-options flex align-center justify-center">
-        <button class="btn-background" :class="{ 'dark-theme': isDark }" @click.stop="openDashboard">Dashboard</button>
+        <button class="btn-background" :class="{ 'dark-theme': isDark }" @click.stop="openDashboard"><i
+            class="fa-solid fa-chart-simple"></i><span class="text">Dashboard</span></button>
         <a class="board-header-menu-btn" :class="{ 'dark-theme': isDark }" @click="$emit('sideBarOpened')"><span
             class="trellicons trellicons-options"></span>
           <span class="text">Show menu</span></a>
