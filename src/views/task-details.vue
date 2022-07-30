@@ -29,7 +29,7 @@
             <div class="members-labels-container flex align-center">
               <member-prev :memberIds="task.memberIds" @pickerOpened="openPicker" />
               <label-prev :taskLabels="taskLabels" @toggle="openPicker" />
-              <date-picker v-if="task.dueDate" :task="task" @toggle="toggleDate" @toggleIsDone="toggleIsDone"
+              <date-picker v-if="task.dueDate" :task="task" @toggleIsDone="toggleIsDone"
                 @removeDueDate="removeDueDate" />
             </div>
             <task-description :description="task.description" @saveDescription="saveDescription" />
@@ -40,21 +40,19 @@
             <task-comment :loggedInUser="loggedUser" @saveComment="saveComment" :comments="task.comments"
               @deleteComment="deleteComment" />
           </div>
-          <task-detail-sidebar :task="task" :currCover="currCover" @toggleDate="toggleDate" @pickerOpened="openPicker"
+          <task-detail-sidebar :task="task" :currCover="currCover" @pickerOpened="openPicker"
             @addUserToTask="addUserToTask" @removeTask="removeTask" />
         </div>
       </div>
     </div>
   </section>
-  <!-- <date v-if="isDate" @updateDueDate="updateDueDate" @removeDueDate="removeDueDate" v-click-outside="toggleDate"
-    :pos="modalPos" @toggleDate="toggleDate" /> -->
 
   <task-options v-if="isPickerCmpOpen" :cmpType="modalCmpType" :task="task" :pos="modalPos" :dueDate="dueDate"
     @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @updateCurrCover="updateCurrCover"
     @pickerClosed="isPickerCmpOpen = false" />
 </template>
 <script>
-import memberPrev from '../cmps/task-details-cmps/memberPrev.vue'
+import memberPrev from '../cmps/task-details-cmps/member-prev.vue'
 import checklistList from '../cmps/task-details-cmps/checklist-list.vue'
 import { utilService } from '../services/util-service.js'
 import attachmentList from '../cmps/task-details-cmps/attachment-list.vue'
@@ -155,15 +153,6 @@ export default {
         groupId: this.task.groupId,
         activityTxt: activityTxt + this.task.title,
       })
-    },
-    toggleDate(ev) {
-      if (!ev) {
-        this.isDate = !this.isDate
-        return
-      }
-      this.modalPos.left = ev?.clientX - 200 + 'px'
-      this.modalPos.top = ev?.clientY - 250 + 'px'
-      this.isDate = !this.isDate
     },
     openPicker(elData) {
       // TODO: calculate from client and adjust modal
