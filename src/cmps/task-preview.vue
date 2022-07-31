@@ -83,8 +83,10 @@ export default {
         newStatus === 'in-progress' ? 'Un marked due date in card ' : 'Marked due date in card ')
     },
     openQuickEdit(ev) {
-      this.x = ev.clientX
-      this.y = ev.clientY
+      const { top, right, width } = ev.target.closest('.task-preview').getBoundingClientRect()
+      this.y = top + 'px'
+      this.x = right - width + 'px'
+      console.log(this.x, this.y)
       this.isOpen = true
     },
     closeQuickEdit() {
@@ -112,7 +114,7 @@ export default {
   },
   computed: {
     getCords() {
-      return { top: this.y + 'px', left: this.x - 228 + 'px' }
+      return { top: this.y, left: this.x }
     },
     getFixedDueDate() {
       return (new Date(this.task.dueDate) + '').slice(4, 10)

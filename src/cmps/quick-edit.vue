@@ -112,7 +112,7 @@ import avatarPreview from './avatar-preview.vue'
 import taskOptions from './task-options-cmp.vue'
 export default {
     created() {
-        console.log(this.task.labels)
+        console.log(this.getCords)
     },
     props: { task: Object, getCords: Object },
     name: 'quickEdit',
