@@ -55,7 +55,8 @@
       <span>Add an item</span>
     </button>
     <div v-else class="add-todo-container">
-      <textarea class="basic-input" v-model="newTodo.title"></textarea>
+      <textarea @keyup.enter="saveTodo(newTodo)" placeholder="Add an item" class="basic-input"
+        v-model="newTodo.title"></textarea>
       <div class="edit-controls">
 
         <button class="save-todo-btn" @click="saveTodo(newTodo)">Add</button>
