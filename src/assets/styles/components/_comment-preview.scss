@@ -1,15 +1,20 @@
 .comment-container {
   margin-block-start: em(8px);
-
+  .task-detail-title {
+    h3 {
+      margin-inline-start: 1px;
+    }
+  }
   .new-comment-container {
     margin-block-start: em(12px);
     .member-icon-container {
       align-self: flex-start;
       position: relative;
-      right: 5px;
+      right: 4px;
     }
     form {
       flex-basis: 1000%;
+      margin-inline-start: 9px;
     }
     .comment-frame {
       max-width: 512px;
@@ -36,7 +41,7 @@
             cursor: text;
           }
         }
-  
+
         .comment-box-input {
           overflow: hidden;
           overflow-wrap: break-word;
@@ -50,7 +55,7 @@
           font-family: inherit;
           cursor: pointer;
         }
-  
+
         .comment-control {
           bottom: 8px;
           left: 12px;
@@ -60,7 +65,7 @@
           transition-duration: 85ms;
           transition-property: opacity, transform;
           transition-timing-function: ease;
-  
+
           &.focus {
             opacity: 1;
             transform: translateY(0);
@@ -82,7 +87,7 @@
       }
     }
     .about-comment {
-      margin: 0 0 em(6px) em(5px);
+      margin: 0 0 em(6px) 0;
       span {
         margin-inline-start: em(5px);
         font-size: 12px;
