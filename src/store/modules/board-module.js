@@ -147,7 +147,7 @@ export default {
         const dataSet = {
           label: member,
           data: [membersCount[member]],
-          backgroundColor: 'rgba(44, 130, 201, 0.75)',
+          backgroundColor: utilService.getRandomColor(),
         }
         membersDataSets.push(dataSet)
       }

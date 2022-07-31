@@ -1,7 +1,6 @@
 .main-search-container {
   .input-wrapper {
     position: relative;
-
     .search-input {
       background-color: #00000014;
       border: none;
@@ -14,11 +13,13 @@
       padding-right: 8px;
       transition: width 150ms;
       width: 250px;
+      border-radius: 3px;
       &::placeholder {
         color: inherit;
         letter-spacing: 0.5px;
         font-family: 'NotoSans-Regular';
         font-size: 0.9rem;
+        padding-inline-start: 0.6rem;
       }
       &:hover {
         background-color: rgba(0, 0, 0, 0.2);
