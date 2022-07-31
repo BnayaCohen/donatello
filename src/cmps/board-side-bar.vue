@@ -32,11 +32,11 @@
             <section class="side-bar-options">
                 <section class="background-change-select flex">
                     <div @click="goToBackgrounds('Photos')">
-                        <img src="src/assets/img/background-photos-sidebar.jpg" alt="Photos" class="bg-item-select">
+                        <img src="http://res.cloudinary.com/donatello-cloud/image/upload/v1659247962/background-photos-sidebar_jvaxom.jpg" alt="Photos" class="bg-item-select">
                         <p>Photos</p>
                     </div>
                     <div @click="goToBackgrounds('Colors')">
-                        <img src="src/assets/img/background-color-sidebar.jpg" alt="Colors" class="bg-item-select">
+                        <img src="http://res.cloudinary.com/donatello-cloud/image/upload/v1659247853/background-color-sidebar_jbbmbx.jpg" alt="Colors" class="bg-item-select">
                         <p>Colors</p>
                     </div>
                 </section>
