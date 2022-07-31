@@ -5,7 +5,6 @@
   display: flex;
   height: 100%;
   left: 0;
-  overflow-y: auto;
   position: fixed;
   top: 0;
   width: 100%;
@@ -14,13 +13,14 @@
 
 .dashboard-modal {
   font-family: 'NotoSans-Regular';
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: absolute;
+  top: 10px;
+  right: 50%;
+  transform: translate(50%, 0);
   height: 100%;
+  max-height: 600px;
   width: 100%;
-  overflow-y: scroll;
-  padding: em(120px) 0;
+  // overflow-y: hidden;
   z-index: 30;
 
   header {
@@ -31,7 +31,7 @@
   }
   .dashboard-close {
     position: absolute;
-    top: 20px;
+    top: 0;
     right: 20px;
     font-size: em(35px);
     background-color: transparent;
@@ -49,63 +49,60 @@
   .general-statistics {
     flex-wrap: wrap;
     margin-block-end: 1rem;
-    .tasks-stats-wrapper {
-      gap: em(10px);
-      flex-wrap: wrap;
-    }
+    
   gap: em(40px);
     padding: 1rem;
     margin-block-start: 1rem;
     .stats {
-      outline: 3px solid rgba(64, 61, 61, 0.067);
-
       border-radius: 20px;
-      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.14);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.09);
       max-height: 175px;
-      width: 180px;
       margin-bottom: 20px;
-      background-image: linear-gradient(
-        90deg,
-        #99b7bf,
-        #7e9ea9,
-        #6b9aa7,
-        #7095a0,
-        #789da9
-      );
+      min-width: 250px;
+      background-color: #f4f4f4;
       .content {
         width: 100%;
       }
 
       &.circle-bar {
         color: #fff;
+        // font-size: .8rem;
+        h3 {
+          margin-inline-start: 0;
+          padding-inline: 0.5rem;
+        }
         svg {
           height: 100px;
           transform: rotate(-90deg);
           max-width: 100px;
+          margin-block-end: 1rem;
         }
+        h2 {
+          margin-block-end: 1rem;
 
+        }
         .in-progress-bar__background,
         .done-progress-bar__background {
           fill: none;
-          stroke: #e2eff0;
-          stroke-width: 1.8;
+          stroke: #c8dedf;
+          stroke-width: 2;
         }
 
         .in-progress-bar__progress,
         .done-progress-bar__progress {
           fill: none;
-          stroke: #e2eff0;
+          stroke: #b0bebf;
           stroke: #78c796;
           stroke-dasharray: 100 100;
           stroke-dashoffset: 100;
           stroke-linecap: round;
-          stroke-width: 1/8;
+          stroke-width: 2;
           transition: stroke-dashoffset 1s ease-in-out;
         }
         
       }
       h3 {
-        color: whitesmoke;
+        color: #42526e;
         font-size: em(25px);
         letter-spacing: 1px;
         margin-inline-start: em(8px);
@@ -113,66 +110,48 @@
       }
       h4 {
         font-size: em(30px);
+
+      }
+      h2 {
+        color: #42526e;
+
       }
       &.small {
         align-items: center;
         margin-block: 0;
         min-height: 175px;
-        background-image: linear-gradient(
-          90deg,
-          #99b7bf,
-          #7e9ea9,
-          #6b9aa7,
-          #7095a0,
-          #789da9
-        );
-
-        h3 {
-          margin: 10px 0 0 10px;
-          line-height: 25px;
-          font-size: em(25px);
-          display: flex;
-          flex-wrap: wrap;
-        }
         .percent-container {
           height: 100%;
         }
       }
 
       &.tasks {
-        position: relative;
-        overflow: hidden;
-      }
-
-      &.lists {
-        .chart-icon-graph {
-          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
-            brightness(104%) contrast(100%);
-          opacity: 0.8;
-          margin-top: em(10px);
+        flex-basis: 20%;
+        @media(max-width: 780px) {
+          flex-basis: 35%;
+        }
+        @media(max-width: 550px) {
+          flex-basis: 50%;
         }
       }
+
       &.members {
         .chart-member {
           filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
             brightness(104%) contrast(100%);
           opacity: 0.8;
           // position: absolute;
+          flex-basis: 20%;
         }
 
       }
       &.overdue {
-        background-image: linear-gradient(
-          90deg,
-          #ec7299,
-          #ef768e,
-          #f07b84,
-          #ef817b,
-          #ec8773
-        );
+        background-image: none;
+        background-color: rgba(201, 50, 50, 0.296);
+        flex-basis: 20%;
         svg {
-          filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg);
-          margin-block-start: 0.5rem;
+          margin-block-start: 4rem;
+
         }
       }
     }
@@ -180,26 +159,19 @@
 
   h1, h2 {
     font-family: 'Roboto-Bold';
+    margin-block: em(4px);
   }
   .chart-container {
     gap: em(30px);
     padding: 1rem;
-    border-radius: 3px;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     .task-per-label, .task-per-member, .duedate-chart {
-      background-color: #fff;
-      border-radius: 5px;
+      background-color: #f4f4f4;
+      border-radius: 20px;
       padding: 1rem;
-      background-image: linear-gradient(
-        90deg,
-        #effbfe,
-        #dde8ec,
-        #eaf6f9,
-        #e9f2f5,
-        #eaf3f7
-      );
-      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.14);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.09);
       canvas {
         max-width: 300px !important;
         @media (max-width: 405px) {
@@ -212,7 +184,7 @@
     }
   }
   .dash-modal-wrapper {
-    background-color: rgba(233, 243, 252, 0.97);
+    background-color: #f6f6f6;
     outline: 4.5px solid rgba(245, 245, 245, 0.393);
     border-radius: 3px;
     padding: 1rem;
