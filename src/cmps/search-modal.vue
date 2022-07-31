@@ -7,7 +7,7 @@
         :key="board._id"
         @click="boardClicked(board._id)"
       >
-        <div class="board-img flex">
+        <div class="board-img flex"> 
           <img
             v-if="board.style?.background"
             :src="board.style.background"
