@@ -9,7 +9,10 @@
         @click="closeDashboard"
       ></button>
       <header class="dashboard-header flex justify-center">
-        <h1><span style="text-decoration: underline">{{board.title}}</span> statistics - {{ todayFixed }}</h1>
+        <h1>
+          <span style="text-decoration: underline">{{ board.title }}</span>
+          statistics - {{ todayFixed }}
+        </h1>
       </header>
       <section class="general-statistics flex">
         <div class="flex tasks-stats-wrapper">
@@ -239,11 +242,10 @@
           <h1>Task per Member</h1>
           <BarChart :options="optionsBar" :chartData="membersData" />
         </div>
-                <div class=" flex flex-column">
+        <div class="flex flex-column">
           <h1>Task due-date statistics</h1>
           <BarChart :options="optionsBar" :chartData="doneTasksData" />
         </div>
-
       </section>
     </div>
   </div>
@@ -296,16 +298,17 @@ export default {
       },
       doneTasksData: {
         labels: [''],
-        datasets: []
+        datasets: [],
       },
       optionsBar: {
         scales: {
           y: {
-            max: 8
+            max: 12,
+            display: false
           },
           yAxes: {
             ticks: {
-              display: false
+              display: false,
             },
           },
         },
@@ -339,7 +342,6 @@ export default {
     }
   },
   created() {
-    // this.optionsBar.scales.y.max = this.taskCount
     const labelsDataSet = this.$store.getters.labelToTaskMap
     const membersDataSets = this.$store.getters.memberToTaskMap
     const doneTasksDataSets = this.$store.getters.doneTasksPerGroup
@@ -372,10 +374,7 @@ export default {
     },
     donePercentDisplay() {
       if (!this.statusMap || !this.statusMap['done']) return '0%'
-      return (
-        ((this.statusMap['done'] / this.taskCount) * 100).toFixed(0) +
-        '%'
-      )
+      return ((this.statusMap['done'] / this.taskCount) * 100).toFixed(0) + '%'
     },
     overdueCount() {
       return this.$store.getters.taskOverdueCount
