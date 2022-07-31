@@ -58,6 +58,7 @@
       box-shadow: 0 3px 15px rgba(0, 0, 0, 0.09);
       max-height: 175px;
       margin-bottom: 20px;
+      min-width: 250px;
       background-color: #f4f4f4;
       .content {
         width: 100%;
@@ -126,6 +127,12 @@
 
       &.tasks {
         flex-basis: 20%;
+        @media(max-width: 780px) {
+          flex-basis: 35%;
+        }
+        @media(max-width: 550px) {
+          flex-basis: 50%;
+        }
       }
 
       &.members {
@@ -143,7 +150,9 @@
         background-color: rgba(201, 50, 50, 0.296);
         flex-basis: 20%;
         svg {
-          margin-block-start: 0.5rem;
+          margin-block-start: 3rem;
+          min-height: 70px;
+          min-width: 70px;
         }
       }
     }
@@ -158,6 +167,7 @@
     padding: 1rem;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     .task-per-label, .task-per-member, .duedate-chart {
       background-color: #f4f4f4;
       border-radius: 20px;
