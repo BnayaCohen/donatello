@@ -7,7 +7,8 @@
     <div class="attachment-details flex flex-column">
       <div class="attach-header flex flex-column">
         <h3 class="attach-title">{{ attachment.title }}</h3>
-        <p class="attach-time-ago">{{ timeAgo }} - <span @click="$emit('removeAttachment',attachment.id)" class="attach-btn">Delete</span></p>
+        <p class="attach-time-ago">{{ timeAgo }} - <span @click="$emit('removeAttachment', attachment.id)"
+            class="attach-btn">Delete</span></p>
       </div>
       <div class="flex align-center">
         <span class="trellicons trellicons-cover cover-icon"></span>
@@ -26,16 +27,14 @@ export default {
   },
   computed: {
     timeAgo() {
-        return  'Added ' + (utilService.timeAgo(this.attachment.createdAt) || 'just now')
+      return 'Added ' + (utilService.timeAgo(this.attachment.createdAt) || 'just now')
     },
   },
   methods: {
     updateCurrCover() {
-      this.$emit('updateCurrCover',  this.attachment.url)
+      this.$emit('updateCurrCover', this.attachment.url)
     },
   },
   emits: ['updateCurrCover'],
 }
 </script>
-<style>
-</style>

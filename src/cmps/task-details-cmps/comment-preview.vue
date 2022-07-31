@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="new-comment-container flex align-center"
-  >
+  <div class="new-comment-container flex align-center">
     <div class="member-icon-container">
       <img class="member-avatar-big" :src="comment.byMember.imgUrl" />
     </div>
@@ -12,13 +10,8 @@
       </div>
       <div class="comment-frame">
         <div ref="commentBox" class="comment-box">
-          <textarea
-            class="basic-input comment-box-input"
-            placeholder="Write a comment..."
-            v-model="comment.txt"
-            disabled
-            :style="{ cursor: 'default' }"
-          ></textarea>
+          <textarea class="basic-input comment-box-input" placeholder="Write a comment..." v-model="comment.txt"
+            disabled :style="{ cursor: 'default' }"></textarea>
           <div ref="commentControl" class="comment-control">
             <button class="submit-comment-btn flex align-center justify-center">
               Save
@@ -29,7 +22,8 @@
       <div class="comment-actions">
         <!-- <span class="quiet-a edit-comment">Edit</span> -->
         <!-- <span class="dash">-</span> -->
-        <span class="quiet-a delete-comment" @click.stop="deleteComment" v-if="comment.byMember.fullname === loggedInUser.fullname">Delete</span>
+        <span class="quiet-a delete-comment" @click.stop="deleteComment"
+          v-if="comment.byMember.fullname === loggedInUser.fullname">Delete</span>
       </div>
     </form>
   </div>
@@ -53,8 +47,7 @@ export default {
     deleteComment() {
       this.$emit('deleteComment', this.comment.id)
     }
-    },
+  },
   emits: ['deleteComment'],
 }
 </script>
-<style></style>

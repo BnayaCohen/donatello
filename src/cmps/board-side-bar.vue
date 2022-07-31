@@ -11,7 +11,7 @@
         <main v-if="!isChangeBgClicked" style="margin-left: 12px;">
             <section class="side-bar-options">
                 <ul class="clean-list">
-                    <li class="flex" @click="isChangeBgClicked = true;currHeader = 'Change background'">
+                    <li class="flex" @click="isChangeBgClicked = true; currHeader = 'Change background'">
                         <div class="bg-placeholder" :style="boardStyle"></div>
                         Change background
                     </li>
@@ -32,11 +32,13 @@
             <section class="side-bar-options">
                 <section class="background-change-select flex">
                     <div @click="goToBackgrounds('Photos')">
-                        <img src="http://res.cloudinary.com/donatello-cloud/image/upload/v1659247962/background-photos-sidebar_jvaxom.jpg" alt="Photos" class="bg-item-select">
+                        <img src="http://res.cloudinary.com/donatello-cloud/image/upload/v1659247962/background-photos-sidebar_jvaxom.jpg"
+                            alt="Photos" class="bg-item-select">
                         <p>Photos</p>
                     </div>
                     <div @click="goToBackgrounds('Colors')">
-                        <img src="http://res.cloudinary.com/donatello-cloud/image/upload/v1659247853/background-color-sidebar_jbbmbx.jpg" alt="Colors" class="bg-item-select">
+                        <img src="http://res.cloudinary.com/donatello-cloud/image/upload/v1659247853/background-color-sidebar_jbbmbx.jpg"
+                            alt="Colors" class="bg-item-select">
                         <p>Colors</p>
                     </div>
                 </section>
@@ -89,7 +91,7 @@ export default {
             if (this.currHeader === 'Colors' || this.currHeader === 'Photos') {
                 this.isOnBackgroundSelect = false
                 this.currHeader = 'Change background'
-            }else{
+            } else {
                 this.isChangeBgClicked = false
                 this.currHeader = 'Menu'
             }
@@ -132,5 +134,3 @@ export default {
     }
 }
 </script>
-<style>
-</style>
