@@ -12,6 +12,7 @@ export const utilService = {
   getImgAvgColor,
   isDarkImg,
   isDarkColor,
+  gratitudePerTime
 }
 
 function makeRandNum() {
@@ -81,6 +82,21 @@ function timeAgo(input) {
       return time ? time : 'Just now'
     }
   }
+}
+
+function gratitudePerTime() {
+  var day = new Date();
+  var hr = day.getHours();
+  if (hr >= 0 && hr < 12) {
+      return ("Good Morning");
+  } else if (hr == 12) {
+      return ("Good Noon");
+  } else if (hr >= 12 && hr <= 17) {
+      return ("Good Afternoon");
+  } else {
+      return ("Good Evening");
+  }
+
 }
 
 function getRandomColor() {

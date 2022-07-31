@@ -7,13 +7,13 @@
     <div v-else class="flex flex-column">
       <textarea class="new-title-input" :class="addingGroup" type="text" :placeholder="inputPlaceholder"
         v-model="titleInput" v-focus></textarea>
-      <div class="flex align-center">
-        <button @click="addEntity" class="add-entity-btn" v-focus>
-          {{ btnPlaceholder }}
-        </button>
-        <button @click="closeAddEntity" class="close-btn trellicons trellicons-close-btn">
-
-        </button>
+      <div class="flex justify-between align-center">
+        <div class="flex">
+          <button @click="addEntity" class="add-entity-btn" v-focus>
+            {{ btnPlaceholder }}</button>
+          <button @click="closeAddEntity" class="close-btn trellicons trellicons-close-btn"></button>
+        </div>
+        <mic-cmp @updateText="titleInput = $event" />
       </div>
     </div>
   </article>
@@ -21,6 +21,8 @@
 
 <script>
 import { boardService } from '../services/board-service.js'
+import micCmp from '../cmps/mic-cmp.vue'
+
 export default {
   name: 'add-group-or-task',
   props: {
@@ -69,7 +71,7 @@ export default {
         this.titleInput = ''
         this.$emit('x', board)
       } catch (err) {
-
+        console.log('cannot add task: ' + err);
       }
     },
     closeAddEntity() {
@@ -111,5 +113,8 @@ export default {
       }
     },
   },
+  components: {
+    micCmp
+  }
 }
 </script>

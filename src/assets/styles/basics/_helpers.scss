@@ -6,6 +6,9 @@
 .flex.inline-flex {
   display: inline-flex;
 }
+.flex.row-reverse {
+  flex-direction: row-reverse;
+}
 
 .flex.flex-column {
   flex-direction: column;
