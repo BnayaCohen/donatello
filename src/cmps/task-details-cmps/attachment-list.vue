@@ -5,10 +5,11 @@
             <h3>Attachments</h3>
         </div>
         <attachment-preview v-for="attachment in attachments" :key="attachment.id" :attachment="attachment"
-            @updateCurrCover="$emit('updateCurrCover', $event)" @removeAttachment="$emit('removeAttachment',$event)"/>
+            @updateCurrCover="$emit('updateCurrCover', $event)" @removeAttachment="$emit('removeAttachment', $event)" />
         <div>
-            <button class="add-attach-btn btn-background" @click="$emit('toggle', { el: $event.target.closest('button'), type: 'attachments' })">
-            Add an attachment</button>
+            <button class="add-attach-btn btn-background"
+                @click="$emit('toggle', { el: $event.target.closest('button'), type: 'attachments' })">
+                Add an attachment</button>
         </div>
     </section>
 </template>
@@ -27,5 +28,3 @@ export default {
     }
 }
 </script>
-<style>
-</style>

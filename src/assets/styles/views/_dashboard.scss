@@ -53,17 +53,28 @@
       gap: em(10px);
       flex-wrap: wrap;
     }
-    gap: em(20px);
+  gap: em(40px);
     padding: 1rem;
     margin-block-start: 1rem;
     .stats {
-      outline: 2px solid rgba(255, 255, 255, 0.904);
-      margin-block-end: em(20px);
-      border-radius: 3px;
-      background-color: #fff;
-      max-height: 140px;
-      width: 270px;
+      outline: 3px solid rgba(64, 61, 61, 0.067);
+
+      border-radius: 20px;
+      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.14);
+      max-height: 175px;
+      width: 180px;
       margin-bottom: 20px;
+      background-image: linear-gradient(
+        90deg,
+        #99b7bf,
+        #7e9ea9,
+        #6b9aa7,
+        #7095a0,
+        #789da9
+      );
+      .content {
+        width: 100%;
+      }
 
       &.circle-bar {
         color: #fff;
@@ -92,21 +103,21 @@
           transition: stroke-dashoffset 1s ease-in-out;
         }
         
-        @media (max-width: 490px) {
-          width: 150px;
-        }
       }
       h3 {
-        color: #fff;
-        font-size: em(24px);
+        color: whitesmoke;
+        font-size: em(25px);
         letter-spacing: 1px;
         margin-inline-start: em(8px);
+        font-family: 'NotoSans-Bold';
+      }
+      h4 {
+        font-size: em(30px);
       }
       &.small {
-        width: 128px;
         align-items: center;
         margin-block: 0;
-        min-height: 140px;
+        min-height: 175px;
         background-image: linear-gradient(
           90deg,
           #99b7bf,
@@ -116,8 +127,12 @@
           #789da9
         );
 
-        h4 {
-          margin: 0;
+        h3 {
+          margin: 10px 0 0 10px;
+          line-height: 25px;
+          font-size: em(25px);
+          display: flex;
+          flex-wrap: wrap;
         }
         .percent-container {
           height: 100%;
@@ -127,57 +142,22 @@
       &.tasks {
         position: relative;
         overflow: hidden;
-        background-image: linear-gradient(
-          90deg,
-          #4fa8f8,
-          #2fb4f5,
-          #23beee,
-          #37c7e5,
-          #55ceda
-        );
-        .chart-icon {
-          width: 225px;
-          -webkit-align-self: flex-end;
-          align-self: flex-end;
-          -webkit-transform: rotate(347deg);
-          transform: rotate(347deg);
-          position: absolute;
-          right: -15px;
-          height: 80px;
-        }
       }
 
       &.lists {
-        background-image: linear-gradient(
-          270deg,
-          #4f93c3,
-          #4f8cc4,
-          #419cc0,
-          #40acd3,
-          #5ba6db
-        );
         .chart-icon-graph {
           filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
             brightness(104%) contrast(100%);
           opacity: 0.8;
-          padding: 0.5rem;
           margin-top: em(10px);
         }
       }
       &.members {
-        background-image: linear-gradient(
-          90deg,
-          #eccd72,
-          #dcbe5e,
-          #ebd360,
-          #ecdc62,
-          #ecda73
-        );
         .chart-member {
           filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(180deg)
             brightness(104%) contrast(100%);
-          padding: 0.5rem;
           opacity: 0.8;
+          // position: absolute;
         }
 
       }
@@ -198,23 +178,40 @@
     }
   }
 
-  h1 {
-    color: #fff;
-    align-self: center;
+  h1, h2 {
+    font-family: 'Roboto-Bold';
   }
   .chart-container {
     gap: em(30px);
     padding: 1rem;
-    // width: 90%;
-    border-radius: 3px;
     align-items: center;
     justify-content: center;
+    .task-per-label, .task-per-member, .duedate-chart {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 1rem;
+      background-image: linear-gradient(
+        90deg,
+        #effbfe,
+        #dde8ec,
+        #eaf6f9,
+        #e9f2f5,
+        #eaf3f7
+      );
+      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.14);
+      canvas {
+        max-width: 300px !important;
+        @media (max-width: 405px) {
+          max-width: 230px !important;
+        } 
+      }
+    }
     @media (max-width: 780px) {
       flex-direction: column;
     }
   }
   .dash-modal-wrapper {
-    background-color: rgba(255, 255, 255, 0.365);
+    background-color: rgba(233, 243, 252, 0.97);
     outline: 4.5px solid rgba(245, 245, 245, 0.393);
     border-radius: 3px;
     padding: 1rem;
