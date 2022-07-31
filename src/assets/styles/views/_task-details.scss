@@ -501,6 +501,16 @@
     .sidebar-btn {
       width: calc(50% - 8px);
     }
+    .sidebar-btns {
+      position: relative;
+      flex-direction: column-reverse;
+      .sidebar-btn-container:nth-child(even) {
+        .sidebar-btn {
+          position: absolute;
+          left: 50%;
+        }
+      }
+    }
     .actions {
       padding: 0;
     }
