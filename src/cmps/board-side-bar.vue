@@ -32,11 +32,11 @@
             <section class="side-bar-options">
                 <section class="background-change-select flex">
                     <div @click="goToBackgrounds('Photos')">
-                        <img src="src/assets/img/background-photos-sidebar.jpg" alt="Photos" class="bg-item-select">
+                        <!-- <img src="src/assets/img/background-photos-sidebar.jpg" alt="Photos" class="bg-item-select"> -->
                         <p>Photos</p>
                     </div>
                     <div @click="goToBackgrounds('Colors')">
-                        <img src="src/assets/img/background-color-sidebar.jpg" alt="Colors" class="bg-item-select">
+                        <!-- <img src="src/assets/img/background-color-sidebar.jpg" alt="Colors" class="bg-item-select"> -->
                         <p>Colors</p>
                     </div>
                 </section>
