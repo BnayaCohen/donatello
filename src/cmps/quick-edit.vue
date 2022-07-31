@@ -172,11 +172,13 @@ export default {
             this.taskToEdit.dueDate = ''
             this.taskToEdit.status = 'in-progress'
             this.updateTask('Deleted the due date in card ', false)
+            this.isPickerOpen = false
         },
         updateDueDate(dueDate) {
             const timestamp = dueDate.getTime()
             this.taskToEdit.dueDate = ref(timestamp)
             this.updateTask('Updated the due date in card ', false)
+            this.isPickerOpen = false
         },
         openPicker(ev, type) {
             const { top, right, height, width } = ev.target.closest('.quick-card-editor-buttons-item').getBoundingClientRect()
