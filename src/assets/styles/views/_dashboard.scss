@@ -184,12 +184,11 @@
   .chart-container {
     gap: em(30px);
     padding: 1rem;
-    border-radius: 3px;
     align-items: center;
     justify-content: center;
     .task-per-label, .task-per-member, .duedate-chart {
       background-color: #fff;
-      border-radius: 5px;
+      border-radius: 20px;
       padding: 1rem;
       background-image: linear-gradient(
         90deg,
