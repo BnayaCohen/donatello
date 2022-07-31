@@ -13,7 +13,8 @@
           </div>
           <div class="task-title-container">
             <textarea rows="1" class="basic-input title-input" type="text" ref="taskTitle" v-model="task.title"
-              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()" @blur="updateTask('Updated the title of card ')"></textarea>
+              placeholder="Enter title here..." @keydown.enter="$refs.taskTitle.blur()"
+              @blur="updateTask('Updated the title of card ')"></textarea>
             <div class="subtitle-header">
               <p>
                 in list
@@ -49,7 +50,7 @@
 
   <task-options v-if="isPickerCmpOpen" :cmpType="modalCmpType" :task="task" :pos="modalPos" :dueDate="dueDate"
     @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @updateCurrCover="updateCurrCover"
-    @pickerClosed="isPickerCmpOpen = false" />
+    @modalSize="setModalSize" @pickerClosed="isPickerCmpOpen = false" />
 </template>
 <script>
 import memberPrev from '../cmps/task-details-cmps/member-prev.vue'
@@ -67,6 +68,7 @@ import taskComment from '../cmps/task-details-cmps/task-comment.vue'
 import taskOptions from '../cmps/task-options-cmp.vue'
 import taskDescription from '../cmps/task-details-cmps/task-description.vue'
 import { ref } from 'vue'
+import { left } from '@popperjs/core'
 
 export default {
   name: 'taskDetails',
@@ -233,6 +235,18 @@ export default {
       this.task.description = newDescription
       this.updateTask('Updated the description of card ')
     },
+    setModalSize({ width, height }) {
+      let { left, top } = this.modalPos
+      left = parseFloat(left)
+      top = parseFloat(top)
+      // sides
+      if (left + width > window.innerWidth) this.modalPos.left = window.innerWidth - width - 20 + 'px'
+      else if (left - width < 0) this.modalPos.left = 20
+      // top and bottom
+      if (top + height > window.innerHeight && top - height < 0) this.modalPos.top = 0
+      else if (top + height > window.innerHeight) this.modalPos.top = top - height + 'px'
+      else if (top - height < 0) this.modalPos.top = 0
+    }
   },
   components: {
     attachmentList,

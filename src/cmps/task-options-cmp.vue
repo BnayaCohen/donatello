@@ -1,23 +1,9 @@
 <template>
-    <section class="dynamic-task-option-container" :style="pos">
-        <component 
-        :is="cmpType"
-
-        @click.stop="''"
-        @modalClosed="$emit('pickerClosed')" 
-        v-click-outside="()=>{$emit('pickerClosed')}"
-        @taskUpdated="addToTask"
-
-        :labelIds="task.labelIds"
-
-        :memberIds="task.memberIds"
-
-        :taskCoverClr="getTaskClr"
-
-        :dueDate="dueDate"
-        @removeDueDate="$emit('removeDueDate',$event)"
-        @updateDueDate="$emit('updateDueDate',$event)"
-    >
+    <section ref="dynamic" class="dynamic-task-option-container" :style="pos">
+        <component :is="cmpType" @click.stop="''" @modalClosed="$emit('pickerClosed')"
+            v-click-outside="() => { $emit('pickerClosed') }" @taskUpdated="addToTask" :labelIds="task.labelIds"
+            :memberIds="task.memberIds" :taskCoverClr="getTaskClr" :dueDate="dueDate"
+            @removeDueDate="$emit('removeDueDate', $event)" @updateDueDate="$emit('updateDueDate', $event)">
         </component>
     </section>
 </template>
@@ -129,6 +115,12 @@ export default {
         dates,
         attachments,
         cover,
+    },
+    mounted() {
+        const el = this.$refs.dynamic
+        const { width, height } = this.$refs.dynamic.getBoundingClientRect()
+        if (!width || !height) this.$emit('modalSize', { width: el.scrollWidth || el.childNodes[0].offsetWidth, height: el.scrollHeight || el.childNodes[0].offsetHeight })
+        else this.$emit('modalSize', { width, height })
     },
 }
 </script>
