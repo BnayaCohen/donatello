@@ -141,7 +141,7 @@
       width: 16px;
     }
     &-text {
-      padding: 9.25px 0;
+      padding: 9px 0;
       p {
         flex: 1;
         margin: 0;
@@ -183,6 +183,8 @@
       cursor: text;
       float: none;
       resize: vertical;
+      height: 37px;
+      resize: none;
       width: 100%;
       margin: 4px 0 0;
       min-height: 32px;
