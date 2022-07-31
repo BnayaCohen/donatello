@@ -10,13 +10,8 @@
       ></button>
       <header class="dashboard-header flex flex-column">
         <h1>{{gratitudePerTime}}, {{ user.fullname }}!</h1>
-        <h2 class="flex">
-          <span style="margin-right: 5px">{{ board.title }},</span>
-          {{ todayFixed }}
-        </h2>
       </header>
       <section class="general-statistics flex justify-center">
-        <div class="flex tasks-stats-wrapper">
           <div class="stats tasks flex row-reverse justify-between">
             <svg
               version="1.1"
@@ -25,13 +20,15 @@
               xmlns:xlink="http://www.w3.org/1999/xlink"
               x="0px"
               y="0px"
-              width="55"
-              height="55"
-              viewBox="3 0 340 300"
+              width="90"
+              height="100"
+              viewBox="0 0 340 255"
               style="
                 enable-background: new 0 0 299.998 299.998;
-                fill: whitesmoke;
-              "
+                fill: #42526e;
+                margin-block-start: 30px;
+              "           
+
               xml:space="preserve"
               class="align-self-center"
             >
@@ -50,7 +47,6 @@
               Tasks
               <h4>{{ taskCount }}</h4>
             </h3>
-          </div>
         </div>
         <div class="stats small circle-bar flex flex-column">
           <h3>Completed tasks</h3>
@@ -79,73 +75,6 @@
           </div>
         </div>
 
-        <div class="stats lists flex justify-between">
-          <div class="content flex row-reverse justify-between">
-            <svg
-              class="align-self-center"
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              x="0px"
-              y="0px"
-              height="50"
-              width="50"
-              viewBox="0 0 300 300"
-              style="
-                enable-background: new 0 0 300 300;
-                fill: whitesmoke;
-                margin-inline-end: 10px;
-                margin-block-start: 10px;
-              "
-              xml:space="preserve"
-            >
-              <g>
-                <g>
-                  <g>
-                    <polygon
-                      points="101.009,137.203 95.889,132.275 88.692,139.75 101.219,151.805 119.336,133.333 111.931,126.069 			"
-                    />
-                    <rect
-                      x="132.56"
-                      y="203.818"
-                      width="72.487"
-                      height="15.562"
-                    />
-                    <polygon
-                      points="101.009,211.697 95.889,206.769 88.692,214.242 101.219,226.302 119.336,207.828 111.931,200.563 			"
-                    />
-                    <polygon
-                      points="101.009,174.525 95.889,169.597 88.692,177.07 101.219,189.13 119.336,170.656 111.931,163.391 			"
-                    />
-                    <rect
-                      x="132.56"
-                      y="129.321"
-                      width="72.487"
-                      height="15.562"
-                    />
-                    <rect
-                      x="132.56"
-                      y="166.643"
-                      width="72.487"
-                      height="15.562"
-                    />
-                    <path
-                      d="M149.997,0C67.157,0,0,67.159,0,149.997C0,232.838,67.157,300,149.997,300S300,232.838,300,149.997
-				C299.997,67.159,232.838,0,149.997,0z M187.911,54.829L224.1,95.28h-36.189V54.829z M231.061,231.71h-0.002
-				c0,12.239-9.918,22.16-22.157,22.16h-119.1c-12.245,0-22.16-9.921-22.16-22.16V68.29c0-12.237,9.915-22.16,22.16-22.16h82.547
-				v64.708h58.712V231.71z"
-                    />
-                  </g>
-                </g>
-              </g>
-            </svg>
-            <h3 class="flex flex-column">
-              Lists
-              <h4>{{ listCount }}</h4>
-            </h3>
-          </div>
-        </div>
         <div class="stats members flex row-reverse justify-between">
           <svg
             id="Capa_1"
@@ -154,7 +83,7 @@
             width="100"
             height="150"
             viewBox="10 0 540 300"
-            style="enable-background: new 0 0 479.293 479.293; fill: whitesmoke"
+            style="enable-background: new 0 0 479.293 479.293; fill: #42526e"
             class="align-self-center"
           >
             <g>
@@ -194,14 +123,11 @@
         <div class="stats overdue flex justify-between">
           <div class="content flex row-reverse justify-between">
             <svg
-              version="1.1"
               id="Capa_1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
               x="0px"
               y="0px"
               viewBox="0 0 69 40"
-              xml:space="preserve"
+              style="fill: #42526e;"
             >
               <g>
                 <path
@@ -367,9 +293,6 @@ export default {
         counter += group.tasks.length
       })
       return counter
-    },
-    listCount() {
-      return this.board?.groups?.length
     },
     memberCount() {
       return this.board.members?.length || 0
