@@ -9,83 +9,53 @@
         @click="closeDashboard"
       ></button>
       <header class="dashboard-header flex flex-column">
-        <h1>Welcome, {{ user.fullname }}</h1>
+        <h1>{{gratitudePerTime}}, {{ user.fullname }}!</h1>
         <h2 class="flex">
           <span style="margin-right: 5px">{{ board.title }},</span>
           {{ todayFixed }}
         </h2>
       </header>
-      <section class="general-statistics flex">
+      <section class="general-statistics flex justify-center">
         <div class="flex tasks-stats-wrapper">
           <div class="stats tasks flex row-reverse justify-between">
-              <svg
-                version="1.1"
-                id="Layer_1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px"
-                y="0px"
-                width="55"
-                height="55"
-                viewBox="3 0 340 300"
-                style="
-                  enable-background: new 0 0 299.998 299.998;
-                  fill: whitesmoke;
-                "
-                xml:space="preserve"
-                            class="align-self-center"
-
-              >
+            <svg
+              version="1.1"
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              width="55"
+              height="55"
+              viewBox="3 0 340 300"
+              style="
+                enable-background: new 0 0 299.998 299.998;
+                fill: whitesmoke;
+              "
+              xml:space="preserve"
+              class="align-self-center"
+            >
+              <g>
                 <g>
-                  <g>
-                    <path
-                      d="M149.995,0.001C67.156,0.001,0,67.16,0,149.999s67.156,149.997,149.995,149.997s150.003-67.161,150.003-149.997
+                  <path
+                    d="M149.995,0.001C67.156,0.001,0,67.16,0,149.999s67.156,149.997,149.995,149.997s150.003-67.161,150.003-149.997
 			C299.997,67.157,232.834,0.001,149.995,0.001z M217.205,217.204c0,10.066-8.159,18.225-18.223,18.225h-97.967
 			c-10.068,0-18.225-8.159-18.225-18.225V82.79c0-10.066,8.159-18.225,18.225-18.225h76.892v36.45h39.298V217.204z M185.688,93.232
 			V64.563l31.517,28.669H185.688z"
-                    />
-                  </g>
+                  />
                 </g>
-              </svg>
-              <h3 class="flex flex-column">
-                Tasks
-                <h4>{{ taskCount }}</h4>
-              </h3>
-          </div>
-        </div>
-        <div class="stats small circle-bar flex flex-column">
-          <h3>Completed tasks</h3>
-          <div class="percent-container flex align-center justify-center">
-            <h2>{{ donePercentDisplay }}</h2>
-            <svg
-            
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="-1 -1 34 34"
-              class="pos-absolute"
-            >
-              <circle
-                cx="16"
-                cy="16"
-                r="15.9155"
-                class="in-progress-bar__background"
-              />
-
-              <circle
-                cx="16"
-                cy="16"
-                r="15.9155"
-                class="in-progress-bar__progress js-progress-bar"
-                ref="inProgressCircle"
-              />
+              </g>
             </svg>
+            <h3 class="flex flex-column">
+              Tasks
+              <h4>{{ taskCount }}</h4>
+            </h3>
           </div>
         </div>
-
         <div class="stats lists flex justify-between">
           <div class="content flex row-reverse justify-between">
             <svg
-                        class="align-self-center"
-
+              class="align-self-center"
               version="1.1"
               id="Layer_1"
               xmlns="http://www.w3.org/2000/svg"
@@ -154,10 +124,10 @@
             id="Capa_1"
             x="0px"
             y="0px"
-            width=" "
-            height="120"
-            viewBox="10 0 495 180"
-            style="enable-background: new 0 0 479.293 479.293; fill: whitesmoke;"
+            width="100"
+            height="150"
+            viewBox="10 0 540 300"
+            style="enable-background: new 0 0 479.293 479.293; fill: whitesmoke"
             class="align-self-center"
           >
             <g>
@@ -194,51 +164,79 @@
             <h4>{{ memberCount }}</h4>
           </h3>
         </div>
+                <div class="stats small circle-bar flex flex-column">
+          <h3>Completed tasks</h3>
+          <div class="percent-container flex align-center justify-center">
+            <h2>{{ donePercentDisplay }}</h2>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="-1 -1 34 34"
+              class="pos-absolute"
+            >
+              <circle
+                cx="16"
+                cy="16"
+                r="15.9155"
+                class="in-progress-bar__background"
+              />
+
+              <circle
+                cx="16"
+                cy="16"
+                r="15.9155"
+                class="in-progress-bar__progress js-progress-bar"
+                ref="inProgressCircle"
+              />
+            </svg>
+          </div>
+        </div>
+
         <div class="stats overdue flex justify-between">
-          <div class="content flex flex-column justify-between">
+          <div class="content flex row-reverse justify-between">
+            <svg
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 69 40"
+              xml:space="preserve"
+            >
+              <g>
+                <path
+                  d="M58.693,53.636L46.848,33.33c-0.405-0.695-1.128-1.11-1.933-1.11c-0.805,0-1.528,0.415-1.933,1.11L31.137,53.636
+		c-0.409,0.7-0.412,1.539-0.008,2.242c0.404,0.703,1.129,1.123,1.94,1.123h23.691c0.811,0,1.536-0.42,1.939-1.123
+		C59.104,55.175,59.102,54.337,58.693,53.636z M56.966,54.882c-0.03,0.055-0.092,0.119-0.205,0.119H33.07
+		c-0.114,0-0.175-0.064-0.206-0.119s-0.056-0.14,0.001-0.238L44.71,34.338c0.057-0.098,0.143-0.118,0.206-0.118
+		c0.062,0,0.148,0.021,0.205,0.118l11.845,20.306C57.022,54.742,56.998,54.827,56.966,54.882z"
+                />
+                <path
+                  d="M45,39.001c-0.552,0-1,0.447-1,1v8c0,0.553,0.448,1,1,1s1-0.447,1-1v-8C46,39.448,45.552,39.001,45,39.001z"
+                />
+                <path
+                  d="M44.29,51.291C44.11,51.48,44,51.74,44,52.001c0,0.26,0.11,0.52,0.29,0.7c0.18,0.189,0.44,0.3,0.71,0.3s0.52-0.11,0.7-0.29
+		c0.19-0.19,0.3-0.44,0.3-0.71c0-0.271-0.11-0.521-0.29-0.71C45.34,50.921,44.66,50.921,44.29,51.291z"
+                />
+                <path
+                  d="M52,6.001c0-0.552-0.448-1-1-1h-5v-3c0-0.553-0.448-1-1-1h-7c-0.552,0-1,0.447-1,1v3H15v-3c0-0.553-0.448-1-1-1H7
+		c-0.552,0-1,0.447-1,1v3H1c-0.552,0-1,0.448-1,1v9h52V6.001z M13,6.001v3H8v-3v-3h5V6.001z M44,6.001v3h-5v-3v-3h5V6.001z"
+                />
+                <path
+                  d="M28.546,52.124l11.845-20.306c0.173-0.297,0.381-0.565,0.605-0.817h-0.51H37v-8h8v6.224c1.825,0.03,3.52,1.015,4.44,2.595
+		L52,36.208v-5.029V18.001c0-0.553-0.448-1-1-1H1c-0.552,0-1,0.447-1,1v39c0,0.553,0.448,1,1,1h27.958
+		c-0.156-0.198-0.302-0.406-0.43-0.629C27.597,55.75,27.604,53.739,28.546,52.124z M15,51.001H7v-8h8V51.001z M15,41.001H7v-8h8
+		V41.001z M15,31.001H7v-8h8V31.001z M25,51.001h-7h-1v-8h8V51.001z M25,41.001h-8v-8h8V41.001z M25,31.001h-8v-8h1h7V31.001z
+		 M27,23.001h7h1v8h-8V23.001z"
+                />
+              </g>
+            </svg>
+
             <h3 class="flex flex-column">
               Overdue
               <h4>{{ overdueCount }}</h4>
             </h3>
           </div>
-          <svg
-            version="1.1"
-            id="Capa_1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            x="0px"
-            y="0px"
-            viewBox="0 0 45 68"
-            xml:space="preserve"
-          >
-            <g>
-              <path
-                d="M58.693,53.636L46.848,33.33c-0.405-0.695-1.128-1.11-1.933-1.11c-0.805,0-1.528,0.415-1.933,1.11L31.137,53.636
-		c-0.409,0.7-0.412,1.539-0.008,2.242c0.404,0.703,1.129,1.123,1.94,1.123h23.691c0.811,0,1.536-0.42,1.939-1.123
-		C59.104,55.175,59.102,54.337,58.693,53.636z M56.966,54.882c-0.03,0.055-0.092,0.119-0.205,0.119H33.07
-		c-0.114,0-0.175-0.064-0.206-0.119s-0.056-0.14,0.001-0.238L44.71,34.338c0.057-0.098,0.143-0.118,0.206-0.118
-		c0.062,0,0.148,0.021,0.205,0.118l11.845,20.306C57.022,54.742,56.998,54.827,56.966,54.882z"
-              />
-              <path
-                d="M45,39.001c-0.552,0-1,0.447-1,1v8c0,0.553,0.448,1,1,1s1-0.447,1-1v-8C46,39.448,45.552,39.001,45,39.001z"
-              />
-              <path
-                d="M44.29,51.291C44.11,51.48,44,51.74,44,52.001c0,0.26,0.11,0.52,0.29,0.7c0.18,0.189,0.44,0.3,0.71,0.3s0.52-0.11,0.7-0.29
-		c0.19-0.19,0.3-0.44,0.3-0.71c0-0.271-0.11-0.521-0.29-0.71C45.34,50.921,44.66,50.921,44.29,51.291z"
-              />
-              <path
-                d="M52,6.001c0-0.552-0.448-1-1-1h-5v-3c0-0.553-0.448-1-1-1h-7c-0.552,0-1,0.447-1,1v3H15v-3c0-0.553-0.448-1-1-1H7
-		c-0.552,0-1,0.447-1,1v3H1c-0.552,0-1,0.448-1,1v9h52V6.001z M13,6.001v3H8v-3v-3h5V6.001z M44,6.001v3h-5v-3v-3h5V6.001z"
-              />
-              <path
-                d="M28.546,52.124l11.845-20.306c0.173-0.297,0.381-0.565,0.605-0.817h-0.51H37v-8h8v6.224c1.825,0.03,3.52,1.015,4.44,2.595
-		L52,36.208v-5.029V18.001c0-0.553-0.448-1-1-1H1c-0.552,0-1,0.447-1,1v39c0,0.553,0.448,1,1,1h27.958
-		c-0.156-0.198-0.302-0.406-0.43-0.629C27.597,55.75,27.604,53.739,28.546,52.124z M15,51.001H7v-8h8V51.001z M15,41.001H7v-8h8
-		V41.001z M15,31.001H7v-8h8V31.001z M25,51.001h-7h-1v-8h8V51.001z M25,41.001h-8v-8h8V41.001z M25,31.001h-8v-8h1h7V31.001z
-		 M27,23.001h7h1v8h-8V23.001z"
-              />
-            </g>
-          </svg>
         </div>
       </section>
       <section class="chart-container flex">
@@ -250,7 +248,7 @@
           <h1>Task per Member</h1>
           <BarChart :options="optionsBar" :chartData="membersData" />
         </div>
-        <div class="flex flex-column">
+        <div class="duedate-chart flex flex-column">
           <h1>Task due-date statistics</h1>
           <BarChart :options="optionsBar" :chartData="doneTasksData" />
         </div>
@@ -261,8 +259,7 @@
 <script>
 import { DoughnutChart, BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import { utilService } from '../services/util-service.js'
-import { right } from '@popperjs/core'
+import {utilService} from '../services/util-service.js'
 Chart.register(...registerables)
 
 export default {
@@ -271,11 +268,11 @@ export default {
   props: {
     width: {
       type: Number,
-      default: 300,
+      default: 200,
     },
     height: {
       type: Number,
-      default: 300,
+      default: 200,
     },
   },
 
@@ -325,9 +322,9 @@ export default {
             position: 'bottom',
             align: 'start',
             labels: {
-              color: '#fff',
+              color: '#42526e',
               font: {
-                size: 16,
+                size: 14,
               },
             },
           },
@@ -339,7 +336,7 @@ export default {
             position: 'bottom',
             align: 'start',
             labels: {
-              color: '#fff',
+              color: '#42526e',
               font: {
                 size: 16,
               },
@@ -389,6 +386,9 @@ export default {
     },
     user() {
       return this.$store.getters.user
+    },
+    gratitudePerTime() {
+      return utilService.gratitudePerTime()
     },
   },
   methods: {

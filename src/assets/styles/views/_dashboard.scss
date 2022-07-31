@@ -53,14 +53,14 @@
       gap: em(10px);
       flex-wrap: wrap;
     }
-    gap: em(40px);
+  gap: em(40px);
     padding: 1rem;
     margin-block-start: 1rem;
     .stats {
       outline: 3px solid rgba(64, 61, 61, 0.067);
 
       border-radius: 20px;
-      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.14);
       max-height: 175px;
       width: 180px;
       margin-bottom: 20px;
@@ -103,9 +103,6 @@
           transition: stroke-dashoffset 1s ease-in-out;
         }
         
-        @media (max-width: 490px) {
-          width: 150px;
-        }
       }
       h3 {
         color: whitesmoke;
@@ -120,7 +117,7 @@
       &.small {
         align-items: center;
         margin-block: 0;
-        min-height: 140px;
+        min-height: 175px;
         background-image: linear-gradient(
           90deg,
           #99b7bf,
@@ -182,16 +179,34 @@
   }
 
   h1, h2 {
-    // align-self: center;
-    font-family: 'NotoSans-Bold';
+    font-family: 'Roboto-Bold';
   }
   .chart-container {
     gap: em(30px);
     padding: 1rem;
-    // width: 90%;
     border-radius: 3px;
     align-items: center;
     justify-content: center;
+    .task-per-label, .task-per-member, .duedate-chart {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 1rem;
+      background-image: linear-gradient(
+        90deg,
+        #effbfe,
+        #dde8ec,
+        #eaf6f9,
+        #e9f2f5,
+        #eaf3f7
+      );
+      box-shadow: 0 3px 30px rgba(0, 0, 0, 0.14);
+      canvas {
+        max-width: 300px !important;
+        @media (max-width: 405px) {
+          max-width: 230px !important;
+        } 
+      }
+    }
     @media (max-width: 780px) {
       flex-direction: column;
     }
