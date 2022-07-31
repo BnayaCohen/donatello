@@ -3,8 +3,7 @@
     <div class="popover-header flex justify-center align-center">
       <span class="modal-title">Members</span>
       <button class="pop-close-btn">
-        <span class="close-btn trellicons trellicons-close-btn"
-          @click="$emit('modalClosed')"></span>
+        <span class="close-btn trellicons trellicons-close-btn" @click="$emit('modalClosed')"></span>
       </button>
     </div>
     <div class="popover-content">
@@ -49,61 +48,3 @@ export default {
   emits: ['modalClosed', 'taskUpdated'],
 }
 </script>
-
-<style lang="scss">
-.member-modal {
-  position: absolute;
-  background-color: #fff;
-  border-radius: 3px;
-  box-shadow: 0 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
-  min-height: 50px;
-  width: 321px;
-  z-index: 35;
-
-  .close-btn.trellicons-close-btn {
-    position: absolute;
-    font-size: 1.2rem;
-    right: 0;
-  }
-
-  .modal-header {
-    align-items: center;
-    border-bottom: 1px solid #091e4221;
-    color: #5e6c84;
-    display: flex;
-    justify-content: center;
-    line-height: 40px;
-    margin: 0 12px;
-    padding: 0 32px;
-    position: relative;
-  }
-
-  .modal-input {
-    background-color: #fafbfc;
-    border: none;
-    border-radius: 3px;
-    box-shadow: inset 0 0 0 2px #dfe1e6;
-    margin: 4px 0 12px;
-    outline: none;
-    padding: 8px 12px;
-    width: 100%;
-
-    &:focus {
-      background-color: #fff;
-      border: 0 #fff;
-      box-shadow: inset 0 0 0 2px #0079bf;
-    }
-  }
-
-  .member-preview {
-    p {
-      flex: 1;
-    }
-
-    .trellicons-check {
-      padding: 5px 11px 5px 5px;
-      // trellicons check icon is "\e916"
-    }
-  }
-}
-</style>

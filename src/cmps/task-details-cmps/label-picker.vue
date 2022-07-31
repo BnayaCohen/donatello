@@ -88,4 +88,3 @@ export default {
   emits: ['taskUpdated', 'modalClosed'],
 }
 </script>
-<style></style>

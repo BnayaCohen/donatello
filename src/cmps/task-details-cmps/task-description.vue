@@ -11,16 +11,8 @@
       <p class="description-dummy" v-if="description && !isEditDescription" @click="openDescription">
         {{ description }}
       </p>
-      <textarea
-        v-else
-        rows="3"
-        placeholder="Add a more detailed description..."
-        ref="taskDescription"
-        v-model="description"
-        :class="descriptionStyle"
-        class="basic-input"
-        @click="openDescription"
-      ></textarea>
+      <textarea v-else rows="3" placeholder="Add a more detailed description..." ref="taskDescription"
+        v-model="description" :class="descriptionStyle" class="basic-input" @click="openDescription"></textarea>
       <div v-if="isEditDescription" class="description-btns flex align-center">
         <button class="description-save-btn" @click.stop="saveDescription">Save</button>
         <button class="description-cancel-btn" @click.stop="closeDescription">Close</button>
@@ -60,4 +52,3 @@ export default {
   emits: ['saveDescription'],
 }
 </script>
-<style></style>
