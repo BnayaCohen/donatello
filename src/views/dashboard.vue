@@ -126,7 +126,7 @@
               id="Capa_1"
               x="0px"
               y="0px"
-              viewBox="0 0 69 40"
+              viewBox="0 0 75 75"
               style="fill: #42526e;"
             >
               <g>
