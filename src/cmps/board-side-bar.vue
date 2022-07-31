@@ -53,7 +53,7 @@
             <div class="search-photos-input">
                 <span class="trellicons trellicons-search"></span>
                 <input type="text" v-model="searchPhoto" placeholder="Photos" class="clean-input"
-                    @keyup.enter="unsplashPhotos" />
+                    @input="unsplashPhotos" />
             </div>
 
             <div v-for="(bgPhoto, i) in currPhotos" :key="i" class="bg-item-select"
