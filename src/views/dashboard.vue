@@ -126,8 +126,11 @@
               id="Capa_1"
               x="0px"
               y="0px"
-              viewBox="0 0 75 75"
+              viewBox="0 0 80 80"
               style="fill: #42526e;"
+              height="100"
+              width="100"
+              class="align-self-center"
             >
               <g>
                 <path
