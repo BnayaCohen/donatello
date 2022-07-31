@@ -52,6 +52,33 @@
             </h3>
           </div>
         </div>
+        <div class="stats small circle-bar flex flex-column">
+          <h3>Completed tasks</h3>
+          <div class="percent-container flex align-center justify-center">
+            <h2>{{ donePercentDisplay }}</h2>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="-1 -1 34 34"
+              class="pos-absolute"
+            >
+              <circle
+                cx="16"
+                cy="16"
+                r="15.9155"
+                class="in-progress-bar__background"
+              />
+
+              <circle
+                cx="16"
+                cy="16"
+                r="15.9155"
+                class="in-progress-bar__progress js-progress-bar"
+                ref="inProgressCircle"
+              />
+            </svg>
+          </div>
+        </div>
+
         <div class="stats lists flex justify-between">
           <div class="content flex row-reverse justify-between">
             <svg
@@ -164,33 +191,6 @@
             <h4>{{ memberCount }}</h4>
           </h3>
         </div>
-                <div class="stats small circle-bar flex flex-column">
-          <h3>Completed tasks</h3>
-          <div class="percent-container flex align-center justify-center">
-            <h2>{{ donePercentDisplay }}</h2>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="-1 -1 34 34"
-              class="pos-absolute"
-            >
-              <circle
-                cx="16"
-                cy="16"
-                r="15.9155"
-                class="in-progress-bar__background"
-              />
-
-              <circle
-                cx="16"
-                cy="16"
-                r="15.9155"
-                class="in-progress-bar__progress js-progress-bar"
-                ref="inProgressCircle"
-              />
-            </svg>
-          </div>
-        </div>
-
         <div class="stats overdue flex justify-between">
           <div class="content flex row-reverse justify-between">
             <svg
