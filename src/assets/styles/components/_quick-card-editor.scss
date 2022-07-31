@@ -92,9 +92,18 @@
       }
       &-details {
         overflow: hidden;
-        padding: 6px 8px 2px;
+        padding: 0px 8px 0;
         position: relative;
         z-index: 10;
+        .quick-edit-img {
+          min-height: 32px;
+          width: calc(100% + 16px);
+          position: relative;
+          left: -8px;
+          top: -6px;
+          max-height: 206px;
+          background-color: inherit;
+        }
       }
       &-members {
         float: right;
@@ -109,6 +118,7 @@
       float: left;
       display: block;
       margin-left: -2px;
+      height: 32px;
       max-width: 100%;
       color: #6b778c;
       .badge {
@@ -197,6 +207,7 @@
     border: none;
     outline: none;
     width: 100%;
+    padding: 0;
     font-family: inherit;
   }
   .task-due-date {
