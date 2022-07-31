@@ -115,7 +115,7 @@ export default {
         const dataSet = {
           label: dateStatus,
           data: [dueDateMap[dateStatus]],
-          backgroundColor: dateStatus === 'over-due'? 'rgba(128, 0, 0, 0.55)' : dateStatus === 'due-soon'? 'rgba(255, 195, 0, 0.55)' : 'rgba(56, 149, 211, 0.55)'
+          backgroundColor: dateStatus === 'over-due'? 'rgba(128, 0, 0)' : dateStatus === 'due-soon'? 'rgba(255, 195, 0)' : 'rgba(56, 149, 211)'
         }
         dueDateDataSets.push(dataSet)
       }
