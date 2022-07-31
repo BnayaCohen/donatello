@@ -8,7 +8,7 @@
       <div class="modal-details">
         <div class="board-preview-wrapper">
           <div :style="setBackground" class="board-preview-container">
-            <img src="	https://skello.herokuapp.com/static/media/board-preview.25c287ae7ad9fc2da090aeeddd284374.svg" />
+            <!-- <img src="@/https://skello.herokuapp.com/static/media/board-preview.25c287ae7ad9fc2da090aeeddd284374.svg" /> -->
           </div>
         </div>
         <div class="background-container">
@@ -89,6 +89,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

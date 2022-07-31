@@ -7,25 +7,13 @@
       </button>
     </div>
 
-    <datepicker
-      inline
-      class="due-date-picker"
-      id="due-date-picker"
-      :value="dueDate"
-      v-model = "dueDate"
-      @update:modelValue="dueDate"
-    ></datepicker>
+    <datepicker inline class="due-date-picker" id="due-date-picker" :value="dueDate" v-model="dueDate"
+      @update:modelValue="dueDate"></datepicker>
     <div class="pop-content">
-      <button
-        class="full-btn flex align-center justify-center save-duedate-btn"
-        @click.stop="updateDueDate"
-      >
+      <button class="full-btn flex align-center justify-center save-duedate-btn" @click.stop="updateDueDate">
         <span>Save</span>
       </button>
-      <button
-        class="full-btn flex align-center justify-center remove-duedate-btn"
-        @click.stop="removeDueDate"
-      >
+      <button class="full-btn flex align-center justify-center remove-duedate-btn" @click.stop="removeDueDate">
         <span>Remove</span>
       </button>
     </div>
@@ -57,4 +45,3 @@ export default {
   emits: ['updateDueDate', 'removeDueDate', 'modalClosed', 'toggleDate']
 }
 </script>
-<style></style>

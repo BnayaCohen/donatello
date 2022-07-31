@@ -79,5 +79,3 @@ export default {
   emits: ['saveComment', 'deleteComment']
 }
 </script>
-<style>
-</style>

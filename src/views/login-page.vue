@@ -1,36 +1,24 @@
 <template>
-  <div
-    class="header-hide"
-    :style="{
-      height: '44px',
-      backgroundColor: '#fff',
-      position: 'fixed',
-      top: 0,
-      width: '100%',
-    }"
-  ></div>
+  <div class="header-hide" :style="{
+    height: '44px',
+    backgroundColor: '#fff',
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+  }"></div>
   <section>
-    <div
-      class="login-page-header flex justify-center align-center"
-      :style="{ height: '196px' }"
-    >
-      <img
-        src="../assets/img/trello-logo.png"
-        :style="{
-          maxHeight: '43px',
-          maxWidth: '43px',
-          marginInlineEnd: '11px',
-        }"
-      />
-      <h1
-        :style="{
-          letterSpacing: '0.8px',
-          fontSize: '54.5px',
-          height: '26px',
-          cursor: 'pointer',
-        }"
-        @click="$router.push('/')"
-      >
+    <div class="login-page-header flex justify-center align-center" :style="{ height: '196px' }">
+      <img src="../assets/img/trello-logo.png" :style="{
+        maxHeight: '43px',
+        maxWidth: '43px',
+        marginInlineEnd: '11px',
+      }" />
+      <h1 :style="{
+        letterSpacing: '0.8px',
+        fontSize: '54.5px',
+        height: '26px',
+        cursor: 'pointer',
+      }" @click="$router.push('/')">
         Donatello
       </h1>
     </div>
@@ -69,8 +57,3 @@ export default {
   },
 }
 </script>
-<style>
-.form-container {
-  font-family: inherit;
-}
-</style>

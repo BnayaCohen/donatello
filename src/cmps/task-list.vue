@@ -93,8 +93,3 @@ export default {
   components: { taskPreview, taskDetails, Container, Draggable, addGroupOrTask, },
 }
 </script>
-<style>
-.smooth-dnd-container {
-  min-height: 1px;
-}
-</style>
