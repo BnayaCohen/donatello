@@ -7,43 +7,50 @@
             <div :style="task.styles" class="list-card list-card-quick-edit is-covered">
                 <!-- Add cover image/background to display in quick edit -->
                 <div class="list-card-details">
-                    <div v-if="task.labelIds.length" class="list-card-labels">
-                        <task-label-list :labelIds="task.labelIds" />
+                    <div v-if="task.style.background" :style="task.style" class="quick-edit-img">
+                        <img v-if="task.style.background.length > 24" :src="task.style.background">
                     </div>
-                    <textarea v-model="title" data-autosize="true" dir="auto" style="
+                    <div class="quick-edit-data" :style="setMarginTop">
+                        <div v-if="task.labelIds.length" class="list-card-labels">
+                            <task-label-list :labelIds="task.labelIds" />
+                        </div>
+                        <textarea v-model="title" data-autosize="true" dir="auto" :style="setPaddingTop" style="
               overflow: hidden;
               overflow-wrap: break-word;
               resize: none;
               height: 90px;
             "></textarea>
-                    <div class="badges">
-                        <span class="badges-container">
-                            <div v-if="task.description" class="task-indicator trellicons trellicons-description badge">
-                            </div>
-                            <div v-if="task.dueDate" class="task-due-date badge" @mouseenter="toggleDueDateOnHover"
-                                @mouseleave="toggleDueDateOnHover" @click="toggleDueDateCheck" :style="dueDateStyle">
-                                <div class="due-date-icon ">
-                                    <span class="trellicons" :class="'trellicons-' + getDueDateIconName"></span>
+                        <div class="badges">
+                            <span class="badges-container">
+                                <div v-if="task.description"
+                                    class="task-indicator trellicons trellicons-description badge">
                                 </div>
-                                <p> {{ getFixedDueDate }}</p>
-                            </div>
-                            <div v-if="task.comments?.length" class="task-indicator badge">
-                                <span class="trellicons trellicons-comment"></span>
-                                <p> {{ task.comments.length }}</p>
-                            </div>
-                            <div v-if="task.attachments?.length" class="task-indicator badge">
-                                <span class="trellicons trellicons-attachment"></span>
-                                <p> {{ task.attachments.length }}</p>
-                            </div>
-                            <div v-if="task.checklists?.length" class="task-indicator badge">
-                                <span class="trellicons trellicons-checkedbox"></span>
-                                <p>{{ getChecklistProgress }}</p>
-                            </div>
-                        </span>
-                    </div>
-                    <div v-if="task.memberIds.length" class="list-card-members">
-                        <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :avatarSize="'small'"
-                            :member="getMemberById(memberId)" />
+                                <div v-if="task.dueDate" class="task-due-date badge" @mouseenter="toggleDueDateOnHover"
+                                    @mouseleave="toggleDueDateOnHover" @click="toggleDueDateCheck"
+                                    :style="dueDateStyle">
+                                    <div class="due-date-icon ">
+                                        <span class="trellicons" :class="'trellicons-' + getDueDateIconName"></span>
+                                    </div>
+                                    <p> {{ getFixedDueDate }}</p>
+                                </div>
+                                <div v-if="task.comments?.length" class="task-indicator badge">
+                                    <span class="trellicons trellicons-comment"></span>
+                                    <p> {{ task.comments.length }}</p>
+                                </div>
+                                <div v-if="task.attachments?.length" class="task-indicator badge">
+                                    <span class="trellicons trellicons-attachment"></span>
+                                    <p> {{ task.attachments.length }}</p>
+                                </div>
+                                <div v-if="task.checklists?.length" class="task-indicator badge">
+                                    <span class="trellicons trellicons-checkedbox"></span>
+                                    <p>{{ getChecklistProgress }}</p>
+                                </div>
+                            </span>
+                        </div>
+                        <div v-if="task.memberIds.length" class="list-card-members">
+                            <avatar-preview v-for="memberId in task.memberIds" :key="memberId" :avatarSize="'small'"
+                                :member="getMemberById(memberId)" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,6 +111,9 @@ import taskLabelList from './task-label-list.vue'
 import avatarPreview from './avatar-preview.vue'
 import taskOptions from './task-options-cmp.vue'
 export default {
+    created() {
+        console.log(this.task.labels)
+    },
     props: { task: Object, getCords: Object },
     name: 'quickEdit',
     components: { avatarPreview, taskLabelList, taskOptions },
@@ -222,6 +232,17 @@ export default {
                 this.task.status === 'in-progress' ? 'un-checkedbox' : 'checkedbox'
             return this.onDueDateHover ? currCheckbox : 'clock'
         },
+        setMarginTop() {
+            const style = {}
+            if (this.task.style.background?.length > 22) style.marginTop = '-8px'
+            return style
+        },
+        setPaddingTop() {
+            const style = {}
+            if (!this.task.labelIds?.length && !this.task.style.background) style.paddingTop = '6px'
+            return style
+
+        }
     },
     emits: ['closeQuickEdit', 'saveTask']
 
