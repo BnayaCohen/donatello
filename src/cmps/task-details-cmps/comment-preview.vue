@@ -35,9 +35,6 @@ export default {
     loggedInUser: Object,
     comment: Object,
   },
-  created() {
-    console.log(this.comment)
-  },
   computed: {
     timeAgo() {
       return utilService.timeAgo(this.comment.createdAt) || 'Just now'

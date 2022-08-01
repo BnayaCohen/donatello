@@ -223,7 +223,6 @@ export default {
       this.updateTask('Added a comment to card ')
     },
     deleteComment(commentId) {
-      console.log('hi')
       const idx = this.task.comments.findIndex(
         (comment) => comment.id === commentId
       )
@@ -245,7 +244,6 @@ export default {
       if (top + height > window.innerHeight && top - height < 0) this.modalPos.top = window.innerHeight - top
       else if (top + height > window.innerHeight) this.modalPos.top = top - height + 'px'
       else if (top - height < 0) this.modalPos.top = 0
-      console.log(this.modalPos, innerHeight, top,)
     }
   },
   components: {

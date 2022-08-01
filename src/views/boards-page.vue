@@ -1,5 +1,5 @@
 <template>
-  <main class="boards-page main-layout">
+  <main v-if="boards" class="boards-page main-layout">
     <div class="boards-page-container">
       <section v-if="starredBoards.length" class="boards-container">
         <div class="boards-title flex">
@@ -38,9 +38,14 @@
         </ul>
       </section>
     </div>
-  </main>
   <board-create v-if="isModalOpen" v-click-outside="toggleModal" @toggleModal="toggleModal" @addBoard="createBoard"
     :style="getCords" />
+  </main>
+    <div v-else class="logo-holder">
+    <div class="bar"></div>
+    <div class="bar fill1"></div>
+    <div class="bar fill2"></div>
+  </div>
 </template>
 
 <script>
@@ -111,7 +116,6 @@ export default {
       }
     },
   },
-
   unmounted() {
     document.body.classList.remove('app-header-background-color-blue')
   },

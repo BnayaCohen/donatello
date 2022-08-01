@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     updateDueDate() {
-      console.log(this.dueDate)
       this.$emit('updateDueDate', this.dueDate)
     },
     removeDueDate() {
