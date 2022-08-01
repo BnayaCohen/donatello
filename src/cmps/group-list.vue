@@ -56,7 +56,6 @@ export default {
       const scene = Object.assign({}, this.scene)
       scene.children = applyDrag(scene.children, dropResult)
       this.scene = scene
-      console.log(dropResult)
       this.$store.dispatch({ type: 'swap', dropResult })
     },
   },

@@ -73,7 +73,6 @@ export default {
             this.updateTask()
         },
         addCover(color) {
-            console.log(color);
             this.$emit('updateCurrCover', color)
             this.updateTask('Added changed the cover of card ')
         },

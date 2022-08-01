@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     boardClicked(boardId) {
-      console.log('hi')
       this.$router.push(`${boardId}`)
       setTimeout(() => {
         window.location.reload()
