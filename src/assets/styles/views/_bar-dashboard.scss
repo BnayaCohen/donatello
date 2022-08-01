@@ -70,17 +70,24 @@
 }
 
 .chart-container {
-  margin-top: 4px;
+  margin: 0 4px;
+  margin-top: 8px;
+  margin-bottom: 20px;
 
   .chart {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     flex: 1;
+    gap: 6px;
+    width: 220px;
+    margin: 0 4px;
 
     h1 {
       font-size: 1.1rem;
       font-weight: 500;
       text-align: left;
+      margin: 6px;
     }
   }
 }
