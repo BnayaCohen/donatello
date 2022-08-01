@@ -102,7 +102,8 @@
         </div>
     </div>
     <task-options v-if="isPickerOpen" :cmpType="modalCmpType" :task="task" :style="modalPos" :dueDate="dueDate"
-        @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @pickerClosed="isPickerOpen = false" />
+        @removeDueDate="removeDueDate" @updateDueDate="updateDueDate" @pickerClosed="isPickerOpen = false"
+        @modalSize="setModalSize" />
 </template>
 
 <script>
@@ -112,14 +113,13 @@ import avatarPreview from './avatar-preview.vue'
 import taskOptions from './task-options-cmp.vue'
 export default {
     created() {
-        console.log(this.getCords)
     },
     props: { task: Object, getCords: Object },
     name: 'quickEdit',
     components: { avatarPreview, taskLabelList, taskOptions },
     data() {
         return {
-            modaPos: {},
+            modalPos: {},
             isPickerOpen: false,
             onDueDateHover: false,
             taskToEdit: this.task,
@@ -244,6 +244,18 @@ export default {
             if (!this.task.labelIds?.length && !this.task.style.background) style.paddingTop = '6px'
             return style
 
+        },
+        setModalSize({ width, height }) {
+            let { left, top } = this.modalPos
+            left = parseFloat(left)
+            top = parseFloat(top)
+            // sides
+            if (left + width > window.innerWidth) this.modalPos.left = window.innerWidth - width - 20 + 'px'
+            else if (left - width < 0) this.modalPos.left = 20
+            // top and bottom
+            if (top + height > window.innerHeight && top - height < 0) this.modalPos.top = 0
+            else if (top + height > window.innerHeight) this.modalPos.top = top - height + 'px'
+            else if (top - height < 0) this.modalPos.top = 0
         }
     },
     emits: ['closeQuickEdit', 'saveTask']
