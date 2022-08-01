@@ -54,7 +54,6 @@ export default {
     },
     cleanSearch() {
       this.isSearch = false
-      console.log(this.isSearch)
     },
     toggleUserMenu(ev) {
       this.x = ev?.clientX
