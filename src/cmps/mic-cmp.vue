@@ -39,6 +39,9 @@ export default {
             this.$emit('updateText', evt.results[0][0].transcript)
         }
     },
+    unmounted() {
+        this.speechRecord.stop()
+    },
     methods: {
         toggleMic() {
             if (this.isRecording) this.speechRecord.stop()
@@ -86,10 +89,12 @@ export default {
     0% {
         background-color: transparent;
     }
+
     50% {
         opacity: 0.6;
         background-color: rgb(236, 148, 136);
     }
+
     100% {
         background-color: transparent;
     }
