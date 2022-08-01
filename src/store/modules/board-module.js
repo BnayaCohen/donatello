@@ -65,7 +65,7 @@ export default {
     task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
     },
-    labelsCharData({ currBoard }) {
+    labelsDataChart({ currBoard }) {
       const boardLabels = currBoard.labels
       let labelsCount = currBoard.groups.reduce((acc, group) => {
         group.tasks.forEach(task => {
@@ -77,13 +77,14 @@ export default {
         })
         return acc
       }, {})
-      const labelsMap = { counter: [], colors: [] }
+      const labelsMap = { data: [], backgroundColor: [], labels: [] }
       Object.keys(labelsCount).forEach(key => {
         const currLabel = boardLabels.find(label => label.id === key)
-        labelsMap.counter.push({ [currLabel.title]: labelsCount[key] })
-        labelsMap.colors.push(currLabel.color)
+        labelsMap.data.push(labelsCount[key])
+        labelsMap.labels.push(currLabel.title)
+        labelsMap.backgroundColor.push(currLabel.color)
       })
-      return labelsCount
+      return labelsMap
     },
     taskStatusMap({ currBoard }) {
       let statusMap = {}
@@ -126,42 +127,29 @@ export default {
       return dueDateDataSets
     },
     taskPerMemberMap({ currBoard }) {
-      let membersCount = {}
-      let membersDataSets = []
-      let currMemberName = ''
       const boardMembers = currBoard.members
-      boardMembers.forEach((member) => {
-        membersCount[member.fullname] = 0
-      })
-      currBoard.groups.forEach((group) => {
-        group.tasks.forEach((task) => {
-          task.memberIds.forEach((memberId) => {
-            for (var i = 0; i < boardMembers.length; i++) {
-              if (boardMembers[i]._id === memberId) {
-                currMemberName = boardMembers[i].fullname
-                break
-              }
-            }
-            if (!currMemberName) return
-            membersCount[currMemberName] += 1
+      let labelsCount = currBoard.groups.reduce((acc, group) => {
+        group.tasks.forEach(task => {
+          task.labelIds.forEach(labelId => {
+            const { id } = boardLabels.find(label => label.id === labelId)
+            if (acc[id]) acc[id]++
+            else acc[id] = 1
           })
         })
+        return acc
+      }, {})
+      const labelsMap = { data: [], backgroundColor: [], labels: [] }
+      Object.keys(labelsCount).forEach(key => {
+        const currLabel = boardLabels.find(label => label.id === key)
+        labelsMap.data.push(labelsCount[key])
+        labelsMap.labels.push(currLabel.title)
+        labelsMap.backgroundColor.push(currLabel.color)
       })
-      var clrIdx = 0
-      for (const member in membersCount) {
-        const dataSet = {
-          label: member,
-          data: [membersCount[member]],
-          backgroundColor: utilService.getTrelloColor(clrIdx),
-        }
-        membersDataSets.push(dataSet)
-        clrIdx++
-      }
-      return membersDataSets
+      return labelsMap
     },
     taskOverdueCount({ currBoard }) {
       return currBoard.groups.reduce((acc, group) =>
-        acc += group.tasks.reduce((acc, task) => acc = (task.dueDate < Date.now() && task.status !== 'stats') ? acc + 1 : acc, 0), 0)
+        acc += group.tasks.reduce((acc, task) => (task.dueDate && Date.now() > task.dueDate && task.status !== 'done') ? acc + 1 : acc, 0), 0)
 
     },
   },
