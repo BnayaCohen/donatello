@@ -4,12 +4,12 @@
   </div>
   <div class="dashboard-modal flex flex-column align-center">
     <div class="dash-modal-wrapper">
-      <button
-        class="trellicons trellicons-close-btn dashboard-close"
-        @click="closeDashboard"
-      ></button>
-      <header class="dashboard-header flex flex-column">
+      <header class="dashboard-header flex">
         <h1>{{ gratitudePerTime }}, {{ user.fullname }}!</h1>
+        <button
+          class="trellicons trellicons-close-btn dashboard-close"
+          @click="closeDashboard"
+        ></button>
       </header>
       <section class="general-statistics flex justify-center">
         <div class="stats tasks flex row-reverse justify-between">
