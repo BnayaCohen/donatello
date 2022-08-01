@@ -24,6 +24,9 @@
   z-index: 30;
 
   header {
+    margin-block-end: 2rem;
+    align-items: center;
+    justify-content: space-between;
     h1 {
       font-size: em(34px);
       line-height: 40px;
@@ -32,13 +35,9 @@
     }
   }
   .dashboard-close {
-    position: absolute;
-    top: 0;
-    right: 20px;
     font-size: em(35px);
     background-color: transparent;
     border: none;
-    color: #fff;
     cursor: pointer;
     transition: all 200ms ease-in-out;
     height: 60px;
@@ -56,10 +55,9 @@
   .general-statistics {
     flex-wrap: wrap;
     justify-content: space-between;
-    
+    margin-block-end: 2rem;
   gap: em(40px);
     padding-block: 1rem;
-    margin-block-start: 1rem;
     .stats {
       border-radius: 20px;
       // box-shadow: 0 5px rgba(0, 0, 0, 0.02), 0 -5px rgba(0, 0, 0, 0.02), 5px 0 rgba(0, 0, 0, 0.02), -5px 0 rgba(0, 0, 0, 0.02) ;
@@ -168,8 +166,6 @@
     justify-content: space-between;
     flex-wrap: wrap;
     .task-per-label, .task-per-member, .duedate-chart {
-      // box-shadow: 0 5px rgba(0, 0, 0, 0.02), 0 -5px rgba(0, 0, 0, 0.02), 5px 0 rgba(0, 0, 0, 0.02), -5px 0 rgba(0, 0, 0, 0.02) ;
-      // background-color: #f2fbff3c;
       border-radius: 20px;
       padding: 1rem;
       gap: em(10px);
