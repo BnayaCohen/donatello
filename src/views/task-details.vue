@@ -68,7 +68,6 @@ import taskComment from '../cmps/task-details-cmps/task-comment.vue'
 import taskOptions from '../cmps/task-options-cmp.vue'
 import taskDescription from '../cmps/task-details-cmps/task-description.vue'
 import { ref } from 'vue'
-import { left } from '@popperjs/core'
 
 export default {
   name: 'taskDetails',
@@ -243,9 +242,10 @@ export default {
       if (left + width > window.innerWidth) this.modalPos.left = window.innerWidth - width - 20 + 'px'
       else if (left - width < 0) this.modalPos.left = 20
       // top and bottom
-      if (top + height > window.innerHeight && top - height < 0) this.modalPos.top = 0
+      if (top + height > window.innerHeight && top - height < 0) this.modalPos.top = window.innerHeight - top
       else if (top + height > window.innerHeight) this.modalPos.top = top - height + 'px'
       else if (top - height < 0) this.modalPos.top = 0
+      console.log(this.modalPos, innerHeight, top,)
     }
   },
   components: {
