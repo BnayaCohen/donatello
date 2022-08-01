@@ -62,11 +62,9 @@
     margin-block-start: 1rem;
     .stats {
       border-radius: 20px;
-      box-shadow: 0 5px 2px rgba(0, 0, 0, 0.05);
-
+      // box-shadow: 0 5px rgba(0, 0, 0, 0.02), 0 -5px rgba(0, 0, 0, 0.02), 5px 0 rgba(0, 0, 0, 0.02), -5px 0 rgba(0, 0, 0, 0.02) ;
       max-height: 175px;
       min-width: 250px;
-      background-color: #f2fbff3c;
       .content {
         width: 100%;
       }
@@ -82,13 +80,13 @@
           padding-inline: 0.5rem;
         }
         svg {
-          height: 100px;
+          height: 90px;
           transform: rotate(-90deg);
-          max-width: 100px;
+          max-width: 90px;
           margin-block-end: 1rem;
         }
         h2 {
-          margin-block-end: 1rem;
+          margin-block-end: 1.2rem;
 
         }
         .in-progress-bar__background,
@@ -151,7 +149,8 @@
       }
       &.overdue {
         background-image: none;
-        background-color: rgba(201, 50, 50, 0.356);
+        box-shadow: 0 4px  #eb5946ce;
+        // background-color: #eb5946a8;
         flex-basis: 20%;
         svg {
           margin-block-start: 4rem;
@@ -172,8 +171,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
     .task-per-label, .task-per-member, .duedate-chart {
-      box-shadow: 0 5px 2px rgba(0, 0, 0, 0.05);
-      background-color: #f2fbff3c;
+      // box-shadow: 0 5px rgba(0, 0, 0, 0.02), 0 -5px rgba(0, 0, 0, 0.02), 5px 0 rgba(0, 0, 0, 0.02), -5px 0 rgba(0, 0, 0, 0.02) ;
+      // background-color: #f2fbff3c;
       border-radius: 20px;
       padding: 1rem;
       gap: em(10px);

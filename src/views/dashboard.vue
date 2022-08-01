@@ -279,8 +279,8 @@ export default {
     }
   },
   created() {
-    const labelsDataSet = this.$store.getters.labelToTaskMap
-    const membersDataSets = this.$store.getters.memberToTaskMap
+    const labelsDataSet = this.$store.getters.taskPerLabelMap
+    const membersDataSets = this.$store.getters.taskPerMemberMap
     const doneTasksDataSets = this.$store.getters.doneTasksPerGroup
     Object.keys(labelsDataSet).map((label) => {
       this.labelsData.labels.push(label)
