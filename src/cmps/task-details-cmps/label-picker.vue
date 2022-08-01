@@ -12,30 +12,19 @@
       </div>
       <h3 class="small-title">Labels</h3>
       <ul class="clean-list">
-        <li
-          v-for="label in labels"
-          :key="label.id"
-          @click.stop="toggleLabel(label.id)"
-          class="label flex align-center"
-        >
-          <div
-            :style="{
-              borderRadius: '3px',
-              width: '100%',
-              height: '32px',
-              backgroundColor: label.color,
-            }"
-          >
-            <span
-              v-if="isLabelInUse(label.id)"
-              class="trellicons trellicons-v-check"
-              :style="{
-                float: 'right',
-                color: '#fff',
-                margin: '7px 7px 0 0',
-                fontWeight: '400',
-              }"
-            ></span>
+        <li v-for="label in labels" :key="label.id" @click.stop="toggleLabel(label.id)" class="label flex align-center">
+          <div :style="{
+            borderRadius: '3px',
+            width: '100%',
+            height: '32px',
+            backgroundColor: label.color,
+          }">
+            <span v-if="isLabelInUse(label.id)" class="trellicons trellicons-v-check" :style="{
+              float: 'right',
+              color: '#fff',
+              margin: '7px 7px 0 0',
+              fontWeight: '400',
+            }"></span>
           </div>
           <span class="pos-absolute">{{ label.title }}</span>
         </li>
@@ -54,32 +43,11 @@ export default {
   data() {
     return {
       labels: this.$store.getters.getLabels,
-      taskLabels: [],
     }
-  },
-  created() {
-    console.log(this.labels)
-    if (this.labelIds) {
-       this.taskLabels = this.labels.filter(label => this.labelIds.includes(label.id))
-      }
-  },
-  computed: {
-    selectedLabel() {
-      this.taskLabels.forEach((taskLabel) => {
-        if (taskLabel.id === labelId) return 'label-selected'
-        else return ''
-      })
-    },
   },
   methods: {
     isLabelInUse(labelId) {
-      let inUse = false
-      this.taskLabels.forEach((taskLabel) => {
-        if (labelId === taskLabel.id) {
-          inUse = true
-        }
-      })
-      return inUse
+      return this.labelIds.includes(labelId)
     },
     toggleLabel(labelId) {
       this.$emit('taskUpdated', labelId)
