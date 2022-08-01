@@ -4,7 +4,7 @@
         <h1>{{ board.title }}</h1>
         <span @click="goBack" class="trellicons trellicons-close-btn"></span>
         <section class="dashboard-content">
-            <div v-for="(item, i) in items" :style="i === 3 ? { background: '#FF6666' } : ''" :key="i"
+            <div v-for="(item, i) in items" :style="i === 3 ? { background: '#eb5a46cc' } : ''" :key="i"
                 class="item-content">
                 <h3 class="item-title">{{ item.title }}</h3>
                 <div class="inline-flex">
