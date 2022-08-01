@@ -5,6 +5,7 @@ import boardDetails from '../views/board-details.vue'
 import taskDetails from '../views/task-details.vue'
 import loginPage from '../views/login-page.vue'
 import dashboard from '../views/dashboard.vue'
+import barDashboard from '../views/bar-dashboard.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -30,7 +31,7 @@ const router = createRouter({
         },
         {
           path: 'dashboard',
-          component: dashboard,
+          component: barDashboard,
         },
       ],
     },

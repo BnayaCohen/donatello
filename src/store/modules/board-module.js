@@ -65,24 +65,23 @@ export default {
     task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
     },
-    taskPerLabelMap({ currBoard }) {
-      let labelsCount = {}
-      let currLabelName = ''
+    labelsCharData({ currBoard }) {
       const boardLabels = currBoard.labels
-      currBoard.groups.forEach((group) => {
-        group.tasks.forEach((task) => {
-          task.labelIds.forEach((labelId) => {
-            for (var i = 0; i < boardLabels.length; i++) {
-              if (boardLabels[i].id === labelId) {
-                currLabelName = boardLabels[i].title
-                break
-              }
-            }
-            const hasLabel = currLabelName in labelsCount
-            if (!hasLabel) labelsCount[currLabelName] = 1
-            else labelsCount[currLabelName]++
+      let labelsCount = currBoard.groups.reduce((acc, group) => {
+        group.tasks.forEach(task => {
+          task.labelIds.forEach(labelId => {
+            const { id } = boardLabels.find(label => label.id === labelId)
+            if (acc[id]) acc[id]++
+            else acc[id] = 1
           })
         })
+        return acc
+      }, {})
+      const labelsMap = { counter: [], colors: [] }
+      Object.keys(labelsCount).forEach(key => {
+        const currLabel = boardLabels.find(label => label.id === key)
+        labelsMap.counter.push({ [currLabel.title]: labelsCount[key] })
+        labelsMap.colors.push(currLabel.color)
       })
       return labelsCount
     },
@@ -119,8 +118,8 @@ export default {
             dateStatus === 'over-due'
               ? '#eb5a46'
               : dateStatus === 'due-soon'
-              ? '#f2d600'
-              : '#0079bf',
+                ? '#f2d600'
+                : '#0079bf',
         }
         dueDateDataSets.push(dataSet)
       }
@@ -161,16 +160,9 @@ export default {
       return membersDataSets
     },
     taskOverdueCount({ currBoard }) {
-      let overdueCount = 0
-      currBoard.groups.forEach((group) => {
-        group.tasks.forEach((task) => {
-          const { dueDate } = task
-          if (dueDate) {
-            if (dueDate < Date.now() && task.status !== 'done') overdueCount++
-          }
-        })
-      })
-      return overdueCount
+      return currBoard.groups.reduce((acc, group) =>
+        acc += group.tasks.reduce((acc, task) => acc = (task.dueDate < Date.now() && task.status !== 'stats') ? acc + 1 : acc, 0), 0)
+
     },
   },
   mutations: {
@@ -467,7 +459,7 @@ export default {
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({}, { filterBy }) {
+    async searchBoards({ }, { filterBy }) {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []

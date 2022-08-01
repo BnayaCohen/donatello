@@ -97,10 +97,11 @@
         z-index: 10;
         .quick-edit-img {
           min-height: 32px;
+          border-radius: 3px 3px 0 0;
           width: calc(100% + 16px);
           position: relative;
           left: -8px;
-          top: -6px;
+          margin-bottom: 6px;
           max-height: 206px;
           background-color: inherit;
         }
