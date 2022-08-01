@@ -120,7 +120,7 @@ export default {
         const el = this.$refs.dynamic
         const { width, height } = this.$refs.dynamic.getBoundingClientRect()
         if (!width || !height) this.$emit('modalSize', { width: el.scrollWidth || el.childNodes[0].offsetWidth, height: el.scrollHeight || el.childNodes[0].offsetHeight })
-        else this.$emit('modalSize', { width, height })
+        else this.$emit('setModalSize', { width, height })
     },
 }
 </script>
