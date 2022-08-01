@@ -9,44 +9,43 @@
         @click="closeDashboard"
       ></button>
       <header class="dashboard-header flex flex-column">
-        <h1>{{gratitudePerTime}}, {{ user.fullname }}!</h1>
+        <h1>{{ gratitudePerTime }}, {{ user.fullname }}!</h1>
       </header>
       <section class="general-statistics flex justify-center">
-          <div class="stats tasks flex row-reverse justify-between">
-            <svg
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              x="0px"
-              y="0px"
-              width="90"
-              height="100"
-              viewBox="0 0 340 255"
-              style="
-                enable-background: new 0 0 299.998 299.998;
-                fill: #42526e;
-                margin-block-start: 30px;
-              "           
-
-              xml:space="preserve"
-              class="align-self-center"
-            >
+        <div class="stats tasks flex row-reverse justify-between">
+          <svg
+            version="1.1"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            width="90"
+            height="100"
+            viewBox="0 0 340 255"
+            style="
+              enable-background: new 0 0 299.998 299.998;
+              fill: #42526e;
+              margin-block-end: 10px;
+            "
+            xml:space="preserve"
+            class="align-self-end"
+          >
+            <g>
               <g>
-                <g>
-                  <path
-                    d="M149.995,0.001C67.156,0.001,0,67.16,0,149.999s67.156,149.997,149.995,149.997s150.003-67.161,150.003-149.997
+                <path
+                  d="M149.995,0.001C67.156,0.001,0,67.16,0,149.999s67.156,149.997,149.995,149.997s150.003-67.161,150.003-149.997
 			C299.997,67.157,232.834,0.001,149.995,0.001z M217.205,217.204c0,10.066-8.159,18.225-18.223,18.225h-97.967
 			c-10.068,0-18.225-8.159-18.225-18.225V82.79c0-10.066,8.159-18.225,18.225-18.225h76.892v36.45h39.298V217.204z M185.688,93.232
 			V64.563l31.517,28.669H185.688z"
-                  />
-                </g>
+                />
               </g>
-            </svg>
-            <h3 class="flex flex-column">
-              Tasks
-              <h4>{{ taskCount }}</h4>
-            </h3>
+            </g>
+          </svg>
+          <h3 class="flex flex-column">
+            Tasks
+            <h4>{{ taskCount }}</h4>
+          </h3>
         </div>
         <div class="stats small circle-bar flex flex-column">
           <h3>Completed tasks</h3>
@@ -84,7 +83,7 @@
             height="150"
             viewBox="10 0 540 300"
             style="enable-background: new 0 0 479.293 479.293; fill: #42526e"
-            class="align-self-center"
+            class="align-self-end"
           >
             <g>
               <g>
@@ -126,11 +125,11 @@
               id="Capa_1"
               x="0px"
               y="0px"
-              viewBox="0 0 80 80"
-              style="fill: #42526e;"
+              viewBox="0 0 70 70"
+              style="fill: #42526e"
               height="100"
-              width="100"
-              class="align-self-center"
+              width="85"
+              class="align-self-end"
             >
               <g>
                 <path
@@ -188,7 +187,8 @@
 <script>
 import { DoughnutChart, BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import {utilService} from '../services/util-service.js'
+import { utilService } from '../services/util-service.js'
+import { inline } from '@floating-ui/core'
 Chart.register(...registerables)
 
 export default {
@@ -250,6 +250,7 @@ export default {
           legend: {
             position: 'bottom',
             align: 'start',
+            display: false,
             labels: {
               color: '#42526e',
               font: {
@@ -264,6 +265,8 @@ export default {
           legend: {
             position: 'bottom',
             align: 'start',
+            display: false,
+
             labels: {
               color: '#42526e',
               font: {

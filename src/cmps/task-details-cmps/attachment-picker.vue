@@ -48,6 +48,7 @@ export default {
       const res = await uploadImg(file)
       // this.isLoading = false
       this.attachProps.url = res.url
+      console.log(res.url)
       this.attachProps.title = file.name
       this.attachProps.createdAt = Date.now()
       this.$emit('taskUpdated', this.attachProps)
