@@ -65,7 +65,7 @@ export default {
     task({ currTask }) {
       return JSON.parse(JSON.stringify(currTask))
     },
-    labelToTaskMap({ currBoard }) {
+    taskPerLabelMap({ currBoard }) {
       let labelsCount = {}
       let currLabelName = ''
       const boardLabels = currBoard.labels
@@ -101,11 +101,12 @@ export default {
       let dueDateMap = { 'over-due': 0, 'due-soon': 0, 'No date assigned': 0 }
       let dueDateDataSets = []
       const diff = 172800000
-      currBoard.groups.forEach(group => {
-        group.tasks.forEach(task => {
+      currBoard.groups.forEach((group) => {
+        group.tasks.forEach((task) => {
           const { dueDate } = task
           if (dueDate) {
-            if (Date.now() > dueDate) dueDateMap['over-due']++
+            if (Date.now() > dueDate && task.status !== 'done')
+              dueDateMap['over-due']++
             else if (dueDate - Date.now() <= diff) dueDateMap['due-soon']++
           } else dueDateMap['No date assigned']++
         })
@@ -114,13 +115,18 @@ export default {
         const dataSet = {
           label: dateStatus,
           data: [dueDateMap[dateStatus]],
-          backgroundColor: dateStatus === 'over-due' ? 'rgba(128, 0, 0)' : dateStatus === 'due-soon' ? 'rgba(255, 195, 0)' : 'rgba(56, 149, 211)'
+          backgroundColor:
+            dateStatus === 'over-due'
+              ? '#eb5a46'
+              : dateStatus === 'due-soon'
+              ? '#f2d600'
+              : '#0079bf',
         }
         dueDateDataSets.push(dataSet)
       }
       return dueDateDataSets
     },
-    memberToTaskMap({ currBoard }) {
+    taskPerMemberMap({ currBoard }) {
       let membersCount = {}
       let membersDataSets = []
       let currMemberName = ''
@@ -142,13 +148,15 @@ export default {
           })
         })
       })
+      var clrIdx = 0
       for (const member in membersCount) {
         const dataSet = {
           label: member,
           data: [membersCount[member]],
-          backgroundColor: utilService.getRandomColor(),
+          backgroundColor: utilService.getTrelloColor(clrIdx),
         }
         membersDataSets.push(dataSet)
+        clrIdx++
       }
       return membersDataSets
     },
@@ -353,7 +361,11 @@ export default {
       commit({ type: 'saveGroup', group })
 
       try {
-        const board = await boardService.saveGroup(state.currBoard._id, group, activityTxt)
+        const board = await boardService.saveGroup(
+          state.currBoard._id,
+          group,
+          activityTxt
+        )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         commit({ type: 'setBoard', board })
       } catch (err) {
@@ -387,7 +399,7 @@ export default {
         const board = await boardService.removeTask(
           state.currBoard._id,
           groupId,
-          taskId,
+          taskId
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         commit({ type: 'setBoard', board })
@@ -445,7 +457,9 @@ export default {
       }
       try {
         const board = await boardService.saveBoard(
-          JSON.parse(JSON.stringify(state.currBoard)), newActivity)
+          JSON.parse(JSON.stringify(state.currBoard)),
+          newActivity
+        )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         commit({ type: 'setBoard', board })
       } catch (err) {
@@ -453,7 +467,7 @@ export default {
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({ }, { filterBy }) {
+    async searchBoards({}, { filterBy }) {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []
