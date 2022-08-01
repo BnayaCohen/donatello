@@ -8,6 +8,7 @@
     }
   }
 
+
   &-page {
     max-width: 800px;
     // min-width: 400px;
@@ -25,7 +26,22 @@
     h1 {
       font-size: em(19px);
       text-align: center;
-      margin: 12px;
+      margin: 6px;
+      margin-bottom: 2px;
+      align-self: center;
+    }
+
+    >span {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: em(20px);
+      cursor: pointer;
+      color: #848484;
+
+      &:hover {
+        color: #172b4d;
+      }
     }
   }
 
@@ -70,7 +86,6 @@
 }
 
 .chart-container {
-  margin: 0 4px;
   margin-top: 8px;
   margin-bottom: 20px;
 
@@ -103,7 +118,6 @@
 .circle-bar {
   color: #fff;
 
-  // font-size: .8rem;
   h3 {
     margin-inline-start: 0;
     padding-inline: 0.5rem;
