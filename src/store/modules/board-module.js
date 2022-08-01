@@ -120,7 +120,7 @@ export default {
               ? '#eb5a46'
               : dateStatus === 'due-soon'
                 ? '#f2d600'
-                : '#0079bf',
+                : '#51e898',
         }
         dueDateDataSets.push(dataSet)
       }
