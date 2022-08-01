@@ -91,31 +91,31 @@ export default {
       let statusMap = {}
       currBoard.groups.forEach((group) => {
         group.tasks.forEach((task) => {
-          const {status} = task
+          const { status } = task
           if (!statusMap[status]) statusMap[status] = 0
           statusMap[status]++
         })
       })
       return statusMap
     },
-    doneTasksPerGroup({currBoard}) {
-      let dueDateMap = {'over-due': 0, 'due-soon': 0, 'No date assigned': 0}
+    doneTasksPerGroup({ currBoard }) {
+      let dueDateMap = { 'over-due': 0, 'due-soon': 0, 'No date assigned': 0 }
       let dueDateDataSets = []
       const diff = 172800000
       currBoard.groups.forEach(group => {
         group.tasks.forEach(task => {
-          const {dueDate} = task
+          const { dueDate } = task
           if (dueDate) {
             if (Date.now() > dueDate) dueDateMap['over-due']++
             else if (dueDate - Date.now() <= diff) dueDateMap['due-soon']++
-          }else dueDateMap['No date assigned']++
+          } else dueDateMap['No date assigned']++
         })
       })
       for (const dateStatus in dueDateMap) {
         const dataSet = {
           label: dateStatus,
           data: [dueDateMap[dateStatus]],
-          backgroundColor: dateStatus === 'over-due'? 'rgba(128, 0, 0)' : dateStatus === 'due-soon'? 'rgba(255, 195, 0)' : 'rgba(56, 149, 211)'
+          backgroundColor: dateStatus === 'over-due' ? 'rgba(128, 0, 0)' : dateStatus === 'due-soon' ? 'rgba(255, 195, 0)' : 'rgba(56, 149, 211)'
         }
         dueDateDataSets.push(dataSet)
       }
@@ -281,7 +281,6 @@ export default {
         txt,
         createdAt: Date.now(),
         byMember: userService.getLoggedInUser(),
-        task: task || {},
       }
       state.currBoard.activities.unshift(newActivity)
     },
@@ -363,11 +362,11 @@ export default {
     },
     async saveGroup({ commit, state }, { group, activityTxt }) {
       commit({ type: 'saveGroup', group })
-      
+
       try {
         const board = await boardService.saveGroup(state.currBoard._id, group, activityTxt)
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({type:'setBoard',board})
+        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("Couldn't save group", err)
         commit({ type: 'saveGroup', group, reverse: true })
@@ -377,14 +376,14 @@ export default {
       commit({ type: 'saveTask', groupId, task })
 
       try {
-        const board =await boardService.saveTask(
+        const board = await boardService.saveTask(
           state.currBoard._id,
           groupId,
           task,
           activityTxt
-          )
-          socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-          commit({type:'setBoard',board})
+        )
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("Couldn't save task", err)
         commit({ type: 'saveTask', groupId, task, reverse: true })
@@ -396,13 +395,13 @@ export default {
       commit({ type: 'removeTask', groupId, taskId })
 
       try {
-       const board = await boardService.removeTask(
+        const board = await boardService.removeTask(
           state.currBoard._id,
           groupId,
           taskId,
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({type:'setBoard',board})
+        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log("couldn't remove task", err)
         commit({ type: 'removeTask', groupId, taskId, reverse: true })
@@ -412,12 +411,12 @@ export default {
       commit({ type: 'removeGroup', groupId })
 
       try {
-       const board = await boardService.removeGroup(
+        const board = await boardService.removeGroup(
           state.currBoard._id,
           groupId
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({type:'setBoard',board})
+        commit({ type: 'setBoard', board })
       } catch (err) {
         commit({ type: 'removeGroup', groupId, reverse: true })
         console.log("couldn't remove group", err)
@@ -435,12 +434,12 @@ export default {
       commit({ type: 'changeGroupPos', dropResult })
 
       try {
-       const board = await boardService.changeGroupPos(
+        const board = await boardService.changeGroupPos(
           state.currBoard._id,
           dropResult
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({type:'setBoard',board})
+        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log(err)
         commit({ type: 'changeGroupPos', dropResult, reverse: true })
@@ -459,7 +458,7 @@ export default {
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({}, { filterBy }) {
+    async searchBoards({ }, { filterBy }) {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []
