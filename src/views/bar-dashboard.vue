@@ -46,17 +46,15 @@ export default {
         return {
             board: this.$store.getters.board,
             membersData: {
-                labels: [''],
-                datasets: this.$store.getters.taskPerMemberMap
+                labels: this.$store.getters.taskPerMemberMap.labels,
+                datasets: [this.$store.getters.taskPerMemberMap]
             },
             doneTasksData: { labels: [''], datasets: this.$store.getters.doneTasksPerGroup, },
             labelsData: { labels: this.$store.getters.labelsDataChart.labels, datasets: [this.$store.getters.labelsDataChart] },
             // Bar options
             optionsBar: {
                 scales: {
-                    y: {
-                        display: false,
-                    },
+
                 },
                 plugins: {
                     legend: {
