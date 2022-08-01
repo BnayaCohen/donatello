@@ -144,7 +144,8 @@ export default {
         membersMap.data.push(memberCount[key])
         membersMap.labels.push(currMember.fullname)
         membersMap.backgroundColor = ['#f2d600', '#eb5a46', '#c377e0', '#00c2e0', '#51e898', '#ff9f1a']
-        membersMap.borderColor = 'rgb(75,192,192)'
+        membersMap.borderColor = '#172b4d'
+        membersMap.borderWidth = 0.7
       })
       return membersMap
     },
