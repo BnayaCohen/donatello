@@ -127,25 +127,25 @@ export default {
       return dueDateDataSets
     },
     taskPerMemberMap({ currBoard }) {
-      const boardMembers = currBoard.members
-      let labelsCount = currBoard.groups.reduce((acc, group) => {
-        group.tasks.forEach(task => {
-          task.labelIds.forEach(labelId => {
-            const { id } = boardLabels.find(label => label.id === labelId)
-            if (acc[id]) acc[id]++
-            else acc[id] = 1
-          })
-        })
-        return acc
-      }, {})
-      const labelsMap = { data: [], backgroundColor: [], labels: [] }
-      Object.keys(labelsCount).forEach(key => {
-        const currLabel = boardLabels.find(label => label.id === key)
-        labelsMap.data.push(labelsCount[key])
-        labelsMap.labels.push(currLabel.title)
-        labelsMap.backgroundColor.push(currLabel.color)
-      })
-      return labelsMap
+      // const boardMembers = currBoard.members
+      // let labelsCount = currBoard.groups.reduce((acc, group) => {
+      //   group.tasks.forEach(task => {
+      //     task.labelIds.forEach(labelId => {
+      //       const { id } = boardLabels.find(label => label.id === labelId)
+      //       if (acc[id]) acc[id]++
+      //       else acc[id] = 1
+      //     })
+      //   })
+      //   return acc
+      // }, {})
+      // const labelsMap = { data: [], backgroundColor: [], labels: [] }
+      // Object.keys(labelsCount).forEach(key => {
+      //   const currLabel = boardLabels.find(label => label.id === key)
+      //   labelsMap.data.push(labelsCount[key])
+      //   labelsMap.labels.push(currLabel.title)
+      //   labelsMap.backgroundColor.push(currLabel.color)
+      // })
+      // return labelsMap
     },
     taskOverdueCount({ currBoard }) {
       return currBoard.groups.reduce((acc, group) =>
