@@ -58,7 +58,7 @@
     justify-content: space-between;
     
   gap: em(40px);
-    padding: 1rem;
+    padding-block: 1rem;
     margin-block-start: 1rem;
     .stats {
       border-radius: 20px;
@@ -149,8 +149,6 @@
       }
       &.overdue {
         background-image: none;
-        box-shadow: 0 4px  #eb5946ce;
-        // background-color: #eb5946a8;
         flex-basis: 20%;
         svg {
           margin-block-start: 4rem;
