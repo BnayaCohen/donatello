@@ -273,6 +273,19 @@ export default {
       const idx = state.lastTasks.findIndex((task) => task.id === taskId)
       state.lastTasks.splice(idx, 1)
     },
+<<<<<<< HEAD
+=======
+    addActivity(state, { task, txt }) {
+      if (txt === state.currBoard.activities[0].txt) return
+      const newActivity = {
+        id: utilService.makeId(),
+        txt,
+        createdAt: Date.now(),
+        byMember: userService.getLoggedInUser(),
+      }
+      state.currBoard.activities.unshift(newActivity)
+    },
+>>>>>>> 9b37babf2e02f43e2aee717dce59f776950e0bda
     removeGroup(state, { groupId, reverse = false }) {
       if (!reverse) {
         const groups = state.currBoard.groups
