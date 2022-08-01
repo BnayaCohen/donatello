@@ -12,7 +12,8 @@ export const utilService = {
   getImgAvgColor,
   isDarkImg,
   isDarkColor,
-  gratitudePerTime
+  gratitudePerTime,
+  getTrelloColor
 }
 
 function makeRandNum() {
@@ -106,6 +107,23 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)]
   }
   return color
+}
+
+function getTrelloColor(idx) {
+  const clrs =  [
+    '#f2d600',
+    '#ff9f1a',
+    '#eb5a46',
+    '#c377e0',
+    '#0079bf',
+    '#00c2e0',
+    '#51e898',
+    '#ECB390',
+    '#FCF8E8',
+    '#CEE5D0',
+    '#94B49F'
+  ]
+  return clrs[idx]
 }
 
 export const applyDrag = (arr, dragResult) => {
