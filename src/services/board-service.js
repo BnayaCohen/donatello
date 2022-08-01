@@ -51,11 +51,12 @@ async function remove(boardId) {
   await httpService.delete(`board/${boardId}`)
 }
 
-async function saveBoard(board) {
+async function saveBoard(board, activity = null) {
   try {
-    return board._id ?
-      await httpService.put(`board/${board._id}`, board)
-      : await httpService.post('board', board)
+    if (board._id) {
+      if (activity) board.activities.unshift(activity)
+      return await httpService.put(`board/${board._id}`, board)
+    } else return await httpService.post('board', board)
   } catch {
     console.log('cannot save board')
   }
@@ -101,13 +102,12 @@ async function saveGroup(boardId, group, txt) {
   try {
     const board = await getById(boardId)
 
-    var activity = createActivity(txt)
+    const activity = createActivity(txt)
     const idx = board.groups.findIndex((curGroup) => group.id === curGroup.id)
     if (idx !== -1) board.groups.splice(idx, 1, group)
     else board.groups.push(group)
 
-    board.activities.unshift(activity)
-    return await saveBoard(board)
+    return await saveBoard(board, activity)
   } catch (err) {
     throw err
   }
@@ -128,8 +128,7 @@ async function saveTask(boardId, groupId, task, activityTxt) {
       group.tasks.push(task)
     }
 
-    board.activities.unshift(activity)
-   return await saveBoard(board)
+    return await saveBoard(board, activity)
   } catch (err) {
     throw err
   }
@@ -152,7 +151,8 @@ async function removeGroup(boardId, groupId) {
     if (idx !== -1) {
       const activity = createActivity('Deleted list ' + board.groups[idx].title)
       board.groups.splice(idx, 1)
-      board.activities.unshift(activity)
+
+      return await saveBoard(board, activity)
     }
     return await saveBoard(board)
   } catch (err) {
@@ -168,7 +168,8 @@ async function removeTask(boardId, groupId, taskId) {
     if (idx !== -1) {
       const activity = createActivity(`Deleted card ${group.tasks[idx].title}`)
       group.tasks.splice(idx, 1)
-      board.activities.unshift(activity)
+
+      return await saveBoard(board, activity)
     }
     return await saveBoard(board)
   } catch (err) {
@@ -187,15 +188,14 @@ async function getTaskById(boardId, groupId, taskId) {
 }
 
 async function changeGroupPos(boardId, { removedIndex, addedIndex }) {
-  // TODO: fix bug
   try {
     const board = await getById(boardId)
     const toGroup = board.groups[addedIndex]
     const group = board.groups.splice(removedIndex, 1)[0]
     board.groups.splice(addedIndex, 0, group)
     const activity = createActivity(`List ${group.title} swaped with list ${toGroup.title}`)
-    board.activities.unshift(activity)
-    return await saveBoard(board)
+
+    return await saveBoard(board, activity)
   } catch (err) {
     throw err
   }
