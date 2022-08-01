@@ -28,11 +28,9 @@ export default {
         this.speechRecord.continuous = true
         this.speechRecord.interimResults = true
         this.speechRecord.onstart = () => {
-            console.log('Start record')
             this.isRecording = true
         }
         this.speechRecord.onend = () => {
-            console.log('Stop record')
             this.isRecording = false
         }
         this.speechRecord.onresult = (evt) => {

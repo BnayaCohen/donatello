@@ -124,7 +124,6 @@ export default {
       else {
         this.editing = this.checklist.todos[idx].id
         setTimeout(() => {
-          console.log(this.$refs)
           this.$refs[ref][0].focus()
         }, 300)
       }

@@ -174,7 +174,6 @@ export default {
       this.$emit('signup', signupInfo)
     },
     handleFile(ev) {
-      console.log(ev)
       var file
       if (ev.type === 'change') file = ev.target.files[0]
       else if (ev.type === 'drop') file = ev.dataTransfer.files[0]

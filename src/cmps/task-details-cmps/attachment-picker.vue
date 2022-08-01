@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     handleFile(ev) {
-      console.log(ev);
       var file
       if (ev.type === "change") file = ev.target.files[0]
       else if (ev.type === "drop") file = ev.dataTransfer.files[0]
@@ -48,7 +47,6 @@ export default {
       const res = await uploadImg(file)
       // this.isLoading = false
       this.attachProps.url = res.url
-      console.log(res.url)
       this.attachProps.title = file.name
       this.attachProps.createdAt = Date.now()
       this.$emit('taskUpdated', this.attachProps)

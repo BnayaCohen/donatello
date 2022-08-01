@@ -86,14 +86,12 @@ export default {
       const { top, right, width } = ev.target.closest('.task-preview').getBoundingClientRect()
       this.y = top + 'px'
       this.x = right - width + 'px'
-      console.log(this.x, this.y)
       this.isOpen = true
     },
     closeQuickEdit() {
       this.isOpen = false
     },
     openTask(groupId, taskId) {
-      console.log(this.task.style)
       this.closeQuickEdit()
       this.$router.push(
         this.$router.currentRoute._value.path + `/${groupId}/${taskId}`
