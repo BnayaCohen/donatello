@@ -23,7 +23,6 @@ export default {
     lastTasks: [],
     showLabelsOnTask: false,
     currTask: null,
-    isDarkTheme: false,
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -274,16 +273,6 @@ export default {
       const idx = state.lastTasks.findIndex((task) => task.id === taskId)
       state.lastTasks.splice(idx, 1)
     },
-    addActivity(state, { task, txt }) {
-      if (txt === state.currBoard.activities[0].txt) return
-      const newActivity = {
-        id: utilService.makeId(),
-        txt,
-        createdAt: Date.now(),
-        byMember: userService.getLoggedInUser(),
-      }
-      state.currBoard.activities.unshift(newActivity)
-    },
     removeGroup(state, { groupId, reverse = false }) {
       if (!reverse) {
         const groups = state.currBoard.groups
@@ -446,13 +435,19 @@ export default {
       }
     },
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
+      const changedTask = newColumn.tasks[itemIndex]
       commit({ type: 'updateGroups', itemIndex, newColumn })
-      commit({ type: 'addActivity', txt: 'Changed a card position' })
-      socketService.emit(SOCKET_EMIT_UPDATE_BOARD, state.currBoard)
+      const newActivity = {
+        id: utilService.makeId(),
+        txt: `Changed card ${changedTask.title} position`,
+        createdAt: Date.now(),
+        byMember: userService.getLoggedInUser(),
+      }
       try {
-        await boardService.saveBoard(
-          JSON.parse(JSON.stringify(state.currBoard))
-        )
+        const board = await boardService.saveBoard(
+          JSON.parse(JSON.stringify(state.currBoard)), newActivity)
+        socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
+        commit({ type: 'setBoard', board })
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
