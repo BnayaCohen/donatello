@@ -181,10 +181,10 @@
 }
 
 .smooth-dnd-container.horizontal {
-  display: flex;
+  display: flex !important;
 }
 
 .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
-  display: flex;
-  height: fit-content;
+  display: flex !important;
+  height: fit-content !important;
 }
