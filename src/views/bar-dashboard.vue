@@ -4,7 +4,8 @@
         <h1>{{ board.title }}</h1>
         <span @click="goBack" class="trellicons trellicons-close-btn"></span>
         <section class="dashboard-content">
-            <div v-for="(item, i) in items " :key="i" class="item-content">
+            <div v-for="(item, i) in items" :style="i === 3 ? { background: '#FF6666' } : ''" :key="i"
+                class="item-content">
                 <h3 class="item-title">{{ item.title }}</h3>
                 <div class="inline-flex">
                     <span v-if="i !== 1">{{ item.data }}</span>
@@ -96,7 +97,7 @@ export default {
                     data: null
                 },
                 {
-                    title: 'Overdue',
+                    title: 'Overdue tasks',
                     icon: 'fa-solid fa-circle-exclamation',
                     data: null
                 }
