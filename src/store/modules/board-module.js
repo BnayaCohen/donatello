@@ -128,24 +128,25 @@ export default {
     },
     taskPerMemberMap({ currBoard }) {
       const boardMembers = currBoard.members
-      let labelsCount = currBoard.groups.reduce((acc, group) => {
+      let memberCount = currBoard.groups.reduce((acc, group) => {
         group.tasks.forEach(task => {
-          task.labelIds.forEach(labelId => {
-            const { id } = boardLabels.find(label => label.id === labelId)
-            if (acc[id]) acc[id]++
-            else acc[id] = 1
+          task.memberIds.forEach(memberId => {
+            const { _id } = boardMembers.find(member => member._id === memberId)
+            if (acc[_id]) acc[_id]++
+            else acc[_id] = 1
           })
         })
         return acc
       }, {})
-      const labelsMap = { data: [], backgroundColor: [], labels: [] }
-      Object.keys(labelsCount).forEach(key => {
-        const currLabel = boardLabels.find(label => label.id === key)
-        labelsMap.data.push(labelsCount[key])
-        labelsMap.labels.push(currLabel.title)
-        labelsMap.backgroundColor.push(currLabel.color)
+      const membersMap = { data: [], backgroundColor: [], labels: [] }
+      Object.keys(memberCount).forEach(key => {
+        const currMember = boardMembers.find(member => member._id === key)
+        membersMap.data.push(memberCount[key])
+        membersMap.labels.push(currMember.fullname)
+        membersMap.backgroundColor = ['#f2d600', '#eb5a46', '#c377e0', '#00c2e0', '#51e898', '#ff9f1a']
+        membersMap.borderColor = 'rgb(75,192,192)'
       })
-      return labelsMap
+      return membersMap
     },
     taskOverdueCount({ currBoard }) {
       return currBoard.groups.reduce((acc, group) =>
