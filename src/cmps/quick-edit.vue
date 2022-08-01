@@ -221,21 +221,20 @@ export default {
             return (new Date(this.taskToEdit.dueDate) + '').slice(4, 10)
         },
         dueDateStyle() {
+            const dueDateDiff = Date.now() - this.taskToEdit.dueDate
+            const day = (1000 * 60 * 60 * 24)
+            let bgColor
+
+            if (this.taskToEdit.status === 'in-progress') {
+                if (dueDateDiff > -day && dueDateDiff < 0) bgColor = this.onDueDateHover ? '#d9b51c' : '#f2d600'
+                else if (dueDateDiff < -day) bgColor = this.onDueDateHover ? '#00000014' : '#00000000'
+                else bgColor = this.onDueDateHover ? '#eb5a46' : '#ec9488'
+            } else bgColor = this.onDueDateHover ? '#519839' : '#61bd4f'
+
             return {
-                backgroundColor:
-                    this.taskToEdit.status === 'in-progress'
-                        ? Date.now() - this.taskToEdit.dueDate > 0
-                            ? this.onDueDateHover
-                                ? '#eb5a46'
-                                : '#ec9488'
-                            : this.onDueDateHover
-                                ? '#00000014'
-                                : '#00000000'
-                        : this.onDueDateHover
-                            ? '#519839'
-                            : '#61bd4f',
+                backgroundColor: bgColor,
                 color:
-                    Date.now() - this.taskToEdit.dueDate > 0 ||
+                    (dueDateDiff > -day) ||
                         this.taskToEdit.status !== 'in-progress'
                         ? '#fff'
                         : '#5e6c84',

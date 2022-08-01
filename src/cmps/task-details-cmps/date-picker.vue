@@ -5,7 +5,7 @@
       <input type="checkbox" class="date-checkbox" @input="toggleIsDone" :checked="task.status === 'done'" />
       <button class="due-date-btn" @click.stop="toggleDate($event)">
         <span class="due-date-txt">{{ dueDateFixed }}</span>
-        <span class="task-complete" v-if="task.status === 'done'">complete</span>
+        <span class="task-duedate-status" v-if="dueDateStatus" :style="dueDateStyle">{{ dueDateStatus }}</span>
         <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg">
           <path
@@ -32,6 +32,26 @@ export default {
         return fixedDate
       }
     },
+    dueDateStatus() {
+      const dueDateDiff = Date.now() - this.task.dueDate
+      const day = (1000 * 60 * 60 * 24)
+
+      if (this.task.status === 'in-progress') {
+        if (dueDateDiff > -day && dueDateDiff < 0) return 'due soon'
+        else if (dueDateDiff < -day) return ''
+        else return 'overdue'
+      } else return 'complete'
+    },
+    dueDateStyle() {
+      const dueDateDiff = Date.now() - this.task.dueDate
+      const day = (1000 * 60 * 60 * 24)
+
+      if (this.task.status === 'in-progress') {
+        if (dueDateDiff > -day && dueDateDiff < 0) return { backgroundColor: '#F2D600' }
+        else if (dueDateDiff < -day) return ''
+        else return { backgroundColor: '#EB5A46', color: '#fff' }
+      } else return { backgroundColor: '#61bd4f', color: '#fff' }
+    }
   },
   methods: {
     removeDueDate() {
