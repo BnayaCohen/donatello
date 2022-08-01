@@ -10,7 +10,7 @@ import { userService } from '../../services/user-service.js'
 
 export default {
   state: {
-    boards: [],
+    boards: null,
     currBoard: null,
     scene: {
       type: 'container',
