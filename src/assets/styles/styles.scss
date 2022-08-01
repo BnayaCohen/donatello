@@ -32,11 +32,12 @@
 @import 'components/user-menu';
 @import 'components/comment-preview';
 @import 'components/task-description';
-@import 'views/dashboard';
 @import 'components/loading';
 @import 'components/board-filter';
 @import 'components/search-modal';
 // VIEWS
+@import 'views/dashboard';
 @import 'views/home-page';
 @import 'views/board-page';
 @import 'views/task-details';
+@import 'views/bar-dashboard';
