@@ -2,6 +2,7 @@
     <div class="screen"></div>
     <main class="dashboard-page dashboard-layout">
         <h1>{{ board.title }}</h1>
+        <span @click="goBack" class="trellicons trellicons-close-btn"></span>
         <section class="dashboard-content">
             <div v-for="(item, i) in items " :key="i" class="item-content">
                 <h3 class="item-title">{{ item.title }}</h3>
@@ -21,8 +22,12 @@
         </section>
         <section class="chart-container flex">
             <div class="chart">
+                <h1>Task per Label</h1>
+                <DoughnutChart :options="optionsDoughnut" :chartData="labelsData" />
+            </div>
+            <div class="chart">
                 <h1>Task per Member</h1>
-                <BarChart :options="optionsBar" :chartData="membersData" />
+                <LineChart :options="optionsBar" :chartData="membersData" />
             </div>
             <div class="chart">
                 <h1>Task due-date statistics</h1>
@@ -45,6 +50,7 @@ export default {
                 datasets: this.$store.getters.taskPerMemberMap
             },
             doneTasksData: { labels: [''], datasets: this.$store.getters.doneTasksPerGroup, },
+            labelsData: { labels: this.$store.getters.labelsDataChart.labels, datasets: [this.$store.getters.labelsDataChart] },
             // Bar options
             optionsBar: {
                 scales: {
@@ -102,7 +108,8 @@ export default {
     },
     created() {
         this.setItemsData()
-        console.log(this.$store.getters.taskPerLabelMap)
+        console.log(this.$store.getters.labelsDataChart)
+        console.log(this.$store.getters.taskPerMemberMap)
     },
     computed: {
         taskCount() {
@@ -126,6 +133,9 @@ export default {
         }
     },
     methods: {
+        goBack() {
+            this.$router.push('/board/' + this.board._id)
+        },
         setItemsData() {
             this.items[0].data = this.taskCount
             this.items[1].data = this.completedTasksPrecentage
