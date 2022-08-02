@@ -54,7 +54,7 @@ async function remove(boardId) {
 async function saveBoard(board, activity = null) {
   try {
     if (board._id) {
-      if (activity) board.activities.unshift(activity)
+      activity && board.activities.unshift(activity)
       return await httpService.put(`board/${board._id}`, board)
     } else return await httpService.post('board', board)
   } catch {

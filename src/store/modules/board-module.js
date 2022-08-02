@@ -23,6 +23,7 @@ export default {
     lastTasks: [],
     showLabelsOnTask: false,
     currTask: null,
+    newActivity: null
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -193,8 +194,19 @@ export default {
     },
     updateGroups(state, { newColumn, itemIndex }) {
       const group = state.currBoard.groups.splice(itemIndex, 1, newColumn)[0]
-      if (!state.firstGroup) state.firstGroup = group
-      else state.secondGroup = group
+      if (!state.firstGroup) {
+        state.firstGroup = group
+        state.newActivity = null
+      }
+      else {
+        state.secondGroup = group
+        state.newActivity = {
+          id: utilService.makeId(),
+          txt: `Changed card from ${state.firstGroup.title} to ${group.title}`,
+          createdAt: Date.now(),
+          byMember: userService.getLoggedInUser(),
+        }
+      }
     },
     undoGroupChanges(state, { itemIndex }) {
       if (state.firstGroup) {
@@ -415,7 +427,6 @@ export default {
     },
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
-
       try {
         const board = await boardService.changeGroupPos(
           state.currBoard._id,
@@ -429,18 +440,11 @@ export default {
       }
     },
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
-      const changedTask = newColumn.tasks[itemIndex]
       commit({ type: 'updateGroups', itemIndex, newColumn })
-      const newActivity = {
-        id: utilService.makeId(),
-        txt: `Changed card ${changedTask.title} position`,
-        createdAt: Date.now(),
-        byMember: userService.getLoggedInUser(),
-      }
       try {
         const board = await boardService.saveBoard(
           JSON.parse(JSON.stringify(state.currBoard)),
-          newActivity
+          state.newActivity
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         commit({ type: 'setBoard', board })
