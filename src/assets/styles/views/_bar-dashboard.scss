@@ -10,10 +10,8 @@
 
 
   &-page {
-    max-width: 800px;
-    // min-width: 400px;
-
-    min-height: 450px;
+    min-width: 1000px;
+    min-height: 630px;
     background-color: #fff;
     position: fixed;
     top: 50%;
@@ -27,7 +25,7 @@
       font-size: em(19px);
       text-align: center;
       margin: 6px;
-      margin-bottom: 2px;
+      margin-bottom: -15px;
       align-self: center;
     }
 
@@ -86,8 +84,10 @@
 }
 
 .chart-container {
-  margin-top: 8px;
+  margin: 0 auto;
+  margin-top: 25px;
   margin-bottom: 20px;
+  gap: 20px;
 
   .chart {
     display: flex;
@@ -95,7 +95,7 @@
     flex-wrap: wrap;
     flex: 1;
     gap: 6px;
-    width: 220px;
+    width: 300px;
     margin: 0 4px;
 
     h1 {

@@ -429,11 +429,11 @@ export default {
       }
     },
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
-      const changedTask = newColumn.tasks[itemIndex]
+      // const changedTask = newColumn.tasks[itemIndex]
       commit({ type: 'updateGroups', itemIndex, newColumn })
       const newActivity = {
         id: utilService.makeId(),
-        txt: `Changed card ${changedTask.title} position`,
+        txt: `Changed card position`,
         createdAt: Date.now(),
         byMember: userService.getLoggedInUser(),
       }
