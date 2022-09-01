@@ -43,7 +43,7 @@
 
 <script>
 import headerHomePage from '../cmps/header-page.vue'
-import { TypeWriter } from '../services/util-service'
+import { userService } from '../services/user-service'
 export default {
   // mounted() {
   //   const el = this.$refs.el
