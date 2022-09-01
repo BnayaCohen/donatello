@@ -58,11 +58,8 @@ export default {
   },
   methods: {
     loginAsGuest() {
-      this.$store.commit('setUserAsGuest')
-      // this.$store.dispatch({ type: 'login', credentials:{
-      //   username: 'bnaya',
-      //   password: '123',
-      // } })
+      const user = userService.getLoggedInUser()
+      this.$store.dispatch({ type: 'setUser', user })
       this.$router.push('/board')
     },
   },
