@@ -1,7 +1,6 @@
 import { httpService } from './http-service.js'
 import { storageService } from './async-storage.js'
 
-
 const STORAGE_KEY = 'userDB'
 
 export const userService = {
@@ -11,7 +10,7 @@ export const userService = {
   logout,
   getLoggedInUser,
   getDefaultGuest,
-  query
+  query,
 }
 
 const USER_STORAGE_KEY = 'loggedinUser'
@@ -64,9 +63,10 @@ async function logout() {
 }
 
 function getLoggedInUser() {
-  const guest = getDefaultGuest()
-  if (!sessionStorage.getItem(USER_STORAGE_KEY)) return _saveToSession(guest)
-  else return JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY))
+  if (!sessionStorage.getItem(USER_STORAGE_KEY)) {
+    const guest = getDefaultGuest()
+    return _saveToSession(guest)
+  } else return JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY))
 }
 
 function _saveToSession(value) {
@@ -76,9 +76,10 @@ function _saveToSession(value) {
 
 function getDefaultGuest() {
   return {
-    _id: "62de4d3609b63fc45f8e3541",
-    username: "guest",
-    fullname: "Guest",
-    imgUrl: "https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-1024.png"
+    _id: '62de4d3609b63fc45f8e3541',
+    username: 'guest',
+    fullname: 'Guest',
+    imgUrl:
+      'https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-1024.png',
   }
 }

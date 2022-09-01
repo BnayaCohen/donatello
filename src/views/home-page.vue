@@ -7,19 +7,24 @@
           <div class="text-container">
             <h1>
               Donatello helps teams move work forward.
-              <span ref="el" data-words='["forward.","together.","better."]'><span class="txt"></span></span>
+              <span ref="el" data-words='["forward.","together.","better."]'
+                ><span class="txt"></span
+              ></span>
             </h1>
             <p style="lineheight: 35px">
               Collaborate,manage projects and reach new productivity peaks. from
               high rises to the home office,the way your team works is unique
               —accomplish it all with Donatello.
             </p>
-            <a class="start-doing flex justify-center" @click="loginAsGuest"><span>Start demo</span></a>
+            <a class="start-doing flex justify-center" @click="loginAsGuest"
+              ><span>Start demo</span></a
+            >
           </div>
         </div>
         <div class="hero-img">
           <img
-            src="https://images.ctfassets.net/rz1oowkt5gyp/5QIzYxue6b7raOnVFtMyQs/113acb8633ee8f0c9cb305d3a228823c/hero.png?w=1200&fm=webp" />
+            src="https://images.ctfassets.net/rz1oowkt5gyp/5QIzYxue6b7raOnVFtMyQs/113acb8633ee8f0c9cb305d3a228823c/hero.png?w=1200&fm=webp"
+          />
         </div>
       </div>
       <section class="get-started">
@@ -53,16 +58,16 @@ export default {
   },
   methods: {
     loginAsGuest() {
-      // this.$store.commit('setUserAsGuest')
-      this.$store.dispatch({ type: 'login', credentials:{
-        username: 'bnaya',
-        password: '123',
-      } })
+      this.$store.commit('setUserAsGuest')
+      // this.$store.dispatch({ type: 'login', credentials:{
+      //   username: 'bnaya',
+      //   password: '123',
+      // } })
       this.$router.push('/board')
-    }
+    },
   },
   created() {
     this.$emit('setBackground', '')
-  }
+  },
 }
 </script>
