@@ -45,11 +45,6 @@
 import headerHomePage from '../cmps/header-page.vue'
 import { userService } from '../services/user-service'
 export default {
-  // mounted() {
-  //   const el = this.$refs.el
-  //   const words = JSON.parse(el.getAttribute('data-words'))
-  //   new TypeWriter(el, words)
-  // },
   components: { headerHomePage },
   data() {
     return {

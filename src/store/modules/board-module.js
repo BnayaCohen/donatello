@@ -132,10 +132,11 @@ export default {
       let memberCount = currBoard.groups.reduce((acc, group) => {
         group.tasks.forEach((task) => {
           task.memberIds.forEach((memberId) => {
-            const { _id } = boardMembers.find(
+            const _id = boardMembers.find(
               (member) => member._id === memberId
-            )
-            if (acc[_id]) acc[_id]++
+            )?._id
+            if (!_id) return 0
+            else if (acc[_id]) acc[_id]++
             else acc[_id] = 1
           })
         })

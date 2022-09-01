@@ -14,7 +14,7 @@ export default {
     },
   },
   mutations: {
-    setUser(state) {
+    setUser(state, { user }) {
       state.user = user
     },
     setUsers(state, { users }) {
