@@ -54,7 +54,7 @@ export default {
   methods: {
     loginAsGuest() {
       const user = userService.getLoggedInUser()
-      this.$store.dispatch({ type: 'setUser', user })
+      this.$store.commit({ type: 'setUser', user })
       this.$router.push('/board')
     },
   },
