@@ -224,6 +224,7 @@ export default {
           createdAt: Date.now(),
           byMember: userService.getLoggedInUser(),
         }
+        state.firstGroup = null
       }
     },
     undoGroupChanges(state, { itemIndex }) {
