@@ -23,6 +23,7 @@ export default {
     lastTasks: [],
     showLabelsOnTask: false,
     currTask: null,
+    newActivity: null,
   },
   getters: {
     boardsForDisplay({ boards }) {
@@ -68,9 +69,9 @@ export default {
     labelsDataChart({ currBoard }) {
       const boardLabels = currBoard.labels
       let labelsCount = currBoard.groups.reduce((acc, group) => {
-        group.tasks.forEach(task => {
-          task.labelIds.forEach(labelId => {
-            const { id } = boardLabels.find(label => label.id === labelId)
+        group.tasks.forEach((task) => {
+          task.labelIds.forEach((labelId) => {
+            const { id } = boardLabels.find((label) => label.id === labelId)
             if (acc[id]) acc[id]++
             else acc[id] = 1
           })
@@ -78,8 +79,8 @@ export default {
         return acc
       }, {})
       const labelsMap = { data: [], backgroundColor: [], labels: [] }
-      Object.keys(labelsCount).forEach(key => {
-        const currLabel = boardLabels.find(label => label.id === key)
+      Object.keys(labelsCount).forEach((key) => {
+        const currLabel = boardLabels.find((label) => label.id === key)
         labelsMap.data.push(labelsCount[key])
         labelsMap.labels.push(currLabel.title)
         labelsMap.backgroundColor.push(currLabel.color)
@@ -119,8 +120,8 @@ export default {
             dateStatus === 'over-due'
               ? '#eb5a46'
               : dateStatus === 'due-soon'
-                ? '#f2d600'
-                : '#61bd4f',
+              ? '#f2d600'
+              : '#61bd4f',
         }
         dueDateDataSets.push(dataSet)
       }
@@ -129,30 +130,50 @@ export default {
     taskPerMemberMap({ currBoard }) {
       const boardMembers = currBoard.members
       let memberCount = currBoard.groups.reduce((acc, group) => {
-        group.tasks.forEach(task => {
-          task.memberIds.forEach(memberId => {
-            const { _id } = boardMembers.find(member => member._id === memberId)
-            if (acc[_id]) acc[_id]++
+        group.tasks.forEach((task) => {
+          task.memberIds.forEach((memberId) => {
+            const _id = boardMembers.find(
+              (member) => member._id === memberId
+            )?._id
+            if (!_id) return 0
+            else if (acc[_id]) acc[_id]++
             else acc[_id] = 1
           })
         })
         return acc
       }, {})
       const membersMap = { data: [], backgroundColor: [], labels: [] }
-      Object.keys(memberCount).forEach(key => {
-        const currMember = boardMembers.find(member => member._id === key)
+      Object.keys(memberCount).forEach((key) => {
+        const currMember = boardMembers.find((member) => member._id === key)
         membersMap.data.push(memberCount[key])
         membersMap.labels.push(currMember.fullname)
-        membersMap.backgroundColor = ['#f2d600', '#eb5a46', '#c377e0', '#00c2e0', '#51e898', '#ff9f1a']
+        membersMap.backgroundColor = [
+          '#f2d600',
+          '#eb5a46',
+          '#c377e0',
+          '#00c2e0',
+          '#51e898',
+          '#ff9f1a',
+        ]
         membersMap.borderColor = '#172b4d'
         membersMap.borderWidth = 0.7
       })
       return membersMap
     },
     taskOverdueCount({ currBoard }) {
-      return currBoard.groups.reduce((acc, group) =>
-        acc += group.tasks.reduce((acc, task) => (task.dueDate && Date.now() > task.dueDate && task.status !== 'done') ? acc + 1 : acc, 0), 0)
-
+      return currBoard.groups.reduce(
+        (acc, group) =>
+          (acc += group.tasks.reduce(
+            (acc, task) =>
+              task.dueDate &&
+              Date.now() > task.dueDate &&
+              task.status !== 'done'
+                ? acc + 1
+                : acc,
+            0
+          )),
+        0
+      )
     },
   },
   mutations: {
@@ -193,8 +214,19 @@ export default {
     },
     updateGroups(state, { newColumn, itemIndex }) {
       const group = state.currBoard.groups.splice(itemIndex, 1, newColumn)[0]
-      if (!state.firstGroup) state.firstGroup = group
-      else state.secondGroup = group
+      if (!state.firstGroup) {
+        state.firstGroup = group
+        state.newActivity = null
+      } else {
+        state.secondGroup = group
+        state.newActivity = {
+          id: utilService.makeId(),
+          txt: `Changed card from ${state.firstGroup.title} to ${group.title}`,
+          createdAt: Date.now(),
+          byMember: userService.getLoggedInUser(),
+        }
+        state.firstGroup = null
+      }
     },
     undoGroupChanges(state, { itemIndex }) {
       if (state.firstGroup) {
@@ -415,7 +447,6 @@ export default {
     },
     async swap({ commit, state }, { dropResult }) {
       commit({ type: 'changeGroupPos', dropResult })
-
       try {
         const board = await boardService.changeGroupPos(
           state.currBoard._id,
@@ -429,27 +460,20 @@ export default {
       }
     },
     async updateGroups({ commit, state }, { itemIndex, newColumn }) {
-      // const changedTask = newColumn.tasks[itemIndex]
       commit({ type: 'updateGroups', itemIndex, newColumn })
-      const newActivity = {
-        id: utilService.makeId(),
-        txt: `Changed card position`,
-        createdAt: Date.now(),
-        byMember: userService.getLoggedInUser(),
-      }
       try {
         const board = await boardService.saveBoard(
           JSON.parse(JSON.stringify(state.currBoard)),
-          newActivity
+          state.newActivity
         )
         socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
-        commit({ type: 'setBoard', board })
+        state.newActivity && commit({ type: 'setBoard', board })
       } catch (err) {
         console.log(err)
         commit({ type: 'undoGroupChanges', itemIndex, newColumn })
       }
     },
-    async searchBoards({ }, { filterBy }) {
+    async searchBoards({}, { filterBy }) {
       try {
         var filteredBoards = await boardService.query(filterBy)
         var miniBoards = []

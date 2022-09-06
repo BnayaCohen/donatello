@@ -1,24 +1,24 @@
 .main-layout {
-    display: grid;
-    grid-template-columns: 5px 1fr 5px;
+  display: grid;
+  grid-template-columns: 5px 1fr 5px;
 
-    > * {
-        grid-column: 2;
-    }
+  > * {
+    grid-column: 2;
+  }
 
-    > *.full {
-        grid-column: 1 / -1;
-    }
+  > *.full {
+    grid-column: 1 / -1;
+  }
 
-//   @include for-narrow-layout {
-//     @include layoutGTC($break-narrow);
-//   }
+  //   @include for-narrow-layout {
+  //     @include layoutGTC($break-narrow);
+  //   }
 
-//   @include for-normal-layout {
-//     @include layoutGTC($break-normal);
-//   }
+  //   @include for-normal-layout {
+  //     @include layoutGTC($break-normal);
+  //   }
 
-//   @include for-wide-layout {
-//     @include layoutGTC($break-wide);
-//   }
+  //   @include for-wide-layout {
+  //     @include layoutGTC($break-wide);
+  //   }
 }

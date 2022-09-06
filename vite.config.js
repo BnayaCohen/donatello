@@ -8,11 +8,11 @@ export default defineConfig({
   plugins: [vue(), VitePWA({ registerType: 'autoUpdate' })],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   build: {
-    outDir: '../backend/public',
+    outDir: '../donatello-backend/public',
     emptyOutDir: true,
-  }
+  },
 })

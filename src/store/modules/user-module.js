@@ -3,7 +3,7 @@ import { userService } from '../../services/user-service.js'
 export default {
   state: {
     user: userService.getLoggedInUser(),
-    users: null
+    users: null,
   },
   getters: {
     user({ user }) {
@@ -11,19 +11,18 @@ export default {
     },
     users({ users }) {
       return users
-    }
+    },
   },
   mutations: {
     setUser(state, { user }) {
       state.user = user
-      userService.getLoggedInUser()
     },
     setUsers(state, { users }) {
       state.users = users
     },
     setUserAsGuest(state) {
       state.user = userService.getDefaultGuest()
-    }
+    },
   },
   actions: {
     async logout({ commit }) {
@@ -33,7 +32,7 @@ export default {
     async login({ commit }, { credentials }) {
       try {
         const user = await userService.login(credentials)
-        console.log(user);
+        console.log(user)
         commit({ type: 'setUser', user })
         return user
       } catch (err) {
@@ -54,8 +53,7 @@ export default {
         const users = await userService.query(filterBy)
         commit({ type: 'setUsers', users })
         return users
-      }
-      catch (err) {
+      } catch (err) {
         console.log('Cannot get users')
       }
     },
